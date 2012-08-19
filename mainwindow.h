@@ -8,7 +8,10 @@
 #include <QStringList>
 #include <QPainter>
 #include <QPixmap>
+#include <QDir>
 #include <math.h>
+
+#include "fgenvironment.h"
 
 namespace Ui {
 class MainWindow;
@@ -39,6 +42,10 @@ private:
     Ui::MainWindow *ui;
     QProcess *procFGFS;
     QStringList aircrafts;
+    QStringList getListOfAircrafts();
+    QStringList listOfAircrafts;
+    void refreshListOfAircrafts();
+    void drawThumbnail(QString dir);
 };
 
 #endif // MAINWINDOW_H

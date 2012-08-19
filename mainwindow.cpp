@@ -7,6 +7,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    refreshListOfAircrafts();
+
+    foreach(QString couple, listOfAircrafts)
+    {
+        ui->cboAircrafts->addItem(couple.split(":")[1]);
+    }
+
+    /*
     procFGFS = new QProcess();
     procFGFS->setProcessChannelMode(QProcess::MergedChannels);
     procFGFS->start("/usr/bin/fgfs",QStringList() << "--show-aircraft", QProcess::ReadOnly);
@@ -15,18 +23,45 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->txaLog->append("Retrieving aircrafts...");
     connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
     connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
+    */
 
-    ui->lblAircraftPreview->setBackgroundRole(QPalette::Base);
-    //ui->lblAircraftPreview->setScaledContents(true);
-
-    QImage image(ui->lblAircraftPreview->width(),ui->lblAircraftPreview->height(),QImage::Format_RGB32);
-    image.fill(Qt::black);
-    ui->lblAircraftPreview->setPixmap(QPixmap::fromImage(image));
+    on_cboAircrafts_currentIndexChanged(ui->cboAircrafts->itemText(0));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::refreshListOfAircrafts()
+{
+    listOfAircrafts = getListOfAircrafts();
+}
+
+QStringList MainWindow::getListOfAircrafts()
+{
+    int i = 0, j = 0;
+    QDir *iterator;
+    QStringList result;
+    FGEnvironment *fgenv = new FGEnvironment();
+    QDir aircraftsDir(fgenv->getAircraftDir());
+    if(!aircraftsDir.exists())
+    {
+        qDebug("Directory %s doesn't exists",aircraftsDir.absolutePath().toStdString().c_str());
+        return QStringList() << "";
+    }
+    QStringList listOfAircrafts = aircraftsDir.entryList(QDir::Dirs,QDir::Name);
+    for(i=0;i<listOfAircrafts.count();i++)
+    {
+        iterator = new QDir(aircraftsDir.absolutePath()+"/"+listOfAircrafts.value(i));
+        QStringList xml = iterator->entryList(QStringList()<<"*-set.xml",QDir::Files,QDir::Name);
+        for(j=0;j<xml.count();j++)
+        {
+            result << QString(listOfAircrafts.value(i) + ":" + xml.value(j).replace("-set.xml","",Qt::CaseSensitive));
+            qDebug("%s",xml.value(j).toStdString().c_str());
+        }
+    }
+    return result;
 }
 
 void MainWindow::on_pbtExit_clicked()
@@ -69,6 +104,23 @@ void MainWindow::procReadAircraftsFinished(int exitCode, QProcess::ExitStatus ex
 
 void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
 {
+    QString aircraftDir;
+
+    qDebug("%s", arg1.toStdString().c_str());
+
+    foreach(QString line, listOfAircrafts)
+    {
+        QStringList couple = line.split(":");
+        if (couple[1].trimmed().compare(arg1)==0)
+        {
+            aircraftDir = couple[0].trimmed();
+        }
+    }
+    drawThumbnail(aircraftDir);
+}
+
+void MainWindow::drawThumbnail(QString dir)
+{
     float ratio = 0.;
 
     float ratioW = 0.;
@@ -77,9 +129,7 @@ void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
     int reducedWidth = 0, reducedHeight = 0;
     float newX = 0.;
 
-    qDebug("%s", arg1.toStdString().c_str());
-
-    QImage srcImage("/usr/share/games/flightgear/Aircraft/"+arg1+"/thumbnail.jpg");
+    QImage srcImage("/usr/share/games/flightgear/Aircraft/"+dir+"/thumbnail.jpg");
     QImage dstImage;
     QPainter *painter;
 
@@ -88,9 +138,6 @@ void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
         qDebug("srcImage is NULL");
         return;
     }
-
-    //qDebug("W: %d\nH: %d", srcImage.width(),srcImage.height());
-    //qDebug("LBLW: %d\nLBLH: %d", ui->lblAircraftPreview->width(),ui->lblAircraftPreview->height());
 
     ratioW = (float)ui->lblAircraftPreview->width() / (float)srcImage.width();
     ratioH = (float)ui->lblAircraftPreview->height() / (float)srcImage.height();
@@ -106,8 +153,6 @@ void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
 
     reducedWidth = floor(ratio * srcImage.width());
     reducedHeight = floor(ratio * srcImage.height());
-
-    qDebug("RW: %d\nRH: %d", reducedWidth, reducedHeight);
 
     // spostamento laterale - centering the image
     newX = (ui->lblAircraftPreview->width() / 2) - ((reducedWidth) / 2);

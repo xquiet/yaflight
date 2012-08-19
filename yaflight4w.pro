@@ -11,8 +11,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    fgenvironment.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    fgenvironment.h
 
 FORMS    += mainwindow.ui
