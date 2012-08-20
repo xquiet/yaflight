@@ -9,10 +9,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     refreshListOfAircrafts();
 
-    foreach(QString couple, listOfAircrafts)
-    {
-        ui->cboAircrafts->addItem(couple.split(":")[1]);
+    /*
+    QHashIterator<QString, QString> item(hashOfAircrafts);
+    while (item.hasNext()) {
+        item.next();
+        listOfAircrafts << item.key();
     }
+    */
+
+    QStringList listOfAircrafts = hashOfAircrafts.keys();
+    listOfAircrafts.sort();
+    ui->cboAircrafts->addItems(listOfAircrafts);
+
+    on_cboAircrafts_currentIndexChanged(ui->cboAircrafts->itemText(0));
 
     /*
     procFGFS = new QProcess();
@@ -24,8 +33,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
     connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
     */
-
-    on_cboAircrafts_currentIndexChanged(ui->cboAircrafts->itemText(0));
 }
 
 MainWindow::~MainWindow()
@@ -35,32 +42,35 @@ MainWindow::~MainWindow()
 
 void MainWindow::refreshListOfAircrafts()
 {
-    listOfAircrafts = getListOfAircrafts();
+    hashOfAircrafts = getListOfAircrafts();
 }
 
-QStringList MainWindow::getListOfAircrafts()
+QHash<QString, QString> MainWindow::getListOfAircrafts()
 {
     int i = 0, j = 0;
-    QDir *iterator;
-    QStringList result;
+    QDir *subdir;
+    QHash<QString,QString> result;
     FGEnvironment *fgenv = new FGEnvironment();
     QDir aircraftsDir(fgenv->getAircraftDir());
     if(!aircraftsDir.exists())
     {
         qDebug("Directory %s doesn't exists",aircraftsDir.absolutePath().toStdString().c_str());
-        return QStringList() << "";
+        return result;
     }
     QStringList listOfAircrafts = aircraftsDir.entryList(QDir::Dirs,QDir::Name);
+    result.begin();
     for(i=0;i<listOfAircrafts.count();i++)
     {
-        iterator = new QDir(aircraftsDir.absolutePath()+"/"+listOfAircrafts.value(i));
-        QStringList xml = iterator->entryList(QStringList()<<"*-set.xml",QDir::Files,QDir::Name);
+        subdir = new QDir(aircraftsDir.absolutePath()+"/"+listOfAircrafts.value(i));
+        QStringList xml = subdir->entryList(QStringList()<<"*-set.xml",QDir::Files,QDir::Name);
         for(j=0;j<xml.count();j++)
         {
-            result << QString(listOfAircrafts.value(i) + ":" + xml.value(j).replace("-set.xml","",Qt::CaseSensitive));
+            result.insert(xml.value(j).replace("-set.xml","",Qt::CaseSensitive),listOfAircrafts.value(i));
+            //result << QString(listOfAircrafts.value(i) + ":" + xml.value(j).replace("-set.xml","",Qt::CaseSensitive));
             qDebug("%s",xml.value(j).toStdString().c_str());
         }
     }
+    result.end();
     return result;
 }
 
@@ -104,19 +114,7 @@ void MainWindow::procReadAircraftsFinished(int exitCode, QProcess::ExitStatus ex
 
 void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
 {
-    QString aircraftDir;
-
-    qDebug("%s", arg1.toStdString().c_str());
-
-    foreach(QString line, listOfAircrafts)
-    {
-        QStringList couple = line.split(":");
-        if (couple[1].trimmed().compare(arg1)==0)
-        {
-            aircraftDir = couple[0].trimmed();
-        }
-    }
-    drawThumbnail(aircraftDir);
+    drawThumbnail(hashOfAircrafts.value(arg1.trimmed()));
 }
 
 void MainWindow::drawThumbnail(QString dir)
@@ -174,4 +172,16 @@ void MainWindow::drawThumbnail(QString dir)
     painter->end();
 
     ui->lblAircraftPreview->setPixmap(pixmap);
+}
+
+void MainWindow::on_btnAircraftInfo_clicked()
+{
+    FGEnvironment *fgenv = new FGEnvironment();
+    QStringList details = fgenv->getAircraftDetails(
+                ui->cboAircrafts->currentText(),
+                hashOfAircrafts.value(ui->cboAircrafts->currentText())
+                );
+    QMessageBox msgBox;
+    msgBox.setText(details.value(0));
+    msgBox.exec();
 }

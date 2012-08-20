@@ -9,6 +9,8 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QDir>
+#include <QHash>
+#include <QHashIterator>
 #include <math.h>
 
 #include "fgenvironment.h"
@@ -38,12 +40,18 @@ private slots:
 
     void on_cboAircrafts_currentIndexChanged(const QString &arg1);
 
+    void on_btnAircraftInfo_clicked();
+
 private:
     Ui::MainWindow *ui;
     QProcess *procFGFS;
     QStringList aircrafts;
-    QStringList getListOfAircrafts();
-    QStringList listOfAircrafts;
+    //QStringList getListOfAircrafts();
+    //QStringList listOfAircrafts;
+    // hash key   --> aircraft name (unique)
+    // hash value --> aircraft dir  (multiple)
+    QHash<QString,QString> hashOfAircrafts;
+    QHash<QString, QString> getListOfAircrafts();
     void refreshListOfAircrafts();
     void drawThumbnail(QString dir);
 };
