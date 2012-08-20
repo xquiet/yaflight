@@ -50,7 +50,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>181</width>
+       <width>141</width>
        <height>24</height>
       </rect>
      </property>
@@ -72,6 +72,29 @@
      </property>
      <property name="text">
       <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnAircraftInfo">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>20</y>
+       <width>31</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="yaflightresources.qrc">
+       <normaloff>:/icons/icons/dialog-information.png</normaloff>:/icons/icons/dialog-information.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
      </property>
     </widget>
    </widget>
@@ -179,6 +202,8 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="yaflightresources.qrc"/>
+ </resources>
  <connections/>
 </ui>
