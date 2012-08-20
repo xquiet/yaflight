@@ -18,3 +18,6 @@ HEADERS  += mainwindow.h \
     fgenvironment.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    yaflightresources.qrc
