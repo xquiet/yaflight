@@ -12,12 +12,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    fgenvironment.cpp
+    fgenvironment.cpp \
+    dlgaircraftdetails.cpp
 
 HEADERS  += mainwindow.h \
-    fgenvironment.h
+    fgenvironment.h \
+    dlgaircraftdetails.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    dlgaircraftdetails.ui
 
 RESOURCES += \
     yaflightresources.qrc

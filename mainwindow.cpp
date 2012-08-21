@@ -177,11 +177,13 @@ void MainWindow::drawThumbnail(QString dir)
 void MainWindow::on_btnAircraftInfo_clicked()
 {
     FGEnvironment *fgenv = new FGEnvironment();
+    QString message;
     QStringList details = fgenv->getAircraftDetails(
                 ui->cboAircrafts->currentText(),
                 hashOfAircrafts.value(ui->cboAircrafts->currentText())
                 );
-    QMessageBox msgBox;
-    msgBox.setText(details.value(0));
-    msgBox.exec();
+
+    dlgAircraftDetails dlg(details, this);
+    dlg.setModal(true);
+    dlg.exec();
 }

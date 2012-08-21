@@ -14,6 +14,7 @@
 #include <math.h>
 
 #include "fgenvironment.h"
+#include "dlgaircraftdetails.h"
 
 namespace Ui {
 class MainWindow;
