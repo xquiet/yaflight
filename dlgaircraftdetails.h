@@ -5,6 +5,9 @@
 #include <QStringList>
 #include <QTableWidgetItem>
 
+#include "fgenvironment.h"
+#include "imagepreview.h"
+
 namespace Ui {
 class dlgAircraftDetails;
 }

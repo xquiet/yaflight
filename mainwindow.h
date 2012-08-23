@@ -6,15 +6,13 @@
 #include <QProcess>
 #include <QByteArray>
 #include <QStringList>
-#include <QPainter>
-#include <QPixmap>
 #include <QDir>
 #include <QHash>
 #include <QHashIterator>
-#include <math.h>
 
 #include "fgenvironment.h"
 #include "dlgaircraftdetails.h"
+#include "imagepreview.h"
 
 namespace Ui {
 class MainWindow;

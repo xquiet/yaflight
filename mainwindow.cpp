@@ -119,59 +119,14 @@ void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
 
 void MainWindow::drawThumbnail(QString dir)
 {
-    float ratio = 0.;
+    FGEnvironment *fgenv = new FGEnvironment();
 
-    float ratioW = 0.;
-    float ratioH = 0.;
-
-    int reducedWidth = 0, reducedHeight = 0;
-    float newX = 0.;
-
-    QImage srcImage("/usr/share/games/flightgear/Aircraft/"+dir+"/thumbnail.jpg");
-    QImage dstImage;
-    QPainter *painter;
-
-    if(srcImage.isNull())
-    {
-        qDebug("srcImage is NULL");
-        return;
-    }
-
-    ratioW = (float)ui->lblAircraftPreview->width() / (float)srcImage.width();
-    ratioH = (float)ui->lblAircraftPreview->height() / (float)srcImage.height();
-
-    if( ratioW < ratioH )
-    {
-        ratio = ratioW;
-    }
-    else
-    {
-        ratio = ratioH;
-    }
-
-    reducedWidth = floor(ratio * srcImage.width());
-    reducedHeight = floor(ratio * srcImage.height());
-
-    // spostamento laterale - centering the image
-    newX = (ui->lblAircraftPreview->width() / 2) - ((reducedWidth) / 2);
-
-    dstImage = srcImage.scaled(
-                reducedWidth,
-                reducedHeight,
-                Qt::KeepAspectRatio,
-                Qt::FastTransformation
+    ImagePreview iprvw(
+                fgenv->getAircraftDir()+"/"+dir+"/thumbnail.jpg",
+                ui->lblAircraftPreview->width(),
+                ui->lblAircraftPreview->height()
                 );
-
-    QPixmap pixmap(ui->lblAircraftPreview->size());
-
-    painter = new QPainter();
-
-    painter->begin(&pixmap);
-    painter->fillRect(pixmap.rect(),Qt::black);
-    painter->drawImage(newX,0,dstImage);
-    painter->end();
-
-    ui->lblAircraftPreview->setPixmap(pixmap);
+    ui->lblAircraftPreview->setPixmap(iprvw.getPixmap());
 }
 
 void MainWindow::on_btnAircraftInfo_clicked()

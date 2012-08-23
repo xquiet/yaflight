@@ -13,11 +13,13 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     fgenvironment.cpp \
-    dlgaircraftdetails.cpp
+    dlgaircraftdetails.cpp \
+    imagepreview.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
-    dlgaircraftdetails.h
+    dlgaircraftdetails.h \
+    imagepreview.h
 
 FORMS    += mainwindow.ui \
     dlgaircraftdetails.ui

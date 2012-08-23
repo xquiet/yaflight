@@ -16,9 +16,19 @@ dlgAircraftDetails::dlgAircraftDetails(QStringList details, QWidget *parent) :
     foreach(QString item, details)
     {
         QStringList couple = item.split(":");
-        ui->tbvDetails->setItem(row,0,new QTableWidgetItem(couple.value(0).toUpper()));
-        ui->tbvDetails->setItem(row,1,new QTableWidgetItem(couple.value(1)));
-        row++;
+        if(couple.value(0).trimmed().compare("splash-texture"))
+        {
+            ui->tbvDetails->setItem(row,0,new QTableWidgetItem(couple.value(0).toUpper()));
+            ui->tbvDetails->setItem(row,1,new QTableWidgetItem(couple.value(1)));
+            row++;
+        }
+        else
+        {
+            FGEnvironment *fgenv = new FGEnvironment();
+            ImagePreview iprvw(fgenv->getRootPath()+"/"+couple.value(1).trimmed(),ui->lblAircraft->width(),ui->lblAircraft->height());
+            ui->lblAircraft->setScaledContents(true);
+            ui->lblAircraft->setPixmap(iprvw.getPixmap());
+        }
     }
 }
 
