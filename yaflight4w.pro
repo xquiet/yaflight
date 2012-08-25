@@ -14,15 +14,20 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     fgenvironment.cpp \
     dlgaircraftdetails.cpp \
-    imagepreview.cpp
+    imagepreview.cpp \
+    cuteexpander.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
     dlgaircraftdetails.h \
-    imagepreview.h
+    imagepreview.h \
+    cuteexpander.h
 
 FORMS    += mainwindow.ui \
-    dlgaircraftdetails.ui
+    dlgaircraftdetails.ui \
+    cuteexpander.ui
 
 RESOURCES += \
     yaflightresources.qrc
+
+OTHER_FILES +=

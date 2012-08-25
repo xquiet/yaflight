@@ -7,6 +7,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->expanderLog->setText("Log");
+    ui->expanderLog->unexpand();
+
+    // reload and populate hashOfAircrafts for
+    // a later use
     refreshListOfAircrafts();
 
     /*
@@ -17,22 +22,20 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     */
 
+    // windows geometries
+    QStringList windowGeometries;
+    windowGeometries << "1280x1024" << "1024x768" << "800x600" << "640x480" <<
+                        "1024x576" << "1152x648" << "1280x720" << "1366x780" <<
+                        "1600x900" << "1920x1080" << "2560x1440" << "3840x2160";
+    //windowGeometries.sort();
+    ui->cboWindowGeometries->addItems(windowGeometries);
+
     QStringList listOfAircrafts = hashOfAircrafts.keys();
     listOfAircrafts.sort();
     ui->cboAircrafts->addItems(listOfAircrafts);
 
+    // triggering the event to cause aircraft preview refresh
     on_cboAircrafts_currentIndexChanged(ui->cboAircrafts->itemText(0));
-
-    /*
-    procFGFS = new QProcess();
-    procFGFS->setProcessChannelMode(QProcess::MergedChannels);
-    procFGFS->start("/usr/bin/fgfs",QStringList() << "--show-aircraft", QProcess::ReadOnly);
-    //if(!pls->waitForStarted())
-    //    return false;
-    ui->txaLog->append("Retrieving aircrafts...");
-    connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
-    connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
-    */
 }
 
 MainWindow::~MainWindow()
@@ -74,12 +77,7 @@ QHash<QString, QString> MainWindow::getListOfAircrafts()
     return result;
 }
 
-void MainWindow::on_pbtExit_clicked()
-{
-    this->close();
-}
-
-void MainWindow::on_pbtAbout_clicked()
+void MainWindow::on_btnAbout_clicked()
 {
     QMessageBox msgbox;
     msgbox.about(this,"About","yaflight4w - yaflight for windows\n(C) 2011-2012 by Matteo Pasotti");
@@ -87,7 +85,15 @@ void MainWindow::on_pbtAbout_clicked()
 
 void MainWindow::on_pbtLaunch_clicked()
 {
-
+    FGEnvironment *fgenv = new FGEnvironment();
+    procFGFS = new QProcess();
+    procFGFS->setProcessChannelMode(QProcess::MergedChannels);
+    procFGFS->start(fgenv->getFgfsBinPath(),QStringList() << "--show-aircraft", QProcess::ReadOnly);
+    //if(!pls->waitForStarted())
+    //    return false;
+    ui->txaLog->append("Retrieving aircrafts...");
+    connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
+    connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
 }
 
 void MainWindow::readAircrafts()
@@ -108,7 +114,7 @@ void MainWindow::readAircrafts()
 void MainWindow::procReadAircraftsFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
     ui->txaLog->append("Retrieving aircrafts: DONE");
-    ui->cboAircrafts->addItems(aircrafts);
+    //ui->cboAircrafts->addItems(aircrafts);
     qDebug("%s (%d)", QString(exitStatus).toStdString().c_str(), exitCode);
 }
 
@@ -141,4 +147,9 @@ void MainWindow::on_btnAircraftInfo_clicked()
     dlgAircraftDetails dlg(details, this);
     dlg.setModal(true);
     dlg.exec();
+}
+
+void MainWindow::on_btnExit_clicked()
+{
+    this->close();
 }

@@ -23,7 +23,7 @@
       <x>10</x>
       <y>10</y>
       <width>201</width>
-      <height>201</height>
+      <height>221</height>
      </rect>
     </property>
     <property name="locale">
@@ -36,13 +36,17 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>170</y>
-       <width>83</width>
-       <height>25</height>
+       <y>174</y>
+       <width>101</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
       <string>Launch!</string>
+     </property>
+     <property name="icon">
+      <iconset resource="yaflightresources.qrc">
+       <normaloff>:/icons/icons/gtk-execute.png</normaloff>:/icons/icons/gtk-execute.png</iconset>
      </property>
     </widget>
     <widget class="QComboBox" name="cboAircrafts">
@@ -104,14 +108,108 @@
       <x>210</x>
       <y>10</y>
       <width>171</width>
-      <height>201</height>
+      <height>221</height>
      </rect>
     </property>
     <property name="title">
      <string>Options</string>
     </property>
+    <widget class="QCheckBox" name="ckbSound">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>151</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Sound</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="ckbGameMode">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>151</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Game mode</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="ckbFullScreen">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>151</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Full Screen</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="ckbClouds">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>110</y>
+       <width>151</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clouds</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="ckbFog">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>151</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Fog</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblWinGeometry">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>170</y>
+       <width>131</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Windows Geometry:</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="cboWindowGeometries">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>190</y>
+       <width>151</width>
+       <height>24</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
-   <widget class="QPushButton" name="pbtExit">
+   <widget class="QPushButton" name="btnExit">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -124,7 +222,7 @@
      <string>Exit</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pbtAbout">
+   <widget class="QPushButton" name="btnAbout">
     <property name="geometry">
      <rect>
       <x>390</x>
@@ -189,19 +287,37 @@
      <enum>Qt::Vertical</enum>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="txaLog">
+   <widget class="CuteExpander" name="expanderLog" native="true">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>280</y>
-      <width>371</width>
-      <height>111</height>
+      <y>240</y>
+      <width>471</width>
+      <height>151</height>
      </rect>
     </property>
+    <widget class="QTextBrowser" name="txaLog">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>30</y>
+       <width>451</width>
+       <height>111</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>CuteExpander</class>
+   <extends>QWidget</extends>
+   <header>cuteexpander.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="yaflightresources.qrc"/>
  </resources>

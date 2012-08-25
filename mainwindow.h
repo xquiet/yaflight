@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QResource>
 #include <QMessageBox>
 #include <QProcess>
 #include <QByteArray>
@@ -27,9 +28,9 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pbtExit_clicked();
+    void on_btnExit_clicked();
 
-    void on_pbtAbout_clicked();
+    void on_btnAbout_clicked();
 
     void on_pbtLaunch_clicked();
 
