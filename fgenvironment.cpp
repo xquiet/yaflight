@@ -20,6 +20,11 @@ QString FGEnvironment::getAircraftDir()
     return fgRootPath+"/Aircraft";
 }
 
+QString FGEnvironment::getFgfsBinPath()
+{
+    return "/usr/bin/fgfs";
+}
+
 QStringList FGEnvironment::getAircraftDetails(QString aircraft, QString aircraftDir)
 {
     // retrieve data from xml files

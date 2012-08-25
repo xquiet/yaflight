@@ -16,6 +16,7 @@ public:
     QString getRootPath();
     QString getAircraftDir();
     QStringList getAircraftDetails(QString aircraft, QString aircraftDir);
+    QString getFgfsBinPath();
 };
 
 #endif // FGENVIRONMENT_H
