@@ -2,6 +2,7 @@
 #define CUTEEXPANDER_H
 
 #include <QWidget>
+#include <QObjectList>
 
 namespace Ui{
 class CuteExpander;
@@ -18,7 +19,9 @@ public:
     void unexpand();
     
 signals:
-    
+    void expanded();
+    void unexpanded();
+
 public slots:
 
 private slots:
