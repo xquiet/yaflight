@@ -7,8 +7,33 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //this->setFixedSize(500,400);
+    _mainWindowMinHeight = 300;
+    _mainWindowMaxHeight = 700;
+    setMinimumHeight(_mainWindowMinHeight);
+    setMaximumHeight(_mainWindowMaxHeight);
+
     ui->expanderLog->setText("Log");
+    ui->expanderMap->setText("Map");
+
+    ui->expanderLog->setMinimumHeight(25); // cutexpander button height
+    ui->expanderMap->setMinimumHeight(25); // cutexpander button height
+    ui->expanderLog->setMaximumHeight(151);
+    ui->expanderMap->setMaximumHeight(200);
+
+
+    ui->txaLog->setGeometry(0,26,ui->expanderLog->width()-2,ui->expanderLog->height()-26);
+    ui->webView->setGeometry(0,26,ui->expanderMap->width()-2,ui->expanderMap->height());
+
+    // connecting expanders signals to local handlers!
+    connect(ui->expanderLog,SIGNAL(expanded()),this,SLOT(exLogExpanded()));
+    connect(ui->expanderLog,SIGNAL(unexpanded()),this,SLOT(exLogUnexpanded()));
+    connect(ui->expanderMap,SIGNAL(expanded()),this,SLOT(exMapExpanded()));
+    connect(ui->expanderMap,SIGNAL(unexpanded()),this,SLOT(exMapUnexpanded()));
+
     ui->expanderLog->unexpand();
+    ui->expanderMap->unexpand();
+
 
     // reload and populate hashOfAircrafts for
     // a later use
@@ -126,9 +151,22 @@ void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
 void MainWindow::drawThumbnail(QString dir)
 {
     FGEnvironment *fgenv = new FGEnvironment();
-
+    QString thumbFilePath = fgenv->getAircraftDir()+"/"+dir+"/thumbnail.jpg";
+    if(!QFile::exists(thumbFilePath))
+    {
+        QStringList details = fgenv->getAircraftDetails(ui->cboAircrafts->currentText(), fgenv->getAircraftDir());
+        foreach(QString item, details)
+        {
+            QStringList couple = item.split(":");
+            if(couple.value(0).trimmed().compare("splash-texture")==0)
+            {
+                thumbFilePath = fgenv->getRootPath()+"/"+couple.value(1).trimmed();
+                break;
+            }
+        }
+    }
     ImagePreview iprvw(
-                fgenv->getAircraftDir()+"/"+dir+"/thumbnail.jpg",
+                thumbFilePath,
                 ui->lblAircraftPreview->width(),
                 ui->lblAircraftPreview->height()
                 );
@@ -152,4 +190,53 @@ void MainWindow::on_btnAircraftInfo_clicked()
 void MainWindow::on_btnExit_clicked()
 {
     this->close();
+}
+
+/*void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    ui->expanderMap->setGeometry(ui->expanderMap->x(),
+                                 ui->expanderLog->y()+ui->expanderLog->height()+2,
+                                 ui->expanderMap->width(),
+                                 ui->expanderMap->height());
+}*/
+
+void MainWindow::exLogExpanded()
+{
+    ui->expanderMap->setGeometry(ui->expanderMap->x(),
+                                 ui->expanderLog->y()+ui->expanderLog->height()+2,
+                                 ui->expanderMap->width(),
+                                 ui->expanderMap->height());
+    this->setGeometry(this->x(),
+                      this->y(),
+                      this->width(),
+                      ui->expanderLog->y()+ui->expanderMap->height()+ui->expanderLog->height()+2);
+}
+
+void MainWindow::exMapExpanded()
+{
+    this->setGeometry(this->x(),
+                      this->y(),
+                      this->width(),
+                      ui->expanderMap->y()+ui->expanderMap->height()+2);
+    //qDebug("%d, %d",ui->expanderLog->height(), ui->expanderMap->height());
+}
+
+void MainWindow::exLogUnexpanded()
+{
+    ui->expanderMap->setGeometry(ui->expanderMap->x(),
+                                 ui->expanderLog->y()+ui->expanderLog->height()+2,
+                                 ui->expanderMap->width(),
+                                 ui->expanderMap->height());
+    this->setGeometry(this->x(),
+                      this->y(),
+                      this->width(),
+                      ui->expanderLog->y()+ui->expanderMap->height()+ui->expanderLog->height()+2);
+}
+
+void MainWindow::exMapUnexpanded()
+{
+    this->setGeometry(this->x(),
+                      this->y(),
+                      this->width(),
+                      ui->expanderMap->y()+ui->expanderMap->height()+2);
 }

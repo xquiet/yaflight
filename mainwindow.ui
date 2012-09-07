@@ -2,13 +2,34 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
+    <width>512</width>
+    <height>571</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
     <width>505</width>
     <height>485</height>
-   </rect>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1000</width>
+    <height>1000</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>yaflight4w</string>
@@ -214,7 +235,7 @@
      <rect>
       <x>390</x>
       <y>10</y>
-      <width>83</width>
+      <width>101</width>
       <height>25</height>
      </rect>
     </property>
@@ -227,7 +248,7 @@
      <rect>
       <x>390</x>
       <y>40</y>
-      <width>83</width>
+      <width>101</width>
       <height>25</height>
      </rect>
     </property>
@@ -240,7 +261,7 @@
      <rect>
       <x>390</x>
       <y>90</y>
-      <width>83</width>
+      <width>101</width>
       <height>25</height>
      </rect>
     </property>
@@ -253,7 +274,7 @@
      <rect>
       <x>390</x>
       <y>120</y>
-      <width>83</width>
+      <width>101</width>
       <height>25</height>
      </rect>
     </property>
@@ -266,7 +287,7 @@
      <rect>
       <x>390</x>
       <y>150</y>
-      <width>83</width>
+      <width>101</width>
       <height>25</height>
      </rect>
     </property>
@@ -277,7 +298,7 @@
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>480</x>
+      <x>490</x>
       <y>10</y>
       <width>20</width>
       <height>271</height>
@@ -296,6 +317,15 @@
       <height>151</height>
      </rect>
     </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <widget class="QTextBrowser" name="txaLog">
      <property name="geometry">
       <rect>
@@ -305,12 +335,80 @@
        <height>111</height>
       </rect>
      </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
     </widget>
+   </widget>
+   <widget class="CuteExpander" name="expanderMap" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>400</y>
+      <width>471</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <widget class="QWebView" name="webView">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>30</y>
+       <width>451</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="url">
+      <url>
+       <string>http://yaflight.altervista.org/yaserv/</string>
+      </url>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="btnAdvanced">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>200</y>
+      <width>101</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Advanced</string>
+    </property>
+    <property name="icon">
+     <iconset resource="yaflightresources.qrc">
+      <normaloff>:/icons/icons/dialog-warning.png</normaloff>:/icons/icons/dialog-warning.png</iconset>
+    </property>
    </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKit/QWebView</header>
+  </customwidget>
   <customwidget>
    <class>CuteExpander</class>
    <extends>QWidget</extends>

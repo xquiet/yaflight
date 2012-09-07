@@ -10,6 +10,7 @@
 #include <QDir>
 #include <QHash>
 #include <QHashIterator>
+#include <QResizeEvent>
 
 #include "fgenvironment.h"
 #include "dlgaircraftdetails.h"
@@ -42,9 +43,22 @@ private slots:
 
     void on_btnAircraftInfo_clicked();
 
+    void exLogExpanded();
+
+    void exMapExpanded();
+
+    void exLogUnexpanded();
+
+    void exMapUnexpanded();
+
+
+protected:
+    //void resizeEvent(QResizeEvent *event);
+
 private:
     Ui::MainWindow *ui;
     QProcess *procFGFS;
+    int _mainWindowMaxHeight, _mainWindowMinHeight;
     QStringList aircrafts;
     //QStringList getListOfAircrafts();
     //QStringList listOfAircrafts;
