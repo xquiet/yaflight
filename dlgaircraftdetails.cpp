@@ -16,7 +16,7 @@ dlgAircraftDetails::dlgAircraftDetails(QStringList details, QWidget *parent) :
     foreach(QString item, details)
     {
         QStringList couple = item.split(":");
-        if(couple.value(0).trimmed().compare("splash-texture"))
+        if(couple.value(0).trimmed().compare("splash-texture")!=0)
         {
             ui->tbvDetails->setItem(row,0,new QTableWidgetItem(couple.value(0).toUpper()));
             ui->tbvDetails->setItem(row,1,new QTableWidgetItem(couple.value(1)));
