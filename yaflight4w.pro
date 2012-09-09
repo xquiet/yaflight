@@ -15,13 +15,15 @@ SOURCES += main.cpp\
     fgenvironment.cpp \
     dlgaircraftdetails.cpp \
     imagepreview.cpp \
-    cuteexpander.cpp
+    cuteexpander.cpp \
+    aircraft.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
     dlgaircraftdetails.h \
     imagepreview.h \
-    cuteexpander.h
+    cuteexpander.h \
+    aircraft.h
 
 FORMS    += mainwindow.ui \
     dlgaircraftdetails.ui \

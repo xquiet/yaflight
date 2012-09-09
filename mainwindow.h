@@ -11,10 +11,13 @@
 #include <QHash>
 #include <QHashIterator>
 #include <QResizeEvent>
+#include <QWidget>
+#include <QPushButton>
 
 #include "fgenvironment.h"
 #include "dlgaircraftdetails.h"
 #include "imagepreview.h"
+#include "aircraft.h"
 
 namespace Ui {
 class MainWindow;
@@ -43,31 +46,30 @@ private slots:
 
     void on_btnAircraftInfo_clicked();
 
-    void exLogExpanded();
+    void on_btnAdvanced_clicked();
 
-    void exMapExpanded();
+    void expOptsUnexpanded();
 
-    void exLogUnexpanded();
-
-    void exMapUnexpanded();
-
+    void expOptsExpanded();
 
 protected:
     //void resizeEvent(QResizeEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
 private:
     Ui::MainWindow *ui;
     QProcess *procFGFS;
     int _mainWindowMaxHeight, _mainWindowMinHeight;
     QStringList aircrafts;
-    //QStringList getListOfAircrafts();
-    //QStringList listOfAircrafts;
     // hash key   --> aircraft name (unique)
     // hash value --> aircraft dir  (multiple)
     QHash<QString,QString> hashOfAircrafts;
     QHash<QString, QString> getListOfAircrafts();
     void refreshListOfAircrafts();
     void drawThumbnail(QString dir);
+
+    QPoint dragPosition; // used to move the frameless window
 };
 
 #endif // MAINWINDOW_H

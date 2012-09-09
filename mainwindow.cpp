@@ -2,38 +2,25 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
+    QMainWindow(parent,Qt::FramelessWindowHint),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
     //this->setFixedSize(500,400);
-    _mainWindowMinHeight = 300;
+    /*_mainWindowMinHeight = 300;
     _mainWindowMaxHeight = 700;
     setMinimumHeight(_mainWindowMinHeight);
-    setMaximumHeight(_mainWindowMaxHeight);
-
-    ui->expanderLog->setText("Log");
-    ui->expanderMap->setText("Map");
-
-    ui->expanderLog->setMinimumHeight(25); // cutexpander button height
-    ui->expanderMap->setMinimumHeight(25); // cutexpander button height
-    ui->expanderLog->setMaximumHeight(151);
-    ui->expanderMap->setMaximumHeight(200);
+    setMaximumHeight(_mainWindowMaxHeight);*/
 
 
-    ui->txaLog->setGeometry(0,26,ui->expanderLog->width()-2,ui->expanderLog->height()-26);
-    ui->webView->setGeometry(0,26,ui->expanderMap->width()-2,ui->expanderMap->height());
+    connect(ui->expanderOpts,SIGNAL(expanded()),this,SLOT(expOptsExpanded()));
+    connect(ui->expanderOpts,SIGNAL(unexpanded()),this,SLOT(expOptsUnexpanded()));
 
-    // connecting expanders signals to local handlers!
-    connect(ui->expanderLog,SIGNAL(expanded()),this,SLOT(exLogExpanded()));
-    connect(ui->expanderLog,SIGNAL(unexpanded()),this,SLOT(exLogUnexpanded()));
-    connect(ui->expanderMap,SIGNAL(expanded()),this,SLOT(exMapExpanded()));
-    connect(ui->expanderMap,SIGNAL(unexpanded()),this,SLOT(exMapUnexpanded()));
+    // cuteexpander
+    ui->expanderOpts->unexpand();
 
-    ui->expanderLog->unexpand();
-    ui->expanderMap->unexpand();
-
+    ui->tbxOpts->setGeometry(0,26,ui->tbxOpts->width(),ui->tbxOpts->height());
 
     // reload and populate hashOfAircrafts for
     // a later use
@@ -155,15 +142,8 @@ void MainWindow::drawThumbnail(QString dir)
     if(!QFile::exists(thumbFilePath))
     {
         QStringList details = fgenv->getAircraftDetails(ui->cboAircrafts->currentText(), fgenv->getAircraftDir());
-        foreach(QString item, details)
-        {
-            QStringList couple = item.split(":");
-            if(couple.value(0).trimmed().compare("splash-texture")==0)
-            {
-                thumbFilePath = fgenv->getRootPath()+"/"+couple.value(1).trimmed();
-                break;
-            }
-        }
+        Aircraft ac(details);
+        thumbFilePath = fgenv->getRootPath()+"/"+ac.getSplashTexture();
     }
     ImagePreview iprvw(
                 thumbFilePath,
@@ -200,43 +180,40 @@ void MainWindow::on_btnExit_clicked()
                                  ui->expanderMap->height());
 }*/
 
-void MainWindow::exLogExpanded()
+void MainWindow::expOptsExpanded()
 {
-    ui->expanderMap->setGeometry(ui->expanderMap->x(),
-                                 ui->expanderLog->y()+ui->expanderLog->height()+2,
-                                 ui->expanderMap->width(),
-                                 ui->expanderMap->height());
-    this->setGeometry(this->x(),
-                      this->y(),
-                      this->width(),
-                      ui->expanderLog->y()+ui->expanderMap->height()+ui->expanderLog->height()+2);
+    this->setGeometry(x(),y(),width(),ui->expanderOpts->height()+ui->expanderOpts->height()+2);
 }
 
-void MainWindow::exMapExpanded()
+void MainWindow::expOptsUnexpanded()
 {
-    this->setGeometry(this->x(),
-                      this->y(),
-                      this->width(),
-                      ui->expanderMap->y()+ui->expanderMap->height()+2);
-    //qDebug("%d, %d",ui->expanderLog->height(), ui->expanderMap->height());
+    this->setGeometry(x(),y(),width(),ui->expanderOpts->height()+ui->expanderOpts->height()+2);
 }
 
-void MainWindow::exLogUnexpanded()
+void MainWindow::on_btnAdvanced_clicked()
 {
-    ui->expanderMap->setGeometry(ui->expanderMap->x(),
-                                 ui->expanderLog->y()+ui->expanderLog->height()+2,
-                                 ui->expanderMap->width(),
-                                 ui->expanderMap->height());
-    this->setGeometry(this->x(),
-                      this->y(),
-                      this->width(),
-                      ui->expanderLog->y()+ui->expanderMap->height()+ui->expanderLog->height()+2);
+    QWidget frmAdvanced(this);
+    frmAdvanced.setGeometry(this->geometry());
+
+    QPushButton btnChiudi(&frmAdvanced);
+    btnChiudi.setGeometry(frmAdvanced.width()/2,
+                          frmAdvanced.height()/2,
+                          200,50);
+    frmAdvanced.show();
 }
 
-void MainWindow::exMapUnexpanded()
+void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-    this->setGeometry(this->x(),
-                      this->y(),
-                      this->width(),
-                      ui->expanderMap->y()+ui->expanderMap->height()+2);
+    if (event->button() == Qt::LeftButton) {
+        dragPosition = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
 }
+
+void MainWindow::mouseMoveEvent(QMouseEvent *event)
+ {
+     if (event->buttons() & Qt::LeftButton) {
+         move(event->globalPos() - dragPosition);
+         event->accept();
+     }
+ }

@@ -6,5 +6,6 @@
         <file>icons/gtk-execute.png</file>
         <file>icons/arrowUp.png</file>
         <file>icons/arrowDown.png</file>
+        <file>icons/yaflight-icon-48.png</file>
     </qresource>
 </RCC>

@@ -81,6 +81,10 @@ QStringList FGEnvironment::getAircraftDetails(QString aircraft, QString aircraft
         {
             result << "splash-texture:" + line.replace("<splash-texture>","").replace("</splash-texture>","").trimmed();
         }
+        else if(line.trimmed().contains("<aero>"))
+        {
+            result << "aero:" + line.replace("<aero>","").replace("</aero>","").trimmed();
+        }
     }
     aircraftFile.close();
     return result;
