@@ -143,7 +143,9 @@ void MainWindow::drawThumbnail(QString dir)
     QString thumbFilePath = fgenv->getAircraftDir()+"/"+dir+"/thumbnail.jpg";
     if(!QFile::exists(thumbFilePath))
     {
-        QStringList details = fgenv->getAircraftDetails(ui->cboAircrafts->currentText(), fgenv->getAircraftDir());
+        QStringList details = fgenv->getAircraftDetails(ui->cboAircrafts->currentText(),
+                                                        hashOfAircrafts.value(ui->cboAircrafts->currentText())
+                                                        );
         Aircraft ac(details);
         thumbFilePath = fgenv->getRootPath()+"/"+ac.getSplashTexture();
     }
