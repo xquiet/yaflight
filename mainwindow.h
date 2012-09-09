@@ -11,8 +11,6 @@
 #include <QHash>
 #include <QHashIterator>
 #include <QResizeEvent>
-#include <QWidget>
-#include <QPushButton>
 
 #include "fgenvironment.h"
 #include "dlgaircraftdetails.h"
@@ -45,8 +43,6 @@ private slots:
     void on_cboAircrafts_currentIndexChanged(const QString &arg1);
 
     void on_btnAircraftInfo_clicked();
-
-    void on_btnAdvanced_clicked();
 
     void expOptsUnexpanded();
 

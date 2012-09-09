@@ -18,9 +18,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->expanderOpts,SIGNAL(unexpanded()),this,SLOT(expOptsUnexpanded()));
 
     // cuteexpander
+    ui->expanderOpts->setText("More...");
     ui->expanderOpts->unexpand();
 
-    ui->tbxOpts->setGeometry(0,26,ui->tbxOpts->width(),ui->tbxOpts->height());
+    ui->tbxOpts->setGeometry(0,2,ui->tbxOpts->width(),ui->tbxOpts->height());
+    ui->tabOpts->setGeometry(0,26,ui->tabOpts->width(),ui->tabOpts->height());
 
     // reload and populate hashOfAircrafts for
     // a later use
@@ -188,18 +190,6 @@ void MainWindow::expOptsExpanded()
 void MainWindow::expOptsUnexpanded()
 {
     this->setGeometry(x(),y(),width(),ui->expanderOpts->height()+ui->expanderOpts->height()+2);
-}
-
-void MainWindow::on_btnAdvanced_clicked()
-{
-    QWidget frmAdvanced(this);
-    frmAdvanced.setGeometry(this->geometry());
-
-    QPushButton btnChiudi(&frmAdvanced);
-    btnChiudi.setGeometry(frmAdvanced.width()/2,
-                          frmAdvanced.height()/2,
-                          200,50);
-    frmAdvanced.show();
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
