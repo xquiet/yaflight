@@ -31,28 +31,6 @@ void configuration::parseFile()
     foreach (QString section, sections)
         confSettings.insert(section,parseSection(section));
     confSettings.end();
-    //---------------------------------------------
-    /*settings.beginGroup("advanced");
-    childKeys = new QStringList();
-    childKeys = settings.childKeys();
-    confSettings.begin();
-    QHash<QString, QString> advHash;
-    advHash.begin();
-    foreach (const QString &childKey, childKeys)
-         advHash.insert(childKey, settings.value(childKey).toString());
-    confSettings.insert("advanced",advHash);
-    settings.endGroup();
-    //---------------------------------------------
-    settings.beginGroup("app");
-    childKeys = new QStringList();
-    childKeys = settings.childKeys();
-    confSettings.begin();
-    QHash<QString, QString> appHash;
-    appHash.begin();
-    foreach (const QString &childKey, childKeys)
-         appHash.insert(childKey, settings.value(childKey).toString());
-    confSettings.insert("app",appHash);
-    settings.endGroup();*/
 }
 
 QHash<QString, QString> configuration::parseSection(QString section)
