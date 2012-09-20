@@ -340,8 +340,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>157</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -375,8 +375,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>157</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -521,8 +521,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>45</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -560,8 +560,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>45</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -573,8 +573,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>45</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -634,6 +634,14 @@
         </widget>
        </widget>
        <widget class="QWidget" name="pageHUD">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>96</width>
+          <height>26</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>HUD</string>
         </attribute>
@@ -662,6 +670,9 @@
          <property name="text">
           <string>HUD 3D</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
         <widget class="QCheckBox" name="ckbHudAntialias">
          <property name="geometry">
@@ -678,6 +689,14 @@
         </widget>
        </widget>
        <widget class="QWidget" name="pageLights">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>96</width>
+          <height>26</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>Lights</string>
         </attribute>
@@ -709,6 +728,14 @@
         </widget>
        </widget>
        <widget class="QWidget" name="pageTime">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>96</width>
+          <height>26</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>Time</string>
         </attribute>
