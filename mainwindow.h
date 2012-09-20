@@ -16,6 +16,7 @@
 #include "dlgaircraftdetails.h"
 #include "imagepreview.h"
 #include "aircraft.h"
+#include "configuration.h"
 
 namespace Ui {
 class MainWindow;

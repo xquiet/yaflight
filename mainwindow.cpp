@@ -50,6 +50,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // triggering the event to cause aircraft preview refresh
     on_cboAircrafts_currentIndexChanged(ui->cboAircrafts->itemText(0));
+
+    FGEnvironment *fgenv = new FGEnvironment();
+    ui->txaLog->append("OS: " + fgenv->detectOS());
+    ui->txaLog->append("FG version: " + fgenv->detectFGVersion());
+
+    configuration conf(fgenv->getYFHome()+"/conf.ini");
+    if(!conf.exists())
+    {
+        if(!conf.create(fgenv->getYFHome()+"/conf.ini"))
+            qFatal("Can't create configuration file");
+    }
+    conf.parseFile();
+    qDebug("%s", conf.get("main", "AIRCRAFT").toStdString().data());
 }
 
 MainWindow::~MainWindow()
@@ -143,7 +156,9 @@ void MainWindow::drawThumbnail(QString dir)
     QString thumbFilePath = fgenv->getAircraftDir()+"/"+dir+"/thumbnail.jpg";
     if(!QFile::exists(thumbFilePath))
     {
-        QStringList details = fgenv->getAircraftDetails(ui->cboAircrafts->currentText(), fgenv->getAircraftDir());
+        QStringList details = fgenv->getAircraftDetails(ui->cboAircrafts->currentText(),
+                                                        hashOfAircrafts.value(ui->cboAircrafts->currentText())
+                                                        );
         Aircraft ac(details);
         thumbFilePath = fgenv->getRootPath()+"/"+ac.getSplashTexture();
     }
