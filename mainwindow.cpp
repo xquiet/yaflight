@@ -44,6 +44,30 @@ MainWindow::MainWindow(QWidget *parent) :
     //windowGeometries.sort();
     ui->cboWindowGeometries->addItems(windowGeometries);
 
+    // aircraft failures
+    QStringList failures;
+    failures << "none" << "pitot"
+             << "static" << "vacuum"
+             << "electrical";
+
+    ui->cboFailures->addItems(failures);
+
+    // day time
+    QStringList daytime;
+    daytime << "none" << "dawn"
+            << "dusk" << "noon"
+            << "midnight";
+
+    ui->cboDayTime->addItems(daytime);
+
+    // seasons
+    QStringList seasons;
+    seasons << "none" << "summer"
+            << "winter";
+
+    ui->cboSeason->addItems(seasons);
+
+
     QStringList listOfAircrafts = hashOfAircrafts.keys();
     listOfAircrafts.sort();
     ui->cboAircrafts->addItems(listOfAircrafts);
@@ -60,9 +84,10 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         if(!conf.create(fgenv->getYFHome()+"/conf.ini"))
             qFatal("Can't create configuration file");
+    }else{
+        conf.parseFile();
+        //qDebug("%s", conf.get("main", "AIRCRAFT").toStdString().data());
     }
-    conf.parseFile();
-    qDebug("%s", conf.get("main", "AIRCRAFT").toStdString().data());
 }
 
 MainWindow::~MainWindow()
@@ -113,12 +138,14 @@ void MainWindow::on_btnAbout_clicked()
 void MainWindow::on_pbtLaunch_clicked()
 {
     FGEnvironment *fgenv = new FGEnvironment();
+    QStringList params = collectLaunchSettings(fgenv);
     procFGFS = new QProcess();
     procFGFS->setProcessChannelMode(QProcess::MergedChannels);
-    procFGFS->start(fgenv->getFgfsBinPath(),QStringList() << "--show-aircraft", QProcess::ReadOnly);
+    procFGFS->start(fgenv->getFgfsBinPath(), params, QProcess::ReadWrite);
     //if(!pls->waitForStarted())
     //    return false;
-    ui->txaLog->append("Retrieving aircrafts...");
+    ui->txaLog->append("Launching...");
+    ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
     connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
     connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
 }
@@ -126,23 +153,14 @@ void MainWindow::on_pbtLaunch_clicked()
 void MainWindow::readAircrafts()
 {
     QByteArray bytes = procFGFS->readAll();
-    QStringList strLines = QString(bytes).split("\n");
-    QStringList cols;
-    foreach (QString line, strLines){
-        line = line.trimmed();
-        if(line.compare("Available aircraft:")!=0){
-            cols = line.split(" ",QString::SkipEmptyParts,Qt::CaseInsensitive);
-            if (cols.length()>0)
-                aircrafts.append(cols[0].trimmed());
-        }
-    }
+    QString strLines = QString(bytes);
+    ui->txaLog->append(strLines);
 }
 
 void MainWindow::procReadAircraftsFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    ui->txaLog->append("Retrieving aircrafts: DONE");
-    //ui->cboAircrafts->addItems(aircrafts);
-    qDebug("%s (%d)", QString(exitStatus).toStdString().c_str(), exitCode);
+    ui->txaLog->append("Simulation complete");
+    qDebug("%s (%d)", QString(exitStatus).toStdString().data(), exitCode);
 }
 
 void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
@@ -222,3 +240,218 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
          event->accept();
      }
  }
+
+QStringList MainWindow::collectLaunchSettings(FGEnvironment *fgenv)
+{
+    QStringList params;
+    // ------------- Quick options -------------
+    // Sound
+    if(ui->ckbSound->isChecked())
+    {
+        params << "--enable-sound";
+    }
+    else
+    {
+        params << "--disable-sound";
+    }
+    // Game Mode
+    if(ui->ckbGameMode->isChecked())
+    {
+        params << "--enable-game-mode";
+    }
+    else
+    {
+        params << "--disable-game-mode";
+    }
+    // Clouds
+    if(ui->ckbClouds->isChecked())
+    {
+        params << "--enable-clouds";
+    }
+    else
+    {
+        params << "--disable-clouds";
+    }
+    // Fog
+    if(ui->ckbFog->isChecked())
+    {
+        params << "--fog-fastest";
+    }
+    else
+    {
+        params << "--fog-disable";
+    }
+    // Full Screen
+    if(ui->ckbFullScreen->isChecked())
+    {
+        params << "--enable-fullscreen";
+        // devo usare questo trucco altrimenti X11ErrorHandling
+        params.insert(0,"-e");
+        params.insert(0,"xterm");
+    }
+    else
+    {
+        params << "--geometry="+ui->cboWindowGeometries->currentText();
+    }
+    // ------------- Rendering -------------
+    // Horizon effect
+    if(ui->ckbHorizonEffect->isChecked())
+    {
+        params << "--enable-horizon-effect";
+    }
+    else
+    {
+        params << "--disable-horizon-effect";
+    }
+    // Sky Blend
+    if(ui->ckbSkyBlending->isChecked())
+    {
+        params << "--enable-skyblend";
+    }
+    else
+    {
+        params << "--disable-skyblend";
+    }
+    // Textures
+    if(ui->ckbTextures->isChecked())
+    {
+        params << "--enable-textures";
+    }
+    else
+    {
+        params << "--disable-textures";
+    }
+    // Distance attenuation
+    if(ui->ckbDistanceAttenuation->isChecked())
+    {
+        params << "--enable-distance-attenuation";
+    }
+    else
+    {
+        params << "--disable-distance-attenuation";
+    }
+    // ------------- Features -------------
+    // Failure
+    if(ui->cboFailures->currentText().compare("none")!=0)
+    {
+        params << "--failure="+ui->cboFailures->currentText().trimmed();
+    }
+    // Lock fuel
+    if(ui->ckbLockFuel->isChecked())
+    {
+        params << "--enable-fuel-freeze";
+    }
+    else
+    {
+        params << "--disable-fuel-freeze";
+    }
+    // Lock time
+    if(ui->ckbLockTime->isChecked())
+    {
+        params << "--enable-clock-freeze";
+    }
+    else
+    {
+        params << "--disable-clock-freeze";
+    }
+    // Random Objects
+    if(ui->ckbRandomObjects->isChecked())
+    {
+        params << "--enable-random-objects";
+    }
+    else
+    {
+        params << "--disable-random-objects";
+    }
+    // AI Models
+    if(ui->ckbAIModels->isChecked())
+    {
+        params << "--enable-ai-models";
+    }
+    else
+    {
+        params << "--disable-ai-models";
+    }
+    // ------------- Aircraft -------------
+    // Auto coordination
+    if(ui->ckbAutoCoordination->isChecked())
+    {
+        params << "--enable-auto-coordination";
+    }
+    else
+    {
+        params << "--disable-auto-coordination";
+    }
+    // Panel
+    if(ui->ckbPanel->isChecked())
+    {
+        params << "--enable-panel";
+    }
+    else
+    {
+        params << "--disable-panel";
+    }
+    // ------------- HUD -------------
+    // Hud 2D
+    if(ui->rdbHud2D->isChecked())
+    {
+        params << "--enable-hud";
+    }
+    else
+    {
+        params << "--disable-hud";
+    }
+    // Hud 3D
+    if(ui->rdbHud3D->isChecked())
+    {
+        params << "--enable-hud-3d";
+    }
+    else
+    {
+        params << "--disable-hud-3d";
+    }
+    // HUD AntiAlias
+    if(ui->ckbHudAntialias->isChecked())
+    {
+        params << "--enable-anti-alias-hud";
+    }
+    else
+    {
+        params << "--disable-anti-alias-hud";
+    }
+    // ------------- Lights -------------
+    // Specular Highlight
+    if(ui->ckbSpecularHighlight->isChecked())
+    {
+        params << "--enable-specular-highlight";
+    }
+    else
+    {
+        params << "--disable-specular-highlight";
+    }
+    // Enhanced lighting
+    if(ui->ckbEnhancedLighting->isChecked())
+    {
+        params << "--enable-enhanced-lighting";
+    }
+    else
+    {
+        params << "--disable-enhanced-lighting";
+    }
+    // ------------- Time -------------
+    // DayTime
+    if(ui->cboDayTime->currentText().compare("none")!=0)
+    {
+        params << "--timeofday="+ui->cboDayTime->currentText().trimmed();
+    }
+    // Season
+    if(ui->cboSeason->currentText().compare("none")!=0)
+    {
+        params << "--season="+ui->cboSeason->currentText().trimmed();
+    }
+
+
+    // static arguments
+    params << "--verbose" << "--fg-root="+fgenv->getRootPath() << "--aircraft="+ui->cboAircrafts->currentText();
+    return params;
+}

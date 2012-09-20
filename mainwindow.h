@@ -65,6 +65,7 @@ private:
     QHash<QString, QString> getListOfAircrafts();
     void refreshListOfAircrafts();
     void drawThumbnail(QString dir);
+    QStringList collectLaunchSettings(FGEnvironment * fgenv);
 
     QPoint dragPosition; // used to move the frameless window
 };

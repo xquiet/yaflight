@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>505</width>
-    <height>476</height>
+    <height>505</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -28,7 +28,7 @@
   <property name="maximumSize">
    <size>
     <width>505</width>
-    <height>476</height>
+    <height>505</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -191,7 +191,7 @@
       <x>20</x>
       <y>200</y>
       <width>471</width>
-      <height>271</height>
+      <height>301</height>
      </rect>
     </property>
     <widget class="QTabWidget" name="tabOpts">
@@ -200,7 +200,7 @@
        <x>0</x>
        <y>30</y>
        <width>471</width>
-       <height>241</height>
+       <height>271</height>
       </rect>
      </property>
      <property name="currentIndex">
@@ -216,7 +216,7 @@
          <x>0</x>
          <y>0</y>
          <width>471</width>
-         <height>211</height>
+         <height>241</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -234,7 +234,7 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>127</height>
+          <height>157</height>
          </rect>
         </property>
         <attribute name="label">
@@ -341,7 +341,7 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>127</height>
+          <height>157</height>
          </rect>
         </property>
         <attribute name="label">
@@ -353,7 +353,7 @@
            <x>0</x>
            <y>0</y>
            <width>461</width>
-           <height>121</height>
+           <height>161</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -376,7 +376,7 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>127</height>
+          <height>157</height>
          </rect>
         </property>
         <attribute name="label">
@@ -388,7 +388,7 @@
            <x>0</x>
            <y>0</y>
            <width>471</width>
-           <height>121</height>
+           <height>161</height>
           </rect>
          </property>
          <property name="sizePolicy">
@@ -416,7 +416,7 @@
          <x>0</x>
          <y>0</y>
          <width>471</width>
-         <height>211</height>
+         <height>241</height>
         </rect>
        </property>
        <property name="currentIndex">
@@ -428,12 +428,93 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>99</height>
+          <height>45</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Features</string>
         </attribute>
+        <widget class="QLabel" name="lblFailures">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>81</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Failures</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="cboFailures">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>151</width>
+           <height>24</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="ckbLockFuel">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>0</y>
+           <width>91</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Lock Fuel</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="ckbLockTime">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>0</y>
+           <width>91</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Lock Time</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="ckbRandomObjects">
+         <property name="geometry">
+          <rect>
+           <x>180</x>
+           <y>20</y>
+           <width>131</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Random objects</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="ckbAIModels">
+         <property name="geometry">
+          <rect>
+           <x>320</x>
+           <y>20</y>
+           <width>101</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>AI Models</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="pageAircraft">
         <property name="geometry">
@@ -441,24 +522,261 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>127</height>
+          <height>45</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Aircraft</string>
         </attribute>
+        <widget class="QCheckBox" name="ckbAutoCoordination">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Auto Coordination</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="ckbPanel">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>10</y>
+           <width>81</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Panel</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="pageEnv">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>471</width>
+          <height>45</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>Environment</string>
         </attribute>
        </widget>
        <widget class="QWidget" name="pageRendering">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>471</width>
+          <height>45</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>Rendering</string>
         </attribute>
+        <widget class="QCheckBox" name="ckbHorizonEffect">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>121</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Horizon effect</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="ckbSkyBlending">
+         <property name="geometry">
+          <rect>
+           <x>140</x>
+           <y>10</y>
+           <width>121</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Sky Blending</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="ckbTextures">
+         <property name="geometry">
+          <rect>
+           <x>270</x>
+           <y>10</y>
+           <width>91</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Textures</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="ckbDistanceAttenuation">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>40</y>
+           <width>171</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Distance attenuation</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="pageHUD">
+        <attribute name="label">
+         <string>HUD</string>
+        </attribute>
+        <widget class="QRadioButton" name="rdbHud2D">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>100</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>HUD 2D</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="rdbHud3D">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>100</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>HUD 3D</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="ckbHudAntialias">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>0</y>
+           <width>121</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>HUD Antialias</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="pageLights">
+        <attribute name="label">
+         <string>Lights</string>
+        </attribute>
+        <widget class="QCheckBox" name="ckbSpecularHighlight">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Specular highlight</string>
+         </property>
+        </widget>
+        <widget class="QCheckBox" name="ckbEnhancedLighting">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>10</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Enhanced lighting</string>
+         </property>
+        </widget>
+       </widget>
+       <widget class="QWidget" name="pageTime">
+        <attribute name="label">
+         <string>Time</string>
+        </attribute>
+        <widget class="QComboBox" name="cboDayTime">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>151</width>
+           <height>24</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="lblDayTime">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>0</y>
+           <width>81</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Day Time</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="lblSeason">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>0</y>
+           <width>81</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Season</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="cboSeason">
+         <property name="geometry">
+          <rect>
+           <x>190</x>
+           <y>20</y>
+           <width>151</width>
+           <height>24</height>
+          </rect>
+         </property>
+        </widget>
        </widget>
       </widget>
+     </widget>
+     <widget class="QWidget" name="tabAirports">
+      <attribute name="title">
+       <string>Airports</string>
+      </attribute>
      </widget>
     </widget>
    </widget>
