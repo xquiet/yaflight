@@ -7,13 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //this->setFixedSize(500,400);
-    /*_mainWindowMinHeight = 300;
-    _mainWindowMaxHeight = 700;
-    setMinimumHeight(_mainWindowMinHeight);
-    setMaximumHeight(_mainWindowMaxHeight);*/
-
-
     connect(ui->expanderOpts,SIGNAL(expanded()),this,SLOT(expOptsExpanded()));
     connect(ui->expanderOpts,SIGNAL(unexpanded()),this,SLOT(expOptsUnexpanded()));
 
@@ -244,6 +237,10 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 QStringList MainWindow::collectLaunchSettings(FGEnvironment *fgenv)
 {
     QStringList params;
+
+    // static arguments
+    params << "--verbose" << "--fg-root="+fgenv->getRootPath() << "--fg-scenery=/usr/share/games/flightgear/Scenery" << "--aircraft="+ui->cboAircrafts->currentText();
+
     // ------------- Quick options -------------
     // Sound
     if(ui->ckbSound->isChecked())
@@ -449,9 +446,5 @@ QStringList MainWindow::collectLaunchSettings(FGEnvironment *fgenv)
     {
         params << "--season="+ui->cboSeason->currentText().trimmed();
     }
-
-
-    // static arguments
-    params << "--verbose" << "--fg-root="+fgenv->getRootPath() << "--aircraft="+ui->cboAircrafts->currentText();
     return params;
 }
