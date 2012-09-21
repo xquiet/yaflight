@@ -134,13 +134,18 @@ void MainWindow::on_pbtLaunch_clicked()
     QStringList params = collectLaunchSettings(fgenv);
     procFGFS = new QProcess();
     procFGFS->setProcessChannelMode(QProcess::MergedChannels);
-    procFGFS->start(fgenv->getFgfsBinPath(), params, QProcess::ReadWrite);
+    procFGFS->setReadChannel(QProcess::StandardOutput);
+    QStringList env = QProcess::systemEnvironment();
+    procFGFS->setEnvironment(env);
+    procFGFS->start(fgenv->getFgfsBinPath(), params, QProcess::ReadOnly);
     //if(!pls->waitForStarted())
     //    return false;
     ui->txaLog->append("Launching...");
     ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
     connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
     connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
+
+    procFGFS->closeWriteChannel();
 }
 
 void MainWindow::readAircrafts()
@@ -153,7 +158,11 @@ void MainWindow::readAircrafts()
 void MainWindow::procReadAircraftsFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
     ui->txaLog->append("Simulation complete");
-    qDebug("%s (%d)", QString(exitStatus).toStdString().data(), exitCode);
+    QString message = QString("process exited with code: %1, status: %2\n")
+        .arg(exitCode)
+        .arg(exitStatus == QProcess::NormalExit ? "QProcess::NormalExit" : "QProcess::CrashExit");
+    qDebug("%s",message.toStdString().data());
+    ui->txaLog->append(message);
 }
 
 void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
