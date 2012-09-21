@@ -299,6 +299,15 @@ QStringList MainWindow::collectLaunchSettings(FGEnvironment *fgenv)
     {
         params << "--geometry="+ui->cboWindowGeometries->currentText();
     }
+    // Units
+    if(ui->rdbUnitMeters->isChecked())
+    {
+        params << "--units-meters";
+    }
+    else
+    {
+        params << "--units-feets";
+    }
     // ------------- Rendering -------------
     // Horizon effect
     if(ui->ckbHorizonEffect->isChecked())

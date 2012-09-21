@@ -334,6 +334,35 @@
           <string>Clouds</string>
          </property>
         </widget>
+        <widget class="QRadioButton" name="rdbUnitMeters">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>70</y>
+           <width>100</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Meters</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="rdbUnitFeets">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>90</y>
+           <width>100</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Feets</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="page_2">
         <property name="geometry">
@@ -448,7 +477,7 @@
         </rect>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="pageFeatures">
         <property name="geometry">
@@ -549,8 +578,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>45</height>
          </rect>
         </property>
         <attribute name="label">
@@ -588,8 +617,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>45</height>
          </rect>
         </property>
         <attribute name="label">
@@ -666,8 +695,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>45</height>
          </rect>
         </property>
         <attribute name="label">
@@ -721,8 +750,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>45</height>
          </rect>
         </property>
         <attribute name="label">
@@ -760,8 +789,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>45</height>
          </rect>
         </property>
         <attribute name="label">
