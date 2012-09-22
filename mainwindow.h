@@ -16,7 +16,7 @@
 #include "dlgaircraftdetails.h"
 #include "imagepreview.h"
 #include "aircraft.h"
-#include "configuration.h"
+#include "settings.h"
 
 namespace Ui {
 class MainWindow;
@@ -49,6 +49,10 @@ private slots:
 
     void expOptsExpanded();
 
+    void on_pbtSaveConf_clicked();
+
+    void on_pbtLoadConf_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -65,7 +69,13 @@ private:
     QHash<QString, QString> getListOfAircrafts();
     void refreshListOfAircrafts();
     void drawThumbnail(QString dir);
-    QStringList collectLaunchSettings(FGEnvironment * fgenv);
+    QStringList collectLaunchSettings();
+
+    FGEnvironment *fgenv;
+
+    //void loadSettings(FGEnvironment *fgenv);
+    void loadSettings();
+    bool saveSettings();
 
     QPoint dragPosition; // used to move the frameless window
 };

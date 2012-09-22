@@ -68,19 +68,13 @@ MainWindow::MainWindow(QWidget *parent) :
     // triggering the event to cause aircraft preview refresh
     on_cboAircrafts_currentIndexChanged(ui->cboAircrafts->itemText(0));
 
-    FGEnvironment *fgenv = new FGEnvironment();
+    //FGEnvironment *fgenv = new FGEnvironment();
+    fgenv = new FGEnvironment();
     ui->txaLog->append("OS: " + fgenv->detectOS());
     ui->txaLog->append("FG version: " + fgenv->detectFGVersion());
 
-    configuration conf(fgenv->getYFHome()+"/conf.ini");
-    if(!conf.exists())
-    {
-        if(!conf.create(fgenv->getYFHome()+"/conf.ini"))
-            qFatal("Can't create configuration file");
-    }else{
-        conf.parseFile();
-        //qDebug("%s", conf.get("main", "AIRCRAFT").toStdString().data());
-    }
+    //loadSettings(fgenv);
+    loadSettings();
 }
 
 MainWindow::~MainWindow()
@@ -130,8 +124,9 @@ void MainWindow::on_btnAbout_clicked()
 
 void MainWindow::on_pbtLaunch_clicked()
 {
-    FGEnvironment *fgenv = new FGEnvironment();
-    QStringList params = collectLaunchSettings(fgenv);
+    //FGEnvironment *fgenv = new FGEnvironment();
+    //QStringList params = collectLaunchSettings(fgenv);
+    QStringList params = collectLaunchSettings();
     procFGFS = new QProcess();
     procFGFS->setProcessChannelMode(QProcess::MergedChannels);
     procFGFS->setReadChannel(QProcess::StandardOutput);
@@ -243,7 +238,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
      }
  }
 
-QStringList MainWindow::collectLaunchSettings(FGEnvironment *fgenv)
+QStringList MainWindow::collectLaunchSettings()
 {
     QStringList params;
 
@@ -436,7 +431,7 @@ QStringList MainWindow::collectLaunchSettings(FGEnvironment *fgenv)
     }
     // ------------- Lights -------------
     // Specular Highlight
-    if(ui->ckbSpecularHighlight->isChecked())
+    if(ui->ckbSpecularReflections->isChecked())
     {
         params << "--enable-specular-highlight";
     }
@@ -465,4 +460,69 @@ QStringList MainWindow::collectLaunchSettings(FGEnvironment *fgenv)
         params << "--season="+ui->cboSeason->currentText().trimmed();
     }
     return params;
+}
+
+void MainWindow::loadSettings()
+{
+    Settings curr_settings(fgenv->getYFHome()+"/conf.ini");
+    if(!curr_settings.isEmpty())
+    {
+        (curr_settings.getSound().compare("-1")==0) ? ui->ckbSound->setChecked(true) : ui->ckbSound->setChecked(false);
+        (curr_settings.getClouds().compare("-1")==0) ? ui->ckbClouds->setChecked(true) : ui->ckbClouds->setChecked(false);
+        (curr_settings.getGameMode().compare("-1")==0) ? ui->ckbGameMode->setChecked(true) : ui->ckbGameMode->setChecked(false);
+        (curr_settings.getFullScreen().compare("-1")==0) ? ui->ckbFullScreen->setChecked(true) : ui->ckbFullScreen->setChecked(false);
+        (curr_settings.getFog().compare("-1")==0) ? ui->ckbFog->setChecked(true) : ui->ckbFog->setChecked(false);
+        (curr_settings.getMeasureUnit().compare("-1")==0) ? ui->rdbUnitMeters->setChecked(true) : ui->rdbUnitFeets->setChecked(true);
+        (curr_settings.getFuelLock().compare("-1")==0) ? ui->ckbLockFuel->setChecked(true) : ui->ckbLockFuel->setChecked(false);
+        (curr_settings.getTimeLock().compare("-1")==0) ? ui->ckbLockTime->setChecked(true) : ui->ckbLockTime->setChecked(false);
+        (curr_settings.getRandomObjects().compare("-1")==0) ? ui->ckbRandomObjects->setChecked(true) : ui->ckbRandomObjects->setChecked(false);
+        (curr_settings.getAIModels().compare("-1")==0) ? ui->ckbAIModels->setChecked(true) : ui->ckbAIModels->setChecked(false);
+        (curr_settings.getAutoCoordination().compare("-1")==0) ? ui->ckbAutoCoordination->setChecked(true) : ui->ckbAutoCoordination->setChecked(false);
+        (curr_settings.getPanel().compare("-1")==0) ? ui->ckbPanel->setChecked(true) : ui->ckbPanel->setChecked(false);
+        (curr_settings.getHorizonEffect().compare("-1")==0) ? ui->ckbHorizonEffect->setChecked(true) : ui->ckbHorizonEffect->setChecked(false);
+        (curr_settings.getSkyBlending().compare("-1")==0) ? ui->ckbSkyBlending->setChecked(true) : ui->ckbSkyBlending->setChecked(false);
+        (curr_settings.getTextures().compare("-1")==0) ? ui->ckbTextures->setChecked(true) : ui->ckbTextures->setChecked(false);
+        (curr_settings.getDistanceAttenuation().compare("-1")==0) ? ui->ckbDistanceAttenuation->setChecked(true) : ui->ckbDistanceAttenuation->setChecked(false);
+        (curr_settings.getWind().compare("-1")==0) ? ui->ckbWind->setChecked(true) : ui->ckbWind->setChecked(false);
+        (curr_settings.getHUDAntiAliased().compare("-1")==0) ? ui->ckbHudAntialias->setChecked(true) : ui->ckbHudAntialias->setChecked(false);
+        (curr_settings.getHUD2D().compare("-1")==0) ? ui->rdbHud2D->setChecked(true) : ui->rdbHud3D->setChecked(true);
+        (curr_settings.getEnhancedLighting().compare("-1")==0) ? ui->ckbEnhancedLighting->setChecked(true) : ui->ckbEnhancedLighting->setChecked(false);
+        (curr_settings.getSpecularReflections().compare("-1")==0) ? ui->ckbSpecularReflections->setChecked(true) : ui->ckbSpecularReflections->setChecked(false);
+
+        // missing handles to Altitude, Heading, Lat, Long, Terrasync
+
+        if(curr_settings.getTurbulence().toFloat()>0)
+        {
+            float wind = curr_settings.getTurbulence().toFloat();
+            ui->hzsTurbulence->setValue((int) floor(wind*10));
+        }
+
+
+        int itemIndex = ui->cboWindowGeometries->findText(curr_settings.getResolution());
+        if(itemIndex >= 0)
+        {
+            ui->cboWindowGeometries->setCurrentIndex(itemIndex);
+        }
+        itemIndex = ui->cboFailures->findText(curr_settings.getFailure());
+        if(itemIndex >= 0)
+        {
+            ui->cboFailures->setCurrentIndex(itemIndex);
+        }
+        itemIndex = ui->cboDayTime->findText(curr_settings.getDayTime());
+        if(itemIndex >= 0)
+        {
+            ui->cboDayTime->setCurrentIndex(itemIndex);
+        }
+        ui->txaLog->append("Configuration loaded correctly");
+    }
+}
+
+void MainWindow::on_pbtSaveConf_clicked()
+{
+    //saveSettings();
+}
+
+void MainWindow::on_pbtLoadConf_clicked()
+{
+    loadSettings();
 }
