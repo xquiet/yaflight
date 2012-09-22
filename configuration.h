@@ -7,12 +7,13 @@
 #include <QFile>
 #include <QTextStream>
 
-class configuration
+class Configuration
 {
 public:
-    configuration(QString conf);
+    Configuration(QString conf);
 
     QStringList get();
+    QHash<QString, QString> get(QString key);
     QString get(QString key, QString param);
     void set(QStringList);
     void set(QString key, QString param, QString value);

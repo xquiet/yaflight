@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     imagepreview.cpp \
     cuteexpander.cpp \
     aircraft.cpp \
-    configuration.cpp
+    configuration.cpp \
+    settings.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
@@ -25,7 +26,8 @@ HEADERS  += mainwindow.h \
     imagepreview.h \
     cuteexpander.h \
     aircraft.h \
-    configuration.h
+    configuration.h \
+    settings.h
 
 FORMS    += mainwindow.ui \
     dlgaircraftdetails.ui \

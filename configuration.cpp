@@ -1,16 +1,16 @@
 #include "configuration.h"
 
-configuration::configuration(QString conf)
+Configuration::Configuration(QString conf)
 {
     confFilePath = conf.trimmed();
 }
 
-bool configuration::exists()
+bool Configuration::exists()
 {
     return QFile::exists(confFilePath);
 }
 
-bool configuration::create(QString path)
+bool Configuration::create(QString path)
 {
     QFile file(path);
     if(file.open(QIODevice::WriteOnly))
@@ -23,7 +23,7 @@ bool configuration::create(QString path)
     return false;
 }
 
-void configuration::parseFile()
+void Configuration::parseFile()
 {
     QStringList sections;
     sections << "main" << "advanced" << "app" << "sceneries";
@@ -33,7 +33,7 @@ void configuration::parseFile()
     confSettings.end();
 }
 
-QHash<QString, QString> configuration::parseSection(QString section)
+QHash<QString, QString> Configuration::parseSection(QString section)
 {
     QSettings settings(confFilePath, QSettings::IniFormat);
     settings.beginGroup(section);
@@ -46,7 +46,17 @@ QHash<QString, QString> configuration::parseSection(QString section)
     return dummyHash;
 }
 
-QString configuration::get(QString key, QString param)
+QString Configuration::get(QString key, QString param)
 {
     return confSettings.value(key).value(param);
+}
+
+QHash<QString, QString> Configuration::get(QString key)
+{
+    return confSettings.value(key);
+}
+
+void Configuration::set(QString key, QString param, QString value)
+{
+    //confSettings.value(key).value(param) = value;
 }
