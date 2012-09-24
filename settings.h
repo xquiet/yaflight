@@ -3,11 +3,16 @@
 
 #include "configuration.h"
 
+#define SET_TRUE "-1"
+#define SET_FALSE "0"
+
 class Settings
 {
 public:
     Settings(QString);
     bool isEmpty();
+    bool storeData();
+
     // main
     QString getAircraft();
     QString getClouds();
