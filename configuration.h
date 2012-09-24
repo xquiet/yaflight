@@ -23,6 +23,7 @@ public:
     bool create(QString path);
     bool exists();
     void parseFile();
+    bool store();
 private:
     QHash<QString, QString> parseSection(QString section);
     QString confFilePath;
