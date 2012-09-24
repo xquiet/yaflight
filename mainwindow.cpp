@@ -467,27 +467,29 @@ void MainWindow::loadSettings()
     Settings curr_settings(fgenv->getYFHome()+"/conf.ini");
     if(!curr_settings.isEmpty())
     {
-        (curr_settings.getSound().compare("-1")==0) ? ui->ckbSound->setChecked(true) : ui->ckbSound->setChecked(false);
-        (curr_settings.getClouds().compare("-1")==0) ? ui->ckbClouds->setChecked(true) : ui->ckbClouds->setChecked(false);
-        (curr_settings.getGameMode().compare("-1")==0) ? ui->ckbGameMode->setChecked(true) : ui->ckbGameMode->setChecked(false);
-        (curr_settings.getFullScreen().compare("-1")==0) ? ui->ckbFullScreen->setChecked(true) : ui->ckbFullScreen->setChecked(false);
-        (curr_settings.getFog().compare("-1")==0) ? ui->ckbFog->setChecked(true) : ui->ckbFog->setChecked(false);
-        (curr_settings.getMeasureUnit().compare("-1")==0) ? ui->rdbUnitMeters->setChecked(true) : ui->rdbUnitFeets->setChecked(true);
-        (curr_settings.getFuelLock().compare("-1")==0) ? ui->ckbLockFuel->setChecked(true) : ui->ckbLockFuel->setChecked(false);
-        (curr_settings.getTimeLock().compare("-1")==0) ? ui->ckbLockTime->setChecked(true) : ui->ckbLockTime->setChecked(false);
-        (curr_settings.getRandomObjects().compare("-1")==0) ? ui->ckbRandomObjects->setChecked(true) : ui->ckbRandomObjects->setChecked(false);
-        (curr_settings.getAIModels().compare("-1")==0) ? ui->ckbAIModels->setChecked(true) : ui->ckbAIModels->setChecked(false);
-        (curr_settings.getAutoCoordination().compare("-1")==0) ? ui->ckbAutoCoordination->setChecked(true) : ui->ckbAutoCoordination->setChecked(false);
-        (curr_settings.getPanel().compare("-1")==0) ? ui->ckbPanel->setChecked(true) : ui->ckbPanel->setChecked(false);
-        (curr_settings.getHorizonEffect().compare("-1")==0) ? ui->ckbHorizonEffect->setChecked(true) : ui->ckbHorizonEffect->setChecked(false);
-        (curr_settings.getSkyBlending().compare("-1")==0) ? ui->ckbSkyBlending->setChecked(true) : ui->ckbSkyBlending->setChecked(false);
-        (curr_settings.getTextures().compare("-1")==0) ? ui->ckbTextures->setChecked(true) : ui->ckbTextures->setChecked(false);
-        (curr_settings.getDistanceAttenuation().compare("-1")==0) ? ui->ckbDistanceAttenuation->setChecked(true) : ui->ckbDistanceAttenuation->setChecked(false);
-        (curr_settings.getWind().compare("-1")==0) ? ui->ckbWind->setChecked(true) : ui->ckbWind->setChecked(false);
-        (curr_settings.getHUDAntiAliased().compare("-1")==0) ? ui->ckbHudAntialias->setChecked(true) : ui->ckbHudAntialias->setChecked(false);
-        (curr_settings.getHUD2D().compare("-1")==0) ? ui->rdbHud2D->setChecked(true) : ui->rdbHud3D->setChecked(true);
-        (curr_settings.getEnhancedLighting().compare("-1")==0) ? ui->ckbEnhancedLighting->setChecked(true) : ui->ckbEnhancedLighting->setChecked(false);
-        (curr_settings.getSpecularReflections().compare("-1")==0) ? ui->ckbSpecularReflections->setChecked(true) : ui->ckbSpecularReflections->setChecked(false);
+        (curr_settings.getSound().compare(SET_TRUE)==0) ? ui->ckbSound->setChecked(true) : ui->ckbSound->setChecked(false);
+        (curr_settings.getClouds().compare(SET_TRUE)==0) ? ui->ckbClouds->setChecked(true) : ui->ckbClouds->setChecked(false);
+        (curr_settings.getGameMode().compare(SET_TRUE)==0) ? ui->ckbGameMode->setChecked(true) : ui->ckbGameMode->setChecked(false);
+        (curr_settings.getFullScreen().compare(SET_TRUE)==0) ? ui->ckbFullScreen->setChecked(true) : ui->ckbFullScreen->setChecked(false);
+        (curr_settings.getFog().compare(SET_TRUE)==0) ? ui->ckbFog->setChecked(true) : ui->ckbFog->setChecked(false);
+        (curr_settings.getMeasureUnit().compare(SET_TRUE)==0) ? ui->rdbUnitMeters->setChecked(true) : ui->rdbUnitFeets->setChecked(true);
+        (curr_settings.getFuelLock().compare(SET_TRUE)==0) ? ui->ckbLockFuel->setChecked(true) : ui->ckbLockFuel->setChecked(false);
+        (curr_settings.getTimeLock().compare(SET_TRUE)==0) ? ui->ckbLockTime->setChecked(true) : ui->ckbLockTime->setChecked(false);
+        (curr_settings.getRandomObjects().compare(SET_TRUE)==0) ? ui->ckbRandomObjects->setChecked(true) : ui->ckbRandomObjects->setChecked(false);
+        (curr_settings.getAIModels().compare(SET_TRUE)==0) ? ui->ckbAIModels->setChecked(true) : ui->ckbAIModels->setChecked(false);
+        (curr_settings.getAutoCoordination().compare(SET_TRUE)==0) ? ui->ckbAutoCoordination->setChecked(true) : ui->ckbAutoCoordination->setChecked(false);
+        (curr_settings.getPanel().compare(SET_TRUE)==0) ? ui->ckbPanel->setChecked(true) : ui->ckbPanel->setChecked(false);
+        (curr_settings.getHorizonEffect().compare(SET_TRUE)==0) ? ui->ckbHorizonEffect->setChecked(true) : ui->ckbHorizonEffect->setChecked(false);
+        (curr_settings.getSkyBlending().compare(SET_TRUE)==0) ? ui->ckbSkyBlending->setChecked(true) : ui->ckbSkyBlending->setChecked(false);
+        (curr_settings.getTextures().compare(SET_TRUE)==0) ? ui->ckbTextures->setChecked(true) : ui->ckbTextures->setChecked(false);
+        (curr_settings.getDistanceAttenuation().compare(SET_TRUE)==0) ? ui->ckbDistanceAttenuation->setChecked(true) : ui->ckbDistanceAttenuation->setChecked(false);
+        (curr_settings.getWind().compare(SET_TRUE)==0) ? ui->ckbWind->setChecked(true) : ui->ckbWind->setChecked(false);
+        (curr_settings.getHUDAntiAliased().compare(SET_TRUE)==0) ? ui->ckbHudAntialias->setChecked(true) : ui->ckbHudAntialias->setChecked(false);
+        // this two (hud2d and hud3d) may collide sometimes, check!!!
+        (curr_settings.getHUD2D().compare(SET_TRUE)==0) ? ui->rdbHud2D->setChecked(true) : ui->rdbHud3D->setChecked(true);
+        (curr_settings.getHUD3D().compare(SET_TRUE)==0) ? ui->rdbHud3D->setChecked(true) : ui->rdbHud3D->setChecked(true);
+        (curr_settings.getEnhancedLighting().compare(SET_TRUE)==0) ? ui->ckbEnhancedLighting->setChecked(true) : ui->ckbEnhancedLighting->setChecked(false);
+        (curr_settings.getSpecularReflections().compare(SET_TRUE)==0) ? ui->ckbSpecularReflections->setChecked(true) : ui->ckbSpecularReflections->setChecked(false);
 
         // missing handles to Altitude, Heading, Lat, Long, Terrasync
 
@@ -514,12 +516,58 @@ void MainWindow::loadSettings()
             ui->cboDayTime->setCurrentIndex(itemIndex);
         }
         ui->txaLog->append("Configuration loaded correctly");
+        /*QMessageBox msgBox("Success","Configuration loaded!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
+        msgBox.exec();*/
+    }
+}
+
+bool MainWindow::saveSettings()
+{
+    Settings curr_settings(fgenv->getYFHome()+"/conf.ini");
+    ui->ckbSound->isChecked() ? curr_settings.setSound(SET_TRUE) : curr_settings.setSound(SET_FALSE);
+    ui->ckbClouds->isChecked() ? curr_settings.setClouds(SET_TRUE) : curr_settings.setClouds(SET_FALSE);
+    ui->ckbGameMode->isChecked() ? curr_settings.setGameMode(SET_TRUE) : curr_settings.setGameMode(SET_FALSE);
+    ui->ckbFullScreen->isChecked() ? curr_settings.setFullScreen(SET_TRUE) : curr_settings.setFullScreen(SET_FALSE);
+    ui->ckbFog->isChecked() ? curr_settings.setFog(SET_TRUE) : curr_settings.setFog(SET_FALSE);
+    ui->rdbUnitMeters->isChecked() ? curr_settings.setMeasureUnit(SET_TRUE) : curr_settings.setMeasureUnit(SET_FALSE);
+    ui->ckbLockFuel->isChecked() ? curr_settings.setFuelLock(SET_TRUE) : curr_settings.setFuelLock(SET_FALSE);
+    ui->ckbLockTime->isChecked() ? curr_settings.setTimeLock(SET_TRUE) : curr_settings.setTimeLock(SET_FALSE);
+    ui->ckbRandomObjects->isChecked() ? curr_settings.setRandomObjects(SET_TRUE) : curr_settings.setRandomObjects(SET_FALSE);
+    ui->ckbAIModels->isChecked() ? curr_settings.setAIModels(SET_TRUE) : curr_settings.setAIModels(SET_FALSE);
+    ui->ckbAutoCoordination->isChecked() ? curr_settings.setAutoCoordination(SET_TRUE) : curr_settings.setAutoCoordination(SET_FALSE);
+    ui->ckbPanel->isChecked() ? curr_settings.setPanel(SET_TRUE) : curr_settings.setPanel(SET_FALSE);
+    ui->ckbHorizonEffect->isChecked() ? curr_settings.setHorizonEffect(SET_TRUE) : curr_settings.setHorizonEffect(SET_FALSE);
+    ui->ckbSkyBlending->isChecked() ? curr_settings.setSkyBlending(SET_TRUE) : curr_settings.setSkyBlending(SET_FALSE);
+    ui->ckbTextures->isChecked() ? curr_settings.setTextures(SET_TRUE) : curr_settings.setTextures(SET_FALSE);
+    ui->ckbDistanceAttenuation->isChecked() ? curr_settings.setDistanceAttenuation(SET_TRUE) : curr_settings.setDistanceAttenuation(SET_FALSE);
+    ui->ckbWind->isChecked() ? curr_settings.setWind(SET_TRUE) : curr_settings.setWind(SET_FALSE);
+    ui->ckbHudAntialias->isChecked() ? curr_settings.setHUDAntiAliased(SET_TRUE) : curr_settings.setHUDAntiAliased(SET_FALSE);
+    ui->rdbHud2D->isChecked() ? curr_settings.setHUD2D(SET_TRUE) : curr_settings.setHUD2D(SET_FALSE);
+    ui->rdbHud3D->isChecked() ? curr_settings.setHUD3D(SET_TRUE) : curr_settings.setHUD3D(SET_FALSE);
+    ui->ckbEnhancedLighting->isChecked() ? curr_settings.setEnhancedLighting(SET_TRUE) : curr_settings.setEnhancedLighting(SET_FALSE);
+    ui->ckbSpecularReflections->isChecked() ? curr_settings.setSpecularReflections(SET_TRUE) : curr_settings.setSpecularReflections(SET_FALSE);
+
+    curr_settings.setTurbulence(""+(ui->hzsTurbulence->value()/10));
+    curr_settings.setResolution(ui->cboWindowGeometries->currentText());
+    curr_settings.setFailure(ui->cboFailures->currentText());
+    curr_settings.setDayTime(ui->cboDayTime->currentText());
+    curr_settings.setSeason(ui->cboSeason->currentText());
+
+    if(curr_settings.storeData())
+    {
+        ui->txaLog->append("Configuration stored correctly");
+        QMessageBox msgBox("Success","Configuration stored!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
+        msgBox.exec();
+    }else{
+        ui->txaLog->append("Configuration NOT stored");
+        QMessageBox msgBox("Failure","Configuration NOT stored!",QMessageBox::Critical,QMessageBox::Close,NULL,NULL,this);
+        msgBox.exec();
     }
 }
 
 void MainWindow::on_pbtSaveConf_clicked()
 {
-    //saveSettings();
+    saveSettings();
 }
 
 void MainWindow::on_pbtLoadConf_clicked()
