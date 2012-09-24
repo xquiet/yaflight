@@ -16,7 +16,7 @@ bool Configuration::create(QString path)
     if(file.open(QIODevice::WriteOnly))
     {
         QTextStream in(&file);
-        in << "[MAINSETTINGS]" << "\n" << "[ADVSETTINGS]" << "\n" << "[APPSETTINGS]" << "\n" << "[SCENERIES]";
+        in << "["+QString(MAINSETTINGS)+"]" << "\n" << "["+QString(ADVSETTINGS)+"]" << "\n" << "["+QString(APPSETTINGS)+"]" << "\n" << "["+QString(SCENERIES)+"]";
         file.close();
         return true;
     }
@@ -27,10 +27,9 @@ bool Configuration::store()
 {
     QSettings settings(confFilePath, QSettings::IniFormat);
     QStringList sections;
-    sections << "mainsettings" << "advsettings" << "appsettings" << "sceneries";
+    sections << MAINSETTINGS << ADVSETTINGS << APPSETTINGS << SCENERIES;
     foreach(QString section, sections)
     {
-        section = section.toUpper();
         settings.beginGroup(section);
         QHashIterator<QString,QString> i(confSettings[section]);
         while(i.hasNext())
@@ -46,10 +45,10 @@ bool Configuration::store()
 void Configuration::parseFile()
 {
     QStringList sections;
-    sections << "mainsettings" << "advsettings" << "appsettings" << "sceneries";
+    sections << MAINSETTINGS << ADVSETTINGS << APPSETTINGS << SCENERIES;
     confSettings.begin();
     foreach (QString section, sections)
-        confSettings.insert(section.toUpper(),parseSection(section.toUpper()));
+        confSettings.insert(section,parseSection(section));
     confSettings.end();
 }
 
@@ -78,6 +77,5 @@ QHash<QString, QString> Configuration::get(QString key)
 
 void Configuration::set(QString key, QString param, QString value)
 {
-    //confSettings.value(key).value(param) = value;
     confSettings[key][param] = value;
 }

@@ -7,6 +7,12 @@
 #include <QFile>
 #include <QTextStream>
 
+
+#define MAINSETTINGS "MAINSETTINGS"
+#define ADVSETTINGS "ADVSETTINGS"
+#define APPSETTINGS "APPSETTINGS"
+#define SCENERIES "SCENERIES"
+
 class Configuration
 {
 public:
