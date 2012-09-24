@@ -493,7 +493,7 @@ void MainWindow::loadSettings()
 
         // missing handles to Altitude, Heading, Lat, Long, Terrasync
 
-        if(curr_settings.getTurbulence().toFloat()>0)
+        if(curr_settings.getTurbulence().toFloat()>-1)
         {
             float wind = curr_settings.getTurbulence().toFloat();
             ui->hzsTurbulence->setValue((int) floor(wind*10));
@@ -547,7 +547,9 @@ bool MainWindow::saveSettings()
     ui->ckbEnhancedLighting->isChecked() ? curr_settings.setEnhancedLighting(SET_TRUE) : curr_settings.setEnhancedLighting(SET_FALSE);
     ui->ckbSpecularReflections->isChecked() ? curr_settings.setSpecularReflections(SET_TRUE) : curr_settings.setSpecularReflections(SET_FALSE);
 
-    curr_settings.setTurbulence(""+(ui->hzsTurbulence->value()/10));
+    float turbulence = ui->hzsTurbulence->value()/10.0;
+
+    curr_settings.setTurbulence(QString::number(turbulence));
     curr_settings.setResolution(ui->cboWindowGeometries->currentText());
     curr_settings.setFailure(ui->cboFailures->currentText());
     curr_settings.setDayTime(ui->cboDayTime->currentText());
