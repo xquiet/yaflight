@@ -12,6 +12,12 @@ bool Configuration::exists()
 
 bool Configuration::create(QString path)
 {
+    QString dirPath = QFileInfo(path).absoluteDir().absolutePath();
+    QDir dir(dirPath);
+    if (!dir.exists())
+    {
+        dir.mkpath(dir.absolutePath());
+    }
     QFile file(path);
     if(file.open(QIODevice::WriteOnly))
     {

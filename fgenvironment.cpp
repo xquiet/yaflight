@@ -2,7 +2,7 @@
 
 FGEnvironment::FGEnvironment()
 {
-    fgRootPath = "/usr/share/games/flightgear";
+    fgRootPath = detectRootPath();
 }
 
 void FGEnvironment::setRootPath(QString path)
@@ -12,22 +12,48 @@ void FGEnvironment::setRootPath(QString path)
 
 QString FGEnvironment::getRootPath()
 {
+    /*if((fgRootPath.isNull())||(fgRootPath.isEmpty()))
+        fgRootPath = detectRootPath();*/
     return fgRootPath;
 }
 
 QString FGEnvironment::getAircraftDir()
 {
-    return fgRootPath+"/Aircraft";
+    return getRootPath()+"/Aircraft";
 }
 
 QString FGEnvironment::getFgfsBinPath()
 {
+#ifdef Q_OS_WIN
+    return "\""+getRootPath()+"/../bin/Win32/fgfs.exe\"";
+#endif
+#ifdef Q_OS_LINUX
     return "/usr/bin/fgfs";
+#endif
+    return "";
+}
+
+QString FGEnvironment::getScenery()
+{
+    // default scenery
+    return getRootPath()+"/Scenery";
 }
 
 QString FGEnvironment::getYFHome()
 {
-    return QDir::homePath()+"/.yaflight";
+    QString yfhome = "";
+#ifdef Q_OS_WIN
+    yfhome = "/yaflight";
+#endif
+#ifdef Q_OS_LINUX
+    yfhome = "/.yaflight";
+#endif
+    if (!QFile::exists(yfhome))
+    {
+        QDir tmppath(QDir::homePath());
+        tmppath.mkpath(yfhome);
+    }
+    return QDir::homePath()+yfhome;
 }
 
 QStringList FGEnvironment::getAircraftDetails(QString aircraft, QString aircraftDir)
@@ -98,6 +124,10 @@ QStringList FGEnvironment::getAircraftDetails(QString aircraft, QString aircraft
 
 QString FGEnvironment::detectOS()
 {
+    operating_system = "";
+#ifdef Q_OS_UNIX
+    operating_system = "Unix";
+#endif
 #ifdef Q_OS_LINUX
     operating_system = "GNU/Linux";
 
@@ -116,19 +146,15 @@ QString FGEnvironment::detectOS()
                 os_details.append(cols[1].trimmed());
         }
     }
-    return operating_system + " - " + os_details.join(" ");
+    operating_system = operating_system + " - " + os_details.join(" ");
 #endif
-#ifdef Q_OS_UNIX
-    operating_system = "Unix";
-#endif
-#ifdef Q_OS_WIN32
+#ifdef Q_OS_WIN
     operating_system = "Windows";
 #endif
 #ifdef Q_OS_MAC
     operating_system = "Mac";
-#else
-    return "";
 #endif
+    return operating_system;
 }
 
 QString FGEnvironment::detectFGVersion()
@@ -149,20 +175,27 @@ QString FGEnvironment::detectFGVersion()
 
 QString FGEnvironment::detectFGBinPath()
 {
-
+    return "";
 }
 
 QString FGEnvironment::detectRootPath()
 {
     QStringList possiblePaths;
+#ifdef Q_OS_WIN
+    possiblePaths << "C:/Program Files/FlightGear/data";
+#endif
+#ifdef Q_OS_MAC
+#endif
+#ifdef Q_OS_LINUX
     possiblePaths << "/usr/share/flightgear/data"
                   << "/usr/share/FlightGear"
                   << "/usr/share/games/FlightGear"
                   << "/usr/share/games/flightgear";
+#endif
     for(int i=0;i<possiblePaths.count();i++)
     {
         if(QFile::exists(possiblePaths[i]))
             return possiblePaths[i];
     }
-    return "";
+    return QString();
 }

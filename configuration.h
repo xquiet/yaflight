@@ -5,6 +5,7 @@
 #include <QSettings>
 #include <QHash>
 #include <QFile>
+#include <QDir>
 #include <QTextStream>
 
 

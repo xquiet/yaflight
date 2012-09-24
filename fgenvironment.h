@@ -22,6 +22,7 @@ public:
     FGEnvironment();
     void setRootPath(QString path);
     QString getRootPath();
+    QString getScenery();
     QString getAircraftDir();
     QStringList getAircraftDetails(QString aircraft, QString aircraftDir);
     QString getFgfsBinPath();

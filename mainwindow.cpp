@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    fgenv = new FGEnvironment();
+
     connect(ui->expanderOpts,SIGNAL(expanded()),this,SLOT(expOptsExpanded()));
     connect(ui->expanderOpts,SIGNAL(unexpanded()),this,SLOT(expOptsUnexpanded()));
 
@@ -68,8 +70,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // triggering the event to cause aircraft preview refresh
     on_cboAircrafts_currentIndexChanged(ui->cboAircrafts->itemText(0));
 
-    //FGEnvironment *fgenv = new FGEnvironment();
-    fgenv = new FGEnvironment();
     ui->txaLog->append("OS: " + fgenv->detectOS());
     ui->txaLog->append("FG version: " + fgenv->detectFGVersion());
 
@@ -167,7 +167,6 @@ void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
 
 void MainWindow::drawThumbnail(QString dir)
 {
-    FGEnvironment *fgenv = new FGEnvironment();
     QString thumbFilePath = fgenv->getAircraftDir()+"/"+dir+"/thumbnail.jpg";
     if(!QFile::exists(thumbFilePath))
     {
@@ -240,10 +239,15 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 QStringList MainWindow::collectLaunchSettings()
 {
+    QString fgScenery = fgenv->getScenery();
     QStringList params;
 
     // static arguments
-    params << "--verbose" << "--fg-root="+fgenv->getRootPath() << "--fg-scenery=/usr/share/games/flightgear/Scenery" << "--aircraft="+ui->cboAircrafts->currentText();
+    //params << "--verbose" << "--fg-root="+fgenv->getRootPath() << "--fg-scenery=/usr/share/games/flightgear/Scenery" << "--aircraft="+ui->cboAircrafts->currentText();
+    params << "--verbose"
+           << "--fg-root="+fgenv->getRootPath()
+           << "--fg-scenery="+fgScenery
+           << "--aircraft="+ui->cboAircrafts->currentText();
 
     // ------------- Quick options -------------
     // Sound
@@ -491,7 +495,18 @@ void MainWindow::loadSettings()
         (curr_settings.getEnhancedLighting().compare(SET_TRUE)==0) ? ui->ckbEnhancedLighting->setChecked(true) : ui->ckbEnhancedLighting->setChecked(false);
         (curr_settings.getSpecularReflections().compare(SET_TRUE)==0) ? ui->ckbSpecularReflections->setChecked(true) : ui->ckbSpecularReflections->setChecked(false);
 
-        // missing handles to Altitude, Heading, Lat, Long, Terrasync
+        // missing handles to Altitude, Heading, Lat, Long, Terrasync, Aircraft
+
+        // aircraft
+        int aircraft_idx = ui->cboAircrafts->findText(curr_settings.getAircraft());
+        if(aircraft_idx>=0)
+        {
+            ui->cboAircrafts->setCurrentIndex(aircraft_idx);
+        }
+        else
+        {
+            ui->txaLog->append("WARN: Aircraft from configuration not available");
+        }
 
         if(curr_settings.getTurbulence().toFloat()>-1)
         {
@@ -515,7 +530,7 @@ void MainWindow::loadSettings()
         {
             ui->cboDayTime->setCurrentIndex(itemIndex);
         }
-        ui->txaLog->append("Configuration loaded correctly");
+        ui->txaLog->append("INFO: Configuration loaded correctly");
         /*QMessageBox msgBox("Success","Configuration loaded!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
         msgBox.exec();*/
     }
@@ -555,16 +570,20 @@ bool MainWindow::saveSettings()
     curr_settings.setDayTime(ui->cboDayTime->currentText());
     curr_settings.setSeason(ui->cboSeason->currentText());
 
+    curr_settings.setAircraft(ui->cboAircrafts->currentText());
+
     if(curr_settings.storeData())
     {
-        ui->txaLog->append("Configuration stored correctly");
+        ui->txaLog->append("INFO: Configuration stored correctly");
         QMessageBox msgBox("Success","Configuration stored!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
         msgBox.exec();
+        return true;
     }else{
-        ui->txaLog->append("Configuration NOT stored");
+        ui->txaLog->append("WARN: Configuration NOT stored");
         QMessageBox msgBox("Failure","Configuration NOT stored!",QMessageBox::Critical,QMessageBox::Close,NULL,NULL,this);
         msgBox.exec();
     }
+    return false;
 }
 
 void MainWindow::on_pbtSaveConf_clicked()
