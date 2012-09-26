@@ -57,63 +57,89 @@
       <x>390</x>
       <y>10</y>
       <width>101</width>
-      <height>25</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Exit</string>
     </property>
+    <property name="icon">
+     <iconset resource="yaflightresources.qrc">
+      <normaloff>:/icons/icons/system-shutdown.png</normaloff>:/icons/icons/system-shutdown.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="btnAbout">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>40</y>
+      <x>20</x>
+      <y>10</y>
       <width>101</width>
-      <height>25</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string>About</string>
     </property>
+    <property name="icon">
+     <iconset resource="yaflightresources.qrc">
+      <normaloff>:/icons/icons/yaflight-icon-48.png</normaloff>:/icons/icons/yaflight-icon-48.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
    </widget>
    <widget class="QPushButton" name="pbtAddModel">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>90</y>
+      <x>20</x>
+      <y>40</y>
       <width>101</width>
-      <height>25</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>New Model</string>
     </property>
+    <property name="icon">
+     <iconset resource="yaflightresources.qrc">
+      <normaloff>:/icons/icons/utilities-file-archiver.png</normaloff>:/icons/icons/utilities-file-archiver.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="pbtSaveConf">
     <property name="geometry">
      <rect>
-      <x>390</x>
+      <x>20</x>
       <y>120</y>
       <width>101</width>
-      <height>25</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Save conf</string>
     </property>
+    <property name="icon">
+     <iconset resource="yaflightresources.qrc">
+      <normaloff>:/icons/icons/media-floppy.png</normaloff>:/icons/icons/media-floppy.png</iconset>
+    </property>
    </widget>
    <widget class="QPushButton" name="pbtLoadConf">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>150</y>
+      <x>20</x>
+      <y>154</y>
       <width>101</width>
-      <height>25</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
      <string>Load conf</string>
+    </property>
+    <property name="icon">
+     <iconset resource="yaflightresources.qrc">
+      <normaloff>:/icons/icons/svn-commit.png</normaloff>:/icons/icons/svn-commit.png</iconset>
     </property>
    </widget>
    <widget class="QLabel" name="lblAircraftPreview">
@@ -161,8 +187,8 @@
    <widget class="QPushButton" name="pbtLaunch">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>40</y>
+      <x>390</x>
+      <y>150</y>
       <width>101</width>
       <height>31</height>
      </rect>
@@ -172,7 +198,7 @@
     </property>
     <property name="icon">
      <iconset resource="yaflightresources.qrc">
-      <normaloff>:/icons/icons/gtk-execute.png</normaloff>:/icons/icons/gtk-execute.png</iconset>
+      <normaloff>:/icons/icons/applications-system.png</normaloff>:/icons/icons/applications-system.png</iconset>
     </property>
    </widget>
    <widget class="QComboBox" name="cboAircrafts">
@@ -234,9 +260,14 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>157</height>
+          <height>151</height>
          </rect>
         </property>
+        <attribute name="icon">
+         <iconset>
+          <normalon>:/icons/icons/configure.png</normalon>
+         </iconset>
+        </attribute>
         <attribute name="label">
          <string>Quick Options</string>
         </attribute>
@@ -369,10 +400,15 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>151</height>
          </rect>
         </property>
+        <attribute name="icon">
+         <iconset>
+          <normalon>:/icons/icons/dialog-warning.png</normalon>
+         </iconset>
+        </attribute>
         <attribute name="label">
          <string>Log</string>
         </attribute>
@@ -404,10 +440,15 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>151</height>
          </rect>
         </property>
+        <attribute name="icon">
+         <iconset>
+          <normalon>:/icons/icons/applications-internet.png</normalon>
+         </iconset>
+        </attribute>
         <attribute name="label">
          <string>Map</string>
         </attribute>
@@ -484,10 +525,15 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
+        <attribute name="icon">
+         <iconset>
+          <normalon>:/icons/icons/configure.png</normalon>
+         </iconset>
+        </attribute>
         <attribute name="label">
          <string>Features</string>
         </attribute>
@@ -578,10 +624,15 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>41</height>
          </rect>
         </property>
+        <attribute name="icon">
+         <iconset>
+          <normalon>:/icons/icons/configure.png</normalon>
+         </iconset>
+        </attribute>
         <attribute name="label">
          <string>Aircraft</string>
         </attribute>
@@ -617,10 +668,15 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>39</height>
          </rect>
         </property>
+        <attribute name="icon">
+         <iconset>
+          <normalon>:/icons/icons/weather-showers-day.png</normalon>
+         </iconset>
+        </attribute>
         <attribute name="label">
          <string>Environment</string>
         </attribute>
@@ -707,8 +763,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>39</height>
          </rect>
         </property>
         <attribute name="label">
@@ -772,8 +828,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>39</height>
          </rect>
         </property>
         <attribute name="label">
@@ -827,8 +883,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>39</height>
          </rect>
         </property>
         <attribute name="label">
@@ -866,10 +922,15 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
+        <attribute name="icon">
+         <iconset>
+          <normalon>:/icons/icons/weather-showers-day.png</normalon>
+         </iconset>
+        </attribute>
         <attribute name="label">
          <string>Time</string>
         </attribute>

@@ -3,9 +3,17 @@
         <file>icons/dialog-information.png</file>
         <file>icons/dialog-warning.png</file>
         <file>icons/dialog-error.png</file>
-        <file>icons/gtk-execute.png</file>
         <file>icons/arrowUp.png</file>
         <file>icons/arrowDown.png</file>
         <file>icons/yaflight-icon-48.png</file>
+        <file>icons/dialog-close.png</file>
+        <file>icons/utilities-file-archiver.png</file>
+        <file>icons/system-shutdown.png</file>
+        <file>icons/configure.png</file>
+        <file>icons/svn-commit.png</file>
+        <file>icons/media-floppy.png</file>
+        <file>icons/weather-showers-day.png</file>
+        <file>icons/applications-system.png</file>
+        <file>icons/applications-internet.png</file>
     </qresource>
 </RCC>
