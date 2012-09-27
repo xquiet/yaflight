@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>505</width>
-    <height>505</height>
+    <height>515</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -28,7 +28,7 @@
   <property name="maximumSize">
    <size>
     <width>505</width>
-    <height>505</height>
+    <height>515</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -217,7 +217,7 @@
       <x>20</x>
       <y>200</y>
       <width>471</width>
-      <height>301</height>
+      <height>311</height>
      </rect>
     </property>
     <widget class="QTabWidget" name="tabOpts">
@@ -226,7 +226,7 @@
        <x>0</x>
        <y>30</y>
        <width>471</width>
-       <height>271</height>
+       <height>281</height>
       </rect>
      </property>
      <property name="currentIndex">
@@ -242,7 +242,7 @@
          <x>0</x>
          <y>0</y>
          <width>471</width>
-         <height>241</height>
+         <height>251</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -260,7 +260,7 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>151</height>
+          <height>161</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -400,8 +400,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>151</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -560,9 +560,9 @@
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>20</y>
+           <y>16</y>
            <width>151</width>
-           <height>24</height>
+           <height>20</height>
           </rect>
          </property>
         </widget>
@@ -624,8 +624,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>41</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -669,7 +669,7 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>39</height>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -764,7 +764,7 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>39</height>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="label">
@@ -829,7 +829,7 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>39</height>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="label">
@@ -884,7 +884,7 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>39</height>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="label">
@@ -938,9 +938,9 @@
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>20</y>
+           <y>16</y>
            <width>151</width>
-           <height>24</height>
+           <height>20</height>
           </rect>
          </property>
         </widget>
@@ -986,9 +986,9 @@
          <property name="geometry">
           <rect>
            <x>190</x>
-           <y>20</y>
+           <y>16</y>
            <width>151</width>
-           <height>24</height>
+           <height>20</height>
           </rect>
          </property>
         </widget>
