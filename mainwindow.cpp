@@ -201,7 +201,11 @@ void MainWindow::on_btnAircraftInfo_clicked()
 
 void MainWindow::on_btnExit_clicked()
 {
-    this->close();
+    QMessageBox msgBox(QMessageBox::Warning,"Warning","Are you sure you want stop you simulation?",QMessageBox::Ok|QMessageBox::Cancel,this);
+    if(msgBox.exec()==QMessageBox::Ok)
+    {
+        this->close();
+    }
 }
 
 /*void MainWindow::resizeEvent(QResizeEvent *event)
