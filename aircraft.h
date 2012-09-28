@@ -2,11 +2,14 @@
 #define AIRCRAFT_H
 
 #include <QStringList>
+#include <QFile>
+#include <QTextStream>
 
 class Aircraft
 {
 public:
-    Aircraft(QStringList data);
+    Aircraft(QString aircraftName, QString aircraftsDir, QString aircraftDir);
+    QStringList getAircraftDetails(QString, QString aircraftsDir, QString aircraftDir);
     // set
     void setAero(QString);
     void setDescription(QString);
@@ -35,7 +38,6 @@ private:
             flightmodel,
             fuelfraction,
             splashtexture;
-
 };
 
 #endif // AIRCRAFT_H
