@@ -6,6 +6,7 @@
 
 QT       += core gui webkit
 
+DEFINES += VERSION="1.1"
 TARGET = yaflight4w
 TEMPLATE = app
 

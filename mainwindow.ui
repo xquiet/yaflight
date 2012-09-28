@@ -155,7 +155,7 @@
      <bool>false</bool>
     </property>
     <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+     <enum>QFrame::Box</enum>
     </property>
     <property name="text">
      <string/>
@@ -400,8 +400,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -440,8 +440,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>151</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -525,8 +525,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -624,8 +624,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -668,8 +668,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -763,8 +763,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -828,8 +828,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -883,8 +883,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -922,8 +922,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">

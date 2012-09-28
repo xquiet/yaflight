@@ -71,8 +71,15 @@ MainWindow::MainWindow(QWidget *parent) :
     // triggering the event to cause aircraft preview refresh
     on_cboAircrafts_currentIndexChanged(ui->cboAircrafts->itemText(0));
 
-    ui->txaLog->append("OS: " + fgenv->detectOS());
-    ui->txaLog->append("FG version: " + fgenv->detectFGVersion());
+    ui->txaLog->append("OS: " + fgenv->getOS());
+    ui->txaLog->append("FG version: " + fgenv->getFGVersion());
+    ui->txaLog->append("FGROOT: " + fgenv->getRootPath());
+    ui->txaLog->append("FGSCEN: " + fgenv->getScenery());
+    ui->txaLog->append("Aircraft dir: " + fgenv->getAircraftDir());
+
+//    QMessageBox msgbox;
+//    msgbox.setText(fgenv->__read_winprogramfiles());
+//    msgbox.exec();
 
     //loadSettings(fgenv);
     loadSettings();
@@ -93,7 +100,6 @@ QHash<QString, QString> MainWindow::getListOfAircrafts()
     int i = 0, j = 0;
     QDir *subdir;
     QHash<QString,QString> result;
-    FGEnvironment *fgenv = new FGEnvironment();
     QDir aircraftsDir(fgenv->getAircraftDir());
     if(!aircraftsDir.exists())
     {
@@ -120,13 +126,11 @@ QHash<QString, QString> MainWindow::getListOfAircrafts()
 void MainWindow::on_btnAbout_clicked()
 {
     QMessageBox msgbox;
-    msgbox.about(this,"About","yaflight4w - yaflight for windows\n(C) 2011-2012 by Matteo Pasotti");
+    msgbox.about(this,"About","yaflight4w - yaflight for windows\nVersion:" + QString::number(VERSION) + "\n(C) 2011-2012 by Matteo Pasotti");
 }
 
 void MainWindow::on_pbtLaunch_clicked()
 {
-    //FGEnvironment *fgenv = new FGEnvironment();
-    //QStringList params = collectLaunchSettings(fgenv);
     QStringList params = collectLaunchSettings();
     procFGFS = new QProcess();
     procFGFS->setProcessChannelMode(QProcess::MergedChannels);
