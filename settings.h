@@ -52,6 +52,8 @@ public:
     QString getAirportID();
     QString getRunway();
     QString getTerraSync();
+    // sceneries
+    QString getSceneries();
 
 
     // main
@@ -93,6 +95,8 @@ public:
     void setAirportID(QString val);
     void setRunway(QString val);
     void setTerraSync(QString val);
+    // sceneries
+    void setSceneries(QString val);
 
 private:
     Configuration *conf;

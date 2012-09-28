@@ -218,7 +218,13 @@ QString Settings::getTerraSync()
 {
     return conf->get(ADVSETTINGS, "TERRASYNC");
 }
+//----------------------------------------
+// Sceneries
 
+QString Settings::getSceneries()
+{
+    return conf->get(SCENERIES, "CUSTOMSCENERIES");
+}
 
 /*
   SET
@@ -413,4 +419,12 @@ void Settings::setRunway(QString val)
 void Settings::setTerraSync(QString val)
 {
     conf->set(QString(ADVSETTINGS), QString("TERRASYNC"), val);
+}
+
+//----------------------------------------
+// Sceneries
+
+void Settings::setSceneries(QString val)
+{
+    conf->set(QString(SCENERIES), QString("CUSTOMSCENERIES"), val);
 }
