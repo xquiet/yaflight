@@ -71,8 +71,8 @@
    <widget class="QPushButton" name="btnAbout">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
+      <x>390</x>
+      <y>80</y>
       <width>101</width>
       <height>21</height>
      </rect>
@@ -95,7 +95,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>40</y>
+      <y>10</y>
       <width>101</width>
       <height>31</height>
      </rect>
@@ -400,8 +400,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>161</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -440,8 +440,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>161</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -525,8 +525,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -624,8 +624,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -668,8 +668,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -763,8 +763,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -828,8 +828,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -883,8 +883,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -922,8 +922,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -1005,7 +1005,7 @@
          <x>10</x>
          <y>10</y>
          <width>451</width>
-         <height>231</height>
+         <height>241</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -1013,6 +1013,87 @@
        </property>
        <property name="frameShadow">
         <enum>QFrame::Sunken</enum>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tabSceneries">
+      <attribute name="title">
+       <string>Sceneries</string>
+      </attribute>
+      <widget class="QPushButton" name="btnAdd">
+       <property name="geometry">
+        <rect>
+         <x>390</x>
+         <y>220</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="yaflightresources.qrc">
+         <normaloff>:/icons/icons/list-add.png</normaloff>:/icons/icons/list-add.png</iconset>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnDel">
+       <property name="geometry">
+        <rect>
+         <x>430</x>
+         <y>220</y>
+         <width>31</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="yaflightresources.qrc">
+         <normaloff>:/icons/icons/list-remove.png</normaloff>:/icons/icons/list-remove.png</iconset>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="ckbTerraSync">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>220</y>
+         <width>91</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>TerraSync</string>
+       </property>
+      </widget>
+      <widget class="QTableWidget" name="tblSceneries">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>50</y>
+         <width>471</width>
+         <height>171</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblDefaultScenery">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>451</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="text">
+        <string/>
        </property>
       </widget>
      </widget>
