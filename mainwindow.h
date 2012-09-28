@@ -11,6 +11,7 @@
 #include <QHash>
 #include <QHashIterator>
 #include <QResizeEvent>
+#include <QStringListModel>
 
 #include "fgenvironment.h"
 #include "dlgaircraftdetails.h"
@@ -70,6 +71,8 @@ private:
     void refreshListOfAircrafts();
     void drawThumbnail(QString dir);
     QStringList collectLaunchSettings();
+
+    Aircraft *ac;
 
     FGEnvironment *fgenv;
 

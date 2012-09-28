@@ -74,8 +74,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->txaLog->append("OS: " + fgenv->getOS());
     ui->txaLog->append("FG version: " + fgenv->getFGVersion());
     ui->txaLog->append("FGROOT: " + fgenv->getRootPath());
-    ui->txaLog->append("FGSCEN: " + fgenv->getScenery());
-    ui->txaLog->append("Aircraft dir: " + fgenv->getAircraftDir());
+    ui->txaLog->append("FGSCEN: " + fgenv->getDefaultScenery());
+    ui->txaLog->append("Aircraft dir: " + fgenv->getAircraftsDir());
+
+    ui->lblDefaultScenery->setText(fgenv->getDefaultScenery());
 
 //    QMessageBox msgbox;
 //    msgbox.setText(fgenv->__read_winprogramfiles());
@@ -100,7 +102,7 @@ QHash<QString, QString> MainWindow::getListOfAircrafts()
     int i = 0, j = 0;
     QDir *subdir;
     QHash<QString,QString> result;
-    QDir aircraftsDir(fgenv->getAircraftDir());
+    QDir aircraftsDir(fgenv->getAircraftsDir());
     if(!aircraftsDir.exists())
     {
         qDebug("Directory %s doesn't exists",aircraftsDir.absolutePath().toStdString().c_str());
@@ -172,14 +174,13 @@ void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
 
 void MainWindow::drawThumbnail(QString dir)
 {
-    QString thumbFilePath = fgenv->getAircraftDir()+"/"+dir+"/thumbnail.jpg";
+    QString thumbFilePath = fgenv->getAircraftsDir()+"/"+dir+"/thumbnail.jpg";
     if(!QFile::exists(thumbFilePath))
     {
-        QStringList details = fgenv->getAircraftDetails(ui->cboAircrafts->currentText(),
-                                                        hashOfAircrafts.value(ui->cboAircrafts->currentText())
-                                                        );
-        Aircraft ac(details);
-        thumbFilePath = fgenv->getRootPath()+"/"+ac.getSplashTexture();
+        ac = new Aircraft(ui->cboAircrafts->currentText(), fgenv->getAircraftsDir(),
+                    hashOfAircrafts.value(ui->cboAircrafts->currentText()));
+
+        thumbFilePath = fgenv->getRootPath()+"/"+ac->getSplashTexture();
     }
     ImagePreview iprvw(
                 thumbFilePath,
@@ -191,10 +192,9 @@ void MainWindow::drawThumbnail(QString dir)
 
 void MainWindow::on_btnAircraftInfo_clicked()
 {
-    FGEnvironment *fgenv = new FGEnvironment();
-    QString message;
-    QStringList details = fgenv->getAircraftDetails(
+    QStringList details = ac->getAircraftDetails(
                 ui->cboAircrafts->currentText(),
+                fgenv->getAircraftsDir(),
                 hashOfAircrafts.value(ui->cboAircrafts->currentText())
                 );
 
@@ -248,7 +248,18 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 QStringList MainWindow::collectLaunchSettings()
 {
-    QString fgScenery = fgenv->getScenery();
+    QString fgScenery = fgenv->getDefaultScenery();
+    if(ui->tblSceneries->rowCount()>0)
+    {
+        for(int i=0;i<ui->tblSceneries->rowCount();i++)
+        {
+            QString currItem = ui->tblSceneries->item(i,0)->text().trimmed();
+            if(fgenv->getDefaultScenery().trimmed().compare(currItem)!=0)
+            {
+                fgScenery += ":" + currItem;
+            }
+        }
+    }
     QStringList params;
 
     // static arguments
@@ -539,6 +550,30 @@ void MainWindow::loadSettings()
         {
             ui->cboDayTime->setCurrentIndex(itemIndex);
         }
+
+        if(curr_settings.getSceneries().trimmed().compare("")!=0)
+        {
+            ui->tblSceneries->setRowCount(0);
+            ui->tblSceneries->setColumnCount(0);
+            ui->tblSceneries->clear();
+            QStringList sceneryList = curr_settings.getSceneries().trimmed().split(":");
+            ui->tblSceneries->setRowCount(sceneryList.count());
+            ui->tblSceneries->setColumnCount(1);
+            ui->tblSceneries->setShowGrid(false);
+            ui->tblSceneries->horizontalHeader()->hide();
+            ui->tblSceneries->verticalHeader()->hide();
+            ui->tblSceneries->setColumnWidth(0,ui->tblSceneries->width()-2);
+            ui->tblSceneries->setSelectionMode(QAbstractItemView::SingleSelection);
+            int row = 0;
+            foreach(QString item, sceneryList)
+            {
+                //ui->tblSceneries->item(row,0)->setText(item);
+                ui->tblSceneries->setItem(row,0,new QTableWidgetItem(item));
+                row++;
+            }
+
+        }
+
         ui->txaLog->append("INFO: Configuration loaded correctly");
         /*QMessageBox msgBox("Success","Configuration loaded!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
         msgBox.exec();*/
@@ -580,6 +615,20 @@ bool MainWindow::saveSettings()
     curr_settings.setSeason(ui->cboSeason->currentText());
 
     curr_settings.setAircraft(ui->cboAircrafts->currentText());
+
+    if(ui->tblSceneries->rowCount()>0)
+    {
+        QString sceneries = "";
+        QString currScenery;
+        for(int i=0;i<ui->tblSceneries->rowCount();i++)
+        {
+            currScenery = ui->tblSceneries->item(i,0)->text().trimmed();
+            if(currScenery.compare(fgenv->getDefaultScenery().trimmed())!=0)
+                sceneries += currScenery + ":";
+        }
+        sceneries.remove(sceneries.length()-1,1);
+        curr_settings.setSceneries(sceneries);
+    }
 
     if(curr_settings.storeData())
     {
