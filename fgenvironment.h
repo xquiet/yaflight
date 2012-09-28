@@ -14,9 +14,18 @@ class FGEnvironment
 {
 private:
     QString fgRootPath;
+    QString fgVersion;
     QProcess *sysinfo;
     QString operating_system;
     QStringList os_details;
+
+    // windows_exception
+    QString _win_program_files;
+
+    QString detectOS();
+    QString detectFGVersion();
+    QString detectFGBinPath();
+    QString detectRootPath();
 
 public:
     FGEnvironment();
@@ -27,11 +36,13 @@ public:
     QStringList getAircraftDetails(QString aircraft, QString aircraftDir);
     QString getFgfsBinPath();
     QString getYFHome();
+    QString getOS();
+    QString getFGVersion();
 
-    QString detectOS();
-    QString detectFGVersion();
-    QString detectFGBinPath();
-    QString detectRootPath();
+    // debug
+    QString __read_winprogramfiles();
+
+
 
 };
 

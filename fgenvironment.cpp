@@ -2,7 +2,10 @@
 
 FGEnvironment::FGEnvironment()
 {
+    operating_system = detectOS();
     fgRootPath = detectRootPath();
+    // detectFGVersion needs the rootpath
+    fgVersion = detectFGVersion();
 }
 
 void FGEnvironment::setRootPath(QString path)
@@ -10,10 +13,18 @@ void FGEnvironment::setRootPath(QString path)
     fgRootPath = path.trimmed();
 }
 
+QString FGEnvironment::getOS()
+{
+    return operating_system;
+}
+
+QString FGEnvironment::getFGVersion()
+{
+    return fgVersion;
+}
+
 QString FGEnvironment::getRootPath()
 {
-    /*if((fgRootPath.isNull())||(fgRootPath.isEmpty()))
-        fgRootPath = detectRootPath();*/
     return fgRootPath;
 }
 
@@ -124,37 +135,40 @@ QStringList FGEnvironment::getAircraftDetails(QString aircraft, QString aircraft
 
 QString FGEnvironment::detectOS()
 {
-    operating_system = "";
-#ifdef Q_OS_UNIX
-    operating_system = "Unix";
-#endif
-#ifdef Q_OS_LINUX
-    operating_system = "GNU/Linux";
+    #ifdef Q_OS_UNIX
+        #ifdef Q_OS_MAC
+            return "Mac";
+        #endif
+        #ifdef Q_OS_LINUX
+            QString os = "GNU/Linux";
 
-    sysinfo = new QProcess();
-    sysinfo->setProcessChannelMode(QProcess::MergedChannels);
-    sysinfo->start("/usr/bin/env",QStringList() << "lsb_release" << "-a", QProcess::ReadOnly);
-    sysinfo->waitForFinished();
-    QByteArray bytes = sysinfo->readAll();
-    QStringList strLines = QString(bytes).split("\n");
-    QStringList cols;
-    foreach (QString line, strLines){
-        line = line.trimmed();
-        if(line.contains("Distributor ID")){
-            cols = line.split(":",QString::SkipEmptyParts,Qt::CaseSensitive);
-            if (cols.length()>0)
-                os_details.append(cols[1].trimmed());
-        }
-    }
-    operating_system = operating_system + " - " + os_details.join(" ");
-#endif
-#ifdef Q_OS_WIN
-    operating_system = "Windows";
-#endif
-#ifdef Q_OS_MAC
-    operating_system = "Mac";
-#endif
-    return operating_system;
+            sysinfo = new QProcess();
+            sysinfo->setProcessChannelMode(QProcess::MergedChannels);
+            sysinfo->start("/usr/bin/env",QStringList() << "lsb_release" << "-a", QProcess::ReadOnly);
+            sysinfo->waitForFinished();
+            QByteArray bytes = sysinfo->readAll();
+            QStringList strLines = QString(bytes).split("\n");
+            QStringList cols;
+            foreach (QString line, strLines){
+                line = line.trimmed();
+                if(line.contains("Distributor ID")){
+                    cols = line.split(":",QString::SkipEmptyParts,Qt::CaseSensitive);
+                    if (cols.length()>0)
+                        os_details.append(cols[1].trimmed());
+                }
+            }
+            return os + " - " + os_details.join(" ");
+        #else
+            return "Unix";
+        #endif
+    #endif
+    #ifdef Q_OS_WIN
+        QProcessEnvironment pe(QProcessEnvironment::systemEnvironment());
+        _win_program_files = pe.value("ProgramFiles").replace("\\","/");
+
+        return "Windows";
+    #endif
+    return "";
 }
 
 QString FGEnvironment::detectFGVersion()
@@ -169,7 +183,9 @@ QString FGEnvironment::detectFGVersion()
         }
         version.close();
     }
-
+    qWarning("Failed to open %s for write: %s",
+             version.fileName().toStdString().data(),
+             version.errorString().toStdString().data());
     return output;
 }
 
@@ -182,7 +198,8 @@ QString FGEnvironment::detectRootPath()
 {
     QStringList possiblePaths;
 #ifdef Q_OS_WIN
-    possiblePaths << "C:/Program Files/FlightGear/data";
+    possiblePaths << _win_program_files + "/FlightGear/data";
+    //possiblePaths << "C:/Program Files/FlightGear/data";
 #endif
 #ifdef Q_OS_MAC
 #endif
@@ -198,4 +215,9 @@ QString FGEnvironment::detectRootPath()
             return possiblePaths[i];
     }
     return QString();
+}
+
+QString FGEnvironment::__read_winprogramfiles()
+{
+    return _win_program_files;
 }
