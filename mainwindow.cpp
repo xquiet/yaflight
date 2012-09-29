@@ -7,8 +7,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    just_started = true;
 
     fgenv = new FGEnvironment();
+
+    //curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
 
     connect(ui->expanderOpts,SIGNAL(expanded()),this,SLOT(expOptsExpanded()));
     connect(ui->expanderOpts,SIGNAL(unexpanded()),this,SLOT(expOptsUnexpanded()));
@@ -68,9 +71,6 @@ MainWindow::MainWindow(QWidget *parent) :
     listOfAircrafts.sort();
     ui->cboAircrafts->addItems(listOfAircrafts);
 
-    // triggering the event to cause aircraft preview refresh
-    on_cboAircrafts_currentIndexChanged(ui->cboAircrafts->itemText(0));
-
     ui->txaLog->append("OS: " + fgenv->getOS());
     ui->txaLog->append("FG version: " + fgenv->getFGVersion());
     ui->txaLog->append("FGROOT: " + fgenv->getRootPath());
@@ -83,8 +83,11 @@ MainWindow::MainWindow(QWidget *parent) :
 //    msgbox.setText(fgenv->__read_winprogramfiles());
 //    msgbox.exec();
 
-    //loadSettings(fgenv);
+    setup_airport_list();
+
     loadSettings();
+
+    just_started = false;
 }
 
 MainWindow::~MainWindow()
@@ -170,6 +173,8 @@ void MainWindow::procReadAircraftsFinished(int exitCode, QProcess::ExitStatus ex
 void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
 {
     drawThumbnail(hashOfAircrafts.value(arg1.trimmed()));
+    if(!just_started)
+        curr_settings->setAircraft(arg1);
 }
 
 void MainWindow::drawThumbnail(QString dir)
@@ -483,80 +488,96 @@ QStringList MainWindow::collectLaunchSettings()
     {
         params << "--season="+ui->cboSeason->currentText().trimmed();
     }
+    // Airport
+    // 2 --> longitude
+    // 3 --> latitude
+    QString longitude = ui->tbvAirports->item(ui->tbvAirports->currentRow(),2)->text().trimmed();
+    QString latitude  = ui->tbvAirports->item(ui->tbvAirports->currentRow(),3)->text().trimmed();
+    if((longitude.compare("")!=0)&&(latitude.compare("")!=0))
+    {
+        params << "--lon="+longitude;
+        params << "--lat="+latitude;
+    }
     return params;
 }
 
 void MainWindow::loadSettings()
 {
-    Settings curr_settings(fgenv->getYFHome()+"/conf.ini");
-    if(!curr_settings.isEmpty())
+    curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
+    if(!curr_settings->isEmpty())
     {
-        (curr_settings.getSound().compare(SET_TRUE)==0) ? ui->ckbSound->setChecked(true) : ui->ckbSound->setChecked(false);
-        (curr_settings.getClouds().compare(SET_TRUE)==0) ? ui->ckbClouds->setChecked(true) : ui->ckbClouds->setChecked(false);
-        (curr_settings.getGameMode().compare(SET_TRUE)==0) ? ui->ckbGameMode->setChecked(true) : ui->ckbGameMode->setChecked(false);
-        (curr_settings.getFullScreen().compare(SET_TRUE)==0) ? ui->ckbFullScreen->setChecked(true) : ui->ckbFullScreen->setChecked(false);
-        (curr_settings.getFog().compare(SET_TRUE)==0) ? ui->ckbFog->setChecked(true) : ui->ckbFog->setChecked(false);
-        (curr_settings.getMeasureUnit().compare(SET_TRUE)==0) ? ui->rdbUnitMeters->setChecked(true) : ui->rdbUnitFeets->setChecked(true);
-        (curr_settings.getFuelLock().compare(SET_TRUE)==0) ? ui->ckbLockFuel->setChecked(true) : ui->ckbLockFuel->setChecked(false);
-        (curr_settings.getTimeLock().compare(SET_TRUE)==0) ? ui->ckbLockTime->setChecked(true) : ui->ckbLockTime->setChecked(false);
-        (curr_settings.getRandomObjects().compare(SET_TRUE)==0) ? ui->ckbRandomObjects->setChecked(true) : ui->ckbRandomObjects->setChecked(false);
-        (curr_settings.getAIModels().compare(SET_TRUE)==0) ? ui->ckbAIModels->setChecked(true) : ui->ckbAIModels->setChecked(false);
-        (curr_settings.getAutoCoordination().compare(SET_TRUE)==0) ? ui->ckbAutoCoordination->setChecked(true) : ui->ckbAutoCoordination->setChecked(false);
-        (curr_settings.getPanel().compare(SET_TRUE)==0) ? ui->ckbPanel->setChecked(true) : ui->ckbPanel->setChecked(false);
-        (curr_settings.getHorizonEffect().compare(SET_TRUE)==0) ? ui->ckbHorizonEffect->setChecked(true) : ui->ckbHorizonEffect->setChecked(false);
-        (curr_settings.getSkyBlending().compare(SET_TRUE)==0) ? ui->ckbSkyBlending->setChecked(true) : ui->ckbSkyBlending->setChecked(false);
-        (curr_settings.getTextures().compare(SET_TRUE)==0) ? ui->ckbTextures->setChecked(true) : ui->ckbTextures->setChecked(false);
-        (curr_settings.getDistanceAttenuation().compare(SET_TRUE)==0) ? ui->ckbDistanceAttenuation->setChecked(true) : ui->ckbDistanceAttenuation->setChecked(false);
-        (curr_settings.getWind().compare(SET_TRUE)==0) ? ui->ckbWind->setChecked(true) : ui->ckbWind->setChecked(false);
-        (curr_settings.getHUDAntiAliased().compare(SET_TRUE)==0) ? ui->ckbHudAntialias->setChecked(true) : ui->ckbHudAntialias->setChecked(false);
+        (curr_settings->getSound().compare(SET_TRUE)==0) ? ui->ckbSound->setChecked(true) : ui->ckbSound->setChecked(false);
+        (curr_settings->getClouds().compare(SET_TRUE)==0) ? ui->ckbClouds->setChecked(true) : ui->ckbClouds->setChecked(false);
+        (curr_settings->getGameMode().compare(SET_TRUE)==0) ? ui->ckbGameMode->setChecked(true) : ui->ckbGameMode->setChecked(false);
+        (curr_settings->getFullScreen().compare(SET_TRUE)==0) ? ui->ckbFullScreen->setChecked(true) : ui->ckbFullScreen->setChecked(false);
+        (curr_settings->getFog().compare(SET_TRUE)==0) ? ui->ckbFog->setChecked(true) : ui->ckbFog->setChecked(false);
+        (curr_settings->getMeasureUnit().compare(SET_TRUE)==0) ? ui->rdbUnitMeters->setChecked(true) : ui->rdbUnitFeets->setChecked(true);
+        (curr_settings->getFuelLock().compare(SET_TRUE)==0) ? ui->ckbLockFuel->setChecked(true) : ui->ckbLockFuel->setChecked(false);
+        (curr_settings->getTimeLock().compare(SET_TRUE)==0) ? ui->ckbLockTime->setChecked(true) : ui->ckbLockTime->setChecked(false);
+        (curr_settings->getRandomObjects().compare(SET_TRUE)==0) ? ui->ckbRandomObjects->setChecked(true) : ui->ckbRandomObjects->setChecked(false);
+        (curr_settings->getAIModels().compare(SET_TRUE)==0) ? ui->ckbAIModels->setChecked(true) : ui->ckbAIModels->setChecked(false);
+        (curr_settings->getAutoCoordination().compare(SET_TRUE)==0) ? ui->ckbAutoCoordination->setChecked(true) : ui->ckbAutoCoordination->setChecked(false);
+        (curr_settings->getPanel().compare(SET_TRUE)==0) ? ui->ckbPanel->setChecked(true) : ui->ckbPanel->setChecked(false);
+        (curr_settings->getHorizonEffect().compare(SET_TRUE)==0) ? ui->ckbHorizonEffect->setChecked(true) : ui->ckbHorizonEffect->setChecked(false);
+        (curr_settings->getSkyBlending().compare(SET_TRUE)==0) ? ui->ckbSkyBlending->setChecked(true) : ui->ckbSkyBlending->setChecked(false);
+        (curr_settings->getTextures().compare(SET_TRUE)==0) ? ui->ckbTextures->setChecked(true) : ui->ckbTextures->setChecked(false);
+        (curr_settings->getDistanceAttenuation().compare(SET_TRUE)==0) ? ui->ckbDistanceAttenuation->setChecked(true) : ui->ckbDistanceAttenuation->setChecked(false);
+        (curr_settings->getWind().compare(SET_TRUE)==0) ? ui->ckbWind->setChecked(true) : ui->ckbWind->setChecked(false);
+        (curr_settings->getHUDAntiAliased().compare(SET_TRUE)==0) ? ui->ckbHudAntialias->setChecked(true) : ui->ckbHudAntialias->setChecked(false);
         // this two (hud2d and hud3d) may collide sometimes, check!!!
-        (curr_settings.getHUD2D().compare(SET_TRUE)==0) ? ui->rdbHud2D->setChecked(true) : ui->rdbHud3D->setChecked(true);
-        (curr_settings.getHUD3D().compare(SET_TRUE)==0) ? ui->rdbHud3D->setChecked(true) : ui->rdbHud3D->setChecked(true);
-        (curr_settings.getEnhancedLighting().compare(SET_TRUE)==0) ? ui->ckbEnhancedLighting->setChecked(true) : ui->ckbEnhancedLighting->setChecked(false);
-        (curr_settings.getSpecularReflections().compare(SET_TRUE)==0) ? ui->ckbSpecularReflections->setChecked(true) : ui->ckbSpecularReflections->setChecked(false);
+        (curr_settings->getHUD2D().compare(SET_TRUE)==0) ? ui->rdbHud2D->setChecked(true) : ui->rdbHud3D->setChecked(true);
+        (curr_settings->getHUD3D().compare(SET_TRUE)==0) ? ui->rdbHud3D->setChecked(true) : ui->rdbHud3D->setChecked(true);
+        (curr_settings->getEnhancedLighting().compare(SET_TRUE)==0) ? ui->ckbEnhancedLighting->setChecked(true) : ui->ckbEnhancedLighting->setChecked(false);
+        (curr_settings->getSpecularReflections().compare(SET_TRUE)==0) ? ui->ckbSpecularReflections->setChecked(true) : ui->ckbSpecularReflections->setChecked(false);
 
         // missing handles to Altitude, Heading, Lat, Long, Terrasync, Aircraft
 
         // aircraft
-        int aircraft_idx = ui->cboAircrafts->findText(curr_settings.getAircraft());
+        int aircraft_idx = ui->cboAircrafts->findText(curr_settings->getAircraft());
         if(aircraft_idx>=0)
         {
             ui->cboAircrafts->setCurrentIndex(aircraft_idx);
+            on_cboAircrafts_currentIndexChanged(ui->cboAircrafts->itemText(aircraft_idx));
         }
         else
         {
             ui->txaLog->append("WARN: Aircraft from configuration not available");
         }
 
-        if(curr_settings.getTurbulence().toFloat()>-1)
+        if(curr_settings->getTurbulence().toFloat()>-1)
         {
-            float wind = curr_settings.getTurbulence().toFloat();
+            float wind = curr_settings->getTurbulence().toFloat();
             ui->hzsTurbulence->setValue((int) floor(wind*10));
         }
 
 
-        int itemIndex = ui->cboWindowGeometries->findText(curr_settings.getResolution());
+        int itemIndex = ui->cboWindowGeometries->findText(curr_settings->getResolution());
         if(itemIndex >= 0)
         {
             ui->cboWindowGeometries->setCurrentIndex(itemIndex);
         }
-        itemIndex = ui->cboFailures->findText(curr_settings.getFailure());
+        itemIndex = ui->cboFailures->findText(curr_settings->getFailure());
         if(itemIndex >= 0)
         {
             ui->cboFailures->setCurrentIndex(itemIndex);
         }
-        itemIndex = ui->cboDayTime->findText(curr_settings.getDayTime());
+        itemIndex = ui->cboDayTime->findText(curr_settings->getDayTime());
         if(itemIndex >= 0)
         {
             ui->cboDayTime->setCurrentIndex(itemIndex);
         }
+        itemIndex = ui->cboSeason->findText(curr_settings->getSeason());
+        if(itemIndex >= 0)
+        {
+            ui->cboSeason->setCurrentIndex(itemIndex);
+        }
 
-        if(curr_settings.getSceneries().trimmed().compare("")!=0)
+        if(curr_settings->getSceneries().trimmed().compare("")!=0)
         {
             ui->tblSceneries->setRowCount(0);
             ui->tblSceneries->setColumnCount(0);
             ui->tblSceneries->clear();
-            QStringList sceneryList = curr_settings.getSceneries().trimmed().split(":");
+            QStringList sceneryList = curr_settings->getSceneries().trimmed().split(":");
             ui->tblSceneries->setRowCount(sceneryList.count());
             ui->tblSceneries->setColumnCount(1);
             ui->tblSceneries->setShowGrid(false);
@@ -574,6 +595,21 @@ void MainWindow::loadSettings()
 
         }
 
+        // airports
+        QString icao = curr_settings->getAirportICAO().trimmed();
+        ui->tbvAirports->clearSelection();
+        if(icao.compare("")!=0)
+        {
+            for(int i=0;i<ui->tbvAirports->rowCount();i++)
+            {
+                if(ui->tbvAirports->item(i,1)->text().trimmed().compare(icao)==0)
+                {
+                    ui->tbvAirports->setItemSelected(ui->tbvAirports->item(i,1),true);
+                    break;
+                }
+            }
+        }
+
         ui->txaLog->append("INFO: Configuration loaded correctly");
         /*QMessageBox msgBox("Success","Configuration loaded!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
         msgBox.exec();*/
@@ -582,40 +618,6 @@ void MainWindow::loadSettings()
 
 bool MainWindow::saveSettings()
 {
-    Settings curr_settings(fgenv->getYFHome()+"/conf.ini");
-    ui->ckbSound->isChecked() ? curr_settings.setSound(SET_TRUE) : curr_settings.setSound(SET_FALSE);
-    ui->ckbClouds->isChecked() ? curr_settings.setClouds(SET_TRUE) : curr_settings.setClouds(SET_FALSE);
-    ui->ckbGameMode->isChecked() ? curr_settings.setGameMode(SET_TRUE) : curr_settings.setGameMode(SET_FALSE);
-    ui->ckbFullScreen->isChecked() ? curr_settings.setFullScreen(SET_TRUE) : curr_settings.setFullScreen(SET_FALSE);
-    ui->ckbFog->isChecked() ? curr_settings.setFog(SET_TRUE) : curr_settings.setFog(SET_FALSE);
-    ui->rdbUnitMeters->isChecked() ? curr_settings.setMeasureUnit(SET_TRUE) : curr_settings.setMeasureUnit(SET_FALSE);
-    ui->ckbLockFuel->isChecked() ? curr_settings.setFuelLock(SET_TRUE) : curr_settings.setFuelLock(SET_FALSE);
-    ui->ckbLockTime->isChecked() ? curr_settings.setTimeLock(SET_TRUE) : curr_settings.setTimeLock(SET_FALSE);
-    ui->ckbRandomObjects->isChecked() ? curr_settings.setRandomObjects(SET_TRUE) : curr_settings.setRandomObjects(SET_FALSE);
-    ui->ckbAIModels->isChecked() ? curr_settings.setAIModels(SET_TRUE) : curr_settings.setAIModels(SET_FALSE);
-    ui->ckbAutoCoordination->isChecked() ? curr_settings.setAutoCoordination(SET_TRUE) : curr_settings.setAutoCoordination(SET_FALSE);
-    ui->ckbPanel->isChecked() ? curr_settings.setPanel(SET_TRUE) : curr_settings.setPanel(SET_FALSE);
-    ui->ckbHorizonEffect->isChecked() ? curr_settings.setHorizonEffect(SET_TRUE) : curr_settings.setHorizonEffect(SET_FALSE);
-    ui->ckbSkyBlending->isChecked() ? curr_settings.setSkyBlending(SET_TRUE) : curr_settings.setSkyBlending(SET_FALSE);
-    ui->ckbTextures->isChecked() ? curr_settings.setTextures(SET_TRUE) : curr_settings.setTextures(SET_FALSE);
-    ui->ckbDistanceAttenuation->isChecked() ? curr_settings.setDistanceAttenuation(SET_TRUE) : curr_settings.setDistanceAttenuation(SET_FALSE);
-    ui->ckbWind->isChecked() ? curr_settings.setWind(SET_TRUE) : curr_settings.setWind(SET_FALSE);
-    ui->ckbHudAntialias->isChecked() ? curr_settings.setHUDAntiAliased(SET_TRUE) : curr_settings.setHUDAntiAliased(SET_FALSE);
-    ui->rdbHud2D->isChecked() ? curr_settings.setHUD2D(SET_TRUE) : curr_settings.setHUD2D(SET_FALSE);
-    ui->rdbHud3D->isChecked() ? curr_settings.setHUD3D(SET_TRUE) : curr_settings.setHUD3D(SET_FALSE);
-    ui->ckbEnhancedLighting->isChecked() ? curr_settings.setEnhancedLighting(SET_TRUE) : curr_settings.setEnhancedLighting(SET_FALSE);
-    ui->ckbSpecularReflections->isChecked() ? curr_settings.setSpecularReflections(SET_TRUE) : curr_settings.setSpecularReflections(SET_FALSE);
-
-    float turbulence = ui->hzsTurbulence->value()/10.0;
-
-    curr_settings.setTurbulence(QString::number(turbulence));
-    curr_settings.setResolution(ui->cboWindowGeometries->currentText());
-    curr_settings.setFailure(ui->cboFailures->currentText());
-    curr_settings.setDayTime(ui->cboDayTime->currentText());
-    curr_settings.setSeason(ui->cboSeason->currentText());
-
-    curr_settings.setAircraft(ui->cboAircrafts->currentText());
-
     if(ui->tblSceneries->rowCount()>0)
     {
         QString sceneries = "";
@@ -627,10 +629,10 @@ bool MainWindow::saveSettings()
                 sceneries += currScenery + ":";
         }
         sceneries.remove(sceneries.length()-1,1);
-        curr_settings.setSceneries(sceneries);
+        curr_settings->setSceneries(sceneries);
     }
 
-    if(curr_settings.storeData())
+    if(curr_settings->storeData())
     {
         ui->txaLog->append("INFO: Configuration stored correctly");
         QMessageBox msgBox("Success","Configuration stored!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
@@ -652,4 +654,279 @@ void MainWindow::on_pbtSaveConf_clicked()
 void MainWindow::on_pbtLoadConf_clicked()
 {
     loadSettings();
+}
+
+QHash<QString, QStringList> MainWindow::collect_all_airports()
+{
+    QHash<QString, QStringList> resultAirports = fgenv->getDefaultAirportList();
+    for(int i=0;i<ui->tblSceneries->rowCount();i++)
+    {
+        QHash<QString, QStringList> tmpAirports = fgenv->parseAirportsIndex(ui->tblSceneries->item(i,0)->text().trimmed()+"/Airports/index.txt");
+        foreach(QString key, tmpAirports.keys())
+        {
+            if(!resultAirports.contains(key))
+            {
+                resultAirports.insert(key,tmpAirports[key]);
+            }
+        }
+    }
+    return resultAirports;
+}
+
+void MainWindow::setup_airport_list()
+{
+    ui->tbvAirports->setColumnCount(5);
+    ui->tbvAirports->setColumnWidth(0,20);
+    ui->tbvAirports->setColumnWidth(1,50);
+    ui->tbvAirports->setColumnWidth(4,ui->tbvAirports->width()-80);
+    ui->tbvAirports->setColumnHidden(2,false);
+    ui->tbvAirports->setColumnHidden(3,false);
+    ui->tbvAirports->setColumnHidden(4,true);
+    ui->tbvAirports->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tbvAirports->setShowGrid(false);
+    ui->tbvAirports->verticalHeader()->hide();
+    ui->tbvAirports->setHorizontalHeaderLabels(QStringList() << "I" << "ICAO" << "Lon" << "Lat" << "Directory");
+
+    AirportIdx apindex(fgenv->getYFHome()+"/airportidx.cache");
+
+    if(!apindex.exists())
+    {
+        // creating airports index cache
+        QHash<QString, QStringList> airportsHash = collect_all_airports();
+        QStringList allAirportDirectories;
+        allAirportDirectories << fgenv->getDefaultAirportsDir();
+        for(int i=0;i<ui->tblSceneries->rowCount();i++)
+        {
+            allAirportDirectories << ui->tblSceneries->item(i,0)->text().trimmed()+"/Airports";
+        }
+        int row = 0;
+        ui->tbvAirports->setRowCount(airportsHash.count());
+        foreach(QString key, airportsHash.keys())
+        {
+            Airport *ap;
+            foreach(QString airportDir, allAirportDirectories)
+            {
+                ap = new Airport(airportDir,key);
+                QDir dir(ap->getAirportDirPath());
+                if(dir.exists())
+                {
+                    ui->tbvAirports->setItem(row,0,new QTableWidgetItem("X"));
+                    airportsHash[key][2] = QString(ap->getAirportDirPath());
+                    break;
+                }
+                else
+                {
+                    ui->tbvAirports->setItem(row,0,new QTableWidgetItem(""));
+                }
+            }
+            ui->tbvAirports->setItem(row,1,new QTableWidgetItem(key));
+            ui->tbvAirports->setItem(row,2,new QTableWidgetItem(airportsHash[key][0]));
+            ui->tbvAirports->setItem(row,3,new QTableWidgetItem(airportsHash[key][1]));
+            ui->tbvAirports->setItem(row,4,new QTableWidgetItem(airportsHash[key][2]));
+            row++;
+        }
+        if(!apindex.create(airportsHash)){
+            QMessageBox msgbox(QMessageBox::Critical,"Error","Can't create airport index cache\nCheck you permissions",QMessageBox::Ok);
+            msgbox.exec();
+        }
+    }
+    else{
+        if(apindex.load())
+        {
+            int row = 0;
+            ui->tbvAirports->setRowCount(apindex.count());
+            QHash<QString, QStringList> cache = apindex.get();
+            foreach(QString key, cache.keys())
+            {
+                if(cache[key][2].trimmed().compare("")==0)
+                {
+                    // ap not installed
+                    ui->tbvAirports->setItem(row,0,new QTableWidgetItem(""));
+                }
+                else
+                {
+                    ui->tbvAirports->setItem(row,0,new QTableWidgetItem("X"));
+                }
+
+                ui->tbvAirports->setItem(row,1,new QTableWidgetItem(key));
+                ui->tbvAirports->setItem(row,2,new QTableWidgetItem(cache[key][0]));
+                ui->tbvAirports->setItem(row,3,new QTableWidgetItem(cache[key][1]));
+                ui->tbvAirports->setItem(row,4,new QTableWidgetItem(cache[key][2]));
+                row++;
+            }
+        }
+    }
+}
+
+void MainWindow::on_btnRefreshAirportList_clicked()
+{
+    setup_airport_list();
+}
+
+void MainWindow::on_ckbFilterInstalled_toggled(bool checked)
+{
+    if(checked)
+    {
+        for(int i=0;i<ui->tbvAirports->rowCount();i++)
+        {
+            if(ui->tbvAirports->item(i,0)->text().compare("X")!=0)
+                ui->tbvAirports->hideRow(i);
+        }
+    }
+    else
+    {
+        for(int i=0;i<ui->tbvAirports->rowCount();i++)
+        {
+            if(ui->tbvAirports->item(i,0)->text().compare("X")!=0)
+                ui->tbvAirports->showRow(i);
+        }
+    }
+}
+
+void MainWindow::on_tbvAirports_clicked(const QModelIndex &index)
+{
+    curr_settings->setLongitude(ui->tbvAirports->item(index.row(),2)->text());
+    curr_settings->setLatitude(ui->tbvAirports->item(index.row(),3)->text());
+    curr_settings->setAirportID(ui->tbvAirports->item(index.row(),1)->text());
+}
+
+void MainWindow::on_ckbSound_toggled(bool checked)
+{
+    checked ? curr_settings->setSound(SET_TRUE) : curr_settings->setSound(SET_FALSE);
+}
+
+void MainWindow::on_ckbClouds_toggled(bool checked)
+{
+    checked ? curr_settings->setClouds(SET_TRUE) : curr_settings->setClouds(SET_FALSE);
+}
+
+void MainWindow::on_ckbGameMode_toggled(bool checked)
+{
+    checked ? curr_settings->setGameMode(SET_TRUE) : curr_settings->setGameMode(SET_FALSE);
+}
+
+void MainWindow::on_ckbFullScreen_toggled(bool checked)
+{
+    checked ? curr_settings->setFullScreen(SET_TRUE) : curr_settings->setFullScreen(SET_FALSE);
+}
+
+void MainWindow::on_ckbFog_toggled(bool checked)
+{
+    checked ? curr_settings->setFog(SET_TRUE) : curr_settings->setFog(SET_FALSE);
+}
+
+void MainWindow::on_rdbUnitMeters_toggled(bool checked)
+{
+    checked ? curr_settings->setMeasureUnit(SET_TRUE) : curr_settings->setMeasureUnit(SET_FALSE);
+}
+
+void MainWindow::on_ckbLockFuel_toggled(bool checked)
+{
+    checked ? curr_settings->setFuelLock(SET_TRUE) : curr_settings->setFuelLock(SET_FALSE);
+}
+
+void MainWindow::on_ckbLockTime_toggled(bool checked)
+{
+    checked ? curr_settings->setTimeLock(SET_TRUE) : curr_settings->setTimeLock(SET_FALSE);
+}
+
+void MainWindow::on_ckbRandomObjects_toggled(bool checked)
+{
+    checked ? curr_settings->setRandomObjects(SET_TRUE) : curr_settings->setRandomObjects(SET_FALSE);
+}
+
+void MainWindow::on_ckbAIModels_toggled(bool checked)
+{
+    checked ? curr_settings->setAIModels(SET_TRUE) : curr_settings->setAIModels(SET_FALSE);
+}
+
+void MainWindow::on_ckbAutoCoordination_toggled(bool checked)
+{
+    checked ? curr_settings->setAutoCoordination(SET_TRUE) : curr_settings->setAutoCoordination(SET_FALSE);
+}
+
+void MainWindow::on_ckbPanel_toggled(bool checked)
+{
+    checked ? curr_settings->setPanel(SET_TRUE) : curr_settings->setPanel(SET_FALSE);
+}
+
+void MainWindow::on_ckbHorizonEffect_toggled(bool checked)
+{
+    checked ? curr_settings->setHorizonEffect(SET_TRUE) : curr_settings->setHorizonEffect(SET_FALSE);
+}
+
+void MainWindow::on_ckbSkyBlending_toggled(bool checked)
+{
+    checked ? curr_settings->setSkyBlending(SET_TRUE) : curr_settings->setSkyBlending(SET_FALSE);
+}
+
+void MainWindow::on_ckbTextures_toggled(bool checked)
+{
+    checked ? curr_settings->setTextures(SET_TRUE) : curr_settings->setTextures(SET_FALSE);
+}
+
+void MainWindow::on_ckbDistanceAttenuation_toggled(bool checked)
+{
+    checked ? curr_settings->setDistanceAttenuation(SET_TRUE) : curr_settings->setDistanceAttenuation(SET_FALSE);
+}
+
+void MainWindow::on_ckbWind_toggled(bool checked)
+{
+    checked ? curr_settings->setWind(SET_TRUE) : curr_settings->setWind(SET_FALSE);
+}
+
+void MainWindow::on_ckbHudAntialias_toggled(bool checked)
+{
+    checked ? curr_settings->setHUDAntiAliased(SET_TRUE) : curr_settings->setHUDAntiAliased(SET_FALSE);
+}
+
+void MainWindow::on_rdbHud2D_toggled(bool checked)
+{
+    checked ? curr_settings->setHUD2D(SET_TRUE) : curr_settings->setHUD2D(SET_FALSE);
+}
+
+void MainWindow::on_rdbHud3D_toggled(bool checked)
+{
+    checked ? curr_settings->setHUD3D(SET_TRUE) : curr_settings->setHUD3D(SET_FALSE);
+}
+
+void MainWindow::on_ckbEnhancedLighting_toggled(bool checked)
+{
+    checked ? curr_settings->setEnhancedLighting(SET_TRUE) : curr_settings->setEnhancedLighting(SET_FALSE);
+}
+
+void MainWindow::on_ckbSpecularReflections_toggled(bool checked)
+{
+    checked ? curr_settings->setSpecularReflections(SET_TRUE) : curr_settings->setSpecularReflections(SET_FALSE);
+}
+
+void MainWindow::on_hzsTurbulence_valueChanged(int value)
+{
+    float turbulence = value / 10.0;
+
+    curr_settings->setTurbulence(QString::number(turbulence));
+}
+
+void MainWindow::on_cboWindowGeometries_currentIndexChanged(const QString &arg1)
+{
+    if(!just_started)
+        curr_settings->setResolution(arg1);
+}
+
+void MainWindow::on_cboFailures_currentIndexChanged(const QString &arg1)
+{
+    if(!just_started)
+        curr_settings->setFailure(arg1);
+}
+
+void MainWindow::on_cboDayTime_currentIndexChanged(const QString &arg1)
+{
+    if(!just_started)
+        curr_settings->setDayTime(arg1);
+}
+
+void MainWindow::on_cboSeason_currentIndexChanged(const QString &arg1)
+{
+    if(!just_started)
+        curr_settings->setSeason(arg1);
 }
