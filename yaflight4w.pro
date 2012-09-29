@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     configuration.cpp \
     settings.cpp \
     airport.cpp \
-    runway.cpp
+    runway.cpp \
+    airportidx.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
@@ -32,7 +33,8 @@ HEADERS  += mainwindow.h \
     configuration.h \
     settings.h \
     airport.h \
-    runway.h
+    runway.h \
+    airportidx.h
 
 FORMS    += mainwindow.ui \
     dlgaircraftdetails.ui \
