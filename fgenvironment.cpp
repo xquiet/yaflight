@@ -33,6 +33,42 @@ QString FGEnvironment::getAircraftsDir()
     return getRootPath()+"/Aircraft";
 }
 
+QString FGEnvironment::getDefaultAirportsDir()
+{
+    return getDefaultScenery() + "/Airports";
+}
+
+QHash<QString, QStringList> FGEnvironment::parseAirportsIndex(QString path)
+{
+    QFile airports(path);
+    QHash<QString, QStringList> result;
+    QStringList pair;
+    if(airports.open(QIODevice::ReadOnly|QIODevice::Text)){
+        QTextStream in(&airports);
+        result.begin();
+        while(!in.atEnd())
+        {
+            /*
+              pair[0] ICAO
+              pair[1] longitude
+              pair[2] latitude
+
+              resultHash -> | string | <lon, lat, empty space for directory> |
+              */
+            pair = in.readLine().split("|");
+            result.insert(pair[0],QStringList() << pair[1] << pair[2] << "");
+        }
+        result.end();
+        airports.close();
+    }
+    return result;
+}
+
+QHash<QString, QStringList> FGEnvironment::getDefaultAirportList()
+{
+    return parseAirportsIndex(getDefaultAirportsDir()+"/"+"index.txt");
+}
+
 QString FGEnvironment::getFgfsBinPath()
 {
 #ifdef Q_OS_WIN
@@ -59,12 +95,13 @@ QString FGEnvironment::getYFHome()
 #ifdef Q_OS_LINUX
     yfhome = "/.yaflight";
 #endif
+    yfhome = QDir::homePath() + yfhome;
     if (!QFile::exists(yfhome))
     {
         QDir tmppath(QDir::homePath());
         tmppath.mkpath(yfhome);
     }
-    return QDir::homePath()+yfhome;
+    return yfhome;
 }
 
 QString FGEnvironment::detectOS()
@@ -149,11 +186,6 @@ QString FGEnvironment::detectRootPath()
             return possiblePaths[i];
     }
     return QString();
-}
-
-QStringList FGEnvironment::getAirportList()
-{
-
 }
 
 // --------------------------
