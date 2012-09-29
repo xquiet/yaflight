@@ -230,7 +230,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabBasic">
       <attribute name="title">
@@ -624,8 +624,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -668,8 +668,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -763,8 +763,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="label">
@@ -828,8 +828,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="label">
@@ -883,8 +883,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="label">
@@ -922,8 +922,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -999,13 +999,13 @@
       <attribute name="title">
        <string>Airports</string>
       </attribute>
-      <widget class="QTableView" name="tbvAirports">
+      <widget class="QTableWidget" name="tbvAirports">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>10</y>
          <width>451</width>
-         <height>241</height>
+         <height>211</height>
         </rect>
        </property>
        <property name="frameShape">
@@ -1013,6 +1013,45 @@
        </property>
        <property name="frameShadow">
         <enum>QFrame::Sunken</enum>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="ckbFilterInstalled">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>230</y>
+         <width>121</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Filter installed</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnRefreshAirportList">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>230</y>
+         <width>21</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="toolTip">
+        <string>Refresh airport list</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="yaflightresources.qrc">
+         <normaloff>:/icons/icons/view-refresh.png</normaloff>:/icons/icons/view-refresh.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
        </property>
       </widget>
      </widget>
