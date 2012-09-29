@@ -32,7 +32,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>yaflight4w</string>
+   <string>cyaflight</string>
   </property>
   <property name="windowIcon">
    <iconset resource="yaflightresources.qrc">
@@ -259,8 +259,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>161</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -400,8 +400,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>161</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -440,8 +440,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>161</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -525,8 +525,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -624,8 +624,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -668,8 +668,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -763,8 +763,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -828,8 +828,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -883,8 +883,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="label">
@@ -922,8 +922,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>37</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
