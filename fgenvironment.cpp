@@ -154,9 +154,12 @@ QString FGEnvironment::detectFGVersion()
         }
         version.close();
     }
-    qWarning("Failed to open %s for write: %s",
-             version.fileName().toStdString().data(),
-             version.errorString().toStdString().data());
+    else
+    {
+        qWarning("Failed to open %s for read: %s",
+                 version.fileName().toStdString().data(),
+                 version.errorString().toStdString().data());
+    }
     return output;
 }
 
