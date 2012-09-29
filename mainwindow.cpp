@@ -491,8 +491,8 @@ QStringList MainWindow::collectLaunchSettings()
     // Airport
     // 2 --> longitude
     // 3 --> latitude
-    QString longitude = ui->tbvAirports->item(ui->tbvAirports->currentRow(),2)->text().trimmed();
-    QString latitude  = ui->tbvAirports->item(ui->tbvAirports->currentRow(),3)->text().trimmed();
+    QString longitude = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),2)->text().trimmed();
+    QString latitude  = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),3)->text().trimmed();
     if((longitude.compare("")!=0)&&(latitude.compare("")!=0))
     {
         params << "--lon="+longitude;
