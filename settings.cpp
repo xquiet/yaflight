@@ -204,7 +204,7 @@ QString Settings::getSpecularReflections()
     return conf->get(ADVSETTINGS, "SPECULARREFLECTIONS");
 }
 
-QString Settings::getAirportID()
+QString Settings::getAirportICAO()
 {
     return conf->get(ADVSETTINGS, "AIRPORTID");
 }

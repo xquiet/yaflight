@@ -49,7 +49,7 @@ public:
     QString getHUD3D();
     QString getEnhancedLighting();
     QString getSpecularReflections();
-    QString getAirportID();
+    QString getAirportICAO();
     QString getRunway();
     QString getTerraSync();
     // sceneries
