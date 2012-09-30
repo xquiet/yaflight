@@ -91,28 +91,11 @@
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="pbtAddModel">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>101</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>New Model</string>
-    </property>
-    <property name="icon">
-     <iconset resource="yaflightresources.qrc">
-      <normaloff>:/icons/icons/utilities-file-archiver.png</normaloff>:/icons/icons/utilities-file-archiver.png</iconset>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pbtSaveConf">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>120</y>
+      <y>40</y>
       <width>101</width>
       <height>31</height>
      </rect>
@@ -230,7 +213,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabBasic">
       <attribute name="title">
@@ -259,8 +242,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>161</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -400,8 +383,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>161</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -435,13 +418,13 @@
          </property>
         </widget>
        </widget>
-       <widget class="QWidget" name="page_3">
+       <widget class="QWidget" name="mapView">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>161</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -525,8 +508,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -624,8 +607,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -668,8 +651,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -763,8 +746,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -828,8 +811,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -883,8 +866,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -922,8 +905,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -1007,6 +990,9 @@
          <width>451</width>
          <height>211</height>
         </rect>
+       </property>
+       <property name="toolTip">
+        <string>Double click to show on map</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
