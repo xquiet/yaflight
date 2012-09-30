@@ -6,7 +6,7 @@
 
 QT       += core gui webkit
 
-DEFINES += VERSION="1.1"
+DEFINES += VERSION="0.99"
 TARGET = cyaflight
 TEMPLATE = app
 
