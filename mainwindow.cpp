@@ -937,9 +937,7 @@ void MainWindow::on_tbvAirports_doubleClicked(const QModelIndex &index)
     QString latitude  = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),3)->text().trimmed();
     QString head = QString::number(ui->dialHeading->value());
     update_latlonhead(latitude, longitude, head);
-    ui->tabBasic->show();
-    ui->mapView->show();
-    ui->tabAirports->hide();
+    ui->tabOpts->setCurrentWidget(ui->tabBasic);
 }
 
 void MainWindow::update_latlonhead(QString lat, QString lon, QString heading)
