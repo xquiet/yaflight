@@ -12,6 +12,7 @@
 #include <QHashIterator>
 #include <QResizeEvent>
 #include <QStringListModel>
+#include <QWebFrame>
 
 #include "fgenvironment.h"
 #include "dlgaircraftdetails.h"
@@ -116,6 +117,10 @@ private slots:
 
     void on_cboSeason_currentIndexChanged(const QString &arg1);
 
+    void on_tbvAirports_doubleClicked(const QModelIndex &index);
+
+    void on_dialHeading_valueChanged(int value);
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -148,6 +153,10 @@ private:
     QPoint dragPosition; // used to move the frameless window
 
     bool just_started;
+
+    void update_latlonhead(QString lat, QString lon, QString heading);
+    void adjust_heading_value(int head);
+    int convert_dialhead_to_azimuth(int value);
 };
 
 #endif // MAINWINDOW_H

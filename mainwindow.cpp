@@ -930,3 +930,63 @@ void MainWindow::on_cboSeason_currentIndexChanged(const QString &arg1)
     if(!just_started)
         curr_settings->setSeason(arg1);
 }
+
+void MainWindow::on_tbvAirports_doubleClicked(const QModelIndex &index)
+{
+    QString longitude = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),2)->text().trimmed();
+    QString latitude  = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),3)->text().trimmed();
+    QString head = QString::number(ui->dialHeading->value());
+    update_latlonhead(latitude, longitude, head);
+    ui->tabBasic->show();
+    ui->mapView->show();
+    ui->tabAirports->hide();
+}
+
+void MainWindow::update_latlonhead(QString lat, QString lon, QString heading)
+{
+    adjust_heading_value((int)ceil(heading.toFloat()));
+    ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaCentroMappa(" + lon + "," + lat + ",true);");
+    ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaLonLat(" + lon + "," + lat + ", true," + heading + ");");
+
+}
+
+void MainWindow::adjust_heading_value(int head)
+{
+    if((head >= 0) && (head < 180))
+    {
+        ui->dialHeading->setValue(head + 180);
+    }
+    else if((head >= 180) && (head < 360))
+    {
+        ui->dialHeading->setValue(head - 180);
+    }
+}
+
+int MainWindow::convert_dialhead_to_azimuth(int value)
+{
+    if((value >= 0) && (value < 180))
+    {
+        return value + 180;
+    }
+    else if ((value >= 180) && (value < 360))
+    {
+        return value - 180;
+    }
+    return -1;
+}
+
+void MainWindow::on_dialHeading_valueChanged(int value)
+{
+    QString longitude = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),2)->text().trimmed();
+    QString latitude  = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),3)->text().trimmed();
+
+    ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaLonLat(" + longitude + "," + latitude + ", true," + QString::number(convert_dialhead_to_azimuth(value)) + ");");
+}
+
+/*
+  sCoords = wbvMap.Eval("document.getElementById('yaflight').innerText;")
+  If Trim(sCoords) = "" Then Return
+  aCoords = Split(sCoords, ",", Null, True)
+  txtLongitude.Text = Trim(aCoords[0])
+  txtLatitude.Text = Trim(aCoords[1])
+  */
