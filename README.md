@@ -1,4 +1,4 @@
-yaflight4w - crossplatform yaflight
+cyaflight - crossplatform yaflight
 ===================================
 
 yaflight is a flightgear launcher developed by me (<matteo@xquiet.eu>) using Gambas3 language.
