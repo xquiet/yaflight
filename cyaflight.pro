@@ -10,6 +10,8 @@ DEFINES += VERSION="0.99"
 TARGET = cyaflight
 TEMPLATE = app
 
+# pkg-config --libs zlib
+LIBS += -lz
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -22,7 +24,8 @@ SOURCES += main.cpp\
     settings.cpp \
     airport.cpp \
     runway.cpp \
-    airportidx.cpp
+    airportidx.cpp \
+    apt_dat.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
@@ -34,7 +37,8 @@ HEADERS  += mainwindow.h \
     settings.h \
     airport.h \
     runway.h \
-    airportidx.h
+    airportidx.h \
+    apt_dat.h
 
 FORMS    += mainwindow.ui \
     dlgaircraftdetails.ui \

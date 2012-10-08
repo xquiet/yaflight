@@ -2,23 +2,23 @@
 #define AIRPORT_H
 
 #include <QStringList>
-//#include <QDir>
 
-#include "runway.h"
+#include "apt_dat.h"
 
 class Airport
 {
 public:
-    Airport(QString airportsDir, QString icao); // icao from Airports/index.txt
+    Airport(QString airportsDir, QString icao, QString aptdatgzipped, QString destpath); // icao from Airports/index.txt
     // get
     QString getICAO();
     QString getLongitude();
     QString getLatitude();
     QStringList getRunwayList();
-    Runway getRunway();
     QString getAirportDirPath();
 private:
     QString airportPath;
+
+    APT_dat *aptdat;
 };
 
 #endif // AIRPORT_H

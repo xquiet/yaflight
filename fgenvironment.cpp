@@ -38,6 +38,11 @@ QString FGEnvironment::getDefaultAirportsDir()
     return getDefaultScenery() + "/Airports";
 }
 
+QString FGEnvironment::getAPTSource()
+{
+    return getRootPath() + "/Airports/apt.dat.gz";
+}
+
 QHash<QString, QStringList> FGEnvironment::parseAirportsIndex(QString path)
 {
     QFile airports(path);
@@ -190,6 +195,7 @@ QString FGEnvironment::detectRootPath()
     }
     return QString();
 }
+
 
 // --------------------------
 // DEBUG methods

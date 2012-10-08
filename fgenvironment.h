@@ -34,6 +34,7 @@ public:
     QString getDefaultScenery();
     QString getAircraftsDir();
     QString getDefaultAirportsDir();
+    QString getAPTSource();
     QHash<QString, QStringList> parseAirportsIndex(QString path);
     QHash<QString, QStringList> getDefaultAirportList();
     QString getFgfsBinPath();

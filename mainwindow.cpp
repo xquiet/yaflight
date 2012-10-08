@@ -706,7 +706,7 @@ void MainWindow::setup_airport_list()
             Airport *ap;
             foreach(QString airportDir, allAirportDirectories)
             {
-                ap = new Airport(airportDir,key);
+                ap = new Airport(airportDir,key,fgenv->getAPTSource(),fgenv->getYFHome()+"/tmp_apt_dat");
                 QDir dir(ap->getAirportDirPath());
                 if(dir.exists())
                 {
@@ -736,6 +736,7 @@ void MainWindow::setup_airport_list()
             int row = 0;
             ui->tbvAirports->setRowCount(apindex.count());
             QHash<QString, QStringList> cache = apindex.get();
+            ap = new Airport(airportDir,key,fgenv->getAPTSource(),fgenv->getYFHome()+"/tmp_apt_dat");
             foreach(QString key, cache.keys())
             {
                 if(cache[key][2].trimmed().compare("")==0)

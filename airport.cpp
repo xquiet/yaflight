@@ -1,6 +1,6 @@
 #include "airport.h"
 
-Airport::Airport(QString airportsDir, QString icao)
+Airport::Airport(QString airportsDir, QString icao, QString aptdatgzipped, QString destpath)
 {
     // build airport directory path
     const char *ch_icao;
@@ -10,6 +10,9 @@ Airport::Airport(QString airportsDir, QString icao)
     QString A(ch_icao[2]);
 
     airportPath = airportsDir + "/" + I + "/" + C + "/" + A;
+
+    aptdat = new APT_dat(aptdatgzipped,destpath);
+    aptdat->parse_apt_dat();
 }
 
 QString Airport::getAirportDirPath()
