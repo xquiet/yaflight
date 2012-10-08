@@ -975,6 +975,8 @@ int MainWindow::convert_dialhead_to_azimuth(int value)
 
 void MainWindow::on_dialHeading_valueChanged(int value)
 {
+    if(ui->tbvAirports->selectedItems().count()<=0)
+        return;
     QString longitude = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),2)->text().trimmed();
     QString latitude  = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),3)->text().trimmed();
 
