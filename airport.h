@@ -3,12 +3,10 @@
 
 #include <QStringList>
 
-#include "apt_dat.h"
-
 class Airport
 {
 public:
-    Airport(QString airportsDir, QString icao, QString aptdatgzipped, QString destpath); // icao from Airports/index.txt
+    Airport(QString airportsDir, QString icao); // icao from Airports/index.txt
     // get
     QString getICAO();
     QString getLongitude();
@@ -18,7 +16,6 @@ public:
 private:
     QString airportPath;
 
-    APT_dat *aptdat;
 };
 
 #endif // AIRPORT_H
