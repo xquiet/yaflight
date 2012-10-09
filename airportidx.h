@@ -6,18 +6,25 @@
 #include <QFile>
 #include <QTextStream>
 
+//#include "apt_dat.h"
+
 class AirportIdx
 {
 public:
-    AirportIdx(QString cachePath);
+    AirportIdx(QString cachePath, QString rwCachePath);
     bool exists();
     bool load();
     int count();
-    bool create(QHash<QString, QStringList> airportHash);
+    bool create(QHash<QString, QStringList> airportHash,
+                QString aptdatgzipped,
+                QString decompresseddirpath);
     QHash<QString, QStringList> get();
 private:
-    QString indexCachePath;
+    QString airportsIndexCachePath;
+    QString runwaysIndexCachePath;
     QHash<QString, QStringList> airportIdxCache;
+
+    //APT_dat *aptdat;
 };
 
 #endif // AIRPORTIDX_H

@@ -1,27 +1,56 @@
 #include "airportidx.h"
 
-AirportIdx::AirportIdx(QString cachePath)
+AirportIdx::AirportIdx(QString cachePath, QString rwCachePath)
 {
-    indexCachePath = cachePath.trimmed();
+    airportsIndexCachePath = cachePath.trimmed();
+    runwaysIndexCachePath = rwCachePath.trimmed();
 }
 
-bool AirportIdx::create(QHash<QString, QStringList> airportHash)
+bool AirportIdx::create(QHash<QString, QStringList> airportHash,
+                        QString aptdatgzipped,
+                        QString decompresseddirpath)
 {
     if(airportHash.count()<=0)
     {
         qWarning("Empty hash");
         return false;
     }
-    QFile cache(indexCachePath);
+    QFile cache(airportsIndexCachePath);
     if(cache.open(QIODevice::WriteOnly|QIODevice::Text))
     {
-        QTextStream out(&cache);
-        foreach(QString key, airportHash.keys())
+        QFile runwayscache(runwaysIndexCachePath);
+        if(runwayscache.open(QIODevice::WriteOnly|QIODevice::Text))
         {
-            out << key + "|" + airportHash[key][0] + "|" + airportHash[key][1] + "|" + airportHash[key][2] << endl;
+            QTextStream out(&cache);
+            QTextStream outrwcache(&runwayscache);
+            foreach(QString key, airportHash.keys())
+            {
+                /*aptdat = new APT_dat(aptdatgzipped,decompresseddirpath);
+                if(!aptdat->retrieve_ap_details(key))
+                {
+                    cache.close();
+                    runwayscache.close();
+                    return false;
+                }
+                QString airportDescription = aptdat->get_ap_description(key);
+                QList<Runway *> runways = aptdat->get_ap_runways(key);*/
+                out << key + "|"
+                           + airportHash[key][0]
+                           + "|"
+                           + airportHash[key][1]
+                           + "|"
+                           + airportHash[key][2]
+                           + "|"
+                           //+ airportDescription
+                    << endl;
+                /*foreach(Runway *rw, runways)
+                    outrwcache << key + "|" + rw->toString() << endl;*/
+            }
+            out.flush();
+            outrwcache.flush();
+            cache.close();
+            runwayscache.close();
         }
-        out.flush();
-        cache.close();
     }
     else
     {
@@ -33,13 +62,13 @@ bool AirportIdx::create(QHash<QString, QStringList> airportHash)
 
 bool AirportIdx::exists()
 {
-    QFile cache(indexCachePath);
+    QFile cache(airportsIndexCachePath);
     return cache.exists();
 }
 
 bool AirportIdx::load()
 {
-    QFile file(indexCachePath);
+    QFile file(airportsIndexCachePath);
     if(file.open(QIODevice::ReadOnly|QIODevice::Text))
     {
         QTextStream in(&file);
