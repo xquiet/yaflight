@@ -11,7 +11,8 @@
 #include <QHash>
 #include <QHashIterator>
 #include <QResizeEvent>
-#include <QStringListModel>
+//#include <QStringListModel>
+#include <QStandardItemModel>
 #include <QWebFrame>
 
 #include "fgenvironment.h"
@@ -21,6 +22,8 @@
 #include "airport.h"
 #include "airportidx.h"
 #include "settings.h"
+
+#include "apt_dat.h"
 
 namespace Ui {
 class MainWindow;
@@ -147,7 +150,7 @@ private:
     FGEnvironment *fgenv;
 
     //void loadSettings(FGEnvironment *fgenv);
-    void loadSettings();
+    void loadSettings(bool appStart=false);
     bool saveSettings();
 
     QPoint dragPosition; // used to move the frameless window

@@ -83,8 +83,13 @@ MainWindow::MainWindow(QWidget *parent) :
 //    msgbox.setText(fgenv->__read_winprogramfiles());
 //    msgbox.exec();
 
+    loadSettings(true);
+
     setup_airport_list();
 
+    // double call to loadSettings
+    // trick to make airport from conf.ini
+    // to be properly selected
     loadSettings();
 
     just_started = false;
@@ -491,8 +496,12 @@ QStringList MainWindow::collectLaunchSettings()
     // Airport
     // 2 --> longitude
     // 3 --> latitude
-    QString longitude = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),2)->text().trimmed();
-    QString latitude  = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),3)->text().trimmed();
+    QModelIndexList selected = ui->tbvAirports->selectionModel()->selectedIndexes();
+    QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
+    QString longitude = model->item(selected.at(0).row(),2)->text().trimmed();
+    QString latitude = model->item(selected.at(0).row(),3)->text().trimmed();
+    //QString longitude = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),2)->text().trimmed();
+    //QString latitude  = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),3)->text().trimmed();
     if((longitude.compare("")!=0)&&(latitude.compare("")!=0))
     {
         params << "--lon="+longitude;
@@ -501,7 +510,7 @@ QStringList MainWindow::collectLaunchSettings()
     return params;
 }
 
-void MainWindow::loadSettings()
+void MainWindow::loadSettings(bool appStart)
 {
     curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
     if(!curr_settings->isEmpty())
@@ -588,24 +597,29 @@ void MainWindow::loadSettings()
             int row = 0;
             foreach(QString item, sceneryList)
             {
-                //ui->tblSceneries->item(row,0)->setText(item);
                 ui->tblSceneries->setItem(row,0,new QTableWidgetItem(item));
                 row++;
             }
 
         }
 
-        // airports
-        QString icao = curr_settings->getAirportICAO().trimmed();
-        ui->tbvAirports->clearSelection();
-        if(icao.compare("")!=0)
-        {
-            for(int i=0;i<ui->tbvAirports->rowCount();i++)
+
+        if(appStart == false){
+            // airports
+            QString icao = curr_settings->getAirportICAO().trimmed();
+            QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
+            ui->tbvAirports->clearSelection();
+            if(icao.compare("")!=0)
             {
-                if(ui->tbvAirports->item(i,1)->text().trimmed().compare(icao)==0)
+                for(int i=0;i<model->rowCount();i++)
                 {
-                    ui->tbvAirports->setItemSelected(ui->tbvAirports->item(i,1),true);
-                    break;
+                    if(model->item(i,1)->text().trimmed().compare(icao)==0)
+                    {
+                        QItemSelectionModel *selectionModel = ui->tbvAirports->selectionModel();
+                        selectionModel->select(model->index(i,1),QItemSelectionModel::ClearAndSelect);
+                        //ui->tbvAirports->setItemSelected(ui->tbvAirports->item(i,1),true);
+                        break;
+                    }
                 }
             }
         }
@@ -674,20 +688,27 @@ QHash<QString, QStringList> MainWindow::collect_all_airports()
 }
 
 void MainWindow::setup_airport_list()
-{
-    ui->tbvAirports->setColumnCount(5);
+{   
+    QStandardItemModel *model = new QStandardItemModel(1,5);
+    ui->tbvAirports->setModel(model);
+
+    model->setHorizontalHeaderLabels(QStringList() << "I" << "ICAO" << "Lon" << "Lat" << "Directory");
+
     ui->tbvAirports->setColumnWidth(0,20);
     ui->tbvAirports->setColumnWidth(1,50);
     ui->tbvAirports->setColumnWidth(4,ui->tbvAirports->width()-80);
     ui->tbvAirports->setColumnHidden(2,false);
     ui->tbvAirports->setColumnHidden(3,false);
     ui->tbvAirports->setColumnHidden(4,true);
-    ui->tbvAirports->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tbvAirports->setShowGrid(false);
     ui->tbvAirports->verticalHeader()->hide();
-    ui->tbvAirports->setHorizontalHeaderLabels(QStringList() << "I" << "ICAO" << "Lon" << "Lat" << "Directory");
 
-    AirportIdx apindex(fgenv->getYFHome()+"/airportidx.cache");
+    ui->tbvAirports->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tbvAirports->setSelectionMode(QAbstractItemView::SingleSelection);
+
+
+    AirportIdx apindex(fgenv->getAirportsCacheFilePath(), fgenv->getRunwaysCacheFilePath());
+    Airport *ap;
 
     if(!apindex.exists())
     {
@@ -700,32 +721,32 @@ void MainWindow::setup_airport_list()
             allAirportDirectories << ui->tblSceneries->item(i,0)->text().trimmed()+"/Airports";
         }
         int row = 0;
-        ui->tbvAirports->setRowCount(airportsHash.count());
+        model->setRowCount(airportsHash.count());
         foreach(QString key, airportsHash.keys())
         {
-            Airport *ap;
             foreach(QString airportDir, allAirportDirectories)
             {
-                ap = new Airport(airportDir,key,fgenv->getAPTSource(),fgenv->getYFHome()+"/tmp_apt_dat");
+                ap = new Airport(airportDir,key);
                 QDir dir(ap->getAirportDirPath());
                 if(dir.exists())
                 {
-                    ui->tbvAirports->setItem(row,0,new QTableWidgetItem("X"));
+                    model->setData(model->index(row,0), QString("X"));
+                    model->setData(model->index(row,0), QBrush(Qt::green),Qt::BackgroundRole);
                     airportsHash[key][2] = QString(ap->getAirportDirPath());
                     break;
                 }
-                else
-                {
-                    ui->tbvAirports->setItem(row,0,new QTableWidgetItem(""));
-                }
             }
-            ui->tbvAirports->setItem(row,1,new QTableWidgetItem(key));
-            ui->tbvAirports->setItem(row,2,new QTableWidgetItem(airportsHash[key][0]));
-            ui->tbvAirports->setItem(row,3,new QTableWidgetItem(airportsHash[key][1]));
-            ui->tbvAirports->setItem(row,4,new QTableWidgetItem(airportsHash[key][2]));
+            if(model->item(row,0)==NULL){
+                model->setData(model->index(row,0), QBrush(Qt::gray),Qt::BackgroundRole);
+                model->setData(model->index(row,0), "");
+            }
+            model->setData(model->index(row,1), key);
+            model->setData(model->index(row,2), airportsHash[key][0]);
+            model->setData(model->index(row,3), airportsHash[key][1]);
+            model->setData(model->index(row,4), airportsHash[key][2]);
             row++;
         }
-        if(!apindex.create(airportsHash)){
+        if(!apindex.create(airportsHash,fgenv->getAPTSource(),fgenv->getYFHome())){
             QMessageBox msgbox(QMessageBox::Critical,"Error","Can't create airport index cache\nCheck you permissions",QMessageBox::Ok);
             msgbox.exec();
         }
@@ -734,25 +755,27 @@ void MainWindow::setup_airport_list()
         if(apindex.load())
         {
             int row = 0;
-            ui->tbvAirports->setRowCount(apindex.count());
+            model->setRowCount(apindex.count());
             QHash<QString, QStringList> cache = apindex.get();
-            ap = new Airport(airportDir,key,fgenv->getAPTSource(),fgenv->getYFHome()+"/tmp_apt_dat");
             foreach(QString key, cache.keys())
             {
+                //ap = new Airport(airportDir,key,fgenv->getAPTSource(),fgenv->getYFHome()+"/tmp_apt_dat");
                 if(cache[key][2].trimmed().compare("")==0)
                 {
                     // ap not installed
-                    ui->tbvAirports->setItem(row,0,new QTableWidgetItem(""));
+                    model->setData(model->index(row,0),"");
+                    model->setData(model->index(row,0), QBrush(Qt::gray),Qt::BackgroundRole);
                 }
                 else
                 {
-                    ui->tbvAirports->setItem(row,0,new QTableWidgetItem("X"));
+                    model->setData(model->index(row,0),"X");
+                    model->setData(model->index(row,0), QBrush(Qt::green),Qt::BackgroundRole);
                 }
 
-                ui->tbvAirports->setItem(row,1,new QTableWidgetItem(key));
-                ui->tbvAirports->setItem(row,2,new QTableWidgetItem(cache[key][0]));
-                ui->tbvAirports->setItem(row,3,new QTableWidgetItem(cache[key][1]));
-                ui->tbvAirports->setItem(row,4,new QTableWidgetItem(cache[key][2]));
+                model->setData(model->index(row,1),key);
+                model->setData(model->index(row,2),cache[key][0]);
+                model->setData(model->index(row,3),cache[key][1]);
+                model->setData(model->index(row,4),cache[key][2]);
                 row++;
             }
         }
@@ -766,19 +789,20 @@ void MainWindow::on_btnRefreshAirportList_clicked()
 
 void MainWindow::on_ckbFilterInstalled_toggled(bool checked)
 {
+    QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
     if(checked)
     {
-        for(int i=0;i<ui->tbvAirports->rowCount();i++)
+        for(int i=0;i<model->rowCount();i++)
         {
-            if(ui->tbvAirports->item(i,0)->text().compare("X")!=0)
+            if(model->item(i,0)->text().compare("X")!=0)
                 ui->tbvAirports->hideRow(i);
         }
     }
     else
     {
-        for(int i=0;i<ui->tbvAirports->rowCount();i++)
+        for(int i=0;i<model->rowCount();i++)
         {
-            if(ui->tbvAirports->item(i,0)->text().compare("X")!=0)
+            if(model->item(i,0)->text().compare("X")!=0)
                 ui->tbvAirports->showRow(i);
         }
     }
@@ -786,9 +810,24 @@ void MainWindow::on_ckbFilterInstalled_toggled(bool checked)
 
 void MainWindow::on_tbvAirports_clicked(const QModelIndex &index)
 {
-    curr_settings->setLongitude(ui->tbvAirports->item(index.row(),2)->text());
-    curr_settings->setLatitude(ui->tbvAirports->item(index.row(),3)->text());
-    curr_settings->setAirportID(ui->tbvAirports->item(index.row(),1)->text());
+    QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
+    QString icao = model->item(index.row(),1)->text().trimmed();
+    APT_dat apdat(fgenv->getAPTSource(),fgenv->getYFHome());
+    if(!apdat.retrieve_ap_details(icao))
+        return;
+
+    QList<Runway *> ap_runways = apdat.get_ap_runways(icao);
+
+    ui->cboRunway->clear();
+
+    foreach(Runway *rw, ap_runways)
+    {
+        ui->cboRunway->addItem(rw->toString());
+    }
+
+    curr_settings->setLongitude(model->item(index.row(),2)->text());
+    curr_settings->setLatitude(model->item(index.row(),3)->text());
+    curr_settings->setAirportID(icao);
 }
 
 void MainWindow::on_ckbSound_toggled(bool checked)
@@ -934,9 +973,16 @@ void MainWindow::on_cboSeason_currentIndexChanged(const QString &arg1)
 
 void MainWindow::on_tbvAirports_doubleClicked(const QModelIndex &index)
 {
-    QString longitude = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),2)->text().trimmed();
-    QString latitude  = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),3)->text().trimmed();
+    QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
+    QModelIndexList modelidxlst = ui->tbvAirports->selectionModel()->selectedIndexes();
+
+    if(modelidxlst.count()<=0)
+        return;
+
+    QString longitude = model->item(modelidxlst.at(0).row(),2)->text().trimmed();
+    QString latitude  = model->item(modelidxlst.at(0).row(),3)->text().trimmed();
     QString head = QString::number(ui->dialHeading->value());
+
     update_latlonhead(latitude, longitude, head);
     ui->tabOpts->setCurrentWidget(ui->tabBasic);
 }
@@ -976,10 +1022,13 @@ int MainWindow::convert_dialhead_to_azimuth(int value)
 
 void MainWindow::on_dialHeading_valueChanged(int value)
 {
-    if(ui->tbvAirports->selectedItems().count()<=0)
+    QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
+    QModelIndexList modelidxlst = ui->tbvAirports->selectionModel()->selectedIndexes();
+
+    if(modelidxlst.count()<=0)
         return;
-    QString longitude = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),2)->text().trimmed();
-    QString latitude  = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),3)->text().trimmed();
+    QString longitude = model->item(modelidxlst.at(0).row(),2)->text().trimmed();
+    QString latitude  = model->item(modelidxlst.at(0).row(),3)->text().trimmed();
 
     ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaLonLat(" + longitude + "," + latitude + ", true," + QString::number(convert_dialhead_to_azimuth(value)) + ");");
 }
