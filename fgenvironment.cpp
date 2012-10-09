@@ -38,6 +38,16 @@ QString FGEnvironment::getDefaultAirportsDir()
     return getDefaultScenery() + "/Airports";
 }
 
+QString FGEnvironment::getAirportsCacheFilePath()
+{
+    return getYFHome()+"/airportidx.cache";
+}
+
+QString FGEnvironment::getRunwaysCacheFilePath()
+{
+    return getYFHome() + "/runwaysidx.cache";
+}
+
 QString FGEnvironment::getAPTSource()
 {
     return getRootPath() + "/Airports/apt.dat.gz";
