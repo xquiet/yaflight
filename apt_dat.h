@@ -23,9 +23,14 @@
 class APT_dat
 {
 public:
-    APT_dat(QString zpath, QString dpath);
-    void parse_apt_dat();
+    APT_dat(QString zpath, QString yfhomedir);
+    //void parse_apt_data();
+    bool retrieve_ap_details(QString icao);
+    QString get_ap_description(QString key);
+    QList<Runway *> get_ap_runways(QString key);
+
 private:
+    QString homeDir;
     QString aptdatFilePath;
     QString decompressedFilePath;
     QHash<QString, Runway *> runwayList;
@@ -34,6 +39,8 @@ private:
     QString parseAirportLine(QStringList items);
     void parseRunwayLine(QString icao, QStringList items);
     QByteArray gUncompress(const QByteArray &data);
+
+    bool store_runways(QString apname, QString data);
 
     bool isDecompressed;
 };

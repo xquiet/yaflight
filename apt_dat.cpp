@@ -1,9 +1,11 @@
 #include "apt_dat.h"
 
-APT_dat::APT_dat(QString zpath, QString dpath)
+APT_dat::APT_dat(QString zpath, QString yfhomedir)
 {
+    homeDir = yfhomedir.trimmed();
     aptdatFilePath = zpath.trimmed();
-    decompressedFilePath = dpath.trimmed();
+    decompressedFilePath = homeDir + "/tmp_apt_dat";
+
     isDecompressed = false;
 }
 
@@ -26,7 +28,17 @@ void APT_dat::read()
     }
 }
 
-void APT_dat::parse_apt_dat()
+QString APT_dat::get_ap_description(QString key)
+{
+    return airportNameList.value(key);
+}
+
+QList<Runway *> APT_dat::get_ap_runways(QString key)
+{
+    return runwayList.values(key);
+}
+
+bool APT_dat::retrieve_ap_details(QString icao)
 {
     if(!isDecompressed)
     {
@@ -44,12 +56,13 @@ void APT_dat::parse_apt_dat()
         QTextStream in(&file);
         in.readLine(); in.readLine(); // skip two header lines containing IBM/DOS and licenses
         QString airportName; // using as key for runwaylist
+        bool airport_icao_match_found = false;
         while(!in.atEnd())
         {
             token = in.readLine();
             if(token.trimmed().compare("")==0)
                 continue; // skip empty lines
-            QStringList lineItems = token.split(" ");
+            QStringList lineItems = token.split(" ",QString::SkipEmptyParts);
             if(lineItems.count()>0){
                 switch(lineItems[0].toInt())
                 {
@@ -57,18 +70,36 @@ void APT_dat::parse_apt_dat()
                     case APTDAT_SEAPLANE_BASE:
                     case APTDAT_HELIPORT:
                         airportName = parseAirportLine(lineItems);
+                        if((!airport_icao_match_found) &&
+                                (!runwayList.empty()))
+                        {
+                            file.close();
+                            airportNameList.end();
+                            runwayList.end();
+                            return true;
+                        }
+                        if(airportName.compare(icao)!=0)
+                        {
+                            airportName = "";
+                            airport_icao_match_found = false;
+                        }
+                        else
+                        {
+                            airport_icao_match_found = true;
+                        }
                         break;
                     case APTDAT_RUNWAY:
                     case APTDAT_RUNWAY_850:
                     case APTDAT_RUNWAY_WATER:
                     case APTDAT_RUNWAY_HELIPAD:
-                        parseRunwayLine(airportName, lineItems);
+                        if(airport_icao_match_found)
+                        {
+                            parseRunwayLine(airportName, lineItems);
+                        }
                         break;
                 }
             }
         }
-        file.close();
-        airportNameList.end();
     }
 }
 
@@ -101,7 +132,7 @@ void APT_dat::parseRunwayLine(QString icao, QStringList items)
     ' 11 --> runway shoulder code
     */
 
-    runwayList.insert(icao, new Runway(items[3].trimmed(),
+    runwayList.insertMulti(icao, new Runway(items[3].trimmed(),
                                        items[1].trimmed(),
                                        items[2].trimmed(),
                                        items[4].trimmed(),
