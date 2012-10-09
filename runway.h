@@ -7,6 +7,7 @@ class Runway
 {
 public:
     Runway(QString number, QString lat, QString lon, QString heading, QString surface, QString shoulder);
+    QString toString();
 
 private:
     QString rwNumber;

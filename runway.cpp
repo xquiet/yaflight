@@ -9,3 +9,13 @@ Runway::Runway(QString number, QString lat, QString lon, QString heading, QStrin
     rwSurfaceCode = surface;
     rwShoulderCode = shoulder;
 }
+
+QString Runway::toString()
+{
+    return QString(rwNumber + "|" +
+                   rwLatitude + "|" +
+                   rwLongitude + "|" +
+                   rwHeading + "|" +
+                   rwSurfaceCode + "|" +
+                   rwShoulderCode);
+}
