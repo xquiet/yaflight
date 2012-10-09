@@ -982,13 +982,13 @@
       <attribute name="title">
        <string>Airports</string>
       </attribute>
-      <widget class="QTableWidget" name="tbvAirports">
+      <widget class="QTableView" name="tbvAirports">
        <property name="geometry">
         <rect>
          <x>10</x>
          <y>10</y>
          <width>451</width>
-         <height>211</height>
+         <height>191</height>
         </rect>
        </property>
        <property name="toolTip">
@@ -1005,7 +1005,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>230</y>
+         <y>210</y>
          <width>121</width>
          <height>20</height>
         </rect>
@@ -1018,7 +1018,7 @@
        <property name="geometry">
         <rect>
          <x>130</x>
-         <y>230</y>
+         <y>210</y>
          <width>21</width>
          <height>21</height>
         </rect>
@@ -1032,6 +1032,52 @@
        <property name="icon">
         <iconset resource="yaflightresources.qrc">
          <normaloff>:/icons/icons/view-refresh.png</normaloff>:/icons/icons/view-refresh.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="cboRunway">
+       <property name="geometry">
+        <rect>
+         <x>330</x>
+         <y>210</y>
+         <width>101</width>
+         <height>24</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblRunway">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>210</y>
+         <width>57</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>RunWay</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnRunwayInfo">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>210</y>
+         <width>21</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="yaflightresources.qrc">
+         <normaloff>:/icons/icons/dialog-information.png</normaloff>:/icons/icons/dialog-information.png</iconset>
        </property>
        <property name="iconSize">
         <size>
