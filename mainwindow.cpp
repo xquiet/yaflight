@@ -617,11 +617,14 @@ void MainWindow::loadSettings(bool appStart)
                     {
                         QItemSelectionModel *selectionModel = ui->tbvAirports->selectionModel();
                         selectionModel->select(model->index(i,1),QItemSelectionModel::ClearAndSelect);
-                        //ui->tbvAirports->setItemSelected(ui->tbvAirports->item(i,1),true);
+                        // runways
+                        on_tbvAirports_clicked(model->index(i,1));
                         break;
                     }
                 }
             }
+
+            ui->webView->reload();
         }
 
         ui->txaLog->append("INFO: Configuration loaded correctly");
@@ -816,14 +819,32 @@ void MainWindow::on_tbvAirports_clicked(const QModelIndex &index)
     if(!apdat.retrieve_ap_details(icao))
         return;
 
-    QList<Runway *> ap_runways = apdat.get_ap_runways(icao);
+    ap_runways = apdat.get_ap_runways(icao);
 
     ui->cboRunway->clear();
 
+    bool isFirst = true;
+
     foreach(Runway *rw, ap_runways)
     {
-        ui->cboRunway->addItem(rw->toString());
+        if(rw->getNumber().compare("xxx")!=0)
+        {
+            if(isFirst)
+                currentRunway = rw;
+            ui->cboRunway->addItem(rw->getNumber());
+        }
+        else if(rw->getNumber().compare("xxx")==0)
+        {
+            // taxiway
+
+        }
+        else
+        {
+
+        }
     }
+
+    on_cboRunway_currentIndexChanged(ui->cboRunway->currentText());
 
     curr_settings->setLongitude(model->item(index.row(),2)->text());
     curr_settings->setLatitude(model->item(index.row(),3)->text());
@@ -1030,7 +1051,7 @@ void MainWindow::on_dialHeading_valueChanged(int value)
     QString longitude = model->item(modelidxlst.at(0).row(),2)->text().trimmed();
     QString latitude  = model->item(modelidxlst.at(0).row(),3)->text().trimmed();
 
-    ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaLonLat(" + longitude + "," + latitude + ", true," + QString::number(convert_dialhead_to_azimuth(value)) + ");");
+    update_latlonhead(latitude, longitude, QString::number(convert_dialhead_to_azimuth(value)));
 }
 
 /*
@@ -1040,3 +1061,49 @@ void MainWindow::on_dialHeading_valueChanged(int value)
   txtLongitude.Text = Trim(aCoords[0])
   txtLatitude.Text = Trim(aCoords[1])
   */
+
+void MainWindow::on_btnGoToMap_clicked()
+{
+    QString longitude = currentRunway->getLongitude();
+    QString latitude = currentRunway->getLatitude();
+    QString head = currentRunway->getHeading();
+
+    ui->dialHeading->setValue(head.toInt());
+
+    longitude = QString::number(longitude.toDouble());
+    latitude = QString::number(latitude.toDouble());
+
+    curr_settings->setLongitude(longitude);
+    curr_settings->setLatitude(latitude);
+    curr_settings->setHeading(head);
+
+    update_latlonhead(latitude, longitude, head);
+    ui->tabOpts->setCurrentWidget(ui->tabBasic);
+}
+
+void MainWindow::on_btnAboutQt_clicked()
+{
+    QMessageBox msgBox;
+    msgBox.aboutQt(this, "About Qt");
+}
+
+void MainWindow::on_cboRunway_currentIndexChanged(const QString &arg1)
+{
+    foreach(Runway *rw, ap_runways)
+    {
+        if(rw->getNumber().compare(arg1)==0)
+        {
+            currentRunway = rw;
+            break;
+        }
+    }
+    if(currentRunway!=NULL)
+        curr_settings->setRunway(currentRunway->getNumber());
+}
+
+void MainWindow::on_btnRunwayInfo_clicked()
+{
+    QMessageBox msgbox;
+    msgbox.setText(currentRunway->getNumber() + " " + currentRunway->getHeading());
+    msgbox.exec();
+}

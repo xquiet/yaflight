@@ -124,6 +124,14 @@ private slots:
 
     void on_dialHeading_valueChanged(int value);
 
+    void on_btnGoToMap_clicked();
+
+    void on_btnAboutQt_clicked();
+
+    void on_cboRunway_currentIndexChanged(const QString &arg1);
+
+    void on_btnRunwayInfo_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -146,6 +154,9 @@ private:
     Settings *curr_settings;
 
     Aircraft *ac;
+
+    QList<Runway *> ap_runways;
+    Runway *currentRunway;
 
     FGEnvironment *fgenv;
 
