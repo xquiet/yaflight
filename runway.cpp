@@ -19,3 +19,33 @@ QString Runway::toString()
                    rwSurfaceCode + "|" +
                    rwShoulderCode);
 }
+
+QString Runway::getNumber()
+{
+    return rwNumber;
+}
+
+QString Runway::getLatitude()
+{
+    return rwLatitude;
+}
+
+QString Runway::getLongitude()
+{
+    return rwLongitude;
+}
+
+QString Runway::getHeading()
+{
+    return rwHeading;
+}
+
+QString Runway::getSurfaceCode()
+{
+    return rwSurfaceCode;
+}
+
+QString Runway::getShoulderCode()
+{
+    return rwShoulderCode;
+}
