@@ -1104,6 +1104,11 @@ void MainWindow::on_cboRunway_currentIndexChanged(const QString &arg1)
 void MainWindow::on_btnRunwayInfo_clicked()
 {
     QMessageBox msgbox;
-    msgbox.setText(currentRunway->getNumber() + " " + currentRunway->getHeading());
+    msgbox.setText("Number: " + currentRunway->getNumber() +
+                   "\nHeading: " + currentRunway->getHeading() +
+                   "\nLongitude: " + currentRunway->getLongitude() +
+                   "\nLatitude: " + currentRunway->getLatitude() +
+                   "\nShoulderCode: " + currentRunway->getShoulderCode() +
+                   "\nSurfaceCode: " + currentRunway->getSurfaceCode());
     msgbox.exec();
 }
