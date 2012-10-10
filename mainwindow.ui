@@ -213,7 +213,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tabBasic">
       <attribute name="title">
@@ -383,8 +383,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>161</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -423,8 +423,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>161</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -988,7 +988,7 @@
          <x>10</x>
          <y>10</y>
          <width>451</width>
-         <height>191</height>
+         <height>181</height>
         </rect>
        </property>
        <property name="toolTip">
@@ -1005,7 +1005,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>210</y>
+         <y>190</y>
          <width>121</width>
          <height>20</height>
         </rect>
@@ -1018,7 +1018,7 @@
        <property name="geometry">
         <rect>
          <x>130</x>
-         <y>210</y>
+         <y>190</y>
          <width>21</width>
          <height>21</height>
         </rect>
@@ -1044,7 +1044,7 @@
        <property name="geometry">
         <rect>
          <x>330</x>
-         <y>210</y>
+         <y>190</y>
          <width>101</width>
          <height>24</height>
         </rect>
@@ -1054,7 +1054,7 @@
        <property name="geometry">
         <rect>
          <x>270</x>
-         <y>210</y>
+         <y>190</y>
          <width>57</width>
          <height>14</height>
         </rect>
@@ -1067,7 +1067,7 @@
        <property name="geometry">
         <rect>
          <x>440</x>
-         <y>210</y>
+         <y>190</y>
          <width>21</width>
          <height>21</height>
         </rect>
@@ -1078,6 +1078,32 @@
        <property name="icon">
         <iconset resource="yaflightresources.qrc">
          <normaloff>:/icons/icons/dialog-information.png</normaloff>:/icons/icons/dialog-information.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnGoToMap">
+       <property name="geometry">
+        <rect>
+         <x>332</x>
+         <y>220</y>
+         <width>101</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="toolTip">
+        <string>Place aircraft on the right place</string>
+       </property>
+       <property name="text">
+        <string>Go To Map...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="yaflightresources.qrc">
+         <normaloff>:/icons/icons/list-add.png</normaloff>:/icons/icons/list-add.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -1169,6 +1195,25 @@
       </widget>
      </widget>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="btnAboutQt">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>100</y>
+      <width>101</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>About Qt</string>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
    </widget>
   </widget>
  </widget>
