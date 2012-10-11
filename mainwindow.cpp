@@ -136,7 +136,10 @@ QHash<QString, QString> MainWindow::getListOfAircrafts()
 void MainWindow::on_btnAbout_clicked()
 {
     QMessageBox msgbox;
-    msgbox.about(this,"About","yaflight4w - yaflight for windows\nVersion:" + QString::number(VERSION) + "\n(C) 2011-2012 by Matteo Pasotti");
+    msgbox.about(this,"About",QApplication::applicationName() +
+                 "cross platform yaflight\nVersion:" +
+                 QString::number(VERSION) +
+                 "\n(C) 2011-2012 by Matteo Pasotti");
 }
 
 void MainWindow::on_pbtLaunch_clicked()
@@ -233,11 +236,13 @@ void MainWindow::on_btnExit_clicked()
 void MainWindow::expOptsExpanded()
 {
     this->setGeometry(x(),y(),width(),ui->expanderOpts->height()+ui->expanderOpts->height()+2);
+    posX = x();
+    posY = y();
 }
 
 void MainWindow::expOptsUnexpanded()
 {
-    this->setGeometry(x(),y(),width(),ui->expanderOpts->height()+ui->expanderOpts->height()+2);
+    this->setGeometry(posX,posY,width(),ui->expanderOpts->height()+ui->expanderOpts->height()+2);
 }
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
@@ -1111,4 +1116,59 @@ void MainWindow::on_btnRunwayInfo_clicked()
                    "\nShoulderCode: " + currentRunway->getShoulderCode() +
                    "\nSurfaceCode: " + currentRunway->getSurfaceCode());
     msgbox.exec();
+}
+
+void MainWindow::on_btnAdd_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select scenery directory"),
+                                                    fgenv->getYFHome(),
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
+    add_scenery_path(dir);
+}
+
+void MainWindow::on_btnDel_clicked()
+{
+    if(ui->tblSceneries->selectedItems().count() <= 0)
+        return;
+    QMessageBox msgbox;
+    msgbox.setText("Dropping: "+ui->tblSceneries->currentItem()->text().trimmed()+"\nAre you sure?");
+    msgbox.addButton(QMessageBox::Ok);
+    msgbox.addButton(QMessageBox::Cancel);
+    if(msgbox.exec() == QMessageBox::Ok)
+        ui->tblSceneries->removeRow(ui->tblSceneries->currentRow());
+}
+
+void MainWindow::add_scenery_path(QString sceneryPath)
+{
+    bool alreadyPresent=false;
+
+    for(int i=0;i<ui->tblSceneries->rowCount();i++)
+    {
+        if(ui->tblSceneries->item(i,0)->text().trimmed().compare(sceneryPath.trimmed())!=0)
+        {
+            if(ui->tblSceneries->item(i,0)->text().trimmed().compare(fgenv->getDefaultScenery())!=0)
+            {
+                alreadyPresent = false;
+            }
+            else
+            {
+                alreadyPresent = true;
+                break;
+            }
+        }
+        else
+        {
+            alreadyPresent = true;
+            break;
+        }
+    }
+
+    if(alreadyPresent == false)
+    {
+        ui->tblSceneries->setRowCount(ui->tblSceneries->rowCount()+1);
+        ui->tblSceneries->setItem(ui->tblSceneries->rowCount()-1,0,new QTableWidgetItem(sceneryPath.trimmed()));
+        qDebug("%s", sceneryPath.toStdString().data());
+    }
+
 }

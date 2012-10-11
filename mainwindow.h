@@ -14,6 +14,7 @@
 //#include <QStringListModel>
 #include <QStandardItemModel>
 #include <QWebFrame>
+#include <QFileDialog>
 
 #include "fgenvironment.h"
 #include "dlgaircraftdetails.h"
@@ -132,15 +133,26 @@ private slots:
 
     void on_btnRunwayInfo_clicked();
 
+    void on_btnAdd_clicked();
+
+    void on_btnDel_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
 private:
+    // ----- app -----
     Ui::MainWindow *ui;
-    QProcess *procFGFS;
+    QPoint dragPosition; // used to move the frameless window
     int _mainWindowMaxHeight, _mainWindowMinHeight;
+    int posX, posY;
+
+    // ----- processes -----
+    QProcess *procFGFS;
+
+    // ----- aircrafts -----
     QStringList aircrafts;
     // hash key   --> aircraft name (unique)
     // hash value --> aircraft dir  (multiple)
@@ -148,26 +160,27 @@ private:
     QHash<QString, QString> getListOfAircrafts();
     void refreshListOfAircrafts();
     void drawThumbnail(QString dir);
-    QStringList collectLaunchSettings();
-    QHash<QString, QStringList> collect_all_airports();
-    void setup_airport_list();
-    Settings *curr_settings;
-
     Aircraft *ac;
 
+    // ----- airports -----
+    QHash<QString, QStringList> collect_all_airports();
+    void setup_airport_list();
     QList<Runway *> ap_runways;
     Runway *currentRunway;
 
-    FGEnvironment *fgenv;
-
-    //void loadSettings(FGEnvironment *fgenv);
+    // ----- settings -----
+    Settings *curr_settings;
+    QStringList collectLaunchSettings();
     void loadSettings(bool appStart=false);
     bool saveSettings();
+    void add_scenery_path(QString sceneryPath);
 
-    QPoint dragPosition; // used to move the frameless window
+    FGEnvironment *fgenv;
 
+    // ----- flags -----
     bool just_started;
 
+    // ----- web service -----
     void update_latlonhead(QString lat, QString lon, QString heading);
     void adjust_heading_value(int head);
     int convert_dialhead_to_azimuth(int value);
