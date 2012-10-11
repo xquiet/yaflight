@@ -612,7 +612,7 @@ void MainWindow::loadSettings(bool appStart)
             ui->tblSceneries->setRowCount(0);
             ui->tblSceneries->setColumnCount(0);
             ui->tblSceneries->clear();
-            QStringList sceneryList = curr_settings->getSceneries().trimmed().split(":");
+            QStringList sceneryList = curr_settings->getSceneries().trimmed().split("|");
             ui->tblSceneries->setRowCount(sceneryList.count());
             ui->tblSceneries->setColumnCount(1);
             ui->tblSceneries->setShowGrid(false);
@@ -669,7 +669,7 @@ bool MainWindow::saveSettings()
         {
             currScenery = ui->tblSceneries->item(i,0)->text().trimmed();
             if(currScenery.compare(fgenv->getDefaultScenery().trimmed())!=0)
-                sceneries += currScenery + ":";
+                sceneries += currScenery + "|";
         }
         sceneries.remove(sceneries.length()-1,1);
         curr_settings->setSceneries(sceneries);
@@ -1168,6 +1168,9 @@ void MainWindow::on_btnDel_clicked()
 void MainWindow::add_scenery_path(QString sceneryPath)
 {
     bool alreadyPresent=false;
+
+    if(ui->tblSceneries->rowCount()<=0)
+        ui->tblSceneries->setRowCount(1);
 
     for(int i=0;i<ui->tblSceneries->rowCount();i++)
     {
