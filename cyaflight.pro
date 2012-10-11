@@ -11,7 +11,11 @@ TARGET = cyaflight
 TEMPLATE = app
 
 # pkg-config --libs zlib
-LIBS += -lz
+LINUX:LIBS += -lz
+
+WIN32:LIBS += "C:\\Users\\matteo\\workspace\\zlib-1.2.7\\contrib\\vstudio\\vc9\\x86\\ZlibDllReleaseWithoutAsm"
+
+INCLUDEPATH += "C:\\Users\\matteo\\workspace\\zlib-1.2.7"
 
 SOURCES += main.cpp\
         mainwindow.cpp \
