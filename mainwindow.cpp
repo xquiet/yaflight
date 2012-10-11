@@ -9,6 +9,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     just_started = true;
 
+    posX = this->x();
+    posY = this->y();
+
     fgenv = new FGEnvironment();
 
     //curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
@@ -235,9 +238,7 @@ void MainWindow::on_btnExit_clicked()
 
 void MainWindow::expOptsExpanded()
 {
-    this->setGeometry(x(),y(),width(),ui->expanderOpts->height()+ui->expanderOpts->height()+2);
-    posX = x();
-    posY = y();
+    this->setGeometry(posX,posY,width(),ui->expanderOpts->height()+ui->expanderOpts->height()+2);
 }
 
 void MainWindow::expOptsUnexpanded()
@@ -249,6 +250,8 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         dragPosition = event->globalPos() - frameGeometry().topLeft();
+        posX = this->x();
+        posY = this->y();
         event->accept();
     }
 }
@@ -257,6 +260,8 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
  {
      if (event->buttons() & Qt::LeftButton) {
          move(event->globalPos() - dragPosition);
+         posX = this->x();
+         posY = this->y();
          event->accept();
      }
  }
