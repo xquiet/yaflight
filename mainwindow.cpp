@@ -228,7 +228,7 @@ void MainWindow::on_btnAircraftInfo_clicked()
                 hashOfAircrafts.value(ui->cboAircrafts->currentText())
                 );
 
-    dlgAircraftDetails dlg(details, this);
+    dlgAircraftDetails dlg(details, fgenv, this);
     dlg.setModal(true);
     dlg.exec();
 }
@@ -562,8 +562,9 @@ void MainWindow::loadSettings(bool appStart)
         (curr_settings->getHUD3D().compare(SET_TRUE)==0) ? ui->rdbHud3D->setChecked(true) : ui->rdbHud3D->setChecked(true);
         (curr_settings->getEnhancedLighting().compare(SET_TRUE)==0) ? ui->ckbEnhancedLighting->setChecked(true) : ui->ckbEnhancedLighting->setChecked(false);
         (curr_settings->getSpecularReflections().compare(SET_TRUE)==0) ? ui->ckbSpecularReflections->setChecked(true) : ui->ckbSpecularReflections->setChecked(false);
+        (curr_settings->getTerraSync().compare(SET_TRUE)==0) ? ui->ckbTerraSync->setChecked(true) : ui->ckbTerraSync->setChecked(false);
 
-        // missing handles to Altitude, Heading, Lat, Long, Terrasync, Aircraft
+        // missing handles to Altitude, Heading, Lat, Long
 
         // aircraft
         int aircraft_idx = ui->cboAircrafts->findText(curr_settings->getAircraft());
@@ -605,6 +606,7 @@ void MainWindow::loadSettings(bool appStart)
             ui->cboSeason->setCurrentIndex(itemIndex);
         }
 
+        // sceneries
         if(curr_settings->getSceneries().trimmed().compare("")!=0)
         {
             ui->tblSceneries->setRowCount(0);
@@ -1016,6 +1018,11 @@ void MainWindow::on_cboSeason_currentIndexChanged(const QString &arg1)
         curr_settings->setSeason(arg1);
 }
 
+void MainWindow::on_ckbTerraSync_toggled(bool checked)
+{
+    checked ? curr_settings->setTerraSync(SET_TRUE) : curr_settings->setTerraSync(SET_FALSE);
+}
+
 void MainWindow::on_tbvAirports_doubleClicked(const QModelIndex &index)
 {
     QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
@@ -1205,3 +1212,4 @@ void MainWindow::hndl_tmr_procfgfs()
         ui->pbtLaunch->setIcon(icon);
     }
 }
+

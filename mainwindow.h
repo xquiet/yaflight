@@ -140,6 +140,8 @@ private slots:
 
     void hndl_tmr_procfgfs();
 
+    void on_ckbTerraSync_toggled(bool checked);
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
