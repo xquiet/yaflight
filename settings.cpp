@@ -223,7 +223,7 @@ QString Settings::getTerraSync()
 
 QString Settings::getSceneries()
 {
-    return conf->get(SCENERIES, "CUSTOMSCENERY");
+    return conf->get(SCENERIES, "CUSTOMSCENERIES");
 }
 
 /*
@@ -426,5 +426,5 @@ void Settings::setTerraSync(QString val)
 
 void Settings::setSceneries(QString val)
 {
-    conf->set(QString(SCENERIES), QString("CUSTOMSCENERY"), val);
+    conf->set(QString(SCENERIES), QString("CUSTOMSCENERIES"), val);
 }
