@@ -17,7 +17,9 @@ class dlgAircraftDetails : public QDialog
     Q_OBJECT
     
 public:
-    explicit dlgAircraftDetails(QStringList details, QWidget *parent = 0);
+    explicit dlgAircraftDetails(QStringList details,
+                                FGEnvironment *fgenv,
+                                QWidget *parent = 0);
     ~dlgAircraftDetails();
     
 private:

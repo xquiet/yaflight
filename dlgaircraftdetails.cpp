@@ -1,7 +1,7 @@
 #include "dlgaircraftdetails.h"
 #include "ui_dlgaircraftdetails.h"
 
-dlgAircraftDetails::dlgAircraftDetails(QStringList details, QWidget *parent) :
+dlgAircraftDetails::dlgAircraftDetails(QStringList details, FGEnvironment *fgenv, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::dlgAircraftDetails)
 {
@@ -24,7 +24,8 @@ dlgAircraftDetails::dlgAircraftDetails(QStringList details, QWidget *parent) :
         }
         else
         {
-            FGEnvironment *fgenv = new FGEnvironment();
+            if(couple.value(1).trimmed().endsWith(".rgb",Qt::CaseInsensitive))
+                return;
             ImagePreview iprvw(fgenv->getRootPath()+"/"+couple.value(1).trimmed(),ui->lblAircraft->width(),ui->lblAircraft->height());
             ui->lblAircraft->setScaledContents(true);
             ui->lblAircraft->setPixmap(iprvw.getPixmap());
