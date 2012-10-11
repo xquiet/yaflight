@@ -15,6 +15,7 @@
 #include <QStandardItemModel>
 #include <QWebFrame>
 #include <QFileDialog>
+#include <QTimer>
 
 #include "fgenvironment.h"
 #include "dlgaircraftdetails.h"
@@ -137,6 +138,8 @@ private slots:
 
     void on_btnDel_clicked();
 
+    void hndl_tmr_procfgfs();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -151,6 +154,7 @@ private:
 
     // ----- processes -----
     QProcess *procFGFS;
+    bool procFGFS_isRunning;
 
     // ----- aircrafts -----
     QStringList aircrafts;

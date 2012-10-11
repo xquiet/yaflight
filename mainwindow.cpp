@@ -147,21 +147,35 @@ void MainWindow::on_btnAbout_clicked()
 
 void MainWindow::on_pbtLaunch_clicked()
 {
-    QStringList params = collectLaunchSettings();
-    procFGFS = new QProcess();
-    procFGFS->setProcessChannelMode(QProcess::MergedChannels);
-    procFGFS->setReadChannel(QProcess::StandardOutput);
-    QStringList env = QProcess::systemEnvironment();
-    procFGFS->setEnvironment(env);
-    procFGFS->start(fgenv->getFgfsBinPath(), params, QProcess::ReadOnly);
-    //if(!pls->waitForStarted())
-    //    return false;
-    ui->txaLog->append("Launching...");
-    ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
-    connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
-    connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
+    if(!procFGFS_isRunning)
+    {
+        QStringList params = collectLaunchSettings();
+        procFGFS = new QProcess();
+        procFGFS->setProcessChannelMode(QProcess::MergedChannels);
+        procFGFS->setReadChannel(QProcess::StandardOutput);
+        QStringList env = QProcess::systemEnvironment();
+        procFGFS->setEnvironment(env);
+        procFGFS->start(fgenv->getFgfsBinPath(), params, QProcess::ReadOnly);
+        //if(!pls->waitForStarted())
+        //    return false;
+        ui->txaLog->append("Launching...");
+        ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
+        connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
+        connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
 
-    procFGFS->closeWriteChannel();
+        QTimer *tmrProcFGFS = new QTimer();
+        connect(tmrProcFGFS, SIGNAL(timeout()),this,SLOT(hndl_tmr_procfgfs()));
+        tmrProcFGFS->start(350);
+
+        procFGFS->closeWriteChannel();
+        procFGFS_isRunning = true;
+    }
+    else
+    {
+        procFGFS->kill();
+        procFGFS->close();
+        procFGFS_isRunning=false;
+    }
 }
 
 void MainWindow::readAircrafts()
@@ -1176,4 +1190,18 @@ void MainWindow::add_scenery_path(QString sceneryPath)
         qDebug("%s", sceneryPath.toStdString().data());
     }
 
+}
+
+void MainWindow::hndl_tmr_procfgfs()
+{
+    if(procFGFS->state() == QProcess::Running)
+    {
+        QIcon icon(":/icons/icons/system-shutdown.png");
+        ui->pbtLaunch->setIcon(icon);
+    }
+    else
+    {
+        QIcon icon(":/icons/icons/applications-system.png");
+        ui->pbtLaunch->setIcon(icon);
+    }
 }
