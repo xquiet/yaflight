@@ -656,6 +656,11 @@ void MainWindow::loadSettings(bool appStart)
 bool MainWindow::saveSettings()
 {
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+    if((lstviewmodel==NULL)||(lstviewmodel->rowCount()<=0))
+    {
+        lstviewmodel = new QStringListModel(QStringList());
+        ui->lstviewSceneries->setModel(lstviewmodel);
+    }
     if(lstviewmodel->rowCount()>0)
     {
         QString sceneries = "";
