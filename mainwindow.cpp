@@ -1167,27 +1167,32 @@ void MainWindow::add_scenery_path(QString sceneryPath)
     bool alreadyPresent=false;
 
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
-    if(lstviewmodel->rowCount()<=0)
-        lstviewmodel->setStringList(QStringList());
-
-    for(int i=0;i<lstviewmodel->rowCount();i++)
+    if((lstviewmodel==NULL)||(lstviewmodel->rowCount()<=0))
     {
-        if(lstviewmodel->stringList().value(i).trimmed().compare(sceneryPath.trimmed())!=0)
+        lstviewmodel = new QStringListModel(QStringList());
+        ui->lstviewSceneries->setModel(lstviewmodel);
+        alreadyPresent = false;
+    }
+    else{
+        for(int i=0;i<lstviewmodel->rowCount();i++)
         {
-            if(lstviewmodel->stringList().value(i).trimmed().compare(fgenv->getDefaultScenery())!=0)
+            if(lstviewmodel->stringList().value(i).trimmed().compare(sceneryPath.trimmed())!=0)
             {
-                alreadyPresent = false;
+                if(lstviewmodel->stringList().value(i).trimmed().compare(fgenv->getDefaultScenery())!=0)
+                {
+                    alreadyPresent = false;
+                }
+                else
+                {
+                    alreadyPresent = true;
+                    break;
+                }
             }
             else
             {
                 alreadyPresent = true;
                 break;
             }
-        }
-        else
-        {
-            alreadyPresent = true;
-            break;
         }
     }
 
