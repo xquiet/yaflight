@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     just_started = true;
+    procFGFS_isRunning = false;
 
     posX = this->x();
     posY = this->y();
