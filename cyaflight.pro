@@ -13,9 +13,9 @@ TEMPLATE = app
 # pkg-config --libs zlib
 unix:LIBS += -lz
 
-win32:LIBS += "C:\\Users\\matteo\\workspace\\zlib-1.2.7\\contrib\\vstudio\\vc9\\x86\\ZlibDllReleaseWithoutAsm"
+win32:LIBS += "C:\\Users\\matteo\\workspace\\zlib-1.2.7\\contrib\\vstudio\\vc9\\x86\\ZlibDllReleaseWithoutAsm\\zlibwapi.dll"
 
-INCLUDEPATH += "C:\\Users\\matteo\\workspace\\zlib-1.2.7"
+win32:INCLUDEPATH += "C:\\Users\\matteo\\workspace\\zlib-1.2.7"
 
 SOURCES += main.cpp\
         mainwindow.cpp \
