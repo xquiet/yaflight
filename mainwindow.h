@@ -190,6 +190,8 @@ private:
     void update_latlonhead(QString lat, QString lon, QString heading);
     void adjust_heading_value(int head);
     int convert_dialhead_to_azimuth(int value);
+    void place_aircraft_on_map_reading_table();
+    void place_aircraft_on_map_reading_settings();
 };
 
 #endif // MAINWINDOW_H

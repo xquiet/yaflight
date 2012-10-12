@@ -636,12 +636,14 @@ void MainWindow::loadSettings(bool appStart)
                         selectionModel->select(model->index(i,1),QItemSelectionModel::ClearAndSelect);
                         // runways
                         on_tbvAirports_clicked(model->index(i,1));
+                        ui->webView->reload();
+                        place_aircraft_on_map_reading_table();
                         break;
                     }
                 }
             }
 
-            ui->webView->reload();
+            // AGGIORNARE POSIZIONE SU MAPPA!
         }
 
         ui->txaLog->append("INFO: Configuration loaded correctly");
@@ -1025,6 +1027,12 @@ void MainWindow::on_ckbTerraSync_toggled(bool checked)
 
 void MainWindow::on_tbvAirports_doubleClicked(const QModelIndex &index)
 {
+    place_aircraft_on_map_reading_table();
+    ui->tabOpts->setCurrentWidget(ui->tabBasic);
+}
+
+void MainWindow::place_aircraft_on_map_reading_table()
+{
     QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
     QModelIndexList modelidxlst = ui->tbvAirports->selectionModel()->selectedIndexes();
 
@@ -1036,7 +1044,24 @@ void MainWindow::on_tbvAirports_doubleClicked(const QModelIndex &index)
     QString head = QString::number(ui->dialHeading->value());
 
     update_latlonhead(latitude, longitude, head);
-    ui->tabOpts->setCurrentWidget(ui->tabBasic);
+}
+
+void MainWindow::place_aircraft_on_map_reading_settings()
+{
+    QString longitude = currentRunway->getLongitude();
+    QString latitude = currentRunway->getLatitude();
+    QString head = currentRunway->getHeading();
+
+    ui->dialHeading->setValue(head.toInt());
+
+    longitude = QString::number(longitude.toDouble());
+    latitude = QString::number(latitude.toDouble());
+
+    curr_settings->setLongitude(longitude);
+    curr_settings->setLatitude(latitude);
+    curr_settings->setHeading(head);
+
+    update_latlonhead(latitude, longitude, head);
 }
 
 void MainWindow::update_latlonhead(QString lat, QString lon, QString heading)
@@ -1095,20 +1120,7 @@ void MainWindow::on_dialHeading_valueChanged(int value)
 
 void MainWindow::on_btnGoToMap_clicked()
 {
-    QString longitude = currentRunway->getLongitude();
-    QString latitude = currentRunway->getLatitude();
-    QString head = currentRunway->getHeading();
-
-    ui->dialHeading->setValue(head.toInt());
-
-    longitude = QString::number(longitude.toDouble());
-    latitude = QString::number(latitude.toDouble());
-
-    curr_settings->setLongitude(longitude);
-    curr_settings->setLatitude(latitude);
-    curr_settings->setHeading(head);
-
-    update_latlonhead(latitude, longitude, head);
+    place_aircraft_on_map_reading_settings();
     ui->tabOpts->setCurrentWidget(ui->tabBasic);
 }
 
