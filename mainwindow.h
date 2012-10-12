@@ -11,7 +11,7 @@
 #include <QHash>
 #include <QHashIterator>
 #include <QResizeEvent>
-//#include <QStringListModel>
+#include <QStringListModel>
 #include <QStandardItemModel>
 #include <QWebFrame>
 #include <QFileDialog>

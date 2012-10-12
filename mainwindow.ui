@@ -1164,7 +1164,7 @@
         <string>TerraSync</string>
        </property>
       </widget>
-      <widget class="QTableWidget" name="tblSceneries">
+      <widget class="QListView" name="lstviewSceneries">
        <property name="geometry">
         <rect>
          <x>0</x>

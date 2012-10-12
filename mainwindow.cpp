@@ -283,11 +283,12 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 QStringList MainWindow::collectLaunchSettings()
 {
     QString fgScenery = fgenv->getDefaultScenery();
-    if(ui->tblSceneries->rowCount()>0)
+    QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+    if(lstviewmodel->rowCount()>0)
     {
-        for(int i=0;i<ui->tblSceneries->rowCount();i++)
+        for(int i=0;i<lstviewmodel->rowCount();i++)
         {
-            QString currItem = ui->tblSceneries->item(i,0)->text().trimmed();
+            QString currItem = lstviewmodel->stringList().value(i).trimmed();
             if(fgenv->getDefaultScenery().trimmed().compare(currItem)!=0)
             {
                 fgScenery += ":" + currItem;
@@ -609,24 +610,14 @@ void MainWindow::loadSettings(bool appStart)
         // sceneries
         if(curr_settings->getSceneries().trimmed().compare("")!=0)
         {
-            ui->tblSceneries->setRowCount(0);
-            ui->tblSceneries->setColumnCount(0);
-            ui->tblSceneries->clear();
+            QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+            if(lstviewmodel==NULL)
+                lstviewmodel = new QStringListModel(QStringList());
+            lstviewmodel->removeRows(0,lstviewmodel->rowCount());
             QStringList sceneryList = curr_settings->getSceneries().trimmed().split("|");
-            ui->tblSceneries->setRowCount(sceneryList.count());
-            ui->tblSceneries->setColumnCount(1);
-            ui->tblSceneries->setShowGrid(false);
-            ui->tblSceneries->horizontalHeader()->hide();
-            ui->tblSceneries->verticalHeader()->hide();
-            ui->tblSceneries->setColumnWidth(0,ui->tblSceneries->width()-2);
-            ui->tblSceneries->setSelectionMode(QAbstractItemView::SingleSelection);
-            int row = 0;
-            foreach(QString item, sceneryList)
-            {
-                ui->tblSceneries->setItem(row,0,new QTableWidgetItem(item));
-                row++;
-            }
-
+            lstviewmodel->setStringList(sceneryList);
+            ui->lstviewSceneries->setSelectionMode(QAbstractItemView::SingleSelection);
+            ui->lstviewSceneries->setModel(lstviewmodel);
         }
 
 
@@ -661,13 +652,14 @@ void MainWindow::loadSettings(bool appStart)
 
 bool MainWindow::saveSettings()
 {
-    if(ui->tblSceneries->rowCount()>0)
+    QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+    if(lstviewmodel->rowCount()>0)
     {
         QString sceneries = "";
         QString currScenery;
-        for(int i=0;i<ui->tblSceneries->rowCount();i++)
+        for(int i=0;i<lstviewmodel->rowCount();i++)
         {
-            currScenery = ui->tblSceneries->item(i,0)->text().trimmed();
+            currScenery = lstviewmodel->stringList().value(i).trimmed();
             if(currScenery.compare(fgenv->getDefaultScenery().trimmed())!=0)
                 sceneries += currScenery + "|";
         }
@@ -702,9 +694,10 @@ void MainWindow::on_pbtLoadConf_clicked()
 QHash<QString, QStringList> MainWindow::collect_all_airports()
 {
     QHash<QString, QStringList> resultAirports = fgenv->getDefaultAirportList();
-    for(int i=0;i<ui->tblSceneries->rowCount();i++)
+    QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+    for(int i=0;i<lstviewmodel->rowCount();i++)
     {
-        QHash<QString, QStringList> tmpAirports = fgenv->parseAirportsIndex(ui->tblSceneries->item(i,0)->text().trimmed()+"/Airports/index.txt");
+        QHash<QString, QStringList> tmpAirports = fgenv->parseAirportsIndex(lstviewmodel->stringList().value(i).trimmed()+"/Airports/index.txt");
         foreach(QString key, tmpAirports.keys())
         {
             if(!resultAirports.contains(key))
@@ -745,9 +738,10 @@ void MainWindow::setup_airport_list()
         QHash<QString, QStringList> airportsHash = collect_all_airports();
         QStringList allAirportDirectories;
         allAirportDirectories << fgenv->getDefaultAirportsDir();
-        for(int i=0;i<ui->tblSceneries->rowCount();i++)
+        QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+        for(int i=0;i<lstviewmodel->rowCount();i++)
         {
-            allAirportDirectories << ui->tblSceneries->item(i,0)->text().trimmed()+"/Airports";
+            allAirportDirectories << lstviewmodel->stringList().value(i).trimmed()+"/Airports";
         }
         int row = 0;
         model->setRowCount(airportsHash.count());
@@ -1155,28 +1149,32 @@ void MainWindow::on_btnAdd_clicked()
 
 void MainWindow::on_btnDel_clicked()
 {
-    if(ui->tblSceneries->selectedItems().count() <= 0)
+    QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+    if(!ui->lstviewSceneries->currentIndex().isValid())
         return;
     QMessageBox msgbox;
-    msgbox.setText("Dropping: "+ui->tblSceneries->currentItem()->text().trimmed()+"\nAre you sure?");
+    msgbox.setText("Dropping: "+
+                   lstviewmodel->stringList().value(ui->lstviewSceneries->currentIndex().row()).trimmed()+
+                   "\nAre you sure?");
     msgbox.addButton(QMessageBox::Ok);
     msgbox.addButton(QMessageBox::Cancel);
     if(msgbox.exec() == QMessageBox::Ok)
-        ui->tblSceneries->removeRow(ui->tblSceneries->currentRow());
+        lstviewmodel->removeRow(ui->lstviewSceneries->currentIndex().row());
 }
 
 void MainWindow::add_scenery_path(QString sceneryPath)
 {
     bool alreadyPresent=false;
 
-    if(ui->tblSceneries->rowCount()<=0)
-        ui->tblSceneries->setRowCount(1);
+    QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+    if(lstviewmodel->rowCount()<=0)
+        lstviewmodel->setStringList(QStringList());
 
-    for(int i=0;i<ui->tblSceneries->rowCount();i++)
+    for(int i=0;i<lstviewmodel->rowCount();i++)
     {
-        if(ui->tblSceneries->item(i,0)->text().trimmed().compare(sceneryPath.trimmed())!=0)
+        if(lstviewmodel->stringList().value(i).trimmed().compare(sceneryPath.trimmed())!=0)
         {
-            if(ui->tblSceneries->item(i,0)->text().trimmed().compare(fgenv->getDefaultScenery())!=0)
+            if(lstviewmodel->stringList().value(i).trimmed().compare(fgenv->getDefaultScenery())!=0)
             {
                 alreadyPresent = false;
             }
@@ -1195,8 +1193,9 @@ void MainWindow::add_scenery_path(QString sceneryPath)
 
     if(alreadyPresent == false)
     {
-        ui->tblSceneries->setRowCount(ui->tblSceneries->rowCount()+1);
-        ui->tblSceneries->setItem(ui->tblSceneries->rowCount()-1,0,new QTableWidgetItem(sceneryPath.trimmed()));
+        QStringList newList = lstviewmodel->stringList();
+        newList.append(sceneryPath.trimmed());
+        lstviewmodel->setStringList(newList);
         qDebug("%s", sceneryPath.toStdString().data());
     }
 
