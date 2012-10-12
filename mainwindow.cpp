@@ -695,6 +695,11 @@ QHash<QString, QStringList> MainWindow::collect_all_airports()
 {
     QHash<QString, QStringList> resultAirports = fgenv->getDefaultAirportList();
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+    if((lstviewmodel==NULL)||(lstviewmodel->rowCount()<=0))
+    {
+        lstviewmodel = new QStringListModel(QStringList());
+        ui->lstviewSceneries->setModel(lstviewmodel);
+    }
     for(int i=0;i<lstviewmodel->rowCount();i++)
     {
         QHash<QString, QStringList> tmpAirports = fgenv->parseAirportsIndex(lstviewmodel->stringList().value(i).trimmed()+"/Airports/index.txt");
@@ -729,7 +734,8 @@ void MainWindow::setup_airport_list()
     ui->tbvAirports->setSelectionMode(QAbstractItemView::SingleSelection);
 
 
-    AirportIdx apindex(fgenv->getAirportsCacheFilePath(), fgenv->getRunwaysCacheFilePath());
+    //AirportIdx apindex(fgenv->getAirportsCacheFilePath(), fgenv->getRunwaysCacheFilePath());
+    AirportIdx apindex(fgenv->getAirportsCacheFilePath());
     Airport *ap;
 
     if(!apindex.exists())

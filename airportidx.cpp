@@ -1,9 +1,8 @@
 #include "airportidx.h"
 
-AirportIdx::AirportIdx(QString cachePath, QString rwCachePath)
+AirportIdx::AirportIdx(QString cachePath)
 {
     airportsIndexCachePath = cachePath.trimmed();
-    runwaysIndexCachePath = rwCachePath.trimmed();
 }
 
 bool AirportIdx::create(QHash<QString, QStringList> airportHash,
@@ -18,39 +17,32 @@ bool AirportIdx::create(QHash<QString, QStringList> airportHash,
     QFile cache(airportsIndexCachePath);
     if(cache.open(QIODevice::WriteOnly|QIODevice::Text))
     {
-        QFile runwayscache(runwaysIndexCachePath);
-        if(runwayscache.open(QIODevice::WriteOnly|QIODevice::Text))
+        QTextStream out(&cache);
+        foreach(QString key, airportHash.keys())
         {
-            QTextStream out(&cache);
-            QTextStream outrwcache(&runwayscache);
-            foreach(QString key, airportHash.keys())
+            /*aptdat = new APT_dat(aptdatgzipped,decompresseddirpath);
+            if(!aptdat->retrieve_ap_details(key))
             {
-                /*aptdat = new APT_dat(aptdatgzipped,decompresseddirpath);
-                if(!aptdat->retrieve_ap_details(key))
-                {
-                    cache.close();
-                    runwayscache.close();
-                    return false;
-                }
-                QString airportDescription = aptdat->get_ap_description(key);
-                QList<Runway *> runways = aptdat->get_ap_runways(key);*/
-                out << key + "|"
-                           + airportHash[key][0]
-                           + "|"
-                           + airportHash[key][1]
-                           + "|"
-                           + airportHash[key][2]
-                           + "|"
-                           //+ airportDescription
-                    << endl;
-                /*foreach(Runway *rw, runways)
-                    outrwcache << key + "|" + rw->toString() << endl;*/
+                cache.close();
+                runwayscache.close();
+                return false;
             }
-            out.flush();
-            outrwcache.flush();
-            cache.close();
-            runwayscache.close();
+            QString airportDescription = aptdat->get_ap_description(key);
+            QList<Runway *> runways = aptdat->get_ap_runways(key);*/
+            out << key + "|"
+                       + airportHash[key][0]
+                       + "|"
+                       + airportHash[key][1]
+                       + "|"
+                       + airportHash[key][2]
+                       + "|"
+                       //+ airportDescription
+                << endl;
+            /*foreach(Runway *rw, runways)
+                outrwcache << key + "|" + rw->toString() << endl;*/
         }
+        out.flush();
+        cache.close();
     }
     else
     {

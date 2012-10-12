@@ -11,7 +11,7 @@
 class AirportIdx
 {
 public:
-    AirportIdx(QString cachePath, QString rwCachePath);
+    AirportIdx(QString cachePath);
     bool exists();
     bool load();
     int count();
@@ -21,7 +21,6 @@ public:
     QHash<QString, QStringList> get();
 private:
     QString airportsIndexCachePath;
-    QString runwaysIndexCachePath;
     QHash<QString, QStringList> airportIdxCache;
 
     //APT_dat *aptdat;
