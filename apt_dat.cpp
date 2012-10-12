@@ -101,6 +101,7 @@ bool APT_dat::retrieve_ap_details(QString icao)
             }
         }
     }
+    return false;  // it should never reach this place
 }
 
 QString APT_dat::parseAirportLine(QStringList items)
