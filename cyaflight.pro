@@ -11,9 +11,9 @@ TARGET = cyaflight
 TEMPLATE = app
 
 # pkg-config --libs zlib
-LINUX:LIBS += -lz
+unix:LIBS += -lz
 
-WIN32:LIBS += "C:\\Users\\matteo\\workspace\\zlib-1.2.7\\contrib\\vstudio\\vc9\\x86\\ZlibDllReleaseWithoutAsm"
+win32:LIBS += "C:\\Users\\matteo\\workspace\\zlib-1.2.7\\contrib\\vstudio\\vc9\\x86\\ZlibDllReleaseWithoutAsm"
 
 INCLUDEPATH += "C:\\Users\\matteo\\workspace\\zlib-1.2.7"
 
