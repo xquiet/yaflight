@@ -34,8 +34,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     fgenv = new FGEnvironment();
 
-    //curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
-
     connect(ui->expanderOpts,SIGNAL(expanded()),this,SLOT(expOptsExpanded()));
     connect(ui->expanderOpts,SIGNAL(unexpanded()),this,SLOT(expOptsUnexpanded()));
 
@@ -49,14 +47,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // reload and populate hashOfAircrafts for
     // a later use
     refreshListOfAircrafts();
-
-    /*
-    QHashIterator<QString, QString> item(hashOfAircrafts);
-    while (item.hasNext()) {
-        item.next();
-        listOfAircrafts << item.key();
-    }
-    */
 
     // windows geometries
     QStringList windowGeometries;
@@ -102,18 +92,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->lblDefaultScenery->setText(fgenv->getDefaultScenery());
 
-//    QMessageBox msgbox;
-//    msgbox.setText(fgenv->__read_winprogramfiles());
-//    msgbox.exec();
-
-    loadSettings(true);
-
     setup_airport_list();
-
-    // double call to loadSettings
-    // trick to make airport from conf.ini
-    // to be properly selected
-    loadSettings();
 
     just_started = false;
 }
@@ -656,14 +635,14 @@ void MainWindow::loadSettings(bool appStart)
                         selectionModel->select(model->index(i,1),QItemSelectionModel::ClearAndSelect);
                         // runways
                         on_tbvAirports_clicked(model->index(i,1));
-                        ui->webView->reload();
-                        place_aircraft_on_map_reading_table();
+                        if(curr_settings->getRunway().trimmed().compare("")!=0){
+                            ui->cboRunway->setCurrentIndex(ui->cboRunway->findText(curr_settings->getRunway().trimmed()));
+                        }
+                        place_aircraft_on_map_reading_settings();
                         break;
                     }
                 }
             }
-
-            // AGGIORNARE POSIZIONE SU MAPPA!
         }
 
         ui->txaLog->append("INFO: Configuration loaded correctly");
@@ -674,6 +653,9 @@ void MainWindow::loadSettings(bool appStart)
 
 bool MainWindow::saveSettings()
 {
+    if(currentRunway!=NULL)
+        curr_settings->setRunway(currentRunway->getNumber());
+
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
     if((lstviewmodel==NULL)||(lstviewmodel->rowCount()<=0))
     {
@@ -697,12 +679,24 @@ bool MainWindow::saveSettings()
     if(curr_settings->storeData())
     {
         ui->txaLog->append("INFO: Configuration stored correctly");
-        QMessageBox msgBox("Success","Configuration stored!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Success");
+        msgBox.setText("Configuration stored!");
+        //msgBox.setInformativeText("Success");
+        msgBox.setIcon(QMessageBox::Information);
+        msgBox.addButton(QMessageBox::Ok);
+        msgBox.setModal(true);
         msgBox.exec();
         return true;
     }else{
         ui->txaLog->append("WARN: Configuration NOT stored");
-        QMessageBox msgBox("Failure","Configuration NOT stored!",QMessageBox::Critical,QMessageBox::Close,NULL,NULL,this);
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Failure");
+        msgBox.setText("Configuration NOT stored!");
+        //msgBox.setInformativeText("Failure");
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.addButton(QMessageBox::Close);
+        msgBox.setModal(true);
         msgBox.exec();
     }
     return false;
@@ -802,7 +796,8 @@ void MainWindow::setup_airport_list()
             model->setData(model->index(row,4), airportsHash[key][2]);
             row++;
         }
-        if(!apindex.create(airportsHash,fgenv->getAPTSource(),fgenv->getYFHome())){
+        //if(!apindex.create(airportsHash,fgenv->getAPTSource(),fgenv->getYFHome())){
+        if(!apindex.create(airportsHash)){
             QMessageBox msgbox(QMessageBox::Critical,"Error","Can't create airport index cache\nCheck you permissions",QMessageBox::Ok);
             msgbox.exec();
         }
@@ -1165,8 +1160,6 @@ void MainWindow::on_cboRunway_currentIndexChanged(const QString &arg1)
             break;
         }
     }
-    if(currentRunway!=NULL)
-        curr_settings->setRunway(currentRunway->getNumber());
 }
 
 void MainWindow::on_btnRunwayInfo_clicked()
