@@ -26,6 +26,8 @@ YaFlight will continue to exist but maintaining two code bases is to much effort
 consequently it will be abandoned soon or later (consider please that cyaflight can be executed 
 even on GNU/Linux and BSD systems, so I'll focus on adding features and maintaining the new one).
 
+In the future cyaflight will replace yaflight entirely.
+
 Minimalist
 ----------
 
