@@ -34,9 +34,7 @@ public:
     bool exists();
     bool load();
     int count();
-    bool create(QHash<QString, QStringList> airportHash,
-                QString aptdatgzipped,
-                QString decompresseddirpath);
+    bool create(QHash<QString, QStringList> airportHash);
     QHash<QString, QStringList> get();
 private:
     QString airportsIndexCachePath;

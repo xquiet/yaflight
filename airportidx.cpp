@@ -24,9 +24,7 @@ AirportIdx::AirportIdx(QString cachePath)
     airportsIndexCachePath = cachePath.trimmed();
 }
 
-bool AirportIdx::create(QHash<QString, QStringList> airportHash,
-                        QString aptdatgzipped,
-                        QString decompresseddirpath)
+bool AirportIdx::create(QHash<QString, QStringList> airportHash)
 {
     if(airportHash.count()<=0)
     {
