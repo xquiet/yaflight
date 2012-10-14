@@ -229,6 +229,7 @@ void MainWindow::on_pbtLaunch_clicked()
     {
         procFGFS->kill();
         procFGFS->close();
+        proc_fgfs_is_running = false;
     }
 }
 
