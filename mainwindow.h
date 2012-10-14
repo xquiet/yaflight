@@ -59,15 +59,19 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_btnExit_clicked();
+    void closeEvent(QCloseEvent *event);
 
-    void on_btnAbout_clicked();
+    void on_btnExit_clicked();
 
     void on_pbtLaunch_clicked();
 
     void readAircrafts();
 
+    void read_ts_output();
+
     void procReadAircraftsFinished(int, QProcess::ExitStatus);
+
+    void proc_ts_finished(int, QProcess::ExitStatus);
 
     void on_cboAircrafts_currentIndexChanged(const QString &arg1);
 
@@ -86,50 +90,6 @@ private slots:
     void on_ckbFilterInstalled_toggled(bool checked);
 
     void on_tbvAirports_clicked(const QModelIndex &index);
-
-    void on_ckbSound_toggled(bool checked);
-
-    void on_ckbClouds_toggled(bool checked);
-
-    void on_ckbGameMode_toggled(bool checked);
-
-    void on_ckbFullScreen_toggled(bool checked);
-
-    void on_ckbFog_toggled(bool checked);
-
-    void on_rdbUnitMeters_toggled(bool checked);
-
-    void on_ckbLockFuel_toggled(bool checked);
-
-    void on_ckbLockTime_toggled(bool checked);
-
-    void on_ckbRandomObjects_toggled(bool checked);
-
-    void on_ckbAIModels_toggled(bool checked);
-
-    void on_ckbAutoCoordination_toggled(bool checked);
-
-    void on_ckbPanel_toggled(bool checked);
-
-    void on_ckbHorizonEffect_toggled(bool checked);
-
-    void on_ckbSkyBlending_toggled(bool checked);
-
-    void on_ckbTextures_toggled(bool checked);
-
-    void on_ckbDistanceAttenuation_toggled(bool checked);
-
-    void on_ckbWind_toggled(bool checked);
-
-    void on_ckbHudAntialias_toggled(bool checked);
-
-    void on_rdbHud2D_toggled(bool checked);
-
-    void on_rdbHud3D_toggled(bool checked);
-
-    void on_ckbEnhancedLighting_toggled(bool checked);
-
-    void on_ckbSpecularReflections_toggled(bool checked);
 
     void on_hzsTurbulence_valueChanged(int value);
 
@@ -159,12 +119,13 @@ private slots:
 
     void hndl_tmr_procfgfs();
 
-    void on_ckbTerraSync_toggled(bool checked);
+    void hndl_tmr_procts();
 
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
+    void setup_about_box();
 
 private:
     // ----- app -----
@@ -175,7 +136,9 @@ private:
 
     // ----- processes -----
     QProcess *procFGFS;
-    bool procFGFS_isRunning;
+    QProcess *procTerraSync;
+    bool proc_fgfs_is_running;
+    bool proc_ts_is_running;
 
     // ----- aircrafts -----
     QStringList aircrafts;
@@ -192,6 +155,7 @@ private:
     void setup_airport_list();
     QList<Runway *> ap_runways;
     Runway *currentRunway;
+    QModelIndex lastAirportIndex;
 
     // ----- settings -----
     Settings *curr_settings;
@@ -199,6 +163,11 @@ private:
     void loadSettings(bool appStart=false);
     bool saveSettings();
     void add_scenery_path(QString sceneryPath);
+    QString lastResolutionSelected;
+    QString lastFailureSelected;
+    QString lastSeasonSelected;
+    QString lastDayTimeSelected;
+    float lastTurbulence;
 
     FGEnvironment *fgenv;
 

@@ -26,8 +26,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QApplication::setApplicationName("YaFlight");
+    QApplication::setApplicationVersion(QString::number(VERSION));
+
     just_started = true;
-    procFGFS_isRunning = false;
+    proc_fgfs_is_running = false;
+    proc_ts_is_running = false;
 
     posX = this->x();
     posY = this->y();
@@ -91,15 +95,25 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->txaLog->append("Aircraft dir: " + fgenv->getAircraftsDir());
 
     ui->lblDefaultScenery->setText(fgenv->getDefaultScenery());
+    ui->lblYFScenery->setText(fgenv->getYFScenery());
+
+    ui->lblTerraSyncStatus->setToolTip("N/A");
 
     setup_airport_list();
 
-    just_started = false;
+    setup_about_box();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setup_about_box()
+{
+    ui->lblAppName->setText(QApplication::applicationName());
+    ui->lblAppVersion->setText("Version: " + QApplication::applicationVersion());
+    ui->lblAppCopyright->setText("(C) 2012 by Matteo Pasotti");
 }
 
 void MainWindow::refreshListOfAircrafts()
@@ -135,30 +149,69 @@ QHash<QString, QString> MainWindow::getListOfAircrafts()
     return result;
 }
 
-void MainWindow::on_btnAbout_clicked()
-{
-    QMessageBox msgbox;
-    msgbox.about(this,"About",QApplication::applicationName() +
-                 "cross platform yaflight\nVersion:" +
-                 QString::number(VERSION) +
-                 "\n(C) 2011-2012 by Matteo Pasotti");
-}
-
 void MainWindow::on_pbtLaunch_clicked()
 {
-    if(!procFGFS_isRunning)
+    if(!proc_fgfs_is_running)
     {
         QStringList params = collectLaunchSettings();
+        QStringList ts_params;
+        QStringList env = QProcess::systemEnvironment();
+
+        bool use_terra_sync = false;
+
+        if(just_started)
+        {
+            use_terra_sync = ui->ckbTerraSync->isChecked();
+        }
+        else
+        {
+            if(curr_settings->getTerraSync().compare(SET_TRUE)==0)
+                use_terra_sync = true;
+        }
+        if(use_terra_sync)
+        {
+            if(!proc_ts_is_running)
+            {
+                procTerraSync = new QProcess();
+                procTerraSync->setProcessChannelMode(QProcess::MergedChannels);
+                procTerraSync->setReadChannel(QProcess::StandardOutput);
+                procTerraSync->setEnvironment(env);
+                ts_params << "-pid" << fgenv->getTerraSyncPidFilePath()
+                          << "-S" // (makes ts using svn protocol rather than rsync)
+                          << "-p" << "5500"
+                          << "-d" << fgenv->getYFScenery();
+                procTerraSync->start(fgenv->getTerraSyncBinPath(), ts_params, QProcess::ReadOnly);
+                ui->txaLog->append("INFO: Starting TerraSync with:");
+                ui->txaLog->append(fgenv->getTerraSyncBinPath() + " " + ts_params.join(" "));
+                connect(procTerraSync,SIGNAL(readyRead()),this,SLOT(read_ts_output()));
+                connect(procTerraSync,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(proc_ts_finished()));
+
+                QTimer *tmrProcTS = new QTimer();
+                connect(tmrProcTS, SIGNAL(timeout()),this,SLOT(hndl_tmr_procts()));
+                tmrProcTS->start(350);
+
+                procTerraSync->closeWriteChannel();
+                if((procTerraSync->state() == QProcess::Starting)||
+                        (procTerraSync->state() == QProcess::Starting))
+                    proc_ts_is_running = true;
+            }
+        }
+
         procFGFS = new QProcess();
         procFGFS->setProcessChannelMode(QProcess::MergedChannels);
         procFGFS->setReadChannel(QProcess::StandardOutput);
-        QStringList env = QProcess::systemEnvironment();
         procFGFS->setEnvironment(env);
+
+        if(proc_ts_is_running)
+        {
+            params << "--atlas=socket,out,1,localhost,5500,udp";
+        }
+
         procFGFS->start(fgenv->getFgfsBinPath(), params, QProcess::ReadOnly);
-        //if(!pls->waitForStarted())
-        //    return false;
+
         ui->txaLog->append("Launching...");
-        ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
+        //ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
+        ui->txaLog->append("INFO: Simulation started");
         connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
         connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
 
@@ -167,13 +220,15 @@ void MainWindow::on_pbtLaunch_clicked()
         tmrProcFGFS->start(350);
 
         procFGFS->closeWriteChannel();
-        procFGFS_isRunning = true;
+        ui->txaLog->append("INFO: TerraSync started");
+        if((procFGFS->state() == QProcess::Running)||
+                (procFGFS->state() == QProcess::Starting))
+            proc_fgfs_is_running = true;
     }
     else
     {
         procFGFS->kill();
         procFGFS->close();
-        procFGFS_isRunning=false;
     }
 }
 
@@ -184,9 +239,26 @@ void MainWindow::readAircrafts()
     ui->txaLog->append(strLines);
 }
 
+void MainWindow::read_ts_output()
+{
+    QByteArray bytes = procTerraSync->readAll();
+    QString strLines = QString(bytes);
+    qDebug("%s", strLines.toStdString().data());
+}
+
 void MainWindow::procReadAircraftsFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
     ui->txaLog->append("Simulation complete");
+    QString message = QString("process exited with code: %1, status: %2\n")
+        .arg(exitCode)
+        .arg(exitStatus == QProcess::NormalExit ? "QProcess::NormalExit" : "QProcess::CrashExit");
+    qDebug("%s",message.toStdString().data());
+    ui->txaLog->append(message);
+}
+
+void MainWindow::proc_ts_finished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    ui->txaLog->append("INFO: TerraSync stopped");
     QString message = QString("process exited with code: %1, status: %2\n")
         .arg(exitCode)
         .arg(exitStatus == QProcess::NormalExit ? "QProcess::NormalExit" : "QProcess::CrashExit");
@@ -234,11 +306,7 @@ void MainWindow::on_btnAircraftInfo_clicked()
 
 void MainWindow::on_btnExit_clicked()
 {
-    QMessageBox msgBox(QMessageBox::Warning,"Warning","Are you sure you want stop you simulation?",QMessageBox::Ok|QMessageBox::Cancel,this);
-    if(msgBox.exec()==QMessageBox::Ok)
-    {
-        this->close();
-    }
+    this->close();
 }
 
 /*void MainWindow::resizeEvent(QResizeEvent *event)
@@ -281,8 +349,13 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 QStringList MainWindow::collectLaunchSettings()
 {
-    QString fgScenery = fgenv->getDefaultScenery();
+    QString fgScenery = fgenv->getDefaultScenery() + ":" + fgenv->getYFScenery();
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+    if(lstviewmodel==NULL)
+    {
+        lstviewmodel = new QStringListModel(QStringList());
+        ui->lstviewSceneries->setModel(lstviewmodel);
+    }
     if(lstviewmodel->rowCount()>0)
     {
         for(int i=0;i<lstviewmodel->rowCount();i++)
@@ -522,20 +595,26 @@ QStringList MainWindow::collectLaunchSettings()
     // 3 --> latitude
     QModelIndexList selected = ui->tbvAirports->selectionModel()->selectedIndexes();
     QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
-    QString longitude = model->item(selected.at(0).row(),2)->text().trimmed();
-    QString latitude = model->item(selected.at(0).row(),3)->text().trimmed();
-    //QString longitude = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),2)->text().trimmed();
-    //QString latitude  = ui->tbvAirports->item(ui->tbvAirports->selectedItems()[0]->row(),3)->text().trimmed();
-    if((longitude.compare("")!=0)&&(latitude.compare("")!=0))
+    if((model!=NULL)&&(model->rowCount()>0))
     {
-        params << "--lon="+longitude;
-        params << "--lat="+latitude;
+        if(selected.count()>0)
+        {
+            QString longitude = model->item(selected.at(0).row(),2)->text().trimmed();
+            QString latitude = model->item(selected.at(0).row(),3)->text().trimmed();
+            if((longitude.compare("")!=0)&&(latitude.compare("")!=0))
+            {
+                params << "--lon="+longitude;
+                params << "--lat="+latitude;
+            }
+        }
     }
     return params;
 }
 
 void MainWindow::loadSettings(bool appStart)
 {
+    if(just_started)
+        just_started = false;
     curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
     if(!curr_settings->isEmpty())
     {
@@ -675,6 +754,41 @@ bool MainWindow::saveSettings()
         sceneries.remove(sceneries.length()-1,1);
         curr_settings->setSceneries(sceneries);
     }
+
+    ui->ckbSound->isChecked() ? curr_settings->setSound(SET_TRUE) : curr_settings->setSound(SET_FALSE);
+    ui->ckbClouds->isChecked() ? curr_settings->setClouds(SET_TRUE) : curr_settings->setClouds(SET_FALSE);
+    ui->ckbGameMode->isChecked() ? curr_settings->setGameMode(SET_TRUE) : curr_settings->setGameMode(SET_FALSE);
+    ui->ckbFullScreen->isChecked() ? curr_settings->setFullScreen(SET_TRUE) : curr_settings->setFullScreen(SET_FALSE);
+    ui->ckbFog->isChecked() ? curr_settings->setFog(SET_TRUE) : curr_settings->setFog(SET_FALSE);
+    ui->rdbUnitMeters->isChecked() ? curr_settings->setMeasureUnit(SET_TRUE) : curr_settings->setMeasureUnit(SET_FALSE);
+    ui->ckbLockFuel->isChecked() ? curr_settings->setFuelLock(SET_TRUE) : curr_settings->setFuelLock(SET_FALSE);
+    ui->ckbLockTime->isChecked() ? curr_settings->setTimeLock(SET_TRUE) : curr_settings->setTimeLock(SET_FALSE);
+    ui->ckbRandomObjects->isChecked() ? curr_settings->setRandomObjects(SET_TRUE) : curr_settings->setRandomObjects(SET_FALSE);
+    ui->ckbAIModels->isChecked() ? curr_settings->setAIModels(SET_TRUE) : curr_settings->setAIModels(SET_FALSE);
+    ui->ckbAutoCoordination->isChecked() ? curr_settings->setAutoCoordination(SET_TRUE) : curr_settings->setAutoCoordination(SET_FALSE);
+    ui->ckbPanel->isChecked() ? curr_settings->setPanel(SET_TRUE) : curr_settings->setPanel(SET_FALSE);
+    ui->ckbHorizonEffect->isChecked() ? curr_settings->setHorizonEffect(SET_TRUE) : curr_settings->setHorizonEffect(SET_FALSE);
+    ui->ckbSkyBlending->isChecked() ? curr_settings->setSkyBlending(SET_TRUE) : curr_settings->setSkyBlending(SET_FALSE);
+    ui->ckbTextures->isChecked() ? curr_settings->setTextures(SET_TRUE) : curr_settings->setTextures(SET_FALSE);
+    ui->ckbDistanceAttenuation->isChecked() ? curr_settings->setDistanceAttenuation(SET_TRUE) : curr_settings->setDistanceAttenuation(SET_FALSE);
+    ui->ckbWind->isChecked() ? curr_settings->setWind(SET_TRUE) : curr_settings->setWind(SET_FALSE);
+    ui->ckbHudAntialias->isChecked() ? curr_settings->setHUDAntiAliased(SET_TRUE) : curr_settings->setHUDAntiAliased(SET_FALSE);
+    ui->rdbHud2D->isChecked() ? curr_settings->setHUD2D(SET_TRUE) : curr_settings->setHUD2D(SET_FALSE);
+    ui->rdbHud3D->isChecked() ? curr_settings->setHUD3D(SET_TRUE) : curr_settings->setHUD3D(SET_FALSE);
+    ui->ckbEnhancedLighting->isChecked() ? curr_settings->setEnhancedLighting(SET_TRUE) : curr_settings->setEnhancedLighting(SET_FALSE);
+    ui->ckbSpecularReflections->isChecked() ? curr_settings->setSpecularReflections(SET_TRUE) : curr_settings->setSpecularReflections(SET_FALSE);
+    curr_settings->setTurbulence(QString::number(lastTurbulence));
+    ui->ckbTerraSync->isChecked() ? curr_settings->setTerraSync(SET_TRUE) : curr_settings->setTerraSync(SET_FALSE);
+
+    curr_settings->setLongitude(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),2)->text());
+    curr_settings->setLatitude(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),3)->text());
+    curr_settings->setAirportID(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),1)->text().trimmed());
+
+    curr_settings->setResolution(lastResolutionSelected);
+    curr_settings->setFailure(lastFailureSelected);
+    curr_settings->setDayTime(lastDayTimeSelected);
+    curr_settings->setSeason(lastSeasonSelected);
+
 
     if(curr_settings->storeData())
     {
@@ -877,8 +991,10 @@ void MainWindow::on_tbvAirports_clicked(const QModelIndex &index)
     {
         if(rw->getNumber().compare("xxx")!=0)
         {
-            if(isFirst)
+            if(isFirst){
                 currentRunway = rw;
+                isFirst = false;
+            }
             ui->cboRunway->addItem(rw->getNumber());
         }
         else if(rw->getNumber().compare("xxx")==0)
@@ -894,155 +1010,27 @@ void MainWindow::on_tbvAirports_clicked(const QModelIndex &index)
 
     on_cboRunway_currentIndexChanged(ui->cboRunway->currentText());
 
-    curr_settings->setLongitude(model->item(index.row(),2)->text());
-    curr_settings->setLatitude(model->item(index.row(),3)->text());
-    curr_settings->setAirportID(icao);
-}
-
-void MainWindow::on_ckbSound_toggled(bool checked)
-{
-    checked ? curr_settings->setSound(SET_TRUE) : curr_settings->setSound(SET_FALSE);
-}
-
-void MainWindow::on_ckbClouds_toggled(bool checked)
-{
-    checked ? curr_settings->setClouds(SET_TRUE) : curr_settings->setClouds(SET_FALSE);
-}
-
-void MainWindow::on_ckbGameMode_toggled(bool checked)
-{
-    checked ? curr_settings->setGameMode(SET_TRUE) : curr_settings->setGameMode(SET_FALSE);
-}
-
-void MainWindow::on_ckbFullScreen_toggled(bool checked)
-{
-    checked ? curr_settings->setFullScreen(SET_TRUE) : curr_settings->setFullScreen(SET_FALSE);
-}
-
-void MainWindow::on_ckbFog_toggled(bool checked)
-{
-    checked ? curr_settings->setFog(SET_TRUE) : curr_settings->setFog(SET_FALSE);
-}
-
-void MainWindow::on_rdbUnitMeters_toggled(bool checked)
-{
-    checked ? curr_settings->setMeasureUnit(SET_TRUE) : curr_settings->setMeasureUnit(SET_FALSE);
-}
-
-void MainWindow::on_ckbLockFuel_toggled(bool checked)
-{
-    checked ? curr_settings->setFuelLock(SET_TRUE) : curr_settings->setFuelLock(SET_FALSE);
-}
-
-void MainWindow::on_ckbLockTime_toggled(bool checked)
-{
-    checked ? curr_settings->setTimeLock(SET_TRUE) : curr_settings->setTimeLock(SET_FALSE);
-}
-
-void MainWindow::on_ckbRandomObjects_toggled(bool checked)
-{
-    checked ? curr_settings->setRandomObjects(SET_TRUE) : curr_settings->setRandomObjects(SET_FALSE);
-}
-
-void MainWindow::on_ckbAIModels_toggled(bool checked)
-{
-    checked ? curr_settings->setAIModels(SET_TRUE) : curr_settings->setAIModels(SET_FALSE);
-}
-
-void MainWindow::on_ckbAutoCoordination_toggled(bool checked)
-{
-    checked ? curr_settings->setAutoCoordination(SET_TRUE) : curr_settings->setAutoCoordination(SET_FALSE);
-}
-
-void MainWindow::on_ckbPanel_toggled(bool checked)
-{
-    checked ? curr_settings->setPanel(SET_TRUE) : curr_settings->setPanel(SET_FALSE);
-}
-
-void MainWindow::on_ckbHorizonEffect_toggled(bool checked)
-{
-    checked ? curr_settings->setHorizonEffect(SET_TRUE) : curr_settings->setHorizonEffect(SET_FALSE);
-}
-
-void MainWindow::on_ckbSkyBlending_toggled(bool checked)
-{
-    checked ? curr_settings->setSkyBlending(SET_TRUE) : curr_settings->setSkyBlending(SET_FALSE);
-}
-
-void MainWindow::on_ckbTextures_toggled(bool checked)
-{
-    checked ? curr_settings->setTextures(SET_TRUE) : curr_settings->setTextures(SET_FALSE);
-}
-
-void MainWindow::on_ckbDistanceAttenuation_toggled(bool checked)
-{
-    checked ? curr_settings->setDistanceAttenuation(SET_TRUE) : curr_settings->setDistanceAttenuation(SET_FALSE);
-}
-
-void MainWindow::on_ckbWind_toggled(bool checked)
-{
-    checked ? curr_settings->setWind(SET_TRUE) : curr_settings->setWind(SET_FALSE);
-}
-
-void MainWindow::on_ckbHudAntialias_toggled(bool checked)
-{
-    checked ? curr_settings->setHUDAntiAliased(SET_TRUE) : curr_settings->setHUDAntiAliased(SET_FALSE);
-}
-
-void MainWindow::on_rdbHud2D_toggled(bool checked)
-{
-    checked ? curr_settings->setHUD2D(SET_TRUE) : curr_settings->setHUD2D(SET_FALSE);
-}
-
-void MainWindow::on_rdbHud3D_toggled(bool checked)
-{
-    checked ? curr_settings->setHUD3D(SET_TRUE) : curr_settings->setHUD3D(SET_FALSE);
-}
-
-void MainWindow::on_ckbEnhancedLighting_toggled(bool checked)
-{
-    checked ? curr_settings->setEnhancedLighting(SET_TRUE) : curr_settings->setEnhancedLighting(SET_FALSE);
-}
-
-void MainWindow::on_ckbSpecularReflections_toggled(bool checked)
-{
-    checked ? curr_settings->setSpecularReflections(SET_TRUE) : curr_settings->setSpecularReflections(SET_FALSE);
-}
-
-void MainWindow::on_hzsTurbulence_valueChanged(int value)
-{
-    float turbulence = value / 10.0;
-
-    curr_settings->setTurbulence(QString::number(turbulence));
+    lastAirportIndex = index;
 }
 
 void MainWindow::on_cboWindowGeometries_currentIndexChanged(const QString &arg1)
 {
-    if(!just_started)
-        curr_settings->setResolution(arg1);
+    lastResolutionSelected = arg1;
 }
 
 void MainWindow::on_cboFailures_currentIndexChanged(const QString &arg1)
 {
-    if(!just_started)
-        curr_settings->setFailure(arg1);
+    lastFailureSelected = arg1;
 }
 
 void MainWindow::on_cboDayTime_currentIndexChanged(const QString &arg1)
 {
-    if(!just_started)
-        curr_settings->setDayTime(arg1);
+    lastDayTimeSelected = arg1;
 }
 
 void MainWindow::on_cboSeason_currentIndexChanged(const QString &arg1)
 {
-    if(!just_started)
-        curr_settings->setSeason(arg1);
-}
-
-void MainWindow::on_ckbTerraSync_toggled(bool checked)
-{
-    checked ? curr_settings->setTerraSync(SET_TRUE) : curr_settings->setTerraSync(SET_FALSE);
+    lastSeasonSelected = arg1;
 }
 
 void MainWindow::on_tbvAirports_doubleClicked(const QModelIndex &index)
@@ -1214,7 +1202,8 @@ void MainWindow::add_scenery_path(QString sceneryPath)
         {
             if(lstviewmodel->stringList().value(i).trimmed().compare(sceneryPath.trimmed())!=0)
             {
-                if(lstviewmodel->stringList().value(i).trimmed().compare(fgenv->getDefaultScenery())!=0)
+                if((lstviewmodel->stringList().value(i).trimmed().compare(fgenv->getDefaultScenery())!=0)&&
+                        (lstviewmodel->stringList().value(i).trimmed().compare(fgenv->getYFScenery())!=0))
                 {
                     alreadyPresent = false;
                 }
@@ -1256,3 +1245,40 @@ void MainWindow::hndl_tmr_procfgfs()
     }
 }
 
+void MainWindow::hndl_tmr_procts()
+{
+    if(procTerraSync->state() == QProcess::Running)
+    {
+        QPixmap pixmap(":/icons/icons/applications-internet.png");
+        ui->lblTerraSyncStatus->setPixmap(pixmap);
+        ui->lblTerraSyncStatus->setToolTip("TerraSync running");
+        ui->lblTerraSyncStatus->setScaledContents(true);
+    }
+    else
+    {
+        QPixmap pixmap(":/icons/icons/dialog-close.png");
+        ui->lblTerraSyncStatus->setPixmap(pixmap);
+        ui->lblTerraSyncStatus->setToolTip("TerraSync not running");
+        ui->lblTerraSyncStatus->setScaledContents(true);
+    }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    QMessageBox msgBox(QMessageBox::Warning,"Warning","Are you sure you want stop you simulation?",QMessageBox::Ok|QMessageBox::Cancel,this);
+    if(msgBox.exec()==QMessageBox::Ok)
+    {
+        if((proc_ts_is_running)&&((procTerraSync->state()==QProcess::Running)||
+                (procTerraSync->state()==QProcess::Starting)))
+            procTerraSync->kill();
+    }
+    else
+    {
+        event->ignore();
+    }
+}
+
+void MainWindow::on_hzsTurbulence_valueChanged(int value)
+{
+    lastTurbulence = value / 10.0;
+}
