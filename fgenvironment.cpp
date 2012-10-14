@@ -25,6 +25,15 @@ FGEnvironment::FGEnvironment()
     fgRootPath = detectRootPath();
     // detectFGVersion needs the rootpath
     fgVersion = detectFGVersion();
+
+    QDir dir(getYFScenery());
+    if(!dir.exists())
+    {
+        if(dir.mkdir(getYFScenery()))
+        {
+            qFatal("Cannot create dir: %s",getYFScenery().toStdString().data());
+        }
+    }
 }
 
 void FGEnvironment::setRootPath(QString path)
@@ -114,6 +123,23 @@ QString FGEnvironment::getFgfsBinPath()
     return "";
 }
 
+QString FGEnvironment::getTerraSyncBinPath()
+{
+    QString ts_path = "";
+#ifdef Q_OS_WIN
+    ts_path = "\""+getRootPath()+"/../bin/Win32/terrasync.exe\"";
+#endif
+#ifdef Q_OS_LINUX
+    ts_path = "/usr/bin/terrasync";
+#endif
+    return ts_path;
+}
+
+QString FGEnvironment::getTerraSyncPidFilePath()
+{
+    return getYFHome() + "/ts_pid";
+}
+
 QString FGEnvironment::getDefaultScenery()
 {
     // default scenery
@@ -136,6 +162,11 @@ QString FGEnvironment::getYFHome()
         tmppath.mkpath(yfhome);
     }
     return yfhome;
+}
+
+QString FGEnvironment::getYFScenery()
+{
+    return getYFHome() + "/Scenery";
 }
 
 QString FGEnvironment::detectOS()

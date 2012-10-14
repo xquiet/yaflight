@@ -59,7 +59,10 @@ public:
     QHash<QString, QStringList> parseAirportsIndex(QString path);
     QHash<QString, QStringList> getDefaultAirportList();
     QString getFgfsBinPath();
+    QString getTerraSyncBinPath();
+    QString getTerraSyncPidFilePath();
     QString getYFHome();
+    QString getYFScenery();
     QString getOS();
     QString getFGVersion();
 
