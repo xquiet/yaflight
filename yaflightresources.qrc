@@ -18,5 +18,6 @@
         <file>icons/list-add.png</file>
         <file>icons/list-remove.png</file>
         <file>icons/view-refresh.png</file>
+        <file>icons/gpl3-logo-small.png</file>
     </qresource>
 </RCC>
