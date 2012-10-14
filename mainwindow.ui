@@ -55,7 +55,7 @@
     <property name="geometry">
      <rect>
       <x>390</x>
-      <y>10</y>
+      <y>40</y>
       <width>101</width>
       <height>31</height>
      </rect>
@@ -66,29 +66,6 @@
     <property name="icon">
      <iconset resource="yaflightresources.qrc">
       <normaloff>:/icons/icons/system-shutdown.png</normaloff>:/icons/icons/system-shutdown.png</iconset>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btnAbout">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>80</y>
-      <width>101</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>About</string>
-    </property>
-    <property name="icon">
-     <iconset resource="yaflightresources.qrc">
-      <normaloff>:/icons/icons/yaflight-icon-48.png</normaloff>:/icons/icons/yaflight-icon-48.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>16</width>
-      <height>16</height>
-     </size>
     </property>
    </widget>
    <widget class="QPushButton" name="pbtSaveConf">
@@ -383,8 +360,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>161</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -423,8 +400,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>161</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -508,8 +485,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -607,8 +584,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -651,8 +628,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -746,8 +723,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -811,8 +788,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -866,8 +843,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="label">
@@ -905,8 +882,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -1168,9 +1145,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>50</y>
+         <y>90</y>
          <width>471</width>
-         <height>171</height>
+         <height>131</height>
         </rect>
        </property>
       </widget>
@@ -1193,26 +1170,155 @@
         <string/>
        </property>
       </widget>
+      <widget class="QLabel" name="lblYFScenery">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>451</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tabAbout">
+      <attribute name="title">
+       <string>About</string>
+      </attribute>
+      <widget class="QLabel" name="lblYFIcon">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>10</y>
+         <width>201</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="yaflightresources.qrc">:/icons/icons/yaflight-icon-48.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblAppName">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>20</y>
+         <width>211</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>AppName</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblAppVersion">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>50</y>
+         <width>211</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>AppVersion</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblAppCopyright">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>80</y>
+         <width>211</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>AppCopyRight</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnAboutQt">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>130</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>About Qt</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblGPLlogo">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>170</y>
+         <width>111</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="yaflightresources.qrc">:/icons/icons/gpl3-logo-small.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>
-   <widget class="QPushButton" name="btnAboutQt">
+   <widget class="QLabel" name="lblTerraSyncStatus">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>100</y>
-      <width>101</width>
+      <x>470</x>
+      <y>120</y>
+      <width>21</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>About Qt</string>
+     <string/>
     </property>
-    <property name="iconSize">
-     <size>
-      <width>16</width>
-      <height>16</height>
-     </size>
+    <property name="pixmap">
+     <pixmap resource="yaflightresources.qrc">:/icons/icons/dialog-close.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>
