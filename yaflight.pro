@@ -7,7 +7,7 @@
 QT       += core gui webkit
 
 DEFINES += VERSION="0.99"
-TARGET = cyaflight
+TARGET = yaflight
 TEMPLATE = app
 
 # pkg-config --libs zlib
