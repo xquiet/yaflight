@@ -1,17 +1,19 @@
-cyaflight - cross-platform yaflight
-===================================
+yaflight
+========
 
-cyaflight is a complete rewrite of yaflight, a flightgear launcher developed by me using Gambas3 language.
+yaflight is a flightgear launch control developed originally using the Gambas3 language
+and now completely rewritten using C++ with the Qt Framework to make it multi-platform.
 
 Current development status
 --------------------------
 
-cyaflight is stable enough for a basic use even if it misses some feature already available in yaflight.
+yaflight series 0.99 (aka cyaflight) is stable enough for a basic usage even if it misses 
+some feature already available in yaflight series 0.1.
 By the end of the year I hope to completely sync the features provided by both, but I develop it in my free time
 so I can't make any promises.
 
-Why?
-----
+Why this total rewrite?
+-----------------------
 
 Gambas3 is a great programming language and software development environment allowing the creation of great applications 
 for GNU/Linux systems. 
@@ -23,10 +25,10 @@ So, what happens to yaflight?
 -----------------------------
 
 YaFlight will continue to exist but maintaining two code bases is to much effort to me
-consequently it will be abandoned soon or later (consider please that cyaflight can be executed 
-even on GNU/Linux and BSD systems, so I'll focus on adding features and maintaining the new one).
+consequently the gambas3 version will be abandoned, soon or later (consider please that the new implementation -cyaflight-
+can be executed even on GNU/Linux and BSD systems, so I'll focus on adding features and maintaining the new one).
 
-In the future cyaflight will replace yaflight entirely.
+In the next few months the "c" prefix will be abandoned and yaflight will be just the cross platform version.
 
 Minimalist
 ----------
@@ -44,3 +46,8 @@ zlib
 
 cyaflight uses zlib to work with compressed files.
 http://www.zlib.net/
+
+icons
+=====
+
+Some of the icons used by yaflight belongs to the kde theme (http://www.kde.org).
