@@ -1268,7 +1268,7 @@ void MainWindow::hndl_tmr_procts()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    QMessageBox msgBox(QMessageBox::Warning,"Warning","Are you sure you want stop you simulation?",QMessageBox::Ok|QMessageBox::Cancel,this);
+    QMessageBox msgBox(QMessageBox::Warning,"Warning","Are you sure you want stop your simulation?",QMessageBox::Ok|QMessageBox::Cancel,this);
     if(msgBox.exec()==QMessageBox::Ok)
     {
         if((proc_ts_is_running)&&((procTerraSync->state()==QProcess::Running)||
