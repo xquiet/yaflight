@@ -600,12 +600,12 @@ QStringList MainWindow::collectLaunchSettings()
     {
         if(selected.count()>0)
         {
-            QString longitude = model->item(selected.at(0).row(),2)->text().trimmed();
-            QString latitude = model->item(selected.at(0).row(),3)->text().trimmed();
-            if((longitude.compare("")!=0)&&(latitude.compare("")!=0))
+            //QString longitude = model->item(selected.at(0).row(),2)->text().trimmed();
+            //QString latitude = model->item(selected.at(0).row(),3)->text().trimmed();
+            if((lastLongitude.compare("")!=0)&&(lastLatitude.compare("")!=0))
             {
-                params << "--lon="+longitude;
-                params << "--lat="+latitude;
+                params << "--lon="+lastLongitude;
+                params << "--lat="+lastLatitude;
             }
         }
     }
@@ -733,8 +733,8 @@ void MainWindow::loadSettings(bool appStart)
 
 bool MainWindow::saveSettings()
 {
-    if(currentRunway!=NULL)
-        curr_settings->setRunway(currentRunway->getNumber());
+    if(curr_settings==NULL)
+        curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
 
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
     if((lstviewmodel==NULL)||(lstviewmodel->rowCount()<=0))
@@ -781,9 +781,16 @@ bool MainWindow::saveSettings()
     curr_settings->setTurbulence(QString::number(lastTurbulence));
     ui->ckbTerraSync->isChecked() ? curr_settings->setTerraSync(SET_TRUE) : curr_settings->setTerraSync(SET_FALSE);
 
-    curr_settings->setLongitude(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),2)->text());
-    curr_settings->setLatitude(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),3)->text());
+    //curr_settings->setLongitude(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),2)->text());
+    //curr_settings->setLatitude(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),3)->text());
+
+    curr_settings->setLongitude(lastLongitude);
+    curr_settings->setLatitude(lastLatitude);
+    curr_settings->setHeading(lastHeading);
     curr_settings->setAirportID(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),1)->text().trimmed());
+
+    if(currentRunway!=NULL)
+        curr_settings->setRunway(currentRunway->getNumber());
 
     curr_settings->setResolution(lastResolutionSelected);
     curr_settings->setFailure(lastFailureSelected);
@@ -869,8 +876,6 @@ void MainWindow::setup_airport_list()
     ui->tbvAirports->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tbvAirports->setSelectionMode(QAbstractItemView::SingleSelection);
 
-
-    //AirportIdx apindex(fgenv->getAirportsCacheFilePath(), fgenv->getRunwaysCacheFilePath());
     AirportIdx apindex(fgenv->getAirportsCacheFilePath());
     Airport *ap;
 
@@ -911,7 +916,6 @@ void MainWindow::setup_airport_list()
             model->setData(model->index(row,4), airportsHash[key][2]);
             row++;
         }
-        //if(!apindex.create(airportsHash,fgenv->getAPTSource(),fgenv->getYFHome())){
         if(!apindex.create(airportsHash)){
             QMessageBox msgbox(QMessageBox::Critical,"Error","Can't create airport index cache\nCheck you permissions",QMessageBox::Ok);
             msgbox.exec();
@@ -925,7 +929,6 @@ void MainWindow::setup_airport_list()
             QHash<QString, QStringList> cache = apindex.get();
             foreach(QString key, cache.keys())
             {
-                //ap = new Airport(airportDir,key,fgenv->getAPTSource(),fgenv->getYFHome()+"/tmp_apt_dat");
                 if(cache[key][2].trimmed().compare("")==0)
                 {
                     // ap not installed
@@ -1012,6 +1015,9 @@ void MainWindow::on_tbvAirports_clicked(const QModelIndex &index)
     on_cboRunway_currentIndexChanged(ui->cboRunway->currentText());
 
     lastAirportIndex = index;
+    lastLongitude = model->item(index.row(),2)->text().trimmed();
+    lastLatitude = model->item(index.row(),3)->text().trimmed();
+
 }
 
 void MainWindow::on_cboWindowGeometries_currentIndexChanged(const QString &arg1)
@@ -1048,29 +1054,24 @@ void MainWindow::place_aircraft_on_map_reading_table()
     if(modelidxlst.count()<=0)
         return;
 
-    QString longitude = model->item(modelidxlst.at(0).row(),2)->text().trimmed();
-    QString latitude  = model->item(modelidxlst.at(0).row(),3)->text().trimmed();
-    QString head = QString::number(ui->dialHeading->value());
+    lastLongitude = model->item(modelidxlst.at(0).row(),2)->text().trimmed();
+    lastLatitude = model->item(modelidxlst.at(0).row(),3)->text().trimmed();
+    //lastHeading = QString::number(ui->dialHeading->value());
+    lastHeading = currentRunway->getHeading();
 
-    update_latlonhead(latitude, longitude, head);
+    update_latlonhead(lastLatitude, lastLongitude, lastHeading);
 }
 
 void MainWindow::place_aircraft_on_map_reading_settings()
 {
-    QString longitude = currentRunway->getLongitude();
-    QString latitude = currentRunway->getLatitude();
-    QString head = currentRunway->getHeading();
+    lastLongitude = QString::number(currentRunway->getLongitude().toDouble());
+    lastLatitude = QString::number(currentRunway->getLatitude().toDouble());
+    lastHeading = currentRunway->getHeading();
 
-    ui->dialHeading->setValue(head.toInt());
+    //ui->dialHeading->setValue(lastHeading.toInt());
+    adjust_heading_value(lastHeading.toInt());
 
-    longitude = QString::number(longitude.toDouble());
-    latitude = QString::number(latitude.toDouble());
-
-    curr_settings->setLongitude(longitude);
-    curr_settings->setLatitude(latitude);
-    curr_settings->setHeading(head);
-
-    update_latlonhead(latitude, longitude, head);
+    update_latlonhead(lastLatitude, lastLongitude, lastHeading);
 }
 
 void MainWindow::update_latlonhead(QString lat, QString lon, QString heading)
@@ -1108,15 +1109,15 @@ int MainWindow::convert_dialhead_to_azimuth(int value)
 
 void MainWindow::on_dialHeading_valueChanged(int value)
 {
-    QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
-    QModelIndexList modelidxlst = ui->tbvAirports->selectionModel()->selectedIndexes();
+    //QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
+    //QModelIndexList modelidxlst = ui->tbvAirports->selectionModel()->selectedIndexes();
 
-    if(modelidxlst.count()<=0)
-        return;
-    QString longitude = model->item(modelidxlst.at(0).row(),2)->text().trimmed();
-    QString latitude  = model->item(modelidxlst.at(0).row(),3)->text().trimmed();
+    //if(modelidxlst.count()<=0)
+    //    return;
+    //QString longitude = model->item(modelidxlst.at(0).row(),2)->text().trimmed();
+    //QString latitude  = model->item(modelidxlst.at(0).row(),3)->text().trimmed();
 
-    update_latlonhead(latitude, longitude, QString::number(convert_dialhead_to_azimuth(value)));
+    update_latlonhead(lastLatitude, lastLongitude, QString::number(convert_dialhead_to_azimuth(value)));
 }
 
 /*
@@ -1146,6 +1147,7 @@ void MainWindow::on_cboRunway_currentIndexChanged(const QString &arg1)
         if(rw->getNumber().compare(arg1)==0)
         {
             currentRunway = rw;
+            lastHeading = rw->getHeading();
             break;
         }
     }

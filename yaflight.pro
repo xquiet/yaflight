@@ -10,7 +10,6 @@ DEFINES += VERSION="0.99"
 TARGET = yaflight
 TEMPLATE = app
 
-# pkg-config --libs zlib
 unix:LIBS += -lz
 
 win32:LIBS += "C:\\Users\\matteo\\workspace\\zlib-1.2.7\\contrib\\vstudio\\vc9\\x86\\ZlibDllReleaseWithoutAsm\\zlibwapi.dll"

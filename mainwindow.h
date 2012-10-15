@@ -167,6 +167,10 @@ private:
     QString lastFailureSelected;
     QString lastSeasonSelected;
     QString lastDayTimeSelected;
+    QString lastAirport;
+    QString lastLongitude;
+    QString lastLatitude;
+    QString lastHeading;
     float lastTurbulence;
 
     FGEnvironment *fgenv;
