@@ -141,8 +141,6 @@ QHash<QString, QString> MainWindow::getListOfAircrafts()
         for(j=0;j<xml.count();j++)
         {
             result.insert(xml.value(j).replace("-set.xml","",Qt::CaseSensitive),listOfAircrafts.value(i));
-            //result << QString(listOfAircrafts.value(i) + ":" + xml.value(j).replace("-set.xml","",Qt::CaseSensitive));
-            qDebug("%s",xml.value(j).toStdString().c_str());
         }
     }
     result.end();
