@@ -746,6 +746,7 @@ bool MainWindow::saveSettings()
     {
         lstviewmodel = new QStringListModel(QStringList());
         ui->lstviewSceneries->setModel(lstviewmodel);
+        curr_settings->setSceneries("");
     }
     if(lstviewmodel->rowCount()>0)
     {
@@ -1204,7 +1205,15 @@ void MainWindow::add_scenery_path(QString sceneryPath)
     {
         lstviewmodel = new QStringListModel(QStringList());
         ui->lstviewSceneries->setModel(lstviewmodel);
-        alreadyPresent = false;
+        if((sceneryPath.trimmed().compare(fgenv->getDefaultScenery())!=0)&&
+                (sceneryPath.trimmed().compare(fgenv->getYFScenery())!=0))
+        {
+            alreadyPresent = false;
+        }
+        else
+        {
+            alreadyPresent = true;
+        }
     }
     else{
         for(int i=0;i<lstviewmodel->rowCount();i++)
