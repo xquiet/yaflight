@@ -49,6 +49,15 @@ bool Settings::storeData()
   */
 
 //----------------------------------------
+// App
+
+QString Settings::getAirportListFiltered()
+{
+    return conf->get(QString(APPSETTINGS), "APTVIEW");
+}
+
+
+//----------------------------------------
 // MAIN
 QString Settings::getAircraft()
 {
@@ -249,6 +258,14 @@ QString Settings::getSceneries()
   SET
   */
 
+
+//----------------------------------------
+// App
+
+void Settings::setAirportListFiltered(QString val)
+{
+    conf->set(QString(APPSETTINGS), QString("APTVIEW"), val);
+}
 
 //----------------------------------------
 // MAIN

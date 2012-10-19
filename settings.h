@@ -32,6 +32,8 @@ public:
     bool isEmpty();
     bool storeData();
 
+    // app
+    QString getAirportListFiltered();
     // main
     QString getAircraft();
     QString getClouds();
@@ -75,6 +77,8 @@ public:
     QString getSceneries();
 
 
+    // app
+    void setAirportListFiltered(QString val);
     // main
     void setAircraft(QString val);
     void setClouds(QString val);
