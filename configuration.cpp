@@ -60,7 +60,16 @@ bool Configuration::store()
         while(i.hasNext())
         {
             i.next();
-            settings.setValue(i.key(),i.value());
+            if(i.value().trimmed().compare("")!=0)
+            {
+                qDebug("%s --> %s", i.key().toStdString().data(), i.value().toStdString().data());
+                settings.setValue(i.key(),i.value());
+            }
+            else
+            {
+                qDebug("Dropping %s",i.key().toStdString().data());
+                settings.remove(i.key());
+            }
         }
         settings.endGroup();
     }
