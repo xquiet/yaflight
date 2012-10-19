@@ -594,6 +594,7 @@ QStringList MainWindow::collectLaunchSettings()
     // 3 --> latitude
     QModelIndexList selected = ui->tbvAirports->selectionModel()->selectedIndexes();
     QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
+
     if((model!=NULL)&&(model->rowCount()>0))
     {
         if(selected.count()>0)
@@ -617,6 +618,10 @@ void MainWindow::loadSettings(bool appStart)
     curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
     if(!curr_settings->isEmpty())
     {
+        (curr_settings->getAirportListFiltered().compare(SET_TRUE)==0) ? ui->ckbFilterInstalled->setChecked(true) : ui->ckbFilterInstalled->setChecked(false);
+
+        on_ckbFilterInstalled_toggled(ui->ckbFilterInstalled->isChecked());
+
         (curr_settings->getSound().compare(SET_TRUE)==0) ? ui->ckbSound->setChecked(true) : ui->ckbSound->setChecked(false);
         (curr_settings->getClouds().compare(SET_TRUE)==0) ? ui->ckbClouds->setChecked(true) : ui->ckbClouds->setChecked(false);
         (curr_settings->getGameMode().compare(SET_TRUE)==0) ? ui->ckbGameMode->setChecked(true) : ui->ckbGameMode->setChecked(false);
@@ -734,6 +739,8 @@ bool MainWindow::saveSettings()
     if(curr_settings==NULL)
         curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
 
+    ui->ckbFilterInstalled->isChecked() ? curr_settings->setAirportListFiltered(SET_TRUE) : curr_settings->setAirportListFiltered(SET_FALSE);
+
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
     if((lstviewmodel==NULL)||(lstviewmodel->rowCount()<=0))
     {
@@ -785,10 +792,11 @@ bool MainWindow::saveSettings()
     curr_settings->setLongitude(lastLongitude);
     curr_settings->setLatitude(lastLatitude);
     curr_settings->setHeading(lastHeading);
-    curr_settings->setAirportID(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),1)->text().trimmed());
-
-    if(currentRunway!=NULL)
-        curr_settings->setRunway(currentRunway->getNumber());
+    if(ui->tbvAirports->selectionModel()->selectedRows().count()>0){
+        curr_settings->setAirportID(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),1)->text().trimmed());
+        if(currentRunway)
+            curr_settings->setRunway(currentRunway->getNumber());
+    }
 
     curr_settings->setResolution(lastResolutionSelected);
     curr_settings->setFailure(lastFailureSelected);
