@@ -42,6 +42,7 @@ public:
     QString getFullScreen();
     QString getSound();
     QString getResolution();
+    QString getCallSign();
     // adv
     QString getFailure();
     QString getFuelLock();
@@ -73,6 +74,7 @@ public:
     QString getAirportICAO();
     QString getRunway();
     QString getTerraSync();
+    QString getFDM();
     // sceneries
     QString getSceneries();
 
@@ -87,6 +89,7 @@ public:
     void setFullScreen(QString val);
     void setSound(QString val);
     void setResolution(QString val);
+    void setCallSign(QString val);
     // adv
     void setFailure(QString val);
     void setFuelLock(QString val);
@@ -118,6 +121,7 @@ public:
     void setAirportID(QString val);
     void setRunway(QString val);
     void setTerraSync(QString val);
+    void setFDM(QString val);
     // sceneries
     void setSceneries(QString val);
 

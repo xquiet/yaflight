@@ -95,6 +95,11 @@ QString Settings::getResolution()
     return conf->get(MAINSETTINGS, "RESOLUTION");
 }
 
+QString Settings::getCallSign()
+{
+    return conf->get(MAINSETTINGS, "CALLSIGN");
+}
+
 //----------------------------------------
 // Advanced
 QString Settings::getFailure()
@@ -246,6 +251,12 @@ QString Settings::getTerraSync()
 {
     return conf->get(ADVSETTINGS, "TERRASYNC");
 }
+
+QString Settings::getFDM()
+{
+    return conf->get(ADVSETTINGS, "FDM");
+}
+
 //----------------------------------------
 // Sceneries
 
@@ -303,6 +314,11 @@ void Settings::setFog(QString val)
 void Settings::setResolution(QString val)
 {
     conf->set(QString(MAINSETTINGS), QString("RESOLUTION"),val);
+}
+
+void Settings::setCallSign(QString val)
+{
+    conf->set(QString(MAINSETTINGS), QString("CALLSIGN"),val);
 }
 
 //----------------------------------------
@@ -455,6 +471,11 @@ void Settings::setRunway(QString val)
 void Settings::setTerraSync(QString val)
 {
     conf->set(QString(ADVSETTINGS), QString("TERRASYNC"), val);
+}
+
+void Settings::setFDM(QString val)
+{
+    conf->set(QString(ADVSETTINGS), QString("FDM"), val);
 }
 
 //----------------------------------------

@@ -60,6 +60,18 @@ MainWindow::MainWindow(QWidget *parent) :
     //windowGeometries.sort();
     ui->cboWindowGeometries->addItems(windowGeometries);
 
+    QStringList fdms;
+    fdms << ""
+         << "jsb"
+         << "larcsim"
+         << "yasim"
+         << "magic"
+         << "baloon"
+         << "ada"
+         << "external"
+         << "null";
+    ui->cboFDM->addItems(fdms);
+
     // aircraft failures
     QStringList failures;
     failures << "none" << "pitot"
@@ -375,6 +387,11 @@ QStringList MainWindow::collectLaunchSettings()
            << "--fg-scenery="+fgScenery
            << "--aircraft="+ui->cboAircrafts->currentText();
 
+    if(ui->lnedtCallSign->text().trimmed().compare("")!=0)
+    {
+        params << "--callsign=\""+ ui->lnedtCallSign->text() +"\"";
+    }
+
     // ------------- Quick options -------------
     // Sound
     if(ui->ckbSound->isChecked())
@@ -531,6 +548,10 @@ QStringList MainWindow::collectLaunchSettings()
     {
         params << "--disable-panel";
     }
+    if(ui->cboFDM->currentText().trimmed().compare("")!=0)
+    {
+        params << "--fdm="+ui->cboFDM->currentText();
+    }
     // ------------- HUD -------------
     // Hud 2D
     if(ui->rdbHud2D->isChecked())
@@ -649,6 +670,18 @@ void MainWindow::loadSettings(bool appStart)
 
         // missing handles to Altitude, Heading, Lat, Long
 
+        if(curr_settings->getCallSign().trimmed().compare("")!=0)
+        {
+            ui->lnedtCallSign->setText(curr_settings->getCallSign().trimmed());
+        }
+
+        int fdmCurrIdx = ui->cboFDM->findText(curr_settings->getFDM().trimmed());
+        if(fdmCurrIdx>=0)
+        {
+            ui->cboFDM->setCurrentIndex(fdmCurrIdx);
+        }
+
+
         // aircraft
         int aircraft_idx = ui->cboAircrafts->findText(curr_settings->getAircraft());
         if(aircraft_idx>=0)
@@ -762,6 +795,11 @@ bool MainWindow::saveSettings()
         curr_settings->setSceneries(sceneries);
     }
 
+    if(ui->lnedtCallSign->text().trimmed().compare("")!=0)
+    {
+        curr_settings->setCallSign(ui->lnedtCallSign->text().trimmed());
+    }
+
     ui->ckbSound->isChecked() ? curr_settings->setSound(SET_TRUE) : curr_settings->setSound(SET_FALSE);
     ui->ckbClouds->isChecked() ? curr_settings->setClouds(SET_TRUE) : curr_settings->setClouds(SET_FALSE);
     ui->ckbGameMode->isChecked() ? curr_settings->setGameMode(SET_TRUE) : curr_settings->setGameMode(SET_FALSE);
@@ -803,6 +841,11 @@ bool MainWindow::saveSettings()
     curr_settings->setFailure(lastFailureSelected);
     curr_settings->setDayTime(lastDayTimeSelected);
     curr_settings->setSeason(lastSeasonSelected);
+
+    if(ui->cboFDM->currentText().trimmed().compare("")!=0)
+    {
+        curr_settings->setFDM(ui->cboFDM->currentText());
+    }
 
 
     if(curr_settings->storeData())
