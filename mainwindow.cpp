@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QApplication::setApplicationName("YaFlight");
     QApplication::setApplicationVersion(QString::number(VERSION));
 
+    ui->lblLoading->setVisible(false);
+
     just_started = true;
     proc_fgfs_is_running = false;
     proc_ts_is_running = false;
@@ -632,10 +634,17 @@ QStringList MainWindow::collectLaunchSettings()
     return params;
 }
 
+void MainWindow::toggleLoadingBarVisible()
+{
+    ui->lblLoading->setVisible(!ui->lblLoading->isVisible());
+    QApplication::processEvents();
+}
+
 void MainWindow::loadSettings(bool appStart)
 {
     if(just_started)
         just_started = false;
+    toggleLoadingBarVisible();
     curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
     if(!curr_settings->isEmpty())
     {
@@ -761,6 +770,8 @@ void MainWindow::loadSettings(bool appStart)
             }
         }
 
+        toggleLoadingBarVisible();
+
         ui->txaLog->append("INFO: Configuration loaded correctly");
         /*QMessageBox msgBox("Success","Configuration loaded!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
         msgBox.exec();*/
@@ -831,7 +842,7 @@ bool MainWindow::saveSettings()
     curr_settings->setLongitude(lastLongitude);
     curr_settings->setLatitude(lastLatitude);
     curr_settings->setHeading(lastHeading);
-    if(ui->tbvAirports->selectionModel()->selectedRows().count()>0){
+    if(ui->tbvAirports->selectionModel()->selectedIndexes().count()>0){
         curr_settings->setAirportID(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),1)->text().trimmed());
         if(currentRunway)
             curr_settings->setRunway(currentRunway->getNumber());
@@ -1210,8 +1221,9 @@ void MainWindow::on_btnRunwayInfo_clicked()
                    "\nHeading: " + currentRunway->getHeading() +
                    "\nLongitude: " + currentRunway->getLongitude() +
                    "\nLatitude: " + currentRunway->getLatitude() +
-                   "\nShoulderCode: " + currentRunway->getShoulderCode() +
-                   "\nSurfaceCode: " + currentRunway->getSurfaceCode());
+                   "\nShoulderCode: " + ShoulderCode::decode(currentRunway->getShoulderCode()) +
+                   "\nSurface: " + SurfaceCode::decode(currentRunway->getSurfaceCode()));
+    msgbox.setWindowTitle("Runway details");
     msgbox.exec();
 }
 
