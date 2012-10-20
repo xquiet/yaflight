@@ -194,7 +194,14 @@ QString FGEnvironment::detectOS()
             }
             return os + " - " + os_details.join(" ");
         #else
-            return "Unix";
+            QString os = "Unix";
+            sysinfo = new QProcess();
+            sysinfo->setProcessChannelMode(QProcess::MergedChannels);
+            sysinfo->start("/usr/bin/env",QStringList() << "uname" << "-s", QProcess::ReadOnly);
+            sysinfo->waitForFinished();
+            QByteArray bytes = sysinfo->readAll();
+            os = os + " " + QString(bytes).split("\n")[0];
+            return os;
         #endif
     #endif
     #ifdef Q_OS_WIN
@@ -239,13 +246,16 @@ QString FGEnvironment::detectRootPath()
         possiblePaths << _win_program_files + "/FlightGear/data";
         //possiblePaths << "C:/Program Files/FlightGear/data";
     #endif
-    #ifdef Q_OS_MAC
-    #endif
-    #ifdef Q_OS_LINUX
-        possiblePaths << "/usr/share/flightgear/data"
-                      << "/usr/share/FlightGear"
-                      << "/usr/share/games/FlightGear"
-                      << "/usr/share/games/flightgear";
+    #ifdef Q_OS_UNIX
+        #ifdef Q_OS_MAC
+        #elif defined Q_OS_LINUX
+            possiblePaths << "/usr/share/flightgear/data"
+                          << "/usr/share/FlightGear"
+                          << "/usr/share/games/FlightGear"
+                          << "/usr/share/games/flightgear";
+        #else
+            possiblePaths << "/usr/local/share/flightgear";
+        #endif
     #endif
     for(int i=0;i<possiblePaths.count();i++)
     {
