@@ -28,7 +28,9 @@ SOURCES += main.cpp\
     airport.cpp \
     runway.cpp \
     airportidx.cpp \
-    apt_dat.cpp
+    apt_dat.cpp \
+    surfacecode.cpp \
+    shouldercode.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
@@ -41,7 +43,9 @@ HEADERS  += mainwindow.h \
     airport.h \
     runway.h \
     airportidx.h \
-    apt_dat.h
+    apt_dat.h \
+    surfacecode.h \
+    shouldercode.h
 
 FORMS    += mainwindow.ui \
     dlgaircraftdetails.ui \
