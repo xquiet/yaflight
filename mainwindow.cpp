@@ -770,12 +770,11 @@ void MainWindow::loadSettings(bool appStart)
             }
         }
 
-        toggleLoadingBarVisible();
-
         ui->txaLog->append("INFO: Configuration loaded correctly");
         /*QMessageBox msgBox("Success","Configuration loaded!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
         msgBox.exec();*/
     }
+    toggleLoadingBarVisible();
 }
 
 bool MainWindow::saveSettings()
