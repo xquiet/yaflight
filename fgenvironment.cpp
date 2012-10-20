@@ -117,8 +117,13 @@ QString FGEnvironment::getFgfsBinPath()
 {
     #ifdef Q_OS_WIN
         return "\""+getRootPath()+"/../bin/Win32/fgfs.exe\"";
-    #elif defined Q_OS_LINUX || defined Q_OS_UNIX
-        return "/usr/bin/fgfs";
+    #elif defined Q_OS_UNIX
+        #ifdef Q_OS_LINUX
+            return "/usr/bin/fgfs";
+        #else
+            //bsd
+            return "/usr/local/bin/fgfs";
+        #endif
     #endif
     return "";
 }
@@ -128,8 +133,13 @@ QString FGEnvironment::getTerraSyncBinPath()
     QString ts_path = "";
     #ifdef Q_OS_WIN
         ts_path = "\""+getRootPath()+"/../bin/Win32/terrasync.exe\"";
-    #elif defined Q_OS_LINUX || defined Q_OS_UNIX
-        ts_path = "/usr/bin/terrasync";
+    #elif defined Q_OS_UNIX
+        #ifdef Q_OS_LINUX
+            ts_path = "/usr/bin/terrasync";
+        #else
+            //bsd
+            ts_path = "/usr/local/bin/terrasync";
+        #endif
     #endif
     return ts_path;
 }
@@ -194,6 +204,7 @@ QString FGEnvironment::detectOS()
             }
             return os + " - " + os_details.join(" ");
         #else
+            //bsd
             QString os = "Unix";
             sysinfo = new QProcess();
             sysinfo->setProcessChannelMode(QProcess::MergedChannels);
@@ -254,6 +265,7 @@ QString FGEnvironment::detectRootPath()
                           << "/usr/share/games/FlightGear"
                           << "/usr/share/games/flightgear";
         #else
+            //bsd
             possiblePaths << "/usr/local/share/flightgear";
         #endif
     #endif
