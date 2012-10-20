@@ -1309,11 +1309,13 @@ void MainWindow::hndl_tmr_procfgfs()
     {
         QIcon icon(":/icons/icons/dialog-close.png");
         ui->pbtLaunch->setIcon(icon);
+        ui->pbtLaunch->setText("Stop");
     }
     else
     {
         QIcon icon(":/icons/icons/applications-system.png");
         ui->pbtLaunch->setIcon(icon);
+        ui->pbtLaunch->setText("Launch!");
     }
 }
 
