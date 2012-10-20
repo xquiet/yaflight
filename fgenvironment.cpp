@@ -29,7 +29,8 @@ FGEnvironment::FGEnvironment()
     QDir dir(getYFScenery());
     if(!dir.exists())
     {
-        if(dir.mkdir(getYFScenery()))
+        //if(dir.mkpath(getYFScenery()))
+        if(!dir.mkdir(getYFScenery()))
         {
             qFatal("Cannot create dir: %s",getYFScenery().toStdString().data());
         }
@@ -114,24 +115,22 @@ QHash<QString, QStringList> FGEnvironment::getDefaultAirportList()
 
 QString FGEnvironment::getFgfsBinPath()
 {
-#ifdef Q_OS_WIN
-    return "\""+getRootPath()+"/../bin/Win32/fgfs.exe\"";
-#endif
-#ifdef Q_OS_LINUX
-    return "/usr/bin/fgfs";
-#endif
+    #ifdef Q_OS_WIN
+        return "\""+getRootPath()+"/../bin/Win32/fgfs.exe\"";
+    #elif defined Q_OS_LINUX || defined Q_OS_UNIX
+        return "/usr/bin/fgfs";
+    #endif
     return "";
 }
 
 QString FGEnvironment::getTerraSyncBinPath()
 {
     QString ts_path = "";
-#ifdef Q_OS_WIN
-    ts_path = "\""+getRootPath()+"/../bin/Win32/terrasync.exe\"";
-#endif
-#ifdef Q_OS_LINUX
-    ts_path = "/usr/bin/terrasync";
-#endif
+    #ifdef Q_OS_WIN
+        ts_path = "\""+getRootPath()+"/../bin/Win32/terrasync.exe\"";
+    #elif defined Q_OS_LINUX || defined Q_OS_UNIX
+        ts_path = "/usr/bin/terrasync";
+    #endif
     return ts_path;
 }
 
@@ -149,12 +148,13 @@ QString FGEnvironment::getDefaultScenery()
 QString FGEnvironment::getYFHome()
 {
     QString yfhome = "";
-#ifdef Q_OS_WIN
-    yfhome = "/yaflight";
-#endif
-#ifdef Q_OS_LINUX
-    yfhome = "/.yaflight";
-#endif
+    #ifdef Q_OS_WIN
+        yfhome = "/yaflight";
+    #else
+        #if defined Q_OS_LINUX || defined Q_OS_UNIX
+            yfhome = "/.yaflight";
+        #endif
+    #endif
     yfhome = QDir::homePath() + yfhome;
     if (!QFile::exists(yfhome))
     {
@@ -174,8 +174,7 @@ QString FGEnvironment::detectOS()
     #ifdef Q_OS_UNIX
         #ifdef Q_OS_MAC
             return "Mac";
-        #endif
-        #ifdef Q_OS_LINUX
+        #elif defined Q_OS_LINUX
             QString os = "GNU/Linux";
 
             sysinfo = new QProcess();
@@ -236,18 +235,18 @@ QString FGEnvironment::detectFGBinPath()
 QString FGEnvironment::detectRootPath()
 {
     QStringList possiblePaths;
-#ifdef Q_OS_WIN
-    possiblePaths << _win_program_files + "/FlightGear/data";
-    //possiblePaths << "C:/Program Files/FlightGear/data";
-#endif
-#ifdef Q_OS_MAC
-#endif
-#ifdef Q_OS_LINUX
-    possiblePaths << "/usr/share/flightgear/data"
-                  << "/usr/share/FlightGear"
-                  << "/usr/share/games/FlightGear"
-                  << "/usr/share/games/flightgear";
-#endif
+    #ifdef Q_OS_WIN
+        possiblePaths << _win_program_files + "/FlightGear/data";
+        //possiblePaths << "C:/Program Files/FlightGear/data";
+    #endif
+    #ifdef Q_OS_MAC
+    #endif
+    #ifdef Q_OS_LINUX
+        possiblePaths << "/usr/share/flightgear/data"
+                      << "/usr/share/FlightGear"
+                      << "/usr/share/games/FlightGear"
+                      << "/usr/share/games/flightgear";
+    #endif
     for(int i=0;i<possiblePaths.count();i++)
     {
         if(QFile::exists(possiblePaths[i]))
