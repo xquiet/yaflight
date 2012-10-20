@@ -41,6 +41,8 @@
 #include "imagepreview.h"
 #include "aircraft.h"
 #include "airport.h"
+#include "surfacecode.h"
+#include "shouldercode.h"
 #include "airportidx.h"
 #include "settings.h"
 
@@ -133,6 +135,7 @@ private:
     QPoint dragPosition; // used to move the frameless window
     int _mainWindowMaxHeight, _mainWindowMinHeight;
     int posX, posY;
+    void toggleLoadingBarVisible();
 
     // ----- processes -----
     QProcess *procFGFS;
