@@ -78,7 +78,7 @@ QStringList Aircraft::getAircraftDetails(QString aircraft, QString aircraftsDir,
       */
 
     QFile aircraftFile (aircraftsDir+"/"+aircraftDir+"/"+aircraft+"-set.xml");
-    qDebug("%s",(aircraftsDir+"/"+aircraftDir+"/"+aircraft+"-set.xml").toStdString().data());
+    //qDebug("%s",(aircraftsDir+"/"+aircraftDir+"/"+aircraft+"-set.xml").toStdString().data());
     if (!aircraftFile.open(QIODevice::ReadOnly | QIODevice::Text))
         return QStringList()<<"";
 

@@ -19,5 +19,6 @@
         <file>icons/list-remove.png</file>
         <file>icons/view-refresh.png</file>
         <file>icons/gpl3-logo-small.png</file>
+        <file>icons/yaflight-custom-icon.png</file>
     </qresource>
 </RCC>
