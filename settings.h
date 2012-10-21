@@ -59,6 +59,7 @@ public:
     QString getSeason();
     QString getTurbulence();
     QString getWind();
+    QString getRealWeather();
     QString getMeasureUnit();
     QString getAltitude();
     QString getHeading();
@@ -106,6 +107,7 @@ public:
     void setSeason(QString val);
     void setTurbulence(QString val);
     void setWind(QString val);
+    void setRealWeather(QString val);
     void setMeasureUnit(QString val);
     void setAltitude(QString val);
     void setHeading(QString val);

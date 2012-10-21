@@ -177,6 +177,11 @@ QString Settings::getWind()
     return conf->get(ADVSETTINGS, "WIND");
 }
 
+QString Settings::getRealWeather()
+{
+    return conf->get(ADVSETTINGS, "REALWEATHER");
+}
+
 QString Settings::getMeasureUnit()
 {
     return conf->get(ADVSETTINGS, "MEASUREUNIT");
@@ -396,6 +401,11 @@ void Settings::setTurbulence(QString val)
 void Settings::setWind(QString val)
 {
     conf->set(QString(ADVSETTINGS), QString("WIND"), val);
+}
+
+void Settings::setRealWeather(QString val)
+{
+    conf->set(QString(ADVSETTINGS), QString("REALWEATHER"), val);
 }
 
 void Settings::setMeasureUnit(QString val)
