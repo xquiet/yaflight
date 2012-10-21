@@ -613,8 +613,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -686,8 +686,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -702,7 +702,7 @@
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>10</y>
+           <y>0</y>
            <width>111</width>
            <height>20</height>
           </rect>
@@ -714,7 +714,7 @@
         <widget class="QSlider" name="hzsTurbulence">
          <property name="geometry">
           <rect>
-           <x>220</x>
+           <x>280</x>
            <y>20</y>
            <width>160</width>
            <height>16</height>
@@ -739,7 +739,7 @@
         <widget class="QLabel" name="lblTurbulence">
          <property name="geometry">
           <rect>
-           <x>140</x>
+           <x>200</x>
            <y>20</y>
            <width>81</width>
            <height>16</height>
@@ -752,7 +752,7 @@
         <widget class="QLabel" name="lblCalm">
          <property name="geometry">
           <rect>
-           <x>210</x>
+           <x>270</x>
            <y>0</y>
            <width>41</width>
            <height>16</height>
@@ -765,7 +765,7 @@
         <widget class="QLabel" name="lblSevere">
          <property name="geometry">
           <rect>
-           <x>350</x>
+           <x>410</x>
            <y>0</y>
            <width>51</width>
            <height>16</height>
@@ -775,14 +775,27 @@
           <string>Severe</string>
          </property>
         </widget>
+        <widget class="QCheckBox" name="ckbRealWeather">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>151</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Real Weather fetch</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="pageRendering">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="label">
@@ -846,8 +859,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="label">
@@ -901,8 +914,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="label">
@@ -940,8 +953,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>37</height>
          </rect>
         </property>
         <attribute name="icon">

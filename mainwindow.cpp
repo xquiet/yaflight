@@ -219,6 +219,7 @@ void MainWindow::on_pbtLaunch_clicked()
             params << "--atlas=socket,out,1,localhost,5500,udp";
         }
 
+        qDebug("%s", (fgenv->getFgfsBinPath() + " " + params.join(" ")).toStdString().data());
         procFGFS->start(fgenv->getFgfsBinPath(), params, QProcess::ReadOnly);
 
         ui->txaLog->append("Launching...");
@@ -601,6 +602,24 @@ QStringList MainWindow::collectLaunchSettings()
     {
         params << "--disable-enhanced-lighting";
     }
+    // ------------- Environment ----------------
+    if(ui->ckbWind->isChecked())
+    {
+        params << "--random-wind";
+    }
+    if(ui->hzsTurbulence->value())
+    {
+        params << "--turbulence=" + QString::number(lastTurbulence);
+    }
+    if(ui->ckbRealWeather->isChecked())
+    {
+        params << "--enable-real-weather-fetch";
+    }
+    else
+    {
+        params << "--disable-real-weather-fetch";
+    }
+
     // ------------- Time -------------
     // DayTime
     if(ui->cboDayTime->currentText().compare("none")!=0)
@@ -669,6 +688,7 @@ void MainWindow::loadSettings(bool appStart)
         (curr_settings->getTextures().compare(SET_TRUE)==0) ? ui->ckbTextures->setChecked(true) : ui->ckbTextures->setChecked(false);
         (curr_settings->getDistanceAttenuation().compare(SET_TRUE)==0) ? ui->ckbDistanceAttenuation->setChecked(true) : ui->ckbDistanceAttenuation->setChecked(false);
         (curr_settings->getWind().compare(SET_TRUE)==0) ? ui->ckbWind->setChecked(true) : ui->ckbWind->setChecked(false);
+        (curr_settings->getRealWeather().compare(SET_TRUE)==0) ? ui->ckbRealWeather->setChecked(true) : ui->ckbRealWeather->setChecked(false);
         (curr_settings->getHUDAntiAliased().compare(SET_TRUE)==0) ? ui->ckbHudAntialias->setChecked(true) : ui->ckbHudAntialias->setChecked(false);
         // this two (hud2d and hud3d) may collide sometimes, check!!!
         (curr_settings->getHUD2D().compare(SET_TRUE)==0) ? ui->rdbHud2D->setChecked(true) : ui->rdbHud3D->setChecked(true);
@@ -827,6 +847,7 @@ bool MainWindow::saveSettings()
     ui->ckbTextures->isChecked() ? curr_settings->setTextures(SET_TRUE) : curr_settings->setTextures(SET_FALSE);
     ui->ckbDistanceAttenuation->isChecked() ? curr_settings->setDistanceAttenuation(SET_TRUE) : curr_settings->setDistanceAttenuation(SET_FALSE);
     ui->ckbWind->isChecked() ? curr_settings->setWind(SET_TRUE) : curr_settings->setWind(SET_FALSE);
+    ui->ckbRealWeather->isChecked() ? curr_settings->setRealWeather(SET_TRUE) : curr_settings->setRealWeather(SET_FALSE);
     ui->ckbHudAntialias->isChecked() ? curr_settings->setHUDAntiAliased(SET_TRUE) : curr_settings->setHUDAntiAliased(SET_FALSE);
     ui->rdbHud2D->isChecked() ? curr_settings->setHUD2D(SET_TRUE) : curr_settings->setHUD2D(SET_FALSE);
     ui->rdbHud3D->isChecked() ? curr_settings->setHUD3D(SET_TRUE) : curr_settings->setHUD3D(SET_FALSE);
