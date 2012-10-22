@@ -619,6 +619,28 @@ QStringList MainWindow::collectLaunchSettings()
     {
         params << "--disable-real-weather-fetch";
     }
+    if(ui->edtCeilingQuote->text().trimmed().compare("")!=0)
+    {
+        if(ui->edtCeilingThickness->text().trimmed().compare("")!=0)
+        {
+            params << "--ceiling=" + ui->edtCeilingQuote->text().trimmed() + ":" + ui->edtCeilingThickness->text().trimmed();
+        }
+        else
+        {
+            params << "--ceiling=" + ui->edtCeilingQuote->text();
+        }
+    }
+    if(ui->edtVisibility->text().trimmed().compare("")!=0)
+    {
+        if(ui->rdbUnitMeters->isChecked())
+        {
+            params << "--visibility=" + ui->edtVisibility->text().trimmed();
+        }
+        else
+        {
+            params << "--visibility-miles=" + ui->edtVisibility->text().trimmed();
+        }
+    }
 
     // ------------- Time -------------
     // DayTime
@@ -710,6 +732,20 @@ void MainWindow::loadSettings(bool appStart)
             ui->cboFDM->setCurrentIndex(fdmCurrIdx);
         }
 
+
+        if(curr_settings->getCeilingQuote().trimmed().compare("")!=0)
+        {
+            ui->edtCeilingQuote->setText(curr_settings->getCeilingQuote().trimmed());
+            if(curr_settings->getCeilingThickness().trimmed().compare("")!=0)
+            {
+                ui->edtCeilingThickness->setText(curr_settings->getCeilingThickness().trimmed());
+            }
+        }
+
+        if(curr_settings->getVisibility().trimmed().compare("")!=0)
+        {
+            ui->edtVisibility->setText(curr_settings->getVisibility().trimmed());
+        }
 
         // aircraft
         int aircraft_idx = ui->cboAircrafts->findText(curr_settings->getAircraft());
@@ -878,6 +914,19 @@ bool MainWindow::saveSettings()
         curr_settings->setFDM(ui->cboFDM->currentText());
     }
 
+    if(ui->edtCeilingQuote->text().trimmed().compare("")!=0)
+    {
+        curr_settings->setCeilingQuote(ui->edtCeilingQuote->text().trimmed());
+        if(ui->edtCeilingThickness->text().trimmed().compare("")!=0)
+        {
+            curr_settings->setCeilingThickness(ui->edtCeilingThickness->text().trimmed());
+        }
+    }
+
+    if(ui->edtVisibility->text().trimmed().compare("")!=0)
+    {
+        curr_settings->setVisibility(ui->edtVisibility->text().trimmed());
+    }
 
     if(curr_settings->storeData())
     {
