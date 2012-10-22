@@ -142,6 +142,8 @@ private:
     QProcess *procTerraSync;
     bool proc_fgfs_is_running;
     bool proc_ts_is_running;
+    QTimer *tmrProcFGFS;
+    QTimer *tmrProcTS;
 
     // ----- aircrafts -----
     QStringList aircrafts;

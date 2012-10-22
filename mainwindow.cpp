@@ -198,7 +198,7 @@ void MainWindow::on_pbtLaunch_clicked()
                 connect(procTerraSync,SIGNAL(readyRead()),this,SLOT(read_ts_output()));
                 connect(procTerraSync,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(proc_ts_finished()));
 
-                QTimer *tmrProcTS = new QTimer();
+                tmrProcTS = new QTimer();
                 connect(tmrProcTS, SIGNAL(timeout()),this,SLOT(hndl_tmr_procts()));
                 tmrProcTS->start(350);
 
@@ -228,7 +228,7 @@ void MainWindow::on_pbtLaunch_clicked()
         connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
         connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
 
-        QTimer *tmrProcFGFS = new QTimer();
+        tmrProcFGFS = new QTimer();
         connect(tmrProcFGFS, SIGNAL(timeout()),this,SLOT(hndl_tmr_procfgfs()));
         tmrProcFGFS->start(350);
 
@@ -1386,6 +1386,8 @@ void MainWindow::hndl_tmr_procfgfs()
         QIcon icon(":/icons/icons/applications-system.png");
         ui->pbtLaunch->setIcon(icon);
         ui->pbtLaunch->setText("Launch!");
+        proc_fgfs_is_running = false;
+        tmrProcFGFS->stop();
     }
 }
 
@@ -1404,6 +1406,7 @@ void MainWindow::hndl_tmr_procts()
         ui->lblTerraSyncStatus->setPixmap(pixmap);
         ui->lblTerraSyncStatus->setToolTip("TerraSync not running");
         ui->lblTerraSyncStatus->setScaledContents(true);
+        tmrProcTS->stop();
     }
 }
 
