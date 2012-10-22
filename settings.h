@@ -67,6 +67,7 @@ public:
     QString getLongitude();
     QString getCeilingQuote();
     QString getCeilingThickness();
+    QString getVisibility();
     QString getHUDAntiAliased();
     QString getHUD2D();
     QString getHUD3D();
@@ -115,6 +116,7 @@ public:
     void setLongitude(QString val);
     void setCeilingQuote(QString val);
     void setCeilingThickness(QString val);
+    void setVisibility(QString val);
     void setHUDAntiAliased(QString val);
     void setHUD2D(QString val);
     void setHUD3D(QString val);

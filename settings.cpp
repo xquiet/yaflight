@@ -217,6 +217,11 @@ QString Settings::getCeilingThickness()
     return conf->get(ADVSETTINGS, "CEILINGTHICKNESS");
 }
 
+QString Settings::getVisibility()
+{
+    return conf->get(ADVSETTINGS, "VISIBILITY");
+}
+
 QString Settings::getHUDAntiAliased()
 {
     return conf->get(ADVSETTINGS, "HUDANTIALIASED");
@@ -441,6 +446,11 @@ void Settings::setCeilingQuote(QString val)
 void Settings::setCeilingThickness(QString val)
 {
     conf->set(QString(ADVSETTINGS), QString("CEILINGTHICKNESS"), val);
+}
+
+void Settings::setVisibility(QString val)
+{
+    conf->set(QString(ADVSETTINGS), QString("VISIBILITY"), val);
 }
 
 void Settings::setHUDAntiAliased(QString val)
