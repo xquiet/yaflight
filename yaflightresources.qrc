@@ -20,5 +20,7 @@
         <file>icons/view-refresh.png</file>
         <file>icons/gpl3-logo-small.png</file>
         <file>icons/yaflight-custom-icon.png</file>
+        <file>icons/clock.png</file>
+        <file>icons/video-display.png</file>
     </qresource>
 </RCC>
