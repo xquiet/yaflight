@@ -389,8 +389,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>161</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -429,8 +429,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>161</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -1452,6 +1452,9 @@
          <height>51</height>
         </rect>
        </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -1465,6 +1468,26 @@
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
+      <widget class="QWidget" name="widget" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>471</width>
+         <height>261</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: #fff;</string>
+       </property>
+      </widget>
+      <zorder>widget</zorder>
+      <zorder>lblYFIcon</zorder>
+      <zorder>lblAppName</zorder>
+      <zorder>lblAppVersion</zorder>
+      <zorder>lblAppCopyright</zorder>
+      <zorder>btnAboutQt</zorder>
+      <zorder>lblGPLlogo</zorder>
      </widget>
     </widget>
    </widget>
