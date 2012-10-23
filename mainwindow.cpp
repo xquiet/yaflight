@@ -835,7 +835,7 @@ void MainWindow::loadSettings(bool appStart)
 
 bool MainWindow::saveSettings()
 {
-    if(curr_settings==NULL)
+    if((!curr_settings)||(just_started))
         curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
 
     ui->ckbFilterInstalled->isChecked() ? curr_settings->setAirportListFiltered(SET_TRUE) : curr_settings->setAirportListFiltered(SET_FALSE);
