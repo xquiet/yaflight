@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QTranslator yaflightTranslator;
+    qDebug(TRANSDIR);
     yaflightTranslator.load(QLocale::system().name(),
                             TRANSDIR);
     a.installTranslator(&yaflightTranslator);

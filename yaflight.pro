@@ -11,11 +11,10 @@ TARGET = yaflight
 TEMPLATE = app
 
 isEmpty(DATADIR) {
-    DATADIR = /usr/share/yaflight/
+    DATADIR = /usr/share/yaflight
 }
 
-#TRANSDIR = $${DATADIR}languages
-TRANSDIR = /home/matteo/workspace/yaflight/languages/
+TRANSDIR = $$DATADIR/languages/
 
 DEFINES += DATADIR=\\\"$$DATADIR\\\" TRANSDIR=\\\"$$TRANSDIR\\\"
 
