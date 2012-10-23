@@ -64,4 +64,10 @@ RESOURCES += \
 
 OTHER_FILES +=
 
-TRANSLATIONS += languages/it_IT.ts
+TRANSLATIONS += languages/it_IT.ts \
+    languages/fr_FR.ts \
+    languages/de_DE.ts \
+    languages/es_ES.ts \
+    languages/ru_RU.ts \
+    languages/zh_CN.ts \
+    languages/zh_TW.ts
