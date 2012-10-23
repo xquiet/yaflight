@@ -23,6 +23,10 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QTranslator yaflightTranslator;
+    yaflightTranslator.load(QLocale::system().name(),
+                            TRANSDIR);
+    a.installTranslator(&yaflightTranslator);
     MainWindow w;
     w.show();
     

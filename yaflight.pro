@@ -10,6 +10,15 @@ DEFINES += VERSION="0.99"
 TARGET = yaflight
 TEMPLATE = app
 
+isEmpty(DATADIR) {
+    DATADIR = /usr/share/yaflight/
+}
+
+#TRANSDIR = $${DATADIR}languages
+TRANSDIR = /home/matteo/workspace/yaflight/languages/
+
+DEFINES += DATADIR=\\\"$$DATADIR\\\" TRANSDIR=\\\"$$TRANSDIR\\\"
+
 unix:LIBS += -lz
 
 win32:LIBS += "C:\\Users\\matteo\\workspace\\zlib-1.2.7\\contrib\\vstudio\\vc9\\x86\\ZlibDllReleaseWithoutAsm\\zlibwapi.dll"
@@ -55,3 +64,5 @@ RESOURCES += \
     yaflightresources.qrc
 
 OTHER_FILES +=
+
+TRANSLATIONS += languages/it_IT.ts

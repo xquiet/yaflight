@@ -35,6 +35,7 @@
 #include <QWebFrame>
 #include <QFileDialog>
 #include <QTimer>
+#include <QTranslator>
 
 #include "fgenvironment.h"
 #include "dlgaircraftdetails.h"

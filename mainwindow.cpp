@@ -102,16 +102,16 @@ MainWindow::MainWindow(QWidget *parent) :
     listOfAircrafts.sort();
     ui->cboAircrafts->addItems(listOfAircrafts);
 
-    ui->txaLog->append("OS: " + fgenv->getOS());
-    ui->txaLog->append("FG version: " + fgenv->getFGVersion());
-    ui->txaLog->append("FGROOT: " + fgenv->getRootPath());
-    ui->txaLog->append("FGSCEN: " + fgenv->getDefaultScenery());
-    ui->txaLog->append("Aircraft dir: " + fgenv->getAircraftsDir());
+    ui->txaLog->append(tr("OS: ") + fgenv->getOS());
+    ui->txaLog->append(tr("FG version: ") + fgenv->getFGVersion());
+    ui->txaLog->append(tr("FGROOT: ") + fgenv->getRootPath());
+    ui->txaLog->append(tr("FGSCEN: ") + fgenv->getDefaultScenery());
+    ui->txaLog->append(tr("Aircraft dir: ") + fgenv->getAircraftsDir());
 
     ui->lblDefaultScenery->setText(fgenv->getDefaultScenery());
     ui->lblYFScenery->setText(fgenv->getYFScenery());
 
-    ui->lblTerraSyncStatus->setToolTip("N/A");
+    ui->lblTerraSyncStatus->setToolTip(tr("N/A"));
 
     setup_airport_list();
 
@@ -126,7 +126,7 @@ MainWindow::~MainWindow()
 void MainWindow::setup_about_box()
 {
     ui->lblAppName->setText(QApplication::applicationName());
-    ui->lblAppVersion->setText("Version: " + QApplication::applicationVersion());
+    ui->lblAppVersion->setText(tr("Version: ") + QApplication::applicationVersion());
     ui->lblAppCopyright->setText("(C) 2012 by Matteo Pasotti");
 }
 
@@ -143,7 +143,7 @@ QHash<QString, QString> MainWindow::getListOfAircrafts()
     QDir aircraftsDir(fgenv->getAircraftsDir());
     if(!aircraftsDir.exists())
     {
-        qDebug("Directory %s doesn't exists",aircraftsDir.absolutePath().toStdString().c_str());
+        qDebug("Directory %s doesn't exists",aircraftsDir.absolutePath().toStdString().data());
         return result;
     }
     QStringList listOfAircrafts = aircraftsDir.entryList(QDir::Dirs,QDir::Name);
@@ -193,7 +193,7 @@ void MainWindow::on_pbtLaunch_clicked()
                           << "-p" << "5500"
                           << "-d" << fgenv->getYFScenery();
                 procTerraSync->start(fgenv->getTerraSyncBinPath(), ts_params, QProcess::ReadOnly);
-                ui->txaLog->append("INFO: Starting TerraSync with:");
+                ui->txaLog->append(tr("INFO: Starting TerraSync with:"));
                 ui->txaLog->append(fgenv->getTerraSyncBinPath() + " " + ts_params.join(" "));
                 connect(procTerraSync,SIGNAL(readyRead()),this,SLOT(read_ts_output()));
                 connect(procTerraSync,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(proc_ts_finished()));
@@ -222,9 +222,9 @@ void MainWindow::on_pbtLaunch_clicked()
         qDebug("%s", (fgenv->getFgfsBinPath() + " " + params.join(" ")).toStdString().data());
         procFGFS->start(fgenv->getFgfsBinPath(), params, QProcess::ReadOnly);
 
-        ui->txaLog->append("Launching...");
+        ui->txaLog->append(tr("Launching..."));
         //ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
-        ui->txaLog->append("INFO: Simulation started");
+        ui->txaLog->append(tr("INFO: Simulation started"));
         connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
         connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
 
@@ -233,7 +233,7 @@ void MainWindow::on_pbtLaunch_clicked()
         tmrProcFGFS->start(350);
 
         procFGFS->closeWriteChannel();
-        ui->txaLog->append("INFO: TerraSync started");
+        ui->txaLog->append(tr("INFO: TerraSync started"));
         if((procFGFS->state() == QProcess::Running)||
                 (procFGFS->state() == QProcess::Starting))
             proc_fgfs_is_running = true;
@@ -262,20 +262,20 @@ void MainWindow::read_ts_output()
 
 void MainWindow::procReadAircraftsFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    ui->txaLog->append("Simulation complete");
-    QString message = QString("process exited with code: %1, status: %2\n")
+    ui->txaLog->append(tr("Simulation complete"));
+    QString message = QString(tr("process exited with code: %1, status: %2\n")
         .arg(exitCode)
-        .arg(exitStatus == QProcess::NormalExit ? "QProcess::NormalExit" : "QProcess::CrashExit");
+        .arg(exitStatus == QProcess::NormalExit ? "QProcess::NormalExit" : "QProcess::CrashExit"));
     qDebug("%s",message.toStdString().data());
     ui->txaLog->append(message);
 }
 
 void MainWindow::proc_ts_finished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    ui->txaLog->append("INFO: TerraSync stopped");
-    QString message = QString("process exited with code: %1, status: %2\n")
+    ui->txaLog->append(tr("INFO: TerraSync stopped"));
+    QString message = QString(tr("process exited with code: %1, status: %2\n")
         .arg(exitCode)
-        .arg(exitStatus == QProcess::NormalExit ? "QProcess::NormalExit" : "QProcess::CrashExit");
+        .arg(exitStatus == QProcess::NormalExit ? "QProcess::NormalExit" : "QProcess::CrashExit"));
     qDebug("%s",message.toStdString().data());
     ui->txaLog->append(message);
 }
@@ -756,7 +756,7 @@ void MainWindow::loadSettings(bool appStart)
         }
         else
         {
-            ui->txaLog->append("WARN: Aircraft from configuration not available");
+            ui->txaLog->append(tr("WARN: Aircraft from configuration not available"));
         }
 
         if(curr_settings->getTurbulence().toFloat()>-1)
@@ -826,7 +826,7 @@ void MainWindow::loadSettings(bool appStart)
             }
         }
 
-        ui->txaLog->append("INFO: Configuration loaded correctly");
+        ui->txaLog->append(tr("INFO: Configuration loaded correctly"));
         /*QMessageBox msgBox("Success","Configuration loaded!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
         msgBox.exec();*/
     }
@@ -930,10 +930,10 @@ bool MainWindow::saveSettings()
 
     if(curr_settings->storeData())
     {
-        ui->txaLog->append("INFO: Configuration stored correctly");
+        ui->txaLog->append(tr("INFO: Configuration stored correctly"));
         QMessageBox msgBox;
-        msgBox.setWindowTitle("Success");
-        msgBox.setText("Configuration stored!");
+        msgBox.setWindowTitle(tr("Success"));
+        msgBox.setText(tr("Configuration stored!"));
         //msgBox.setInformativeText("Success");
         msgBox.setIcon(QMessageBox::Information);
         msgBox.addButton(QMessageBox::Ok);
@@ -941,10 +941,10 @@ bool MainWindow::saveSettings()
         msgBox.exec();
         return true;
     }else{
-        ui->txaLog->append("WARN: Configuration NOT stored");
+        ui->txaLog->append(tr("WARN: Configuration NOT stored"));
         QMessageBox msgBox;
-        msgBox.setWindowTitle("Failure");
-        msgBox.setText("Configuration NOT stored!");
+        msgBox.setWindowTitle(tr("Failure"));
+        msgBox.setText(tr("Configuration NOT stored!"));
         //msgBox.setInformativeText("Failure");
         msgBox.setIcon(QMessageBox::Critical);
         msgBox.addButton(QMessageBox::Close);
@@ -1047,7 +1047,7 @@ void MainWindow::setup_airport_list()
             row++;
         }
         if(!apindex.create(airportsHash)){
-            QMessageBox msgbox(QMessageBox::Critical,"Error","Can't create airport index cache\nCheck you permissions",QMessageBox::Ok);
+            QMessageBox msgbox(QMessageBox::Critical,tr("Error"),tr("Can't create airport index cache\nCheck you permissions"),QMessageBox::Ok);
             msgbox.exec();
         }
     }
@@ -1286,13 +1286,13 @@ void MainWindow::on_cboRunway_currentIndexChanged(const QString &arg1)
 void MainWindow::on_btnRunwayInfo_clicked()
 {
     QMessageBox msgbox;
-    msgbox.setText("Number: " + currentRunway->getNumber() +
-                   "\nHeading: " + currentRunway->getHeading() +
-                   "\nLongitude: " + currentRunway->getLongitude() +
-                   "\nLatitude: " + currentRunway->getLatitude() +
-                   "\nShoulderCode: " + ShoulderCode::decode(currentRunway->getShoulderCode()) +
-                   "\nSurface: " + SurfaceCode::decode(currentRunway->getSurfaceCode()));
-    msgbox.setWindowTitle("Runway details");
+    msgbox.setText(tr("Number: ") + currentRunway->getNumber() +
+                   tr("\nHeading: ") + currentRunway->getHeading() +
+                   tr("\nLongitude: ") + currentRunway->getLongitude() +
+                   tr("\nLatitude: ") + currentRunway->getLatitude() +
+                   tr("\nShoulderCode: ") + ShoulderCode::decode(currentRunway->getShoulderCode()) +
+                   tr("\nSurface: ") + SurfaceCode::decode(currentRunway->getSurfaceCode()));
+    msgbox.setWindowTitle(tr("Runway details"));
     msgbox.exec();
 }
 
@@ -1311,9 +1311,9 @@ void MainWindow::on_btnDel_clicked()
     if(!ui->lstviewSceneries->currentIndex().isValid())
         return;
     QMessageBox msgbox;
-    msgbox.setText("Dropping: "+
+    msgbox.setText(tr("Dropping: ")+
                    lstviewmodel->stringList().value(ui->lstviewSceneries->currentIndex().row()).trimmed()+
-                   "\nAre you sure?");
+                   tr("\nAre you sure?"));
     msgbox.addButton(QMessageBox::Ok);
     msgbox.addButton(QMessageBox::Cancel);
     if(msgbox.exec() == QMessageBox::Ok)
@@ -1385,7 +1385,7 @@ void MainWindow::hndl_tmr_procfgfs()
     {
         QIcon icon(":/icons/icons/applications-system.png");
         ui->pbtLaunch->setIcon(icon);
-        ui->pbtLaunch->setText("Launch!");
+        ui->pbtLaunch->setText(tr("Launch!"));
         proc_fgfs_is_running = false;
         tmrProcFGFS->stop();
     }
@@ -1397,14 +1397,14 @@ void MainWindow::hndl_tmr_procts()
     {
         QPixmap pixmap(":/icons/icons/applications-internet.png");
         ui->lblTerraSyncStatus->setPixmap(pixmap);
-        ui->lblTerraSyncStatus->setToolTip("TerraSync running");
+        ui->lblTerraSyncStatus->setToolTip(tr("TerraSync running"));
         ui->lblTerraSyncStatus->setScaledContents(true);
     }
     else
     {
         QPixmap pixmap(":/icons/icons/dialog-close.png");
         ui->lblTerraSyncStatus->setPixmap(pixmap);
-        ui->lblTerraSyncStatus->setToolTip("TerraSync not running");
+        ui->lblTerraSyncStatus->setToolTip(tr("TerraSync not running"));
         ui->lblTerraSyncStatus->setScaledContents(true);
         tmrProcTS->stop();
     }
@@ -1412,7 +1412,7 @@ void MainWindow::hndl_tmr_procts()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    QMessageBox msgBox(QMessageBox::Warning,"Warning","Are you sure you want stop your simulation?",QMessageBox::Ok|QMessageBox::Cancel,this);
+    QMessageBox msgBox(QMessageBox::Warning,tr("Warning"),tr("Are you sure you want stop your simulation?"),QMessageBox::Ok|QMessageBox::Cancel,this);
     if(msgBox.exec()==QMessageBox::Ok)
     {
         if((proc_ts_is_running)&&((procTerraSync->state()==QProcess::Running)||
