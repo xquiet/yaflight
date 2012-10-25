@@ -20,9 +20,9 @@ DEFINES += DATADIR=\\\"$$DATADIR\\\" TRANSDIR=\\\"$$TRANSDIR\\\"
 
 unix:LIBS += -lz
 
-win32:LIBS += "C:\\Users\\matteo\\workspace\\zlib-1.2.7\\contrib\\vstudio\\vc9\\x86\\ZlibDllReleaseWithoutAsm\\zlibwapi.dll"
+win32:LIBS += "C:\\librerie\\zlib-1.2.7\\contrib\\vstudio\\vc9\\x86\\ZlibDllReleaseWithoutAsm\\zlibwapi.dll"
 
-win32:INCLUDEPATH += "C:\\Users\\matteo\\workspace\\zlib-1.2.7"
+win32:INCLUDEPATH += "C:\\librerie\\zlib-1.2.7"
 
 SOURCES += main.cpp\
         mainwindow.cpp \
