@@ -1290,7 +1290,7 @@ void MainWindow::on_btnRunwayInfo_clicked()
                    tr("\nHeading: ") + currentRunway->getHeading() +
                    tr("\nLongitude: ") + currentRunway->getLongitude() +
                    tr("\nLatitude: ") + currentRunway->getLatitude() +
-                   tr("\nShoulderCode: ") + ShoulderCode::decode(currentRunway->getShoulderCode()) +
+                   tr("\nShoulder: ") + ShoulderCode::decode(currentRunway->getShoulderCode()) +
                    tr("\nSurface: ") + SurfaceCode::decode(currentRunway->getSurfaceCode()));
     msgbox.setWindowTitle(tr("Runway details"));
     msgbox.exec();
