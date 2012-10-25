@@ -389,8 +389,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>161</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -429,8 +429,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>161</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -560,9 +560,9 @@
           <widget class="QCheckBox" name="ckbAIModels">
            <property name="geometry">
             <rect>
-             <x>310</x>
-             <y>30</y>
-             <width>101</width>
+             <x>170</x>
+             <y>70</y>
+             <width>171</width>
              <height>20</height>
             </rect>
            </property>
@@ -594,7 +594,7 @@
             <rect>
              <x>170</x>
              <y>30</y>
-             <width>131</width>
+             <width>181</width>
              <height>20</height>
             </rect>
            </property>
@@ -617,7 +617,7 @@
             <rect>
              <x>170</x>
              <y>10</y>
-             <width>91</width>
+             <width>181</width>
              <height>20</height>
             </rect>
            </property>
@@ -628,9 +628,9 @@
           <widget class="QCheckBox" name="ckbLockTime">
            <property name="geometry">
             <rect>
-             <x>310</x>
-             <y>10</y>
-             <width>91</width>
+             <x>170</x>
+             <y>50</y>
+             <width>171</width>
              <height>20</height>
             </rect>
            </property>
@@ -781,7 +781,7 @@
           <rect>
            <x>10</x>
            <y>130</y>
-           <width>151</width>
+           <width>231</width>
            <height>20</height>
           </rect>
          </property>
@@ -794,7 +794,7 @@
           <rect>
            <x>10</x>
            <y>110</y>
-           <width>151</width>
+           <width>241</width>
            <height>20</height>
           </rect>
          </property>
@@ -900,7 +900,7 @@
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>151</width>
+           <width>231</width>
            <height>20</height>
           </rect>
          </property>
@@ -964,7 +964,7 @@
           <rect>
            <x>10</x>
            <y>30</y>
-           <width>111</width>
+           <width>251</width>
            <height>20</height>
           </rect>
          </property>
@@ -1237,7 +1237,7 @@
         <rect>
          <x>332</x>
          <y>220</y>
-         <width>101</width>
+         <width>131</width>
          <height>25</height>
         </rect>
        </property>
