@@ -363,7 +363,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1506"/>
+        <location filename="../mainwindow.ui" line="1529"/>
         <source>Loading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -516,7 +516,7 @@ Latitude: </source>
     <message>
         <location filename="../mainwindow.cpp" line="1293"/>
         <source>
-ShoulderCode: </source>
+Shoulder: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
