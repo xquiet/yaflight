@@ -225,7 +225,7 @@
     <message>
         <location filename="../mainwindow.ui" line="873"/>
         <source>Sky Blending</source>
-        <translation type="unfinished"></translation>
+        <translation>Miscelazione Cielo</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="883"/>
@@ -325,7 +325,7 @@
     <message>
         <location filename="../mainwindow.ui" line="1248"/>
         <source>Go To Map...</source>
-        <translation>Vai alla Mappa</translation>
+        <translation>Vai alla Mappa...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1264"/>
@@ -363,7 +363,7 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1506"/>
+        <location filename="../mainwindow.ui" line="1529"/>
         <source>Loading...</source>
         <translation>Caricando...</translation>
     </message>
@@ -375,7 +375,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="106"/>
         <source>FG version: </source>
-        <translation>Version FG: </translation>
+        <translation>Versione FG: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="107"/>
@@ -516,8 +516,8 @@ Latitude: </source>
     <message>
         <location filename="../mainwindow.cpp" line="1293"/>
         <source>
-ShoulderCode: </source>
-        <translation type="unfinished"></translation>
+Shoulder: </source>
+        <translation>Spalla: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1294"/>
