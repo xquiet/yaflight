@@ -25,6 +25,9 @@ dlgAircraftDetails::dlgAircraftDetails(QStringList details, FGEnvironment *fgenv
     ui(new Ui::dlgAircraftDetails)
 {
     ui->setupUi(this);
+
+    this->setFixedSize(590,400);
+
     ui->tbvDetails->setRowCount(details.size());
     ui->tbvDetails->setColumnCount(2);
     ui->tbvDetails->horizontalHeader()->hide();
