@@ -43,6 +43,7 @@ public:
     QString getSound();
     QString getResolution();
     QString getCallSign();
+    QString getControlMode();
     // adv
     QString getFailure();
     QString getFuelLock();
@@ -50,6 +51,8 @@ public:
     QString getRandomObjects();
     QString getAIModels();
     QString getAutoCoordination();
+    QString getInAir();
+    QString getAltitude();
     QString getPanel();
     QString getHorizonEffect();
     QString getSkyBlending();
@@ -61,7 +64,6 @@ public:
     QString getWind();
     QString getRealWeather();
     QString getMeasureUnit();
-    QString getAltitude();
     QString getHeading();
     QString getLatitude();
     QString getLongitude();
@@ -92,6 +94,7 @@ public:
     void setSound(QString val);
     void setResolution(QString val);
     void setCallSign(QString val);
+    void setControlMode(QString val);
     // adv
     void setFailure(QString val);
     void setFuelLock(QString val);
@@ -99,6 +102,8 @@ public:
     void setRandomObjects(QString val);
     void setAIModels(QString val);
     void setAutoCoordination(QString val);
+    void setInAir(QString val);
+    void setAltitude(QString val);
     void setPanel(QString val);
     void setHorizonEffect(QString val);
     void setSkyBlending(QString val);
@@ -110,7 +115,6 @@ public:
     void setWind(QString val);
     void setRealWeather(QString val);
     void setMeasureUnit(QString val);
-    void setAltitude(QString val);
     void setHeading(QString val);
     void setLatitude(QString val);
     void setLongitude(QString val);

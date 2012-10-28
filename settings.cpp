@@ -100,6 +100,11 @@ QString Settings::getCallSign()
     return conf->get(MAINSETTINGS, "CALLSIGN");
 }
 
+QString Settings::getControlMode()
+{
+    return conf->get(MAINSETTINGS, "CM");
+}
+
 //----------------------------------------
 // Advanced
 QString Settings::getFailure()
@@ -130,6 +135,11 @@ QString Settings::getAIModels()
 QString Settings::getAutoCoordination()
 {
     return conf->get(ADVSETTINGS, "AUTOCOORD");
+}
+
+QString Settings::getInAir()
+{
+    return conf->get(ADVSETTINGS, "INAIR");
 }
 
 QString Settings::getPanel()
@@ -331,6 +341,11 @@ void Settings::setCallSign(QString val)
     conf->set(QString(MAINSETTINGS), QString("CALLSIGN"),val);
 }
 
+void Settings::setControlMode(QString val)
+{
+    conf->set(QString(MAINSETTINGS), QString("CM"),val);
+}
+
 //----------------------------------------
 // Advanced
 void Settings::setFailure(QString val)
@@ -361,6 +376,11 @@ void Settings::setAIModels(QString val)
 void Settings::setAutoCoordination(QString val)
 {
     conf->set(QString(ADVSETTINGS), QString("AUTOCOORD"), val);
+}
+
+void Settings::setInAir(QString val)
+{
+    conf->set(QString(ADVSETTINGS), QString("INAIR"), val);
 }
 
 void Settings::setPanel(QString val)
