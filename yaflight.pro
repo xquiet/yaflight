@@ -38,7 +38,8 @@ SOURCES += main.cpp\
     airportidx.cpp \
     apt_dat.cpp \
     surfacecode.cpp \
-    shouldercode.cpp
+    shouldercode.cpp \
+    runwaydetailsdialog.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
@@ -53,11 +54,13 @@ HEADERS  += mainwindow.h \
     airportidx.h \
     apt_dat.h \
     surfacecode.h \
-    shouldercode.h
+    shouldercode.h \
+    runwaydetailsdialog.h
 
 FORMS    += mainwindow.ui \
     dlgaircraftdetails.ui \
-    cuteexpander.ui
+    cuteexpander.ui \
+    runwaydetailsdialog.ui
 
 RESOURCES += \
     yaflightresources.qrc
