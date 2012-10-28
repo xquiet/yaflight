@@ -44,6 +44,7 @@
 #include "airport.h"
 #include "surfacecode.h"
 #include "shouldercode.h"
+#include "runwaydetailsdialog.h"
 #include "airportidx.h"
 #include "settings.h"
 
@@ -124,6 +125,11 @@ private slots:
 
     void hndl_tmr_procts();
 
+    void on_ckbInAir_toggled(bool checked);
+
+
+    void on_cboControlMode_currentIndexChanged(const QString &arg1);
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -177,6 +183,7 @@ private:
     QString lastLongitude;
     QString lastLatitude;
     QString lastHeading;
+    QString lastControlModeSelected;
     float lastTurbulence;
 
     FGEnvironment *fgenv;

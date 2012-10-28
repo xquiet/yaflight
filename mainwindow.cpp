@@ -62,6 +62,13 @@ MainWindow::MainWindow(QWidget *parent) :
     //windowGeometries.sort();
     ui->cboWindowGeometries->addItems(windowGeometries);
 
+    // control mode
+    QStringList controlModes;
+    controlModes << "keyboard"
+                 << "joystick"
+                 << "mouse";
+    ui->cboControlMode->addItems(controlModes);
+
     QStringList fdms;
     fdms << ""
          << "jsb"
@@ -224,6 +231,7 @@ void MainWindow::on_pbtLaunch_clicked()
 
         ui->txaLog->append(tr("Launching..."));
         //ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
+        qDebug("%s",(fgenv->getFgfsBinPath()+" "+params.join(" ")).toStdString().data());
         ui->txaLog->append(tr("INFO: Simulation started"));
         connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
         connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
@@ -442,7 +450,7 @@ QStringList MainWindow::collectLaunchSettings()
     }
     else
     {
-        params << "--geometry="+ui->cboWindowGeometries->currentText();
+        params << "--geometry="+lastResolutionSelected;
     }
     // Units
     if(ui->rdbUnitMeters->isChecked())
@@ -453,6 +461,10 @@ QStringList MainWindow::collectLaunchSettings()
     {
         params << "--units-feets";
     }
+
+    // control mode
+    params << "--control=" + lastControlModeSelected;
+
     // ------------- Rendering -------------
     // Horizon effect
     if(ui->ckbHorizonEffect->isChecked())
@@ -494,7 +506,7 @@ QStringList MainWindow::collectLaunchSettings()
     // Failure
     if(ui->cboFailures->currentText().compare("none")!=0)
     {
-        params << "--failure="+ui->cboFailures->currentText().trimmed();
+        params << "--failure=" + lastFailureSelected;
     }
     // Lock fuel
     if(ui->ckbLockFuel->isChecked())
@@ -553,8 +565,18 @@ QStringList MainWindow::collectLaunchSettings()
     }
     if(ui->cboFDM->currentText().trimmed().compare("")!=0)
     {
-        params << "--fdm="+ui->cboFDM->currentText();
+        params << "--fdm=" + ui->cboFDM->currentText();
     }
+    if((ui->ckbInAir->isChecked())&&(ui->lnedtAltitude->text().trimmed().compare("")!=0))
+    {
+        // using toInt and then QString::number to avoid passing not valid strings
+        params << "--in-air" << "--altitude=" + QString::number(ui->lnedtAltitude->text().trimmed().toInt());
+    }
+    else
+    {
+        params << "--on-ground";
+    }
+
     // ------------- HUD -------------
     // Hud 2D
     if(ui->rdbHud2D->isChecked())
@@ -704,6 +726,7 @@ void MainWindow::loadSettings(bool appStart)
         (curr_settings->getRandomObjects().compare(SET_TRUE)==0) ? ui->ckbRandomObjects->setChecked(true) : ui->ckbRandomObjects->setChecked(false);
         (curr_settings->getAIModels().compare(SET_TRUE)==0) ? ui->ckbAIModels->setChecked(true) : ui->ckbAIModels->setChecked(false);
         (curr_settings->getAutoCoordination().compare(SET_TRUE)==0) ? ui->ckbAutoCoordination->setChecked(true) : ui->ckbAutoCoordination->setChecked(false);
+        (curr_settings->getInAir().compare(SET_TRUE)==0) ? ui->ckbInAir->setChecked(true) : ui->ckbInAir->setChecked(false);
         (curr_settings->getPanel().compare(SET_TRUE)==0) ? ui->ckbPanel->setChecked(true) : ui->ckbPanel->setChecked(false);
         (curr_settings->getHorizonEffect().compare(SET_TRUE)==0) ? ui->ckbHorizonEffect->setChecked(true) : ui->ckbHorizonEffect->setChecked(false);
         (curr_settings->getSkyBlending().compare(SET_TRUE)==0) ? ui->ckbSkyBlending->setChecked(true) : ui->ckbSkyBlending->setChecked(false);
@@ -718,8 +741,6 @@ void MainWindow::loadSettings(bool appStart)
         (curr_settings->getEnhancedLighting().compare(SET_TRUE)==0) ? ui->ckbEnhancedLighting->setChecked(true) : ui->ckbEnhancedLighting->setChecked(false);
         (curr_settings->getSpecularReflections().compare(SET_TRUE)==0) ? ui->ckbSpecularReflections->setChecked(true) : ui->ckbSpecularReflections->setChecked(false);
         (curr_settings->getTerraSync().compare(SET_TRUE)==0) ? ui->ckbTerraSync->setChecked(true) : ui->ckbTerraSync->setChecked(false);
-
-        // missing handles to Altitude, Heading, Lat, Long
 
         if(curr_settings->getCallSign().trimmed().compare("")!=0)
         {
@@ -745,6 +766,12 @@ void MainWindow::loadSettings(bool appStart)
         if(curr_settings->getVisibility().trimmed().compare("")!=0)
         {
             ui->edtVisibility->setText(curr_settings->getVisibility().trimmed());
+        }
+
+        int cmCurrIdx = ui->cboControlMode->findText(curr_settings->getControlMode().trimmed());
+        if(cmCurrIdx>=0)
+        {
+            ui->cboControlMode->setCurrentIndex(cmCurrIdx);
         }
 
         // aircraft
@@ -877,6 +904,7 @@ bool MainWindow::saveSettings()
     ui->ckbRandomObjects->isChecked() ? curr_settings->setRandomObjects(SET_TRUE) : curr_settings->setRandomObjects(SET_FALSE);
     ui->ckbAIModels->isChecked() ? curr_settings->setAIModels(SET_TRUE) : curr_settings->setAIModels(SET_FALSE);
     ui->ckbAutoCoordination->isChecked() ? curr_settings->setAutoCoordination(SET_TRUE) : curr_settings->setAutoCoordination(SET_FALSE);
+    ui->ckbInAir->isChecked() ? curr_settings->setInAir(SET_TRUE) : curr_settings->setInAir(SET_FALSE);
     ui->ckbPanel->isChecked() ? curr_settings->setPanel(SET_TRUE) : curr_settings->setPanel(SET_FALSE);
     ui->ckbHorizonEffect->isChecked() ? curr_settings->setHorizonEffect(SET_TRUE) : curr_settings->setHorizonEffect(SET_FALSE);
     ui->ckbSkyBlending->isChecked() ? curr_settings->setSkyBlending(SET_TRUE) : curr_settings->setSkyBlending(SET_FALSE);
@@ -892,8 +920,17 @@ bool MainWindow::saveSettings()
     curr_settings->setTurbulence(QString::number(lastTurbulence));
     ui->ckbTerraSync->isChecked() ? curr_settings->setTerraSync(SET_TRUE) : curr_settings->setTerraSync(SET_FALSE);
 
-    //curr_settings->setLongitude(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),2)->text());
-    //curr_settings->setLatitude(((QStandardItemModel*)ui->tbvAirports->model())->item(lastAirportIndex.row(),3)->text());
+    if((ui->lnedtAltitude->isEnabled())&&(ui->lnedtAltitude->text().trimmed().compare("")!=0))
+    {
+        if(ui->lnedtAltitude->text().trimmed().toInt() > 0)
+        {
+            curr_settings->setAltitude(ui->lnedtAltitude->text().trimmed());
+        }
+    }
+    else
+    {
+        curr_settings->setAltitude("");
+    }
 
     curr_settings->setLongitude(lastLongitude);
     curr_settings->setLatitude(lastLatitude);
@@ -908,6 +945,7 @@ bool MainWindow::saveSettings()
     curr_settings->setFailure(lastFailureSelected);
     curr_settings->setDayTime(lastDayTimeSelected);
     curr_settings->setSeason(lastSeasonSelected);
+    curr_settings->setControlMode(lastControlModeSelected);
 
     if(ui->cboFDM->currentText().trimmed().compare("")!=0)
     {
@@ -1285,7 +1323,8 @@ void MainWindow::on_cboRunway_currentIndexChanged(const QString &arg1)
 
 void MainWindow::on_btnRunwayInfo_clicked()
 {
-    QMessageBox msgbox;
+    RunwayDetailsDialog dlgRunwayDetails(this);
+    /*QMessageBox msgbox;
     msgbox.setText(tr("Number: ") + currentRunway->getNumber() +
                    tr("\nHeading: ") + currentRunway->getHeading() +
                    tr("\nLongitude: ") + currentRunway->getLongitude() +
@@ -1293,7 +1332,10 @@ void MainWindow::on_btnRunwayInfo_clicked()
                    tr("\nShoulder: ") + ShoulderCode::decode(currentRunway->getShoulderCode()) +
                    tr("\nSurface: ") + SurfaceCode::decode(currentRunway->getSurfaceCode()));
     msgbox.setWindowTitle(tr("Runway details"));
-    msgbox.exec();
+    msgbox.exec();*/
+    dlgRunwayDetails.setCurrentRunway(currentRunway);
+    //dlgRunwayDetails.setModal(true);
+    dlgRunwayDetails.exec();
 }
 
 void MainWindow::on_btnAdd_clicked()
@@ -1428,4 +1470,22 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::on_hzsTurbulence_valueChanged(int value)
 {
     lastTurbulence = value / 10.0;
+}
+
+void MainWindow::on_ckbInAir_toggled(bool checked)
+{
+    if(checked)
+    {
+        ui->lnedtAltitude->setEnabled(true);
+    }
+    else
+    {
+        ui->lnedtAltitude->setEnabled(false);
+    }
+}
+
+
+void MainWindow::on_cboControlMode_currentIndexChanged(const QString &arg1)
+{
+    lastControlModeSelected = arg1;
 }
