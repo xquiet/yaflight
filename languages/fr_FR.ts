@@ -6,12 +6,12 @@
     <message>
         <location filename="../cuteexpander.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../cuteexpander.ui" line="38"/>
         <source>Cute Expander</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -320,7 +320,7 @@
     <message>
         <location filename="../mainwindow.ui" line="1234"/>
         <source>Filter installed</source>
-        <translation type="unfinished">Filtrage des aéroports installés</translation>
+        <translation>Filtrage des aéroports installés</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1247"/>
@@ -405,7 +405,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="116"/>
         <source>Aircraft dir: </source>
-        <translation type="unfinished"></translation>
+        <translation>Aéronef directoire: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="121"/>
@@ -415,131 +415,132 @@
     <message>
         <location filename="../mainwindow.cpp" line="136"/>
         <source>Version: </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="203"/>
         <source>INFO: Starting TerraSync with:</source>
-        <translation type="unfinished"></translation>
+        <translation>INFO: Lancement de TerraSync avec:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="232"/>
         <source>Launching...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lancement...</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="235"/>
         <source>INFO: Simulation started</source>
-        <translation type="unfinished"></translation>
+        <translation>INFO: La simulation a commencé </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="244"/>
         <source>INFO: TerraSync started</source>
-        <translation type="unfinished"></translation>
+        <translation>INFO: TerraSync lancé </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="273"/>
         <source>Simulation complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Simulation terminée</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="274"/>
         <location filename="../mainwindow.cpp" line="284"/>
         <source>process exited with code: %1, status: %2
 </source>
-        <translation type="unfinished"></translation>
+        <translation>la procedure est terminé avec le code: %1, statut: %2</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="283"/>
         <source>INFO: TerraSync stopped</source>
-        <translation type="unfinished"></translation>
+        <translation>INFO: TerraSync arrêté</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="786"/>
         <source>WARN: Aircraft from configuration not available</source>
-        <translation type="unfinished"></translation>
+        <translation>WARN: Aéronef pas disponible</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="856"/>
         <source>INFO: Configuration loaded correctly</source>
-        <translation type="unfinished"></translation>
+        <translation>INFO: Configuration chargé correctement</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="971"/>
         <source>INFO: Configuration stored correctly</source>
-        <translation type="unfinished"></translation>
+        <translation>INFO: Configuration stockées correctment</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="973"/>
         <source>Success</source>
-        <translation type="unfinished"></translation>
+        <translation>Succès</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="974"/>
         <source>Configuration stored!</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration stockées!</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="982"/>
         <source>WARN: Configuration NOT stored</source>
-        <translation type="unfinished"></translation>
+        <translation>WARN: Configuration pas stockées</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="984"/>
         <source>Failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Panne</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="985"/>
         <source>Configuration NOT stored!</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration PAS stockées!</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1088"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1088"/>
         <source>Can&apos;t create airport index cache
 Check you permissions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne peut pas créer la cache d&apos;index aéroport
+Vérifiez vos autorizations</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1343"/>
         <source>Select scenery directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez le répertoire paysages</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1356"/>
         <source>Dropping: </source>
-        <translation type="unfinished"></translation>
+        <translation>Abandonner: </translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1358"/>
         <source>
 Are you sure?</source>
-        <translation type="unfinished"></translation>
+        <translation>êtes-vous sûr?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1442"/>
         <source>TerraSync running</source>
-        <translation type="unfinished"></translation>
+        <translation>TerraSync en exécution</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1449"/>
         <source>TerraSync not running</source>
-        <translation type="unfinished"></translation>
+        <translation>TerraSync pas en exécution</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1457"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Attention</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1457"/>
         <source>Are you sure you want stop your simulation?</source>
-        <translation type="unfinished"></translation>
+        <translation>êtes-vous sûr de arrêter votre simulation?</translation>
     </message>
 </context>
 <context>
@@ -547,7 +548,7 @@ Are you sure?</source>
     <message>
         <location filename="../runwaydetailsdialog.ui" line="26"/>
         <source>Runway Details</source>
-        <translation type="unfinished">Les détails de la piste</translation>
+        <translation>Les détails de la piste</translation>
     </message>
     <message>
         <location filename="../runwaydetailsdialog.cpp" line="62"/>
@@ -580,7 +581,7 @@ Are you sure?</source>
     <message>
         <location filename="../dlgaircraftdetails.ui" line="14"/>
         <source>Aircraft details</source>
-        <translation type="unfinished"></translation>
+        <translation>Les détails de l&apos;Aéronef</translation>
     </message>
 </context>
 </TS>
