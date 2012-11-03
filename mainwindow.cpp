@@ -1077,10 +1077,15 @@ QHash<QString, QStringList> MainWindow::collect_all_airports()
 
 void MainWindow::setup_airport_list(bool forceAptIdxRebuild)
 {   
-    QStandardItemModel *model = new QStandardItemModel(1,5);
+    QStandardItemModel *model = new QStandardItemModel(1,6);
     ui->tbvAirports->setModel(model);
 
-    model->setHorizontalHeaderLabels(QStringList() << "I" << "ICAO" << "Lon" << "Lat" << "Directory");
+    model->setHorizontalHeaderLabels(QStringList() << "I"
+                                                   << "ICAO"
+                                                   << "Lon"
+                                                   << "Lat"
+                                                   << "Directory"
+                                                   << "Description");
 
     ui->tbvAirports->setColumnWidth(0,20);
     ui->tbvAirports->setColumnWidth(1,50);
@@ -1088,6 +1093,7 @@ void MainWindow::setup_airport_list(bool forceAptIdxRebuild)
     ui->tbvAirports->setColumnHidden(2,false);
     ui->tbvAirports->setColumnHidden(3,false);
     ui->tbvAirports->setColumnHidden(4,true);
+    ui->tbvAirports->setColumnHidden(5,false);
     ui->tbvAirports->setShowGrid(false);
     ui->tbvAirports->verticalHeader()->hide();
 
@@ -1132,9 +1138,11 @@ void MainWindow::setup_airport_list(bool forceAptIdxRebuild)
             model->setData(model->index(row,2), airportsHash[key][0]);
             model->setData(model->index(row,3), airportsHash[key][1]);
             model->setData(model->index(row,4), airportsHash[key][2]);
+            model->setData(model->index(row,5), airportsHash[key][3]);
             row++;
         }
-        if(!apindex.create(airportsHash)){
+        if(!apindex.create(airportsHash,fgenv->getAPTSource(),fgenv->getYFHome()))
+        {
             QMessageBox msgbox(QMessageBox::Critical,tr("Error"),tr("Can't create airport index cache\nCheck you permissions"),QMessageBox::Ok);
             msgbox.exec();
         }
@@ -1163,6 +1171,7 @@ void MainWindow::setup_airport_list(bool forceAptIdxRebuild)
                 model->setData(model->index(row,2),cache[key][0]);
                 model->setData(model->index(row,3),cache[key][1]);
                 model->setData(model->index(row,4),cache[key][2]);
+                model->setData(model->index(row,5),cache[key][3]);
                 row++;
             }
         }
