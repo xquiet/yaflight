@@ -130,6 +130,12 @@ private slots:
 
     void on_cboControlMode_currentIndexChanged(const QString &arg1);
 
+    void on_pbtSearchFGData_clicked();
+
+    void on_pbtSearchFGFSBin_clicked();
+
+    void on_pbtSetupDefaultFGSettings_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);

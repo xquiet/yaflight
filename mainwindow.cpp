@@ -221,13 +221,24 @@ void MainWindow::on_pbtLaunch_clicked()
         procFGFS->setReadChannel(QProcess::StandardOutput);
         procFGFS->setEnvironment(env);
 
+        QString fgfsBinary;
+
+        if(ui->lnedtFGFSBinaryPath->text().trimmed().compare("")!=0)
+        {
+            fgfsBinary = ui->lnedtFGFSBinaryPath->text();
+        }
+        else
+        {
+            fgfsBinary = fgenv->getFgfsBinPath();
+        }
+
         if(proc_ts_is_running)
         {
             params << "--atlas=socket,out,1,localhost,5500,udp";
         }
 
-        qDebug("%s", (fgenv->getFgfsBinPath() + " " + params.join(" ")).toStdString().data());
-        procFGFS->start(fgenv->getFgfsBinPath(), params, QProcess::ReadOnly);
+        qDebug("%s", (fgfsBinary + " " + params.join(" ")).toStdString().data());
+        procFGFS->start(fgfsBinary, params, QProcess::ReadOnly);
 
         ui->txaLog->append(tr("Launching..."));
         //ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
@@ -393,8 +404,18 @@ QStringList MainWindow::collectLaunchSettings()
 
     // static arguments
     //params << "--verbose" << "--fg-root="+fgenv->getRootPath() << "--fg-scenery=/usr/share/games/flightgear/Scenery" << "--aircraft="+ui->cboAircrafts->currentText();
+    QString fgRootPath;
+    if(ui->lnedtFGDataDir->text().trimmed().compare("")!=0)
+    {
+        fgRootPath = ui->lnedtFGDataDir->text().trimmed();
+    }
+    else
+    {
+        fgRootPath = fgenv->getRootPath();
+    }
+
     params << "--verbose"
-           << "--fg-root="+fgenv->getRootPath()
+           << "--fg-root="+fgRootPath
            << "--fg-scenery="+fgScenery
            << "--aircraft="+ui->cboAircrafts->currentText();
 
@@ -742,6 +763,16 @@ void MainWindow::loadSettings(bool appStart)
         (curr_settings->getSpecularReflections().compare(SET_TRUE)==0) ? ui->ckbSpecularReflections->setChecked(true) : ui->ckbSpecularReflections->setChecked(false);
         (curr_settings->getTerraSync().compare(SET_TRUE)==0) ? ui->ckbTerraSync->setChecked(true) : ui->ckbTerraSync->setChecked(false);
 
+        if(curr_settings->get_fgfs_bin_path().trimmed().compare("")!=0)
+        {
+            ui->lnedtFGFSBinaryPath->setText(curr_settings->get_fgfs_bin_path().trimmed());
+        }
+
+        if(curr_settings->getFGDataPath().trimmed().compare("")!=0)
+        {
+            ui->lnedtFGDataDir->setText(curr_settings->getFGDataPath().trimmed());
+        }
+
         if(curr_settings->getCallSign().trimmed().compare("")!=0)
         {
             ui->lnedtCallSign->setText(curr_settings->getCallSign().trimmed());
@@ -964,6 +995,16 @@ bool MainWindow::saveSettings()
     if(ui->edtVisibility->text().trimmed().compare("")!=0)
     {
         curr_settings->setVisibility(ui->edtVisibility->text().trimmed());
+    }
+
+    if(ui->lnedtFGDataDir->text().trimmed().compare("")!=0)
+    {
+        curr_settings->setFGDataPath(ui->lnedtFGDataDir->text().trimmed());
+    }
+
+    if(ui->lnedtFGFSBinaryPath->text().trimmed().compare("")!=0)
+    {
+        curr_settings->set_fgfs_bin_path(ui->lnedtFGFSBinaryPath->text().trimmed());
     }
 
     if(curr_settings->storeData())
@@ -1488,4 +1529,27 @@ void MainWindow::on_ckbInAir_toggled(bool checked)
 void MainWindow::on_cboControlMode_currentIndexChanged(const QString &arg1)
 {
     lastControlModeSelected = arg1;
+}
+
+void MainWindow::on_pbtSearchFGData_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select FGDATA directory"),
+                                                    fgenv->getRootPath(),
+                                                    QFileDialog::ShowDirsOnly
+                                                    | QFileDialog::DontResolveSymlinks);
+    ui->lnedtFGDataDir->setText(dir);
+}
+
+void MainWindow::on_pbtSearchFGFSBin_clicked()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Select fgfs binary path"),
+                                                    fgenv->getFgfsBinPath(),
+                                                    QFileDialog::DontResolveSymlinks);
+    ui->lnedtFGFSBinaryPath->setText(dir);
+}
+
+void MainWindow::on_pbtSetupDefaultFGSettings_clicked()
+{
+    ui->lnedtFGDataDir->setText(fgenv->getRootPath());
+    ui->lnedtFGFSBinaryPath->setText(fgenv->getFgfsBinPath());
 }
