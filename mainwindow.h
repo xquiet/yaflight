@@ -136,6 +136,8 @@ private slots:
 
     void on_pbtSetupDefaultFGSettings_clicked();
 
+    void on_btnRecreateAiportsIndex_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -170,7 +172,7 @@ private:
 
     // ----- airports -----
     QHash<QString, QStringList> collect_all_airports();
-    void setup_airport_list();
+    void setup_airport_list(bool forceAptIdxRebuild=false);
     QList<Runway *> ap_runways;
     Runway *currentRunway;
     QModelIndex lastAirportIndex;

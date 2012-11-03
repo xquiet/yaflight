@@ -111,8 +111,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->txaLog->append(tr("OS: ") + fgenv->getOS());
     ui->txaLog->append(tr("FG version: ") + fgenv->getFGVersion());
-    ui->txaLog->append(tr("FGROOT: ") + fgenv->getRootPath());
-    ui->txaLog->append(tr("FGSCEN: ") + fgenv->getDefaultScenery());
+    ui->txaLog->append(tr("Default FGROOT: ") + fgenv->getRootPath());
+    ui->txaLog->append(tr("Default FGSCEN: ") + fgenv->getDefaultScenery());
     ui->txaLog->append(tr("Aircraft dir: ") + fgenv->getAircraftsDir());
 
     ui->lblDefaultScenery->setText(fgenv->getDefaultScenery());
@@ -1052,9 +1052,18 @@ QHash<QString, QStringList> MainWindow::collect_all_airports()
         lstviewmodel = new QStringListModel(QStringList());
         ui->lstviewSceneries->setModel(lstviewmodel);
     }
+    QHash<QString, QStringList> tmpAirports = fgenv->parseAirportsIndex(fgenv->getYFScenery()+"/Airports/index.txt");
+    foreach(QString key, tmpAirports.keys())
+    {
+        if(!resultAirports.contains(key))
+        {
+            resultAirports.insert(key,tmpAirports[key]);
+        }
+    }
+    tmpAirports.clear();
     for(int i=0;i<lstviewmodel->rowCount();i++)
     {
-        QHash<QString, QStringList> tmpAirports = fgenv->parseAirportsIndex(lstviewmodel->stringList().value(i).trimmed()+"/Airports/index.txt");
+        tmpAirports = fgenv->parseAirportsIndex(lstviewmodel->stringList().value(i).trimmed()+"/Airports/index.txt");
         foreach(QString key, tmpAirports.keys())
         {
             if(!resultAirports.contains(key))
@@ -1066,7 +1075,7 @@ QHash<QString, QStringList> MainWindow::collect_all_airports()
     return resultAirports;
 }
 
-void MainWindow::setup_airport_list()
+void MainWindow::setup_airport_list(bool forceAptIdxRebuild)
 {   
     QStandardItemModel *model = new QStandardItemModel(1,5);
     ui->tbvAirports->setModel(model);
@@ -1088,7 +1097,7 @@ void MainWindow::setup_airport_list()
     AirportIdx apindex(fgenv->getAirportsCacheFilePath());
     Airport *ap;
 
-    if(!apindex.exists())
+    if(!apindex.exists()||forceAptIdxRebuild)
     {
         // creating airports index cache
         QHash<QString, QStringList> airportsHash = collect_all_airports();
@@ -1552,4 +1561,13 @@ void MainWindow::on_pbtSetupDefaultFGSettings_clicked()
 {
     ui->lnedtFGDataDir->setText(fgenv->getRootPath());
     ui->lnedtFGFSBinaryPath->setText(fgenv->getFgfsBinPath());
+}
+
+void MainWindow::on_btnRecreateAiportsIndex_clicked()
+{
+    QMessageBox msgbox(QMessageBox::Warning,tr("Warning"),tr("Are you sure you want to rebuild the entire Airports index?\nIt should take a few minutes on slower machines"),QMessageBox::Ok|QMessageBox::Cancel,this);
+    if(msgbox.exec()==QMessageBox::Ok)
+    {
+        setup_airport_list(true);
+    }
 }
