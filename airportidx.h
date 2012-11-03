@@ -25,7 +25,7 @@
 #include <QFile>
 #include <QTextStream>
 
-//#include "apt_dat.h"
+#include "apt_dat.h"
 
 class AirportIdx
 {
@@ -34,7 +34,7 @@ public:
     bool exists();
     bool load();
     int count();
-    bool create(QHash<QString, QStringList> airportHash);
+    bool create(QHash<QString, QStringList> airportHash, QString aptsource, QString yfhome);
     QHash<QString, QStringList> get();
 private:
     QString airportsIndexCachePath;
