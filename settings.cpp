@@ -56,6 +56,15 @@ QString Settings::getAirportListFiltered()
     return conf->get(QString(APPSETTINGS), "APTVIEW");
 }
 
+QString Settings::get_fgfs_bin_path()
+{
+    return conf->get(QString(APPSETTINGS), "FGFSBIN");
+}
+
+QString Settings::getFGDataPath()
+{
+    return conf->get(QString(APPSETTINGS), "FGDATADIR");
+}
 
 //----------------------------------------
 // MAIN
@@ -296,6 +305,16 @@ QString Settings::getSceneries()
 void Settings::setAirportListFiltered(QString val)
 {
     conf->set(QString(APPSETTINGS), QString("APTVIEW"), val);
+}
+
+void Settings::set_fgfs_bin_path(QString val)
+{
+    conf->set(QString(APPSETTINGS), QString("FGFGSBIN"), val);
+}
+
+void Settings::setFGDataPath(QString val)
+{
+    conf->set(QString(APPSETTINGS), QString("FGDATADIR"), val);
 }
 
 //----------------------------------------

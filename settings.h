@@ -34,6 +34,8 @@ public:
 
     // app
     QString getAirportListFiltered();
+    QString get_fgfs_bin_path();
+    QString getFGDataPath();
     // main
     QString getAircraft();
     QString getClouds();
@@ -85,6 +87,8 @@ public:
 
     // app
     void setAirportListFiltered(QString val);
+    void set_fgfs_bin_path(QString val);
+    void setFGDataPath(QString val);
     // main
     void setAircraft(QString val);
     void setClouds(QString val);
