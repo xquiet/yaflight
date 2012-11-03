@@ -24,7 +24,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QTranslator yaflightTranslator;
-    qDebug(TRANSDIR);
     #ifdef Q_OS_UNIX
     yaflightTranslator.load(QLocale::system().name(),
                             TRANSDIR);
