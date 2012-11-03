@@ -38,7 +38,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="157"/>
-        <location filename="../mainwindow.cpp" line="1471"/>
+        <location filename="../mainwindow.cpp" line="1489"/>
         <source>Launch!</source>
         <translation>Lancer!</translation>
     </message>
@@ -208,203 +208,222 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="845"/>
+        <location filename="../mainwindow.ui" line="853"/>
         <source>FlightGear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="876"/>
+        <location filename="../mainwindow.ui" line="884"/>
         <source>FGDATA Directory:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="895"/>
+        <location filename="../mainwindow.ui" line="903"/>
         <source>fgfs binary path:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="921"/>
-        <location filename="../mainwindow.ui" line="934"/>
+        <location filename="../mainwindow.ui" line="929"/>
+        <location filename="../mainwindow.ui" line="942"/>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="947"/>
+        <location filename="../mainwindow.ui" line="955"/>
         <source>Default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="959"/>
+        <location filename="../mainwindow.ui" line="967"/>
         <source>Rendering options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="971"/>
+        <location filename="../mainwindow.ui" line="979"/>
         <source>Enhanced lighting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="984"/>
+        <location filename="../mainwindow.ui" line="992"/>
         <source>Specular highlight</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1016"/>
+        <location filename="../mainwindow.ui" line="1024"/>
         <source>Distance attenuation</source>
         <translation>Atténuation par la distance</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1029"/>
+        <location filename="../mainwindow.ui" line="1037"/>
         <source>Textures</source>
         <translation>Textures</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1042"/>
+        <location filename="../mainwindow.ui" line="1050"/>
         <source>Horizon effect</source>
         <translation>Effet d&apos;horizon</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1055"/>
+        <location filename="../mainwindow.ui" line="1063"/>
         <source>Sky Blending</source>
         <translation>Mélange ciel</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1065"/>
+        <location filename="../mainwindow.ui" line="1073"/>
         <source>Environment</source>
         <translation>Ambiance</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1077"/>
+        <location filename="../mainwindow.ui" line="1085"/>
         <source>Severe</source>
         <translation>Sévère</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1090"/>
+        <location filename="../mainwindow.ui" line="1098"/>
         <source>Real Weather fetch</source>
         <translation>Récupérer Temps Réel</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1128"/>
+        <location filename="../mainwindow.ui" line="1136"/>
         <source>Turbulence</source>
         <translation>Turbulence</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1141"/>
+        <location filename="../mainwindow.ui" line="1149"/>
         <source>Calm</source>
         <translation>Calme</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1154"/>
+        <location filename="../mainwindow.ui" line="1162"/>
         <source>Random Wind</source>
         <translation>Vent aléatoire</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1177"/>
+        <location filename="../mainwindow.ui" line="1185"/>
         <source>Ceiling</source>
         <translation>Plaffonage</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1190"/>
+        <location filename="../mainwindow.ui" line="1198"/>
         <source>Visibility</source>
         <translation>Visibilité</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1223"/>
+        <location filename="../mainwindow.ui" line="1231"/>
         <source>Quote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1236"/>
+        <location filename="../mainwindow.ui" line="1244"/>
         <source>Thickness</source>
         <translation>épaisseur</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1246"/>
+        <location filename="../mainwindow.ui" line="1254"/>
         <source>Time</source>
         <translation>Temps</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1274"/>
+        <location filename="../mainwindow.ui" line="1282"/>
         <source>Season</source>
         <translation>Saison</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1293"/>
+        <location filename="../mainwindow.ui" line="1301"/>
         <source>Day Time</source>
         <translation>Journée</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1311"/>
+        <location filename="../mainwindow.ui" line="1319"/>
         <source>Airports</source>
         <translation>Aéroports</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1323"/>
+        <location filename="../mainwindow.ui" line="1331"/>
         <source>Double click to show on map</source>
         <translation>Double-cliquer pour montrer sur la carte</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1342"/>
+        <location filename="../mainwindow.ui" line="1350"/>
         <source>Filter installed</source>
         <translation>Filtrage des aéroports installés</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1355"/>
+        <location filename="../mainwindow.ui" line="1363"/>
         <source>Refresh airport list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1391"/>
+        <location filename="../mainwindow.ui" line="1399"/>
         <source>RunWay</source>
         <translation>Piste</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1427"/>
+        <location filename="../mainwindow.ui" line="1435"/>
         <source>Place aircraft on the right place</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1430"/>
+        <location filename="../mainwindow.ui" line="1438"/>
         <source>Go To Map...</source>
         <translation>Aller à la carte...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1446"/>
+        <location filename="../mainwindow.ui" line="1461"/>
+        <source>Recreate airports index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1480"/>
         <source>Sceneries</source>
         <translation>Paysages</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1492"/>
+        <location filename="../mainwindow.ui" line="1526"/>
         <source>TerraSync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1546"/>
+        <location filename="../mainwindow.ui" line="1580"/>
         <source>About</source>
         <translation>à propos</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1580"/>
+        <location filename="../mainwindow.ui" line="1614"/>
         <source>AppName</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1593"/>
+        <location filename="../mainwindow.ui" line="1627"/>
         <source>AppVersion</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1606"/>
+        <location filename="../mainwindow.ui" line="1640"/>
         <source>AppCopyRight</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1619"/>
+        <location filename="../mainwindow.ui" line="1653"/>
         <source>About Qt</source>
         <translation>à propos de Qt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1711"/>
+        <location filename="../mainwindow.ui" line="1709"/>
+        <source>Contributors:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1725"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pavel Fric (&lt;span style=&quot; font-style:italic;&quot;&gt;Czech Translations&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1778"/>
         <source>Loading...</source>
         <translation>Chargement...</translation>
     </message>
@@ -420,12 +439,12 @@
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="114"/>
-        <source>FGROOT: </source>
+        <source>Default FGROOT: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="115"/>
-        <source>FGSCEN: </source>
+        <source>Default FGSCEN: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -521,61 +540,68 @@
         <translation>Configuration PAS stockées!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1129"/>
+        <location filename="../mainwindow.cpp" line="1146"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1129"/>
+        <location filename="../mainwindow.cpp" line="1146"/>
         <source>Can&apos;t create airport index cache
 Check you permissions</source>
         <translation>Ne peut pas créer la cache d&apos;index aéroport
 Vérifiez vos autorizations</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1384"/>
+        <location filename="../mainwindow.cpp" line="1402"/>
         <source>Select scenery directory</source>
         <translation>Sélectionnez le répertoire paysages</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1397"/>
+        <location filename="../mainwindow.cpp" line="1415"/>
         <source>Dropping: </source>
         <translation>Abandonner: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1399"/>
+        <location filename="../mainwindow.cpp" line="1417"/>
         <source>
 Are you sure?</source>
         <translation>êtes-vous sûr?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1483"/>
+        <location filename="../mainwindow.cpp" line="1501"/>
         <source>TerraSync running</source>
         <translation>TerraSync en exécution</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1490"/>
+        <location filename="../mainwindow.cpp" line="1508"/>
         <source>TerraSync not running</source>
         <translation>TerraSync pas en exécution</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1498"/>
+        <location filename="../mainwindow.cpp" line="1516"/>
+        <location filename="../mainwindow.cpp" line="1577"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1498"/>
+        <location filename="../mainwindow.cpp" line="1516"/>
         <source>Are you sure you want stop your simulation?</source>
         <translation>êtes-vous sûr de arrêter votre simulation?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1536"/>
+        <location filename="../mainwindow.cpp" line="1554"/>
         <source>Select FGDATA directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1545"/>
+        <location filename="../mainwindow.cpp" line="1563"/>
         <source>Select fgfs binary path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1577"/>
+        <source>Are you sure you want to rebuild the entire Airports index?
+It should take a few minutes on slower machines</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
