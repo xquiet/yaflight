@@ -24,6 +24,8 @@ APT_dat::APT_dat(QString zpath, QString yfhomedir)
     homeDir = yfhomedir.trimmed();
     aptdatFilePath = zpath.trimmed();
     decompressedFilePath = homeDir + "/tmp_apt_dat";
+    aptcache = homeDir + "/apts.cache";
+    rwscache = homeDir + "/rws.cache";
 
     isDecompressed = false;
 }
@@ -47,18 +49,76 @@ void APT_dat::read()
     }
 }
 
-QString APT_dat::get_ap_description(QString key)
+QHash<QString, QStringList> APT_dat::getAirports()
 {
-    return airportNameList.value(key);
+    QHash<QString, QStringList> airports;
+    airports.begin();
+    QFile file(aptcache);
+    if(file.open(QIODevice::ReadWrite|QIODevice::Text)){
+        QTextStream in(&file);
+        while(!in.atEnd())
+        {
+            QStringList items = in.readLine().split("|");
+            if(items.count()<3){
+                qFatal("Cache file %s not valid", aptcache.toStdString().data());
+                return airports;
+            }
+            airports.insert(items[0], QStringList() << items[1] << items[2]);
+        }
+        airports.end();
+        file.close();
+    }else{
+        qFatal("Cannot open file %s: Error %s", file.fileName().toStdString().data(), file.errorString().toStdString().data());
+        return airports;
+    }
+    return airports;
 }
 
-QList<Runway *> APT_dat::get_ap_runways(QString key)
+QList<Runway *> APT_dat::getRunwaysByAirport(QString key)
 {
-    return runwayList.values(key);
+    QList<Runway *> runways;
+    int counter = 0;
+    runways.begin();
+    bool foundFirstMatch = false;
+    QFile file(rwscache);
+    if(file.open(QIODevice::ReadWrite|QIODevice::Text)){
+        QTextStream in(&file);
+        while(!in.atEnd())
+        {
+            QStringList items = in.readLine().split("|");
+            if(items.count()<7){
+                qFatal("Cache file %s not valid", rwscache.toStdString().data());
+                return runways;
+            }
+            if(items[0].trimmed().compare(key)==0){
+                runways.insert(counter++, new Runway(items[1].trimmed(),
+                                                     items[2].trimmed(),
+                                                     items[3].trimmed(),
+                                                     items[4].trimmed(),
+                                                     items[5].trimmed(),
+                                                     items[6].trimmed()));
+                if(!foundFirstMatch)
+                    foundFirstMatch = true;
+            }
+            if(foundFirstMatch && (items[0].trimmed().compare(key)!=0))
+            {
+                break;
+            }
+        }
+        runways.end();
+        file.close();
+    }else{
+        qFatal("Cannot open file %s: Error %s", file.fileName().toStdString().data(), file.errorString().toStdString().data());
+        return runways;
+    }
+    return runways;
 }
 
-bool APT_dat::retrieve_ap_details(QString icao)
+
+bool APT_dat::create_cache(QHash<QString, QStringList> allAirports, QStringList all_airports_dir)
 {
+    allAirportsDir = all_airports_dir;
+
     if(!isDecompressed)
     {
         if(!QFile::exists(decompressedFilePath))
@@ -66,16 +126,26 @@ bool APT_dat::retrieve_ap_details(QString icao)
         isDecompressed = true;
     }
 
-    airportNameList.begin();
-    runwayList.begin();
+    QFile cache_apt(aptcache);
+
+    if(cache_apt.exists() && !QFile::remove(aptcache))
+    {
+        qFatal("Cannot remove file %s. Cache NOT built!", aptcache.toStdString().data());
+        return false;
+    }
+
+    QFile cache_rws(rwscache);
+    if(cache_rws.exists() && !QFile::remove(rwscache))
+    {
+        qFatal("Cannot remove file %s. Cache NOT built!", rwscache.toStdString().data());
+        return false;
+    }
 
     QFile file(decompressedFilePath);
     QString token;
     if(file.open(QIODevice::ReadOnly|QIODevice::Text)){
         QTextStream in(&file);
         in.readLine(); in.readLine(); // skip two header lines containing IBM/DOS and licenses
-        QString airportName; // using as key for runwaylist
-        bool airport_icao_match_found = false;
         while(!in.atEnd())
         {
             token = in.readLine();
@@ -88,33 +158,13 @@ bool APT_dat::retrieve_ap_details(QString icao)
                     case APTDAT_AIRPORT:
                     case APTDAT_SEAPLANE_BASE:
                     case APTDAT_HELIPORT:
-                        airportName = parseAirportLine(lineItems);
-                        if((!airport_icao_match_found) &&
-                                (!runwayList.empty()))
-                        {
-                            file.close();
-                            airportNameList.end();
-                            runwayList.end();
-                            return true;
-                        }
-                        if(airportName.compare(icao)!=0)
-                        {
-                            airportName = "";
-                            airport_icao_match_found = false;
-                        }
-                        else
-                        {
-                            airport_icao_match_found = true;
-                        }
+                        parseAirportLine(lineItems);
                         break;
                     case APTDAT_RUNWAY:
                     case APTDAT_RUNWAY_850:
                     case APTDAT_RUNWAY_WATER:
                     case APTDAT_RUNWAY_HELIPAD:
-                        if(airport_icao_match_found)
-                        {
-                            parseRunwayLine(airportName, lineItems);
-                        }
+                        parseRunwayLine(lineItems);
                         break;
                 }
             }
@@ -123,20 +173,77 @@ bool APT_dat::retrieve_ap_details(QString icao)
     return false;  // it should never reach this place
 }
 
-QString APT_dat::parseAirportLine(QStringList items)
+bool APT_dat::aptcache_exists()
+{
+    QFile cache(aptcache);
+    return cache.exists();
+}
+
+bool APT_dat::rwscache_exists()
+{
+    QFile cache(rwscache);
+    return cache.exists();
+}
+
+bool APT_dat::addAirport()
+{
+    QString airportDirectory = "";
+    Airport *ap;
+    foreach(QString airportDir, allAirportsDir)
+    {
+        ap = new Airport(airportDir,lastAirportName);
+        QDir dir(ap->getAirportDirPath());
+        if(dir.exists())
+        {
+            airportDirectory = QString(ap->getAirportDirPath());
+            break;
+        }
+    }
+
+    QFile file(aptcache);
+    if(file.open(QIODevice::Append|QIODevice::Text)){
+        QTextStream out(&file);
+        out << lastAirportName << "|" << lastAirportDescription << "|" << airportDirectory << endl;
+        file.close();
+    }else{
+        qFatal("Cannot open file %s: Error %s", file.fileName().toStdString().data(), file.errorString().toStdString().data());
+        return false;
+    }
+    return true;
+}
+
+bool APT_dat::addRunway()
+{
+    QFile file(rwscache);
+    if(file.open(QIODevice::Append|QIODevice::Text)){
+        QTextStream out(&file);
+        out << lastAirportName << "|" << lastRunway->toString() << endl;
+        file.close();
+    }else{
+        qFatal("Cannot open file %s: Error %s", file.fileName().toStdString().data(), file.errorString().toStdString().data());
+        return false;
+    }
+    return true;
+}
+
+void APT_dat::parseAirportLine(QStringList items)
 {
     /*
       0 -> APTDAT_AIRPORT/SEAPLANE_BASE/HELIPORT
       4 -> ICAO
       */
     QString icao = items[4].trimmed();
+    QString airportDescription;
     for(int i=0;i<5;i++)
         items.pop_front();
-    airportNameList.insert(icao,items.join(" "));
-    return icao;
+    airportDescription = items.join(" ");
+
+    lastAirportName = icao;
+    lastAirportDescription = airportDescription;
+    addAirport();
 }
 
-void APT_dat::parseRunwayLine(QString icao, QStringList items)
+void APT_dat::parseRunwayLine(QStringList items)
 {
     /*
     ' id --> what it is
@@ -152,13 +259,23 @@ void APT_dat::parseRunwayLine(QString icao, QStringList items)
     ' 11 --> runway shoulder code
     */
 
-    runwayList.insertMulti(icao, new Runway(items[3].trimmed(),
+    lastRunway = new Runway(items[3].trimmed(),
+                            items[1].trimmed(),
+                            items[2].trimmed(),
+                            items[4].trimmed(),
+                            items[10].trimmed(),
+                            items[11].trimmed()
+                            );
+
+    addRunway();
+
+    /*lastRunwayList.insertMulti(icao, new Runway(items[3].trimmed(),
                                        items[1].trimmed(),
                                        items[2].trimmed(),
                                        items[4].trimmed(),
                                        items[10].trimmed(),
                                        items[11].trimmed()
-                                       ));
+                                       ));*/
 
 }
 

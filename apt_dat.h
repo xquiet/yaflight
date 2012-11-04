@@ -24,9 +24,11 @@
 #include <QTextStream>
 #include <QHash>
 #include <QStringList>
+#include <QDir>
 
 #include <zlib.h>
 
+#include "airport.h"
 #include "runway.h"
 
 #define APTDAT_AIRPORT          1
@@ -44,20 +46,33 @@ class APT_dat
 public:
     APT_dat(QString zpath, QString yfhomedir);
     //void parse_apt_data();
-    bool retrieve_ap_details(QString icao);
-    QString get_ap_description(QString key);
-    QList<Runway *> get_ap_runways(QString key);
+    bool create_cache(QHash<QString, QStringList> allAirports, QStringList all_airports_dir);
+    QHash<QString, QStringList> getAirports();
+
+    QList<Runway *> getRunwaysByAirport(QString key);
+
+    bool aptcache_exists();
+    bool rwscache_exists();
 
 private:
     QString homeDir;
     QString aptdatFilePath;
     QString decompressedFilePath;
-    QHash<QString, Runway *> runwayList;
-    QHash<QString, QString> airportNameList;
+    QString aptcache;
+    QString rwscache;
+    QHash<QString, QStringList> airports;
+    Runway *lastRunway;
+    QString lastAirportName;
+    QString lastAirportDescription;
+    QStringList allAirportsDir;
+
     void read();
-    QString parseAirportLine(QStringList items);
-    void parseRunwayLine(QString icao, QStringList items);
+    void parseAirportLine(QStringList items);
+    void parseRunwayLine(QStringList items);
     QByteArray gUncompress(const QByteArray &data);
+
+    bool addAirport();
+    bool addRunway();
 
     bool store_runways(QString apname, QString data);
 
