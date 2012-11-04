@@ -35,7 +35,6 @@ SOURCES += main.cpp\
     settings.cpp \
     airport.cpp \
     runway.cpp \
-    airportidx.cpp \
     apt_dat.cpp \
     surfacecode.cpp \
     shouldercode.cpp \
@@ -51,7 +50,6 @@ HEADERS  += mainwindow.h \
     settings.h \
     airport.h \
     runway.h \
-    airportidx.h \
     apt_dat.h \
     surfacecode.h \
     shouldercode.h \
