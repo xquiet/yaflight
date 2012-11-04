@@ -45,7 +45,6 @@
 #include "surfacecode.h"
 #include "shouldercode.h"
 #include "runwaydetailsdialog.h"
-#include "airportidx.h"
 #include "settings.h"
 
 #include "apt_dat.h"
@@ -105,8 +104,6 @@ private slots:
 
     void on_cboSeason_currentIndexChanged(const QString &arg1);
 
-    void on_tbvAirports_doubleClicked(const QModelIndex &index);
-
     void on_dialHeading_valueChanged(int value);
 
     void on_btnGoToMap_clicked();
@@ -138,6 +135,8 @@ private slots:
 
     void on_btnRecreateAiportsIndex_clicked();
 
+    void on_pbtSearchAirport_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -151,6 +150,7 @@ private:
     int _mainWindowMaxHeight, _mainWindowMinHeight;
     int posX, posY;
     void toggleLoadingBarVisible();
+    void setup_default_paths();
 
     // ----- processes -----
     QProcess *procFGFS;
@@ -172,6 +172,7 @@ private:
 
     // ----- airports -----
     QHash<QString, QStringList> collect_all_airports();
+    QStringList collect_all_airports_dir();
     void setup_airport_list(bool forceAptIdxRebuild=false);
     QList<Runway *> ap_runways;
     Runway *currentRunway;

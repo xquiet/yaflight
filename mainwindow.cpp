@@ -115,8 +115,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->txaLog->append(tr("Default FGSCEN: ") + fgenv->getDefaultScenery());
     ui->txaLog->append(tr("Aircraft dir: ") + fgenv->getAircraftsDir());
 
-    ui->lblDefaultScenery->setText(fgenv->getDefaultScenery());
-    ui->lblYFScenery->setText(fgenv->getYFScenery());
+    setup_default_paths();
 
     ui->lblTerraSyncStatus->setToolTip(tr("N/A"));
 
@@ -128,6 +127,14 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setup_default_paths()
+{
+    ui->lnedtFGDataDir->setText(fgenv->getRootPath());
+    ui->lnedtFGFSBinaryPath->setText(fgenv->getFgfsBinPath());
+    ui->lblDefaultScenery->setText(fgenv->getDefaultScenery());
+    ui->lblYFScenery->setText(fgenv->getYFScenery());
 }
 
 void MainWindow::setup_about_box()
@@ -382,7 +389,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 QStringList MainWindow::collectLaunchSettings()
 {
-    QString fgScenery = fgenv->getDefaultScenery() + ":" + fgenv->getYFScenery();
+    QString fgScenery = ui->lblDefaultScenery->text() + ":" + fgenv->getYFScenery();
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
     if(lstviewmodel==NULL)
     {
@@ -394,7 +401,7 @@ QStringList MainWindow::collectLaunchSettings()
         for(int i=0;i<lstviewmodel->rowCount();i++)
         {
             QString currItem = lstviewmodel->stringList().value(i).trimmed();
-            if(fgenv->getDefaultScenery().trimmed().compare(currItem)!=0)
+            if(ui->lblDefaultScenery->text().trimmed().compare(currItem)!=0)
             {
                 fgScenery += ":" + currItem;
             }
@@ -771,6 +778,7 @@ void MainWindow::loadSettings(bool appStart)
         if(curr_settings->getFGDataPath().trimmed().compare("")!=0)
         {
             ui->lnedtFGDataDir->setText(curr_settings->getFGDataPath().trimmed());
+            ui->lblDefaultScenery->setText(curr_settings->getFGDataPath().trimmed() + "/Scenery");
         }
 
         if(curr_settings->getCallSign().trimmed().compare("")!=0)
@@ -912,7 +920,7 @@ bool MainWindow::saveSettings()
         for(int i=0;i<lstviewmodel->rowCount();i++)
         {
             currScenery = lstviewmodel->stringList().value(i).trimmed();
-            if(currScenery.compare(fgenv->getDefaultScenery().trimmed())!=0)
+            if(currScenery.compare(ui->lblDefaultScenery->text().trimmed())!=0)
                 sceneries += currScenery + "|";
         }
         sceneries.remove(sceneries.length()-1,1);
@@ -1060,7 +1068,6 @@ QHash<QString, QStringList> MainWindow::collect_all_airports()
             resultAirports.insert(key,tmpAirports[key]);
         }
     }
-    tmpAirports.clear();
     for(int i=0;i<lstviewmodel->rowCount();i++)
     {
         tmpAirports = fgenv->parseAirportsIndex(lstviewmodel->stringList().value(i).trimmed()+"/Airports/index.txt");
@@ -1072,109 +1079,77 @@ QHash<QString, QStringList> MainWindow::collect_all_airports()
             }
         }
     }
+
     return resultAirports;
+}
+
+QStringList MainWindow::collect_all_airports_dir()
+{
+    QStringList allAirportDirectories;
+    allAirportDirectories << ui->lblDefaultScenery->text() + "/Airports";
+    allAirportDirectories << fgenv->getYFScenery() + "/Airports";
+    QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+    if(!lstviewmodel)
+        lstviewmodel = new QStringListModel();
+    for(int i=0;i<lstviewmodel->rowCount();i++)
+    {
+        allAirportDirectories << lstviewmodel->stringList().value(i).trimmed()+"/Airports";
+    }
+    return allAirportDirectories;
 }
 
 void MainWindow::setup_airport_list(bool forceAptIdxRebuild)
 {   
-    QStandardItemModel *model = new QStandardItemModel(1,6);
+    QStandardItemModel *model = new QStandardItemModel(1,4);
     ui->tbvAirports->setModel(model);
 
     model->setHorizontalHeaderLabels(QStringList() << "I"
                                                    << "ICAO"
-                                                   << "Lon"
-                                                   << "Lat"
-                                                   << "Directory"
-                                                   << "Description");
+                                                   << "Description"
+                                                   << "Directory");
 
     ui->tbvAirports->setColumnWidth(0,20);
     ui->tbvAirports->setColumnWidth(1,50);
-    ui->tbvAirports->setColumnWidth(4,ui->tbvAirports->width()-80);
-    ui->tbvAirports->setColumnHidden(2,false);
-    ui->tbvAirports->setColumnHidden(3,false);
-    ui->tbvAirports->setColumnHidden(4,true);
-    ui->tbvAirports->setColumnHidden(5,false);
+    ui->tbvAirports->setColumnWidth(2,ui->tbvAirports->width()-80);
+    ui->tbvAirports->setColumnHidden(3,true);
     ui->tbvAirports->setShowGrid(false);
     ui->tbvAirports->verticalHeader()->hide();
 
     ui->tbvAirports->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tbvAirports->setSelectionMode(QAbstractItemView::SingleSelection);
 
-    AirportIdx apindex(fgenv->getAirportsCacheFilePath());
-    Airport *ap;
+    APT_dat aptdat(fgenv->getAPTSource(),fgenv->getYFHome());
 
-    if(!apindex.exists()||forceAptIdxRebuild)
+    if(!aptdat.aptcache_exists()||forceAptIdxRebuild)
     {
-        // creating airports index cache
-        QHash<QString, QStringList> airportsHash = collect_all_airports();
-        QStringList allAirportDirectories;
-        allAirportDirectories << fgenv->getDefaultAirportsDir();
-        QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
-        for(int i=0;i<lstviewmodel->rowCount();i++)
-        {
-            allAirportDirectories << lstviewmodel->stringList().value(i).trimmed()+"/Airports";
-        }
-        int row = 0;
-        model->setRowCount(airportsHash.count());
-        foreach(QString key, airportsHash.keys())
-        {
-            foreach(QString airportDir, allAirportDirectories)
-            {
-                ap = new Airport(airportDir,key);
-                QDir dir(ap->getAirportDirPath());
-                if(dir.exists())
-                {
-                    model->setData(model->index(row,0), QString("X"));
-                    model->setData(model->index(row,0), QBrush(Qt::green),Qt::BackgroundRole);
-                    airportsHash[key][2] = QString(ap->getAirportDirPath());
-                    break;
-                }
-            }
-            if(model->item(row,0)==NULL){
-                model->setData(model->index(row,0), QBrush(Qt::gray),Qt::BackgroundRole);
-                model->setData(model->index(row,0), "");
-            }
-            model->setData(model->index(row,1), key);
-            model->setData(model->index(row,2), airportsHash[key][0]);
-            model->setData(model->index(row,3), airportsHash[key][1]);
-            model->setData(model->index(row,4), airportsHash[key][2]);
-            model->setData(model->index(row,5), airportsHash[key][3]);
-            row++;
-        }
-        if(!apindex.create(airportsHash,fgenv->getAPTSource(),fgenv->getYFHome()))
+        if(!aptdat.create_cache(collect_all_airports(),collect_all_airports_dir()))
         {
             QMessageBox msgbox(QMessageBox::Critical,tr("Error"),tr("Can't create airport index cache\nCheck you permissions"),QMessageBox::Ok);
             msgbox.exec();
+            return;
         }
     }
-    else{
-        if(apindex.load())
+    int row = 0;
+    QHash<QString, QStringList> cache = aptdat.getAirports();
+    model->setRowCount(cache.count());
+    foreach(QString key, cache.keys())
+    {
+        if(cache[key][1].trimmed().compare("")==0)
         {
-            int row = 0;
-            model->setRowCount(apindex.count());
-            QHash<QString, QStringList> cache = apindex.get();
-            foreach(QString key, cache.keys())
-            {
-                if(cache[key][2].trimmed().compare("")==0)
-                {
-                    // ap not installed
-                    model->setData(model->index(row,0),"");
-                    model->setData(model->index(row,0), QBrush(Qt::gray),Qt::BackgroundRole);
-                }
-                else
-                {
-                    model->setData(model->index(row,0),"X");
-                    model->setData(model->index(row,0), QBrush(Qt::green),Qt::BackgroundRole);
-                }
-
-                model->setData(model->index(row,1),key);
-                model->setData(model->index(row,2),cache[key][0]);
-                model->setData(model->index(row,3),cache[key][1]);
-                model->setData(model->index(row,4),cache[key][2]);
-                model->setData(model->index(row,5),cache[key][3]);
-                row++;
-            }
+            // ap not installed
+            model->setData(model->index(row,0),"");
+            model->setData(model->index(row,0), QBrush(Qt::gray),Qt::BackgroundRole);
         }
+        else
+        {
+            model->setData(model->index(row,0),"X");
+            model->setData(model->index(row,0), QBrush(Qt::green),Qt::BackgroundRole);
+        }
+
+        model->setData(model->index(row,1),key);
+        model->setData(model->index(row,2),cache[key][0]);
+        model->setData(model->index(row,3),cache[key][1]);
+        row++;
     }
 }
 
@@ -1209,10 +1184,8 @@ void MainWindow::on_tbvAirports_clicked(const QModelIndex &index)
     QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
     QString icao = model->item(index.row(),1)->text().trimmed();
     APT_dat apdat(fgenv->getAPTSource(),fgenv->getYFHome());
-    if(!apdat.retrieve_ap_details(icao))
-        return;
 
-    ap_runways = apdat.get_ap_runways(icao);
+    QList<Runway *> ap_runways = apdat.getRunwaysByAirport(icao);
 
     ui->cboRunway->clear();
 
@@ -1265,12 +1238,6 @@ void MainWindow::on_cboDayTime_currentIndexChanged(const QString &arg1)
 void MainWindow::on_cboSeason_currentIndexChanged(const QString &arg1)
 {
     lastSeasonSelected = arg1;
-}
-
-void MainWindow::on_tbvAirports_doubleClicked(const QModelIndex &index)
-{
-    place_aircraft_on_map_reading_table();
-    ui->tabOpts->setCurrentWidget(ui->tabBasic);
 }
 
 void MainWindow::place_aircraft_on_map_reading_table()
@@ -1430,7 +1397,7 @@ void MainWindow::add_scenery_path(QString sceneryPath)
     {
         lstviewmodel = new QStringListModel(QStringList());
         ui->lstviewSceneries->setModel(lstviewmodel);
-        if((sceneryPath.trimmed().compare(fgenv->getDefaultScenery())!=0)&&
+        if((sceneryPath.trimmed().compare(ui->lblDefaultScenery->text())!=0)&&
                 (sceneryPath.trimmed().compare(fgenv->getYFScenery())!=0))
         {
             alreadyPresent = false;
@@ -1445,7 +1412,7 @@ void MainWindow::add_scenery_path(QString sceneryPath)
         {
             if(lstviewmodel->stringList().value(i).trimmed().compare(sceneryPath.trimmed())!=0)
             {
-                if((lstviewmodel->stringList().value(i).trimmed().compare(fgenv->getDefaultScenery())!=0)&&
+                if((lstviewmodel->stringList().value(i).trimmed().compare(ui->lblDefaultScenery->text().trimmed())!=0)&&
                         (lstviewmodel->stringList().value(i).trimmed().compare(fgenv->getYFScenery())!=0))
                 {
                     alreadyPresent = false;
@@ -1568,8 +1535,7 @@ void MainWindow::on_pbtSearchFGFSBin_clicked()
 
 void MainWindow::on_pbtSetupDefaultFGSettings_clicked()
 {
-    ui->lnedtFGDataDir->setText(fgenv->getRootPath());
-    ui->lnedtFGFSBinaryPath->setText(fgenv->getFgfsBinPath());
+    setup_default_paths();
 }
 
 void MainWindow::on_btnRecreateAiportsIndex_clicked()
@@ -1578,5 +1544,19 @@ void MainWindow::on_btnRecreateAiportsIndex_clicked()
     if(msgbox.exec()==QMessageBox::Ok)
     {
         setup_airport_list(true);
+    }
+}
+
+void MainWindow::on_pbtSearchAirport_clicked()
+{
+    QStandardItemModel *model = (QStandardItemModel *)ui->tbvAirports->model();
+    for(int i=0;i<model->rowCount();i++)
+    {
+        if(model->item(i,1)->text().trimmed().compare(ui->lnedtSearchAirport->text().trimmed())==0)
+        {
+            ui->tbvAirports->setCurrentIndex(model->index(i,1));
+            ui->tbvAirports->selectRow(i);
+            break;
+        }
     }
 }
