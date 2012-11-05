@@ -60,10 +60,11 @@ void DialogAppSettings::on_pbtSearchFGData_clicked()
 
 void DialogAppSettings::on_pbtSearchFGFSBin_clicked()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Select fgfs binary path"),
+    /*QString dir = QFileDialog::getOpenFileName(this, tr("Select fgfs binary path"),
                                                     "",
-                                                    QFileDialog::DontResolveSymlinks);
-    ui->lnedtFGFSBinaryPath->setText(dir);
+                                                    QFileDialog::DontResolveSymlinks);*/
+    QString path = QFileDialog::getOpenFileName(this,tr("Select fgfs binary path"), "");
+    ui->lnedtFGFSBinaryPath->setText(path);
 }
 
 void DialogAppSettings::on_pbtSetupDefaultFGSettings_clicked()
