@@ -15,6 +15,55 @@
     </message>
 </context>
 <context>
+    <name>DialogAppSettings</name>
+    <message>
+        <location filename="../dialogappsettings.ui" line="14"/>
+        <source>Manual configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogappsettings.ui" line="46"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogappsettings.ui" line="65"/>
+        <source>FGDATA Directory:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogappsettings.ui" line="91"/>
+        <location filename="../dialogappsettings.ui" line="117"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogappsettings.ui" line="136"/>
+        <source>fgfs binary path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogappsettings.cpp" line="36"/>
+        <source>Failure</source>
+        <translation type="unfinished">Neúspěch</translation>
+    </message>
+    <message>
+        <location filename="../dialogappsettings.cpp" line="37"/>
+        <source>App Configuration NOT stored!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogappsettings.cpp" line="54"/>
+        <source>Select FGDATA directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../dialogappsettings.cpp" line="63"/>
+        <source>Select fgfs binary path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.ui" line="35"/>
@@ -38,7 +87,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="157"/>
-        <location filename="../mainwindow.cpp" line="1456"/>
+        <location filename="../mainwindow.cpp" line="1427"/>
         <source>Launch!</source>
         <translation>Spustit!</translation>
     </message>
@@ -209,218 +258,192 @@
         <translation>Vyhlazování HUD</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="853"/>
-        <source>FlightGear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="884"/>
-        <source>FGDATA Directory:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="903"/>
-        <source>fgfs binary path:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="929"/>
-        <location filename="../mainwindow.ui" line="942"/>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="955"/>
-        <source>Default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.ui" line="967"/>
+        <location filename="../mainwindow.ui" line="851"/>
         <source>Rendering options</source>
         <translation>Volby pro vykreslování</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="979"/>
+        <location filename="../mainwindow.ui" line="863"/>
         <source>Enhanced lighting</source>
         <translation>Zlepšené osvětlení</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="992"/>
+        <location filename="../mainwindow.ui" line="876"/>
         <source>Specular highlight</source>
         <translation>Zrcadlové zvýraznění</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1024"/>
+        <location filename="../mainwindow.ui" line="908"/>
         <source>Distance attenuation</source>
         <translation>Zmírnění vzdálenosti</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1037"/>
+        <location filename="../mainwindow.ui" line="921"/>
         <source>Textures</source>
         <translation>Textury</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1050"/>
+        <location filename="../mainwindow.ui" line="934"/>
         <source>Horizon effect</source>
         <translation>Efekt horizontu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1063"/>
+        <location filename="../mainwindow.ui" line="947"/>
         <source>Sky Blending</source>
         <translation>Směs oblohy</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1073"/>
+        <location filename="../mainwindow.ui" line="957"/>
         <source>Environment</source>
         <translation>Prostředí</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1085"/>
+        <location filename="../mainwindow.ui" line="969"/>
         <source>Severe</source>
         <translation>Silný</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1098"/>
+        <location filename="../mainwindow.ui" line="982"/>
         <source>Real Weather fetch</source>
         <translation>Skutečná data o počasí</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1136"/>
+        <location filename="../mainwindow.ui" line="1020"/>
         <source>Turbulence</source>
         <translation>Turbulence</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1149"/>
+        <location filename="../mainwindow.ui" line="1033"/>
         <source>Calm</source>
         <translation>Klidný</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1162"/>
+        <location filename="../mainwindow.ui" line="1046"/>
         <source>Random Wind</source>
         <translation>Náhodný vítr</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1185"/>
+        <location filename="../mainwindow.ui" line="1069"/>
         <source>Ceiling</source>
         <translation>Výškový dostup</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1198"/>
+        <location filename="../mainwindow.ui" line="1082"/>
         <source>Visibility</source>
         <translation>Viditelnost</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1231"/>
+        <location filename="../mainwindow.ui" line="1115"/>
         <source>Quote</source>
         <translation>Podíl</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1244"/>
+        <location filename="../mainwindow.ui" line="1128"/>
         <source>Thickness</source>
         <translation>Tloušťka</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1254"/>
+        <location filename="../mainwindow.ui" line="1138"/>
         <source>Time</source>
         <translation>Čas</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1282"/>
+        <location filename="../mainwindow.ui" line="1166"/>
         <source>Season</source>
         <translation>Roční období</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1301"/>
+        <location filename="../mainwindow.ui" line="1185"/>
         <source>Day Time</source>
         <translation>Denní doba</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1319"/>
+        <location filename="../mainwindow.ui" line="1203"/>
         <source>Airports</source>
         <translation>Letiště</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1331"/>
+        <location filename="../mainwindow.ui" line="1215"/>
         <source>Double click to show on map</source>
         <translation>Pro ukázání na mapě klepněte dvakrát</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1350"/>
+        <location filename="../mainwindow.ui" line="1234"/>
         <source>Filter installed</source>
         <translation>Filtr nainstalován</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1363"/>
+        <location filename="../mainwindow.ui" line="1247"/>
         <source>Refresh airport list</source>
         <translation>Obnovit seznam letiště</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1399"/>
+        <location filename="../mainwindow.ui" line="1283"/>
         <source>RunWay</source>
         <translation>Přistávací/Vzletová dráha</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1435"/>
+        <location filename="../mainwindow.ui" line="1319"/>
         <source>Place aircraft on the right place</source>
         <translation>Umístit letoun na správné místo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1438"/>
+        <location filename="../mainwindow.ui" line="1322"/>
         <source>Go To Map...</source>
         <translation>Jít na mapu...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1461"/>
+        <location filename="../mainwindow.ui" line="1345"/>
         <source>Recreate airports index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1497"/>
+        <location filename="../mainwindow.ui" line="1381"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1503"/>
+        <location filename="../mainwindow.ui" line="1387"/>
         <source>Sceneries</source>
         <translation>Krajiny</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1549"/>
+        <location filename="../mainwindow.ui" line="1433"/>
         <source>TerraSync</source>
         <translation>TerraSync</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1603"/>
+        <location filename="../mainwindow.ui" line="1487"/>
         <source>About</source>
         <translation>O programu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1637"/>
+        <location filename="../mainwindow.ui" line="1521"/>
         <source>AppName</source>
         <translation>Název programu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1650"/>
+        <location filename="../mainwindow.ui" line="1534"/>
         <source>AppVersion</source>
         <translation>Verze programu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1663"/>
+        <location filename="../mainwindow.ui" line="1547"/>
         <source>AppCopyRight</source>
         <translation>Autorské právo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1676"/>
+        <location filename="../mainwindow.ui" line="1560"/>
         <source>About Qt</source>
         <translation>O Qt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1732"/>
+        <location filename="../mainwindow.ui" line="1616"/>
         <source>Contributors:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1748"/>
+        <location filename="../mainwindow.ui" line="1632"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -429,17 +452,17 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1801"/>
+        <location filename="../mainwindow.ui" line="1685"/>
         <source>Loading...</source>
         <translation>Nahrává se...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="112"/>
+        <location filename="../mainwindow.cpp" line="130"/>
         <source>OS: </source>
         <translation>OS: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="113"/>
+        <location filename="../mainwindow.cpp" line="131"/>
         <source>FG version: </source>
         <translation>Verze FG: </translation>
     </message>
@@ -452,170 +475,172 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">FGSCEN: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="114"/>
+        <location filename="../mainwindow.cpp" line="132"/>
         <source>Default FGROOT: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="115"/>
+        <location filename="../mainwindow.cpp" line="133"/>
         <source>Default FGSCEN: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="116"/>
+        <location filename="../mainwindow.cpp" line="134"/>
         <source>Aircraft dir: </source>
         <translation>Adresář s letadly: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="120"/>
+        <location filename="../mainwindow.cpp" line="138"/>
         <source>N/A</source>
         <translation>Nedostupný</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="143"/>
+        <location filename="../mainwindow.cpp" line="159"/>
         <source>Version: </source>
         <translation>Verze: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="210"/>
+        <location filename="../mainwindow.cpp" line="226"/>
         <source>INFO: Starting TerraSync with:</source>
         <translation>INFO: Spuštění TerraSync s:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="250"/>
+        <location filename="../mainwindow.cpp" line="259"/>
         <source>Launching...</source>
         <translation>Spouští se...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="253"/>
+        <location filename="../mainwindow.cpp" line="262"/>
         <source>INFO: Simulation started</source>
         <translation>INFO: Simulace spuštěna</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="262"/>
+        <location filename="../mainwindow.cpp" line="271"/>
         <source>INFO: TerraSync started</source>
         <translation>INFO: TerraSync spuštěn</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="291"/>
+        <location filename="../mainwindow.cpp" line="300"/>
         <source>Simulation complete</source>
         <translation>Simulace dokončena</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="292"/>
-        <location filename="../mainwindow.cpp" line="302"/>
+        <location filename="../mainwindow.cpp" line="301"/>
+        <location filename="../mainwindow.cpp" line="311"/>
         <source>process exited with code: %1, status: %2
 </source>
         <translation>Proces skončil s kódem: %1, stav: %2
 </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="301"/>
+        <location filename="../mainwindow.cpp" line="310"/>
         <source>INFO: TerraSync stopped</source>
         <translation>INFO: TerraSync zastaven</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="825"/>
+        <location filename="../mainwindow.cpp" line="815"/>
         <source>WARN: Aircraft from configuration not available</source>
         <translation>VAROVÁNÍ: Letoun v nastavení nedostupný</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="895"/>
+        <location filename="../mainwindow.cpp" line="885"/>
         <source>INFO: Configuration loaded correctly</source>
         <translation>INFO: Nastavení nahráno správně</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1020"/>
+        <location filename="../mainwindow.cpp" line="1001"/>
         <source>INFO: Configuration stored correctly</source>
         <translation>INFO: Nastavení uloženo správně</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1022"/>
+        <location filename="../mainwindow.cpp" line="1003"/>
         <source>Success</source>
         <translation>Úspěch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1023"/>
+        <location filename="../mainwindow.cpp" line="1004"/>
         <source>Configuration stored!</source>
         <translation>Nastavení uloženo!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1031"/>
+        <location filename="../mainwindow.cpp" line="1012"/>
         <source>WARN: Configuration NOT stored</source>
         <translation>VAROVÁNÍ: Nastavení NENÍ uloženo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1033"/>
+        <location filename="../mainwindow.cpp" line="1014"/>
         <source>Failure</source>
         <translation>Neúspěch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1034"/>
+        <location filename="../mainwindow.cpp" line="1015"/>
         <source>Configuration NOT stored!</source>
         <translation>Nastavení NENÍ uloženo!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1127"/>
+        <location filename="../mainwindow.cpp" line="53"/>
+        <location filename="../mainwindow.cpp" line="1108"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1127"/>
+        <location filename="../mainwindow.cpp" line="48"/>
+        <source>AutoDetection failed: manual configuration will be started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="53"/>
+        <source>Manual configuration aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1108"/>
         <source>Can&apos;t create airport index cache
 Check you permissions</source>
         <translation>Nelze vytvořit vyrovnávací paměť rejstříku letiště
 Prověřte svá oprávnění</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1369"/>
+        <location filename="../mainwindow.cpp" line="1340"/>
         <source>Select scenery directory</source>
         <translation>Vybrat adresář s krajinou</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1382"/>
+        <location filename="../mainwindow.cpp" line="1353"/>
         <source>Dropping: </source>
         <translation>Vyřazení: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1384"/>
+        <location filename="../mainwindow.cpp" line="1355"/>
         <source>
 Are you sure?</source>
         <translation>
 Jste si jistý?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1468"/>
+        <location filename="../mainwindow.cpp" line="1439"/>
         <source>TerraSync running</source>
         <translation>Běží TerraSync</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1475"/>
+        <location filename="../mainwindow.cpp" line="1446"/>
         <source>TerraSync not running</source>
         <translation>TerraSync neběží</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1483"/>
-        <location filename="../mainwindow.cpp" line="1543"/>
+        <location filename="../mainwindow.cpp" line="48"/>
+        <location filename="../mainwindow.cpp" line="1454"/>
+        <location filename="../mainwindow.cpp" line="1492"/>
         <source>Warning</source>
         <translation>Varování</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1483"/>
+        <location filename="../mainwindow.cpp" line="1454"/>
         <source>Are you sure you want stop your simulation?</source>
         <translation>Opravdu chcete zastavit simulaci?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1521"/>
-        <source>Select FGDATA directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1530"/>
-        <source>Select fgfs binary path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../mainwindow.cpp" line="1543"/>
+        <location filename="../mainwindow.cpp" line="1492"/>
         <source>Are you sure you want to rebuild the entire Airports index?
 It should take a few minutes on slower machines</source>
         <translation type="unfinished"></translation>
