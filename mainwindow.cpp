@@ -319,7 +319,7 @@ void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
 {
     drawThumbnail(hashOfAircrafts.value(arg1.trimmed()));
     if(!just_started)
-        curr_settings->setAircraft(arg1);
+        lastAircraft = arg1;
 }
 
 void MainWindow::drawThumbnail(QString dir)
@@ -962,6 +962,8 @@ bool MainWindow::saveSettings()
         curr_settings->setAltitude("");
     }
 
+    curr_settings->setAircraft(lastAircraft);
+
     curr_settings->setLongitude(lastLongitude);
     curr_settings->setLatitude(lastLatitude);
     curr_settings->setHeading(lastHeading);
@@ -1166,7 +1168,7 @@ void MainWindow::on_tbvAirports_clicked(const QModelIndex &index)
     QString icao = model->item(index.row(),1)->text().trimmed();
     APT_dat apdat(fgenv->getAPTSource(),fgenv->getYFHome());
 
-    QList<Runway *> ap_runways = apdat.getRunwaysByAirport(icao);
+    ap_runways = apdat.getRunwaysByAirport(icao);
 
     ui->cboRunway->clear();
 

@@ -188,6 +188,7 @@ private:
     QString lastLatitude;
     QString lastHeading;
     QString lastControlModeSelected;
+    QString lastAircraft;
     float lastTurbulence;
 
     FGEnvironment *fgenv;
