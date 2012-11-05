@@ -6,7 +6,8 @@
 
 QT       += core gui webkit
 
-DEFINES += VERSION="0.99"
+DEFINES += MAX_VERSION="0.99"
+DEFINES += MIN_VERSION="14"
 TARGET = yaflight
 TEMPLATE = app
 

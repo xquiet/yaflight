@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     QApplication::setApplicationName("YaFlight");
-    QApplication::setApplicationVersion(QString::number(VERSION));
+    QApplication::setApplicationVersion(QString::number(MAX_VERSION) + "." + QString::number(MIN_VERSION));
 
     ui->lblLoading->setVisible(false);
 
