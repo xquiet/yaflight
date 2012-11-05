@@ -21,10 +21,18 @@
 
 FGEnvironment::FGEnvironment()
 {
+
+}
+
+bool FGEnvironment::start()
+{
     operating_system = detectOS();
     fgRootPath = detectRootPath();
     // detectFGVersion needs the rootpath
     fgVersion = detectFGVersion();
+
+    if(fgRootPath.trimmed().compare("")==0)
+        return false;
 
     QDir dir(getYFScenery());
     if(!dir.exists())
@@ -33,8 +41,10 @@ FGEnvironment::FGEnvironment()
         if(!dir.mkdir(getYFScenery()))
         {
             qFatal("Cannot create dir: %s",getYFScenery().toStdString().data());
+            return false;
         }
     }
+    return true;
 }
 
 void FGEnvironment::setRootPath(QString path)
@@ -65,16 +75,6 @@ QString FGEnvironment::getAircraftsDir()
 QString FGEnvironment::getDefaultAirportsDir()
 {
     return getDefaultScenery() + "/Airports";
-}
-
-QString FGEnvironment::getAirportsCacheFilePath()
-{
-    return getYFHome()+"/airportidx.cache";
-}
-
-QString FGEnvironment::getRunwaysCacheFilePath()
-{
-    return getYFHome() + "/runwaysidx.cache";
 }
 
 QString FGEnvironment::getAPTSource()
@@ -243,11 +243,6 @@ QString FGEnvironment::detectFGVersion()
                  version.errorString().toStdString().data());
     }
     return output;
-}
-
-QString FGEnvironment::detectFGBinPath()
-{
-    return "";
 }
 
 QString FGEnvironment::detectRootPath()
