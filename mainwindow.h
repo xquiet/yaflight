@@ -39,6 +39,7 @@
 
 #include "fgenvironment.h"
 #include "dlgaircraftdetails.h"
+#include "dialogappsettings.h"
 #include "imagepreview.h"
 #include "aircraft.h"
 #include "airport.h"
@@ -46,6 +47,7 @@
 #include "shouldercode.h"
 #include "runwaydetailsdialog.h"
 #include "settings.h"
+#include "appsettings.h"
 
 #include "apt_dat.h"
 
@@ -124,14 +126,7 @@ private slots:
 
     void on_ckbInAir_toggled(bool checked);
 
-
     void on_cboControlMode_currentIndexChanged(const QString &arg1);
-
-    void on_pbtSearchFGData_clicked();
-
-    void on_pbtSearchFGFSBin_clicked();
-
-    void on_pbtSetupDefaultFGSettings_clicked();
 
     void on_btnRecreateAiportsIndex_clicked();
 

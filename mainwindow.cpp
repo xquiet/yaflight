@@ -40,6 +40,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
     fgenv = new FGEnvironment();
 
+    if(!fgenv->start())
+    {
+        appsettings *appsett = new appsettings(fgenv->getYFHome()+"/appconf.ini");
+        if(appsett->isEmpty())
+        {
+            QMessageBox msgbox(QMessageBox::Warning,tr("Warning"),tr("AutoDetection failed: manual configuration will be started"),QMessageBox::Ok,this);
+            msgbox.exec();
+            DialogAppSettings appSettingsDlg(this);
+            if(appSettingsDlg.exec() == QMessageBox::Cancel)
+            {
+                QMessageBox msgbox(QMessageBox::Warning,tr("Error"),tr("Manual configuration aborted"),QMessageBox::Ok,this);
+                msgbox.exec();
+                QApplication::exit(1);
+            }
+        }
+        fgenv->setRootPath(appsett->getFGDataPath());
+    }
+
     connect(ui->expanderOpts,SIGNAL(expanded()),this,SLOT(expOptsExpanded()));
     connect(ui->expanderOpts,SIGNAL(unexpanded()),this,SLOT(expOptsUnexpanded()));
 
@@ -131,8 +149,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::setup_default_paths()
 {
-    ui->lnedtFGDataDir->setText(fgenv->getRootPath());
-    ui->lnedtFGFSBinaryPath->setText(fgenv->getFgfsBinPath());
     ui->lblDefaultScenery->setText(fgenv->getDefaultScenery());
     ui->lblYFScenery->setText(fgenv->getYFScenery());
 }
@@ -230,14 +246,7 @@ void MainWindow::on_pbtLaunch_clicked()
 
         QString fgfsBinary;
 
-        if(ui->lnedtFGFSBinaryPath->text().trimmed().compare("")!=0)
-        {
-            fgfsBinary = ui->lnedtFGFSBinaryPath->text();
-        }
-        else
-        {
-            fgfsBinary = fgenv->getFgfsBinPath();
-        }
+        fgfsBinary = fgenv->getFgfsBinPath();
 
         if(proc_ts_is_running)
         {
@@ -389,7 +398,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 QStringList MainWindow::collectLaunchSettings()
 {
-    QString fgScenery = ui->lblDefaultScenery->text() + ":" + fgenv->getYFScenery();
+    QString fgScenery = fgenv->getDefaultScenery() + ":" + fgenv->getYFScenery();
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
     if(lstviewmodel==NULL)
     {
@@ -401,7 +410,7 @@ QStringList MainWindow::collectLaunchSettings()
         for(int i=0;i<lstviewmodel->rowCount();i++)
         {
             QString currItem = lstviewmodel->stringList().value(i).trimmed();
-            if(ui->lblDefaultScenery->text().trimmed().compare(currItem)!=0)
+            if(fgenv->getDefaultScenery().trimmed().compare(currItem)!=0)
             {
                 fgScenery += ":" + currItem;
             }
@@ -411,18 +420,9 @@ QStringList MainWindow::collectLaunchSettings()
 
     // static arguments
     //params << "--verbose" << "--fg-root="+fgenv->getRootPath() << "--fg-scenery=/usr/share/games/flightgear/Scenery" << "--aircraft="+ui->cboAircrafts->currentText();
-    QString fgRootPath;
-    if(ui->lnedtFGDataDir->text().trimmed().compare("")!=0)
-    {
-        fgRootPath = ui->lnedtFGDataDir->text().trimmed();
-    }
-    else
-    {
-        fgRootPath = fgenv->getRootPath();
-    }
 
     params << "--verbose"
-           << "--fg-root="+fgRootPath
+           << "--fg-root="+fgenv->getRootPath()
            << "--fg-scenery="+fgScenery
            << "--aircraft="+ui->cboAircrafts->currentText();
 
@@ -737,9 +737,10 @@ void MainWindow::loadSettings(bool appStart)
         just_started = false;
     toggleLoadingBarVisible();
     curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
+    appsettings *app_settings = new appsettings(fgenv->getYFHome()+"/appconf.ini");
     if(!curr_settings->isEmpty())
     {
-        (curr_settings->getAirportListFiltered().compare(SET_TRUE)==0) ? ui->ckbFilterInstalled->setChecked(true) : ui->ckbFilterInstalled->setChecked(false);
+        (app_settings->getAirportListFiltered().compare(SET_TRUE)==0) ? ui->ckbFilterInstalled->setChecked(true) : ui->ckbFilterInstalled->setChecked(false);
 
         on_ckbFilterInstalled_toggled(ui->ckbFilterInstalled->isChecked());
 
@@ -769,17 +770,6 @@ void MainWindow::loadSettings(bool appStart)
         (curr_settings->getEnhancedLighting().compare(SET_TRUE)==0) ? ui->ckbEnhancedLighting->setChecked(true) : ui->ckbEnhancedLighting->setChecked(false);
         (curr_settings->getSpecularReflections().compare(SET_TRUE)==0) ? ui->ckbSpecularReflections->setChecked(true) : ui->ckbSpecularReflections->setChecked(false);
         (curr_settings->getTerraSync().compare(SET_TRUE)==0) ? ui->ckbTerraSync->setChecked(true) : ui->ckbTerraSync->setChecked(false);
-
-        if(curr_settings->get_fgfs_bin_path().trimmed().compare("")!=0)
-        {
-            ui->lnedtFGFSBinaryPath->setText(curr_settings->get_fgfs_bin_path().trimmed());
-        }
-
-        if(curr_settings->getFGDataPath().trimmed().compare("")!=0)
-        {
-            ui->lnedtFGDataDir->setText(curr_settings->getFGDataPath().trimmed());
-            ui->lblDefaultScenery->setText(curr_settings->getFGDataPath().trimmed() + "/Scenery");
-        }
 
         if(curr_settings->getCallSign().trimmed().compare("")!=0)
         {
@@ -904,7 +894,8 @@ bool MainWindow::saveSettings()
     if((!curr_settings)||(just_started))
         curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
 
-    ui->ckbFilterInstalled->isChecked() ? curr_settings->setAirportListFiltered(SET_TRUE) : curr_settings->setAirportListFiltered(SET_FALSE);
+    appsettings *app_settings = new appsettings(fgenv->getYFHome()+"/appconf.ini");
+    ui->ckbFilterInstalled->isChecked() ? app_settings->setAirportListFiltered(SET_TRUE) : app_settings->setAirportListFiltered(SET_FALSE);
 
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
     if((lstviewmodel==NULL)||(lstviewmodel->rowCount()<=0))
@@ -920,7 +911,7 @@ bool MainWindow::saveSettings()
         for(int i=0;i<lstviewmodel->rowCount();i++)
         {
             currScenery = lstviewmodel->stringList().value(i).trimmed();
-            if(currScenery.compare(ui->lblDefaultScenery->text().trimmed())!=0)
+            if(currScenery.compare(fgenv->getDefaultScenery().trimmed())!=0)
                 sceneries += currScenery + "|";
         }
         sceneries.remove(sceneries.length()-1,1);
@@ -1005,17 +996,7 @@ bool MainWindow::saveSettings()
         curr_settings->setVisibility(ui->edtVisibility->text().trimmed());
     }
 
-    if(ui->lnedtFGDataDir->text().trimmed().compare("")!=0)
-    {
-        curr_settings->setFGDataPath(ui->lnedtFGDataDir->text().trimmed());
-    }
-
-    if(ui->lnedtFGFSBinaryPath->text().trimmed().compare("")!=0)
-    {
-        curr_settings->set_fgfs_bin_path(ui->lnedtFGFSBinaryPath->text().trimmed());
-    }
-
-    if(curr_settings->storeData())
+    if(curr_settings->storeData() && app_settings->storeData())
     {
         ui->txaLog->append(tr("INFO: Configuration stored correctly"));
         QMessageBox msgBox;
@@ -1086,7 +1067,7 @@ QHash<QString, QStringList> MainWindow::collect_all_airports()
 QStringList MainWindow::collect_all_airports_dir()
 {
     QStringList allAirportDirectories;
-    allAirportDirectories << ui->lblDefaultScenery->text() + "/Airports";
+    allAirportDirectories << fgenv->getDefaultScenery() + "/Airports";
     allAirportDirectories << fgenv->getYFScenery() + "/Airports";
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
     if(!lstviewmodel)
@@ -1215,8 +1196,8 @@ void MainWindow::on_tbvAirports_clicked(const QModelIndex &index)
     on_cboRunway_currentIndexChanged(ui->cboRunway->currentText());
 
     lastAirportIndex = index;
-    lastLongitude = model->item(index.row(),2)->text().trimmed();
-    lastLatitude = model->item(index.row(),3)->text().trimmed();
+    lastLongitude = currentRunway->getLongitude();
+    lastLatitude = currentRunway->getLatitude();
 
 }
 
@@ -1350,17 +1331,7 @@ void MainWindow::on_cboRunway_currentIndexChanged(const QString &arg1)
 void MainWindow::on_btnRunwayInfo_clicked()
 {
     RunwayDetailsDialog dlgRunwayDetails(this);
-    /*QMessageBox msgbox;
-    msgbox.setText(tr("Number: ") + currentRunway->getNumber() +
-                   tr("\nHeading: ") + currentRunway->getHeading() +
-                   tr("\nLongitude: ") + currentRunway->getLongitude() +
-                   tr("\nLatitude: ") + currentRunway->getLatitude() +
-                   tr("\nShoulder: ") + ShoulderCode::decode(currentRunway->getShoulderCode()) +
-                   tr("\nSurface: ") + SurfaceCode::decode(currentRunway->getSurfaceCode()));
-    msgbox.setWindowTitle(tr("Runway details"));
-    msgbox.exec();*/
     dlgRunwayDetails.setCurrentRunway(currentRunway);
-    //dlgRunwayDetails.setModal(true);
     dlgRunwayDetails.exec();
 }
 
@@ -1397,7 +1368,7 @@ void MainWindow::add_scenery_path(QString sceneryPath)
     {
         lstviewmodel = new QStringListModel(QStringList());
         ui->lstviewSceneries->setModel(lstviewmodel);
-        if((sceneryPath.trimmed().compare(ui->lblDefaultScenery->text())!=0)&&
+        if((sceneryPath.trimmed().compare(fgenv->getDefaultScenery())!=0)&&
                 (sceneryPath.trimmed().compare(fgenv->getYFScenery())!=0))
         {
             alreadyPresent = false;
@@ -1412,7 +1383,7 @@ void MainWindow::add_scenery_path(QString sceneryPath)
         {
             if(lstviewmodel->stringList().value(i).trimmed().compare(sceneryPath.trimmed())!=0)
             {
-                if((lstviewmodel->stringList().value(i).trimmed().compare(ui->lblDefaultScenery->text().trimmed())!=0)&&
+                if((lstviewmodel->stringList().value(i).trimmed().compare(fgenv->getDefaultScenery().trimmed())!=0)&&
                         (lstviewmodel->stringList().value(i).trimmed().compare(fgenv->getYFScenery())!=0))
                 {
                     alreadyPresent = false;
@@ -1514,28 +1485,6 @@ void MainWindow::on_ckbInAir_toggled(bool checked)
 void MainWindow::on_cboControlMode_currentIndexChanged(const QString &arg1)
 {
     lastControlModeSelected = arg1;
-}
-
-void MainWindow::on_pbtSearchFGData_clicked()
-{
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Select FGDATA directory"),
-                                                    fgenv->getRootPath(),
-                                                    QFileDialog::ShowDirsOnly
-                                                    | QFileDialog::DontResolveSymlinks);
-    ui->lnedtFGDataDir->setText(dir);
-}
-
-void MainWindow::on_pbtSearchFGFSBin_clicked()
-{
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Select fgfs binary path"),
-                                                    fgenv->getFgfsBinPath(),
-                                                    QFileDialog::DontResolveSymlinks);
-    ui->lnedtFGFSBinaryPath->setText(dir);
-}
-
-void MainWindow::on_pbtSetupDefaultFGSettings_clicked()
-{
-    setup_default_paths();
 }
 
 void MainWindow::on_btnRecreateAiportsIndex_clicked()
