@@ -24,22 +24,20 @@ Consider that many users asked me how they could be able to use yaflight on Wind
 So, what happens to yaflight?
 -----------------------------
 
-YaFlight will continue to exist but maintaining two code bases is to much effort to me
-consequently the gambas3 version will be abandoned, soon or later (consider please that the new implementation -cyaflight-
+The old YaFlight series (0.1.x) was renamed to fglc and it's still available here https://sourceforge.net/projects/fglc.
+Consider please that maintaining two code bases is to much effort to me
+consequently the gambas3 version will be abandoned, soon or later (the new yaflight implementation
 can be executed even on GNU/Linux and BSD systems, so I'll focus on adding features and maintaining the new one).
-
-In the next few months the "c" prefix will be abandoned and yaflight will be just the cross platform version.
 
 Minimalist
 ----------
 
-cyaflight (like yaflight) aims to be a minimalist, fast and easy to use launch control for FlightGear (http://www.flightgear.org).
+yaflight (like fglc) aims to be a minimalist, fast and easy to use launch control for FlightGear (http://www.flightgear.org).
 
 Configuration file format
 -------------------------
 
-yaflight and cyaflight configuration files use the same format except for the CUSTOMSCENERY keyword replaced by
- CUSTOMSCENERIES. This way migration will be easier.
+yaflight and fglc configuration files are now quite different and they are stored in different locations.
 
 zlib
 ====
@@ -50,4 +48,4 @@ http://www.zlib.net/
 icons
 =====
 
-Some of the icons used by yaflight belongs to the kde theme (http://www.kde.org).
+Some of the icons used by yaflight belongs to the kde theme (http://www.kde.org) and to the gnome theme (http://www.gnome.org).
