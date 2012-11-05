@@ -57,7 +57,7 @@ void RunwayDetailsDialog::setCurrentRunway(Runway *r)
         model = new QStandardItemModel();
         ui->tbvRunwayDetails->setModel(model);
     }
-    model->setRowCount(5);
+    model->setRowCount(6);
     model->setColumnCount(2);
     model->setItem(0,0, new QStandardItem(tr("Number")));
     model->setItem(0,1, new QStandardItem(currentRunway->getNumber()));
@@ -65,8 +65,10 @@ void RunwayDetailsDialog::setCurrentRunway(Runway *r)
     model->setItem(1,1, new QStandardItem(currentRunway->getLongitude()));
     model->setItem(2,0, new QStandardItem(tr("Latitude")));
     model->setItem(2,1, new QStandardItem(currentRunway->getLatitude()));
-    model->setItem(3,0, new QStandardItem(tr("Shoulder")));
-    model->setItem(3,1, new QStandardItem(ShoulderCode::decode(currentRunway->getShoulderCode())));
-    model->setItem(4,0, new QStandardItem(tr("Surface")));
-    model->setItem(4,1, new QStandardItem(SurfaceCode::decode(currentRunway->getSurfaceCode())));
+    model->setItem(3,0, new QStandardItem(tr("Heading")));
+    model->setItem(3,1, new QStandardItem(currentRunway->getHeading()));
+    model->setItem(4,0, new QStandardItem(tr("Shoulder")));
+    model->setItem(4,1, new QStandardItem(ShoulderCode::decode(currentRunway->getShoulderCode())));
+    model->setItem(5,0, new QStandardItem(tr("Surface")));
+    model->setItem(5,1, new QStandardItem(SurfaceCode::decode(currentRunway->getSurfaceCode())));
 }
