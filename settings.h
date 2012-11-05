@@ -25,6 +25,53 @@
 #define SET_TRUE "-1"
 #define SET_FALSE "0"
 
+#define AIRCRAFT    "AIRCRAFT"
+#define SOUND       "SOUND"
+#define CLOUDS      "CLOUDS"
+#define GAMEMODE    "GAMEMODE"
+#define FULLSCREEN  "FULLSCREEN"
+#define FOG         "FOG"
+#define RESOLUTION  "RESOLUTION"
+#define CALLSIGN    "CALLSIGN"
+#define CM          "CM"
+// ------- advsettings --------------
+#define FAILURE     "FAILURE"
+#define FUELLOCK    "FUELLOCK"
+#define TIMELOCK    "TIMELOCK"
+#define RNDOBJECTS  "RNDOBJECTS"
+#define AIMODELS    "AIMODELS"
+#define AUTOCOORD   "AUTOCOORD"
+#define INAIR       "INAIR"
+#define PANEL       "PANEL"
+#define HORIZEFFECT "HORIZEFFECT"
+#define SKYBLENDING "SKYBLENDING"
+#define TEXTURES    "TEXTURES"
+#define DISTATTENUATION "DISTATTENUATION"
+#define DAYTIME     "DAYTIME"
+#define SEASON      "SEASON"
+#define TURBULENCE  "TURBULENCE"
+#define WIND        "WIND"
+#define REALWEATHER "REALWEATHER"
+#define MEASUREUNIT "MEASUREUNIT"
+#define ALTITUDE    "ALTITUDE"
+#define HEADING     "HEADING"
+#define LATITUDE    "LATITUDE"
+#define LONGITUDE   "LONGITUDE"
+#define CEILINGQUOTE "CEILINGQUOTE"
+#define CEILINGTHICKNESS "CEILINGTHICKNESS"
+#define VISIBILITY  "VISIBILITY"
+#define HUDANTIALIASED "HUDANTIALIASED"
+#define HUD2D       "HUD2D"
+#define HUD3D       "HUD3D"
+#define ENHANCEDRWLIGHTING "ENHANCEDRWLIGHTING"
+#define SPECULARREFLECTIONS "SPECULARREFLECTIONS"
+#define AIRPORTID   "AIRPORTID"
+#define RUNWAY      "RUNWAY"
+#define TERRASYNC   "TERRASYNC"
+#define FDM         "FDM"
+
+#define CUSTOMSCENERIES "CUSTOMSCENERIES"
+
 class Settings
 {
 public:
@@ -32,10 +79,6 @@ public:
     bool isEmpty();
     bool storeData();
 
-    // app
-    QString getAirportListFiltered();
-    QString get_fgfs_bin_path();
-    QString getFGDataPath();
     // main
     QString getAircraft();
     QString getClouds();
@@ -85,10 +128,6 @@ public:
     QString getSceneries();
 
 
-    // app
-    void setAirportListFiltered(QString val);
-    void set_fgfs_bin_path(QString val);
-    void setFGDataPath(QString val);
     // main
     void setAircraft(QString val);
     void setClouds(QString val);

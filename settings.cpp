@@ -24,7 +24,7 @@ Settings::Settings(QString confFilePath)
     conf = new Configuration(confFilePath);
     if(!conf->exists())
     {
-        if(!conf->create(confFilePath))
+        if(!conf->create(confFilePath,false))
             qFatal("Can't create configuration file");
         conf_empty = true;
     }else{
@@ -49,241 +49,223 @@ bool Settings::storeData()
   */
 
 //----------------------------------------
-// App
-
-QString Settings::getAirportListFiltered()
-{
-    return conf->get(QString(APPSETTINGS), "APTVIEW");
-}
-
-QString Settings::get_fgfs_bin_path()
-{
-    return conf->get(QString(APPSETTINGS), "FGFSBIN");
-}
-
-QString Settings::getFGDataPath()
-{
-    return conf->get(QString(APPSETTINGS), "FGDATADIR");
-}
-
-//----------------------------------------
 // MAIN
 QString Settings::getAircraft()
 {
-    return conf->get(MAINSETTINGS, "AIRCRAFT");
+    return conf->get(MAINSETTINGS, AIRCRAFT);
 }
 
 QString Settings::getSound()
 {
-    return conf->get(MAINSETTINGS, "SOUND");
+    return conf->get(MAINSETTINGS, SOUND);
 }
 
 
 QString Settings::getClouds()
 {
-    return conf->get(MAINSETTINGS, "CLOUDS");
+    return conf->get(MAINSETTINGS, CLOUDS);
 }
 
 QString Settings::getGameMode()
 {
-    return conf->get(MAINSETTINGS, "GAMEMODE");
+    return conf->get(MAINSETTINGS, GAMEMODE);
 }
 
 QString Settings::getFullScreen()
 {
-    return conf->get(MAINSETTINGS, "FULLSCREEN");
+    return conf->get(MAINSETTINGS, FULLSCREEN);
 }
 
 QString Settings::getFog()
 {
-    return conf->get(MAINSETTINGS, "FOG");
+    return conf->get(MAINSETTINGS, FOG);
 }
 
 QString Settings::getResolution()
 {
-    return conf->get(MAINSETTINGS, "RESOLUTION");
+    return conf->get(MAINSETTINGS, RESOLUTION);
 }
 
 QString Settings::getCallSign()
 {
-    return conf->get(MAINSETTINGS, "CALLSIGN");
+    return conf->get(MAINSETTINGS, CALLSIGN);
 }
 
 QString Settings::getControlMode()
 {
-    return conf->get(MAINSETTINGS, "CM");
+    return conf->get(MAINSETTINGS, CM);
 }
 
 //----------------------------------------
 // Advanced
 QString Settings::getFailure()
 {
-    return conf->get(ADVSETTINGS, "FAILURE");
+    return conf->get(ADVSETTINGS, FAILURE);
 }
 
 QString Settings::getFuelLock()
 {
-    return conf->get(ADVSETTINGS, "FUELLOCK");
+    return conf->get(ADVSETTINGS, FUELLOCK);
 }
 
 QString Settings::getTimeLock()
 {
-    return conf->get(ADVSETTINGS, "TIMELOCK");
+    return conf->get(ADVSETTINGS, TIMELOCK);
 }
 
 QString Settings::getRandomObjects()
 {
-    return conf->get(ADVSETTINGS, "RNDOBJECTS");
+    return conf->get(ADVSETTINGS, RNDOBJECTS);
 }
 
 QString Settings::getAIModels()
 {
-    return conf->get(ADVSETTINGS, "AIMODELS");
+    return conf->get(ADVSETTINGS, AIMODELS);
 }
 
 QString Settings::getAutoCoordination()
 {
-    return conf->get(ADVSETTINGS, "AUTOCOORD");
+    return conf->get(ADVSETTINGS, AUTOCOORD);
 }
 
 QString Settings::getInAir()
 {
-    return conf->get(ADVSETTINGS, "INAIR");
+    return conf->get(ADVSETTINGS, INAIR);
 }
 
 QString Settings::getPanel()
 {
-    return conf->get(ADVSETTINGS, "PANEL");
+    return conf->get(ADVSETTINGS, PANEL);
 }
 
 QString Settings::getHorizonEffect()
 {
-    return conf->get(ADVSETTINGS, "HORIZEFFECT");
+    return conf->get(ADVSETTINGS, HORIZEFFECT);
 }
 
 QString Settings::getSkyBlending()
 {
-    return conf->get(ADVSETTINGS, "SKYBLENDING");
+    return conf->get(ADVSETTINGS, SKYBLENDING);
 }
 
 QString Settings::getTextures()
 {
-    return conf->get(ADVSETTINGS, "TEXTURES");
+    return conf->get(ADVSETTINGS, TEXTURES);
 }
 
 QString Settings::getDistanceAttenuation()
 {
-    return conf->get(ADVSETTINGS, "DISTATTENUATION");
+    return conf->get(ADVSETTINGS, DISTATTENUATION);
 }
 
 QString Settings::getDayTime()
 {
-    return conf->get(ADVSETTINGS, "DAYTIME");
+    return conf->get(ADVSETTINGS, DAYTIME);
 }
 
 QString Settings::getSeason()
 {
-    return conf->get(ADVSETTINGS, "SEASON");
+    return conf->get(ADVSETTINGS, SEASON);
 }
 
 QString Settings::getTurbulence()
 {
-    return conf->get(ADVSETTINGS, "TURBULENCE");
+    return conf->get(ADVSETTINGS, TURBULENCE);
 }
 
 QString Settings::getWind()
 {
-    return conf->get(ADVSETTINGS, "WIND");
+    return conf->get(ADVSETTINGS, WIND);
 }
 
 QString Settings::getRealWeather()
 {
-    return conf->get(ADVSETTINGS, "REALWEATHER");
+    return conf->get(ADVSETTINGS, REALWEATHER);
 }
 
 QString Settings::getMeasureUnit()
 {
-    return conf->get(ADVSETTINGS, "MEASUREUNIT");
+    return conf->get(ADVSETTINGS, MEASUREUNIT);
 }
 
 QString Settings::getAltitude()
 {
-    return conf->get(ADVSETTINGS, "ALTITUDE");
+    return conf->get(ADVSETTINGS, ALTITUDE);
 }
 
 QString Settings::getHeading()
 {
-    return conf->get(ADVSETTINGS, "HEADING");
+    return conf->get(ADVSETTINGS, HEADING);
 }
 
 QString Settings::getLatitude()
 {
-    return conf->get(ADVSETTINGS, "LATITUDE");
+    return conf->get(ADVSETTINGS, LATITUDE);
 }
 
 QString Settings::getLongitude()
 {
-    return conf->get(ADVSETTINGS, "LONGITUDE");
+    return conf->get(ADVSETTINGS, LONGITUDE);
 }
 
 QString Settings::getCeilingQuote()
 {
-    return conf->get(ADVSETTINGS, "CEILINGQUOTE");
+    return conf->get(ADVSETTINGS, CEILINGQUOTE);
 }
 
 QString Settings::getCeilingThickness()
 {
-    return conf->get(ADVSETTINGS, "CEILINGTHICKNESS");
+    return conf->get(ADVSETTINGS, CEILINGTHICKNESS);
 }
 
 QString Settings::getVisibility()
 {
-    return conf->get(ADVSETTINGS, "VISIBILITY");
+    return conf->get(ADVSETTINGS, VISIBILITY);
 }
 
 QString Settings::getHUDAntiAliased()
 {
-    return conf->get(ADVSETTINGS, "HUDANTIALIASED");
+    return conf->get(ADVSETTINGS, HUDANTIALIASED);
 }
 
 QString Settings::getHUD2D()
 {
-    return conf->get(ADVSETTINGS, "HUD2D");
+    return conf->get(ADVSETTINGS, HUD2D);
 }
 
 QString Settings::getHUD3D()
 {
-    return conf->get(ADVSETTINGS, "HUD3D");
+    return conf->get(ADVSETTINGS, HUD3D);
 }
 
 QString Settings::getEnhancedLighting()
 {
-    return conf->get(ADVSETTINGS, "ENHANCEDRWLIGHTING");
+    return conf->get(ADVSETTINGS, ENHANCEDRWLIGHTING);
 }
 
 QString Settings::getSpecularReflections()
 {
-    return conf->get(ADVSETTINGS, "SPECULARREFLECTIONS");
+    return conf->get(ADVSETTINGS, SPECULARREFLECTIONS);
 }
 
 QString Settings::getAirportICAO()
 {
-    return conf->get(ADVSETTINGS, "AIRPORTID");
+    return conf->get(ADVSETTINGS, AIRPORTID);
 }
 
 QString Settings::getRunway()
 {
-    return conf->get(ADVSETTINGS, "RUNWAY");
+    return conf->get(ADVSETTINGS, RUNWAY);
 }
 
 QString Settings::getTerraSync()
 {
-    return conf->get(ADVSETTINGS, "TERRASYNC");
+    return conf->get(ADVSETTINGS, TERRASYNC);
 }
 
 QString Settings::getFDM()
 {
-    return conf->get(ADVSETTINGS, "FDM");
+    return conf->get(ADVSETTINGS, FDM);
 }
 
 //----------------------------------------
@@ -291,250 +273,231 @@ QString Settings::getFDM()
 
 QString Settings::getSceneries()
 {
-    return conf->get(SCENERIES, "CUSTOMSCENERIES");
+    return conf->get(SCENERIES, CUSTOMSCENERIES);
 }
 
 /*
   SET
   */
 
-
-//----------------------------------------
-// App
-
-void Settings::setAirportListFiltered(QString val)
-{
-    conf->set(QString(APPSETTINGS), QString("APTVIEW"), val);
-}
-
-void Settings::set_fgfs_bin_path(QString val)
-{
-    conf->set(QString(APPSETTINGS), QString("FGFGSBIN"), val);
-}
-
-void Settings::setFGDataPath(QString val)
-{
-    conf->set(QString(APPSETTINGS), QString("FGDATADIR"), val);
-}
-
 //----------------------------------------
 // MAIN
 void Settings::setAircraft(QString val)
 {
-    conf->set(QString(MAINSETTINGS), QString("AIRCRAFT"), val);
+    conf->set(QString(MAINSETTINGS), QString(AIRCRAFT), val);
 }
 
 void Settings::setSound(QString val)
 {
-    conf->set(QString(MAINSETTINGS), QString("SOUND"), val);
+    conf->set(QString(MAINSETTINGS), QString(SOUND), val);
 }
 
 
 void Settings::setClouds(QString val)
 {
-    conf->set(QString(MAINSETTINGS), QString("CLOUDS"), val);
+    conf->set(QString(MAINSETTINGS), QString(CLOUDS), val);
 }
 
 void Settings::setGameMode(QString val)
 {
-    conf->set(QString(MAINSETTINGS), QString("GAMEMODE"), val);
+    conf->set(QString(MAINSETTINGS), QString(GAMEMODE), val);
 }
 
 void Settings::setFullScreen(QString val)
 {
-    conf->set(QString(MAINSETTINGS), QString("FULLSCREEN"),val);
+    conf->set(QString(MAINSETTINGS), QString(FULLSCREEN),val);
 }
 
 void Settings::setFog(QString val)
 {
-    conf->set(QString(MAINSETTINGS), QString("FOG"),val);
+    conf->set(QString(MAINSETTINGS), QString(FOG),val);
 }
 
 void Settings::setResolution(QString val)
 {
-    conf->set(QString(MAINSETTINGS), QString("RESOLUTION"),val);
+    conf->set(QString(MAINSETTINGS), QString(RESOLUTION),val);
 }
 
 void Settings::setCallSign(QString val)
 {
-    conf->set(QString(MAINSETTINGS), QString("CALLSIGN"),val);
+    conf->set(QString(MAINSETTINGS), QString(CALLSIGN),val);
 }
 
 void Settings::setControlMode(QString val)
 {
-    conf->set(QString(MAINSETTINGS), QString("CM"),val);
+    conf->set(QString(MAINSETTINGS), QString(CM),val);
 }
 
 //----------------------------------------
 // Advanced
 void Settings::setFailure(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("FAILURE"),val);
+    conf->set(QString(ADVSETTINGS), QString(FAILURE),val);
 }
 
 void Settings::setFuelLock(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("FUELLOCK"),val);
+    conf->set(QString(ADVSETTINGS), QString(FUELLOCK),val);
 }
 
 void Settings::setTimeLock(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("TIMELOCK"), val);
+    conf->set(QString(ADVSETTINGS), QString(TIMELOCK), val);
 }
 
 void Settings::setRandomObjects(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("RNDOBJECTS"), val);
+    conf->set(QString(ADVSETTINGS), QString(RNDOBJECTS), val);
 }
 
 void Settings::setAIModels(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("AIMODELS"), val);
+    conf->set(QString(ADVSETTINGS), QString(AIMODELS), val);
 }
 
 void Settings::setAutoCoordination(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("AUTOCOORD"), val);
+    conf->set(QString(ADVSETTINGS), QString(AUTOCOORD), val);
 }
 
 void Settings::setInAir(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("INAIR"), val);
+    conf->set(QString(ADVSETTINGS), QString(INAIR), val);
 }
 
 void Settings::setPanel(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("PANEL"), val);
+    conf->set(QString(ADVSETTINGS), QString(PANEL), val);
 }
 
 void Settings::setHorizonEffect(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("HORIZEFFECT"), val);
+    conf->set(QString(ADVSETTINGS), QString(HORIZEFFECT), val);
 }
 
 void Settings::setSkyBlending(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("SKYBLENDING"), val);
+    conf->set(QString(ADVSETTINGS), QString(SKYBLENDING), val);
 }
 
 void Settings::setTextures(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("TEXTURES"), val);
+    conf->set(QString(ADVSETTINGS), QString(TEXTURES), val);
 }
 
 void Settings::setDistanceAttenuation(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("DISTATTENUATION"), val);
+    conf->set(QString(ADVSETTINGS), QString(DISTATTENUATION), val);
 }
 
 void Settings::setDayTime(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("DAYTIME"), val);
+    conf->set(QString(ADVSETTINGS), QString(DAYTIME), val);
 }
 
 void Settings::setSeason(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("SEASON"), val);
+    conf->set(QString(ADVSETTINGS), QString(SEASON), val);
 }
 
 void Settings::setTurbulence(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("TURBULENCE"), val);
+    conf->set(QString(ADVSETTINGS), QString(TURBULENCE), val);
 }
 
 void Settings::setWind(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("WIND"), val);
+    conf->set(QString(ADVSETTINGS), QString(WIND), val);
 }
 
 void Settings::setRealWeather(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("REALWEATHER"), val);
+    conf->set(QString(ADVSETTINGS), QString(REALWEATHER), val);
 }
 
 void Settings::setMeasureUnit(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("MEASUREUNIT"), val);
+    conf->set(QString(ADVSETTINGS), QString(MEASUREUNIT), val);
 }
 
 void Settings::setAltitude(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("ALTITUDE"), val);
+    conf->set(QString(ADVSETTINGS), QString(ALTITUDE), val);
 }
 
 void Settings::setHeading(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("HEADING"), val);
+    conf->set(QString(ADVSETTINGS), QString(HEADING), val);
 }
 
 void Settings::setLatitude(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("LATITUDE"), val);
+    conf->set(QString(ADVSETTINGS), QString(LATITUDE), val);
 }
 
 void Settings::setLongitude(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("LONGITUDE"), val);
+    conf->set(QString(ADVSETTINGS), QString(LONGITUDE), val);
 }
 
 void Settings::setCeilingQuote(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("CEILINGQUOTE"), val);
+    conf->set(QString(ADVSETTINGS), QString(CEILINGQUOTE), val);
 }
 
 void Settings::setCeilingThickness(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("CEILINGTHICKNESS"), val);
+    conf->set(QString(ADVSETTINGS), QString(CEILINGTHICKNESS), val);
 }
 
 void Settings::setVisibility(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("VISIBILITY"), val);
+    conf->set(QString(ADVSETTINGS), QString(VISIBILITY), val);
 }
 
 void Settings::setHUDAntiAliased(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("HUDANTIALIASED"), val);
+    conf->set(QString(ADVSETTINGS), QString(HUDANTIALIASED), val);
 }
 
 void Settings::setHUD2D(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("HUD2D"), val);
+    conf->set(QString(ADVSETTINGS), QString(HUD2D), val);
 }
 
 void Settings::setHUD3D(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("HUD3D"), val);
+    conf->set(QString(ADVSETTINGS), QString(HUD3D), val);
 }
 
 void Settings::setEnhancedLighting(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("ENHANCEDRWLIGHTING"), val);
+    conf->set(QString(ADVSETTINGS), QString(ENHANCEDRWLIGHTING), val);
 }
 
 void Settings::setSpecularReflections(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("SPECULARREFLECTIONS"), val);
+    conf->set(QString(ADVSETTINGS), QString(SPECULARREFLECTIONS), val);
 }
 
 void Settings::setAirportID(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("AIRPORTID"), val);
+    conf->set(QString(ADVSETTINGS), QString(AIRPORTID), val);
 }
 
 void Settings::setRunway(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("RUNWAY"), val);
+    conf->set(QString(ADVSETTINGS), QString(RUNWAY), val);
 }
 
 void Settings::setTerraSync(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("TERRASYNC"), val);
+    conf->set(QString(ADVSETTINGS), QString(TERRASYNC), val);
 }
 
 void Settings::setFDM(QString val)
 {
-    conf->set(QString(ADVSETTINGS), QString("FDM"), val);
+    conf->set(QString(ADVSETTINGS), QString(FDM), val);
 }
 
 //----------------------------------------
@@ -542,5 +505,5 @@ void Settings::setFDM(QString val)
 
 void Settings::setSceneries(QString val)
 {
-    conf->set(QString(SCENERIES), QString("CUSTOMSCENERIES"), val);
+    conf->set(QString(SCENERIES), QString(CUSTOMSCENERIES), val);
 }
