@@ -782,6 +782,10 @@ void MainWindow::loadSettings(bool appStart)
             ui->cboFDM->setCurrentIndex(fdmCurrIdx);
         }
 
+        if(curr_settings->getAltitude().trimmed().compare("")!=0)
+        {
+            ui->lnedtAltitude->setText(curr_settings->getAltitude().trimmed());
+        }
 
         if(curr_settings->getCeilingQuote().trimmed().compare("")!=0)
         {
