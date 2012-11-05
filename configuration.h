@@ -46,7 +46,7 @@ public:
 
     QHash<QString, QHash<QString, QString> > confSettings;
 
-    bool create(QString path);
+    bool create(QString path, bool ifApp);
     bool exists();
     void parseFile();
     bool store();

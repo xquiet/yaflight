@@ -29,7 +29,7 @@ bool Configuration::exists()
     return QFile::exists(confFilePath);
 }
 
-bool Configuration::create(QString path)
+bool Configuration::create(QString path, bool ifApp)
 {
     QString dirPath = QFileInfo(path).absoluteDir().absolutePath();
     QDir dir(dirPath);
@@ -41,7 +41,14 @@ bool Configuration::create(QString path)
     if(file.open(QIODevice::WriteOnly))
     {
         QTextStream in(&file);
-        in << "["+QString(MAINSETTINGS)+"]" << "\n" << "["+QString(ADVSETTINGS)+"]" << "\n" << "["+QString(APPSETTINGS)+"]" << "\n" << "["+QString(SCENERIES)+"]";
+        if(!ifApp)
+        {
+            in << "["+QString(MAINSETTINGS)+"]"
+               << "\n" << "["+QString(ADVSETTINGS)+"]" << "\n"
+               << "["+QString(SCENERIES)+"]";
+        }else{
+            in << "["+QString(APPSETTINGS)+"]" << "\n";
+        }
         file.close();
         return true;
     }
