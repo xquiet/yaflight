@@ -170,7 +170,7 @@ bool APT_dat::create_cache(QHash<QString, QStringList> allAirports, QStringList 
             }
         }
     }
-    return false;  // it should never reach this place
+    return true;
 }
 
 bool APT_dat::aptcache_exists()
