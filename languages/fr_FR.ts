@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="fr_FR">
 <context>
+    <name>AircraftDetailsDialog</name>
+    <message>
+        <location filename="../aircraftdetailsdialog.ui" line="14"/>
+        <source>Aircraft details</source>
+        <translation>Les détails de l&apos;Aéronef</translation>
+    </message>
+</context>
+<context>
     <name>CuteExpander</name>
     <message>
         <location filename="../cuteexpander.ui" line="14"/>
@@ -19,7 +27,7 @@
     <message>
         <location filename="../dialogappsettings.ui" line="14"/>
         <source>Manual configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration manual</translation>
     </message>
     <message>
         <location filename="../dialogappsettings.ui" line="46"/>
@@ -35,7 +43,7 @@
         <location filename="../dialogappsettings.ui" line="91"/>
         <location filename="../dialogappsettings.ui" line="117"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../dialogappsettings.ui" line="136"/>
@@ -45,7 +53,7 @@
     <message>
         <location filename="../dialogappsettings.cpp" line="36"/>
         <source>Failure</source>
-        <translation type="unfinished">Panne</translation>
+        <translation>Panne</translation>
     </message>
     <message>
         <location filename="../dialogappsettings.cpp" line="37"/>
@@ -99,7 +107,7 @@
     <message>
         <location filename="../mainwindow.ui" line="232"/>
         <source>Quick Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Options Rapides</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="250"/>
@@ -675,32 +683,32 @@ It should take a few minutes on slower machines</source>
         <translation>Les détails de la piste</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="62"/>
+        <location filename="../runwaydetailsdialog.cpp" line="63"/>
         <source>Number</source>
         <translation>Nombre</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="64"/>
+        <location filename="../runwaydetailsdialog.cpp" line="65"/>
         <source>Longitude</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="66"/>
+        <location filename="../runwaydetailsdialog.cpp" line="67"/>
         <source>Latitude</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="68"/>
+        <location filename="../runwaydetailsdialog.cpp" line="69"/>
         <source>Heading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="70"/>
+        <location filename="../runwaydetailsdialog.cpp" line="71"/>
         <source>Shoulder</source>
         <translation>Accotement</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="72"/>
+        <location filename="../runwaydetailsdialog.cpp" line="73"/>
         <source>Surface</source>
         <translation>Surface</translation>
     </message>
@@ -708,9 +716,8 @@ It should take a few minutes on slower machines</source>
 <context>
     <name>dlgAircraftDetails</name>
     <message>
-        <location filename="../dlgaircraftdetails.ui" line="14"/>
         <source>Aircraft details</source>
-        <translation>Les détails de l&apos;Aéronef</translation>
+        <translation type="obsolete">Les détails de l&apos;Aéronef</translation>
     </message>
 </context>
 </TS>

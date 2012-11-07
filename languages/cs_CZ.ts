@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="cs_CZ">
 <context>
+    <name>AircraftDetailsDialog</name>
+    <message>
+        <location filename="../aircraftdetailsdialog.ui" line="14"/>
+        <source>Aircraft details</source>
+        <translation type="unfinished">Podrobnosti letadla</translation>
+    </message>
+</context>
+<context>
     <name>CuteExpander</name>
     <message>
         <location filename="../cuteexpander.ui" line="14"/>
@@ -686,32 +694,32 @@ It should take a few minutes on slower machines</source>
         <translation>Podrobnosti přistávací/vzletové dráhy</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="62"/>
+        <location filename="../runwaydetailsdialog.cpp" line="63"/>
         <source>Number</source>
         <translation>Počet</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="64"/>
+        <location filename="../runwaydetailsdialog.cpp" line="65"/>
         <source>Longitude</source>
         <translation>Délka</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="66"/>
+        <location filename="../runwaydetailsdialog.cpp" line="67"/>
         <source>Latitude</source>
         <translation>Šířka</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="68"/>
+        <location filename="../runwaydetailsdialog.cpp" line="69"/>
         <source>Heading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="70"/>
+        <location filename="../runwaydetailsdialog.cpp" line="71"/>
         <source>Shoulder</source>
         <translation>Okraj</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="72"/>
+        <location filename="../runwaydetailsdialog.cpp" line="73"/>
         <source>Surface</source>
         <translation>Povrch</translation>
     </message>
@@ -719,9 +727,8 @@ It should take a few minutes on slower machines</source>
 <context>
     <name>dlgAircraftDetails</name>
     <message>
-        <location filename="../dlgaircraftdetails.ui" line="14"/>
         <source>Aircraft details</source>
-        <translation>Podrobnosti letadla</translation>
+        <translation type="obsolete">Podrobnosti letadla</translation>
     </message>
 </context>
 </TS>

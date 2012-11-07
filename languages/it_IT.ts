@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="it_IT">
 <context>
+    <name>AircraftDetailsDialog</name>
+    <message>
+        <location filename="../aircraftdetailsdialog.ui" line="14"/>
+        <source>Aircraft details</source>
+        <translation>Dettagli aeromobile</translation>
+    </message>
+</context>
+<context>
     <name>CuteExpander</name>
     <message>
         <location filename="../cuteexpander.ui" line="14"/>
@@ -725,32 +733,32 @@ Sei sicuro?</translation>
         <translation>Dettagli Pista</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="62"/>
+        <location filename="../runwaydetailsdialog.cpp" line="63"/>
         <source>Number</source>
         <translation>Numero</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="64"/>
+        <location filename="../runwaydetailsdialog.cpp" line="65"/>
         <source>Longitude</source>
         <translation>Longitudine</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="66"/>
+        <location filename="../runwaydetailsdialog.cpp" line="67"/>
         <source>Latitude</source>
         <translation>Latitudine</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="68"/>
+        <location filename="../runwaydetailsdialog.cpp" line="69"/>
         <source>Heading</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="70"/>
+        <location filename="../runwaydetailsdialog.cpp" line="71"/>
         <source>Shoulder</source>
         <translation>Bordo</translation>
     </message>
     <message>
-        <location filename="../runwaydetailsdialog.cpp" line="72"/>
+        <location filename="../runwaydetailsdialog.cpp" line="73"/>
         <source>Surface</source>
         <translation>Superificie</translation>
     </message>
@@ -758,9 +766,8 @@ Sei sicuro?</translation>
 <context>
     <name>dlgAircraftDetails</name>
     <message>
-        <location filename="../dlgaircraftdetails.ui" line="14"/>
         <source>Aircraft details</source>
-        <translation>Dettagli aeromobile</translation>
+        <translation type="obsolete">Dettagli aeromobile</translation>
     </message>
 </context>
 </TS>
