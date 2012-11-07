@@ -58,6 +58,8 @@ MainWindow::MainWindow(QWidget *parent) :
         fgenv->setRootPath(appsett->getFGDataPath());
     }
 
+    log = new Logger(fgenv->getYFHome()+"/yf.log");
+
     connect(ui->expanderOpts,SIGNAL(expanded()),this,SLOT(expOptsExpanded()));
     connect(ui->expanderOpts,SIGNAL(unexpanded()),this,SLOT(expOptsUnexpanded()));
 
@@ -223,8 +225,8 @@ void MainWindow::on_pbtLaunch_clicked()
                           << "-p" << "5500"
                           << "-d" << fgenv->getYFScenery();
                 procTerraSync->start(fgenv->getTerraSyncBinPath(), ts_params, QProcess::ReadOnly);
-                ui->txaLog->append(tr("INFO: Starting TerraSync with:"));
-                ui->txaLog->append(fgenv->getTerraSyncBinPath() + " " + ts_params.join(" "));
+                log->Log(Logger::ET_INFO, fgenv->getTerraSyncBinPath() + " " + ts_params.join(" "));
+                ui->txaLog->append(Logger::ET_INFO + ": " + tr("Starting TerraSync"));
                 connect(procTerraSync,SIGNAL(readyRead()),this,SLOT(read_ts_output()));
                 connect(procTerraSync,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(proc_ts_finished()));
 
@@ -253,13 +255,14 @@ void MainWindow::on_pbtLaunch_clicked()
             params << "--atlas=socket,out,1,localhost,5500,udp";
         }
 
-        qDebug("%s", (fgfsBinary + " " + params.join(" ")).toStdString().data());
+        log->Log(Logger::ET_INFO, fgfsBinary + " " + params.join(" "));
+
         procFGFS->start(fgfsBinary, params, QProcess::ReadOnly);
 
         ui->txaLog->append(tr("Launching..."));
         //ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
         qDebug("%s",(fgenv->getFgfsBinPath()+" "+params.join(" ")).toStdString().data());
-        ui->txaLog->append(tr("INFO: Simulation started"));
+        ui->txaLog->append(Logger::ET_INFO + ": "+ tr("Simulation started"));
         connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
         connect(procFGFS,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(procReadAircraftsFinished(int, QProcess::ExitStatus)));
 
@@ -268,7 +271,7 @@ void MainWindow::on_pbtLaunch_clicked()
         tmrProcFGFS->start(350);
 
         procFGFS->closeWriteChannel();
-        ui->txaLog->append(tr("INFO: TerraSync started"));
+        ui->txaLog->append(Logger::ET_INFO + ": "+ tr("TerraSync started"));
         if((procFGFS->state() == QProcess::Running)||
                 (procFGFS->state() == QProcess::Starting))
             proc_fgfs_is_running = true;
@@ -307,7 +310,7 @@ void MainWindow::procReadAircraftsFinished(int exitCode, QProcess::ExitStatus ex
 
 void MainWindow::proc_ts_finished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    ui->txaLog->append(tr("INFO: TerraSync stopped"));
+    ui->txaLog->append(Logger::ET_INFO + ": "+ tr("TerraSync stopped"));
     QString message = QString(tr("process exited with code: %1, status: %2\n")
         .arg(exitCode)
         .arg(exitStatus == QProcess::NormalExit ? "QProcess::NormalExit" : "QProcess::CrashExit"));
@@ -816,7 +819,7 @@ void MainWindow::loadSettings(bool appStart)
         }
         else
         {
-            ui->txaLog->append(tr("WARN: Aircraft from configuration not available"));
+            ui->txaLog->append(Logger::ET_WARN + ": "+ tr("Aircraft from configuration not available"));
         }
 
         if(curr_settings->getTurbulence().toFloat()>-1)
@@ -886,7 +889,7 @@ void MainWindow::loadSettings(bool appStart)
             }
         }
 
-        ui->txaLog->append(tr("INFO: Configuration loaded correctly"));
+        ui->txaLog->append(Logger::ET_INFO + ": "+ tr("Configuration loaded correctly"));
         /*QMessageBox msgBox("Success","Configuration loaded!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
         msgBox.exec();*/
     }
@@ -1004,7 +1007,7 @@ bool MainWindow::saveSettings()
 
     if(curr_settings->storeData() && app_settings->storeData())
     {
-        ui->txaLog->append(tr("INFO: Configuration stored correctly"));
+        ui->txaLog->append(Logger::ET_INFO + ": "+ tr("Configuration stored correctly"));
         QMessageBox msgBox;
         msgBox.setWindowTitle(tr("Success"));
         msgBox.setText(tr("Configuration stored!"));
@@ -1015,7 +1018,7 @@ bool MainWindow::saveSettings()
         msgBox.exec();
         return true;
     }else{
-        ui->txaLog->append(tr("WARN: Configuration NOT stored"));
+        ui->txaLog->append(Logger::ET_WARN + ": "+ tr("Configuration NOT stored"));
         QMessageBox msgBox;
         msgBox.setWindowTitle(tr("Failure"));
         msgBox.setText(tr("Configuration NOT stored!"));

@@ -37,6 +37,7 @@
 #include <QTimer>
 #include <QTranslator>
 
+#include "logger.h"
 #include "fgenvironment.h"
 #include "dlgaircraftdetails.h"
 #include "dialogappsettings.h"
@@ -146,6 +147,7 @@ private:
     int posX, posY;
     void toggleLoadingBarVisible();
     void setup_default_paths();
+    Logger *log;
 
     // ----- processes -----
     QProcess *procFGFS;
