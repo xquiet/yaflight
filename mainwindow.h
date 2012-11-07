@@ -39,7 +39,7 @@
 
 #include "logger.h"
 #include "fgenvironment.h"
-#include "dlgaircraftdetails.h"
+#include "aircraftdetailsdialog.h"
 #include "dialogappsettings.h"
 #include "imagepreview.h"
 #include "aircraft.h"

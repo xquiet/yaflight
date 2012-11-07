@@ -351,7 +351,7 @@ void MainWindow::on_btnAircraftInfo_clicked()
                 hashOfAircrafts.value(ui->cboAircrafts->currentText())
                 );
 
-    dlgAircraftDetails dlg(details, fgenv, this);
+    AircraftDetailsDialog dlg(details, fgenv, this);
     dlg.setModal(true);
     dlg.exec();
 }

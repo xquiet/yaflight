@@ -28,7 +28,6 @@ win32:INCLUDEPATH += "C:\\librerie\\zlib-1.2.7"
 SOURCES += main.cpp\
         mainwindow.cpp \
     fgenvironment.cpp \
-    dlgaircraftdetails.cpp \
     imagepreview.cpp \
     cuteexpander.cpp \
     aircraft.cpp \
@@ -42,11 +41,11 @@ SOURCES += main.cpp\
     runwaydetailsdialog.cpp \
     appsettings.cpp \
     dialogappsettings.cpp \
-    logger.cpp
+    logger.cpp \
+    aircraftdetailsdialog.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
-    dlgaircraftdetails.h \
     imagepreview.h \
     cuteexpander.h \
     aircraft.h \
@@ -60,13 +59,14 @@ HEADERS  += mainwindow.h \
     runwaydetailsdialog.h \
     appsettings.h \
     dialogappsettings.h \
-    logger.h
+    logger.h \
+    aircraftdetailsdialog.h
 
 FORMS    += mainwindow.ui \
-    dlgaircraftdetails.ui \
     cuteexpander.ui \
     runwaydetailsdialog.ui \
-    dialogappsettings.ui
+    dialogappsettings.ui \
+    aircraftdetailsdialog.ui
 
 RESOURCES += \
     yaflightresources.qrc
