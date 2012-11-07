@@ -33,6 +33,7 @@ RunwayDetailsDialog::RunwayDetailsDialog(QWidget *parent) :
     ui->tbvRunwayDetails->setShowGrid(false);
     ui->tbvRunwayDetails->horizontalHeader()->setHidden(true);
     ui->tbvRunwayDetails->verticalHeader()->setHidden(true);
+    ui->tbvRunwayDetails->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     ui->buttonBox->setGeometry(5,ui->tbvRunwayDetails->height()+ui->tbvRunwayDetails->y()+2,
                                        ui->tbvRunwayDetails->width(),
