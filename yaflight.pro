@@ -41,7 +41,8 @@ SOURCES += main.cpp\
     shouldercode.cpp \
     runwaydetailsdialog.cpp \
     appsettings.cpp \
-    dialogappsettings.cpp
+    dialogappsettings.cpp \
+    logger.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
@@ -58,7 +59,8 @@ HEADERS  += mainwindow.h \
     shouldercode.h \
     runwaydetailsdialog.h \
     appsettings.h \
-    dialogappsettings.h
+    dialogappsettings.h \
+    logger.h
 
 FORMS    += mainwindow.ui \
     dlgaircraftdetails.ui \
