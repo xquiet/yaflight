@@ -725,6 +725,10 @@ QStringList MainWindow::collectLaunchSettings()
             }
         }
     }
+
+    // heading
+    params << "--heading="+lastHeading;
+
     return params;
 }
 
@@ -863,6 +867,9 @@ void MainWindow::loadSettings(bool appStart)
             ui->lstviewSceneries->setModel(lstviewmodel);
         }
 
+
+        // heading
+        lastHeading = curr_settings->getHeading();
 
         if(appStart == false){
             // airports
@@ -1302,6 +1309,7 @@ void MainWindow::on_dialHeading_valueChanged(int value)
     //QString latitude  = model->item(modelidxlst.at(0).row(),3)->text().trimmed();
 
     update_latlonhead(lastLatitude, lastLongitude, QString::number(convert_dialhead_to_azimuth(value)));
+    lastHeading = QString::number(convert_dialhead_to_azimuth(value));
 }
 
 /*
@@ -1326,6 +1334,8 @@ void MainWindow::on_btnAboutQt_clicked()
 
 void MainWindow::on_cboRunway_currentIndexChanged(const QString &arg1)
 {
+    if(just_started)
+        return;
     foreach(Runway *rw, ap_runways)
     {
         if(rw->getNumber().compare(arg1)==0)
