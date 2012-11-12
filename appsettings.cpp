@@ -1,7 +1,10 @@
 #include "appsettings.h"
 
+QString appsettings::updatesHost = "yaflight.altervista.org";
+QString appsettings::updatesScript = "/updates_script.php";
+
 appsettings::appsettings(QString confFilePath)
-{
+{ 
     conf = new Configuration(confFilePath);
     if(!conf->exists())
     {
@@ -22,6 +25,16 @@ bool appsettings::isEmpty()
 bool appsettings::storeData()
 {
     return conf->store();
+}
+
+QString appsettings::getUpdatesHost()
+{
+    return updatesHost;
+}
+
+QString appsettings::getUpdatesScript()
+{
+    return updatesScript;
 }
 
 //----------------------------------------

@@ -16,6 +16,8 @@ public:
 
     bool isEmpty();
     bool storeData();
+    QString getUpdatesHost();
+    QString getUpdatesScript();
 
     // app - GET
     QString getAirportListFiltered();
@@ -30,6 +32,8 @@ public:
 private:
     Configuration *conf;
     bool conf_empty;
+    static QString updatesHost;
+    static QString updatesScript;
 };
 
 #endif // APPSETTINGS_H

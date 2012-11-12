@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     if(!fgenv->start())
     {
-        appsettings *appsett = new appsettings(fgenv->getYFHome()+"/appconf.ini");
+        appsett = new appsettings(fgenv->getYFHome()+"/appconf.ini");
         if(appsett->isEmpty())
         {
             QMessageBox msgbox(QMessageBox::Warning,tr("Warning"),tr("AutoDetection failed: manual configuration will be started"),QMessageBox::Ok,this);
@@ -142,11 +142,52 @@ MainWindow::MainWindow(QWidget *parent) :
     setup_airport_list();
 
     setup_about_box();
+
+    check_updates();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::check_updates()
+{
+    http = new QHttp(appsett->getUpdatesHost(),QHttp::ConnectionModeHttp,80);
+    connect(http,SIGNAL(requestFinished(int,bool)),this,SLOT(verify_updates()));
+    http->get(appsett->getUpdatesScript());
+
+}
+
+void MainWindow::verify_updates()
+{
+    QString sDataReturned = QString(http->readAll());
+    //qDebug("%s",sDataReturned.toStdString().data());
+    QStringList items = sDataReturned.split("\n");
+    foreach(QString item, items)
+    {
+        QStringList couple = item.split(":");
+        if(couple[0].trimmed().compare("last-yaflight-vers")==0)
+        {
+            QStringList veritems = couple[1].split(".");
+            QString major = veritems[0]+"."+veritems[1];
+            QString minor = veritems[2];
+            float a = floorf(major.toFloat() * 100) / 100;
+            float b = MAX_VERSION;
+            if(a > b)
+            {
+                ui->lblLatestVersionAvailable->setText(tr("Version")+ " " + major + "." + minor + " " + tr("is available"));
+            }
+            else
+            {
+                if(minor.toInt() > MIN_VERSION)
+                    ui->lblLatestVersionAvailable->setText(tr("Version") + " " + major + "." + minor + " " + tr("is available"));
+                else
+                    ui->lblLatestVersionAvailable->setText(tr("Your yaflight is up to date"));
+            }
+        }
+    }
+    http->close();
 }
 
 void MainWindow::setup_default_paths()

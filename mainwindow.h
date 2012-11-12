@@ -36,6 +36,7 @@
 #include <QFileDialog>
 #include <QTimer>
 #include <QTranslator>
+#include <QtNetwork/QHttp>
 
 #include "logger.h"
 #include "fgenvironment.h"
@@ -133,6 +134,8 @@ private slots:
 
     void on_pbtSearchAirport_clicked();
 
+    void verify_updates();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -148,6 +151,8 @@ private:
     void toggleLoadingBarVisible();
     void setup_default_paths();
     Logger *log;
+    QHttp *http;
+    void check_updates();
 
     // ----- processes -----
     QProcess *procFGFS;
@@ -177,6 +182,7 @@ private:
 
     // ----- settings -----
     Settings *curr_settings;
+    appsettings *appsett;
     QStringList collectLaunchSettings();
     void loadSettings(bool appStart=false);
     bool saveSettings();
