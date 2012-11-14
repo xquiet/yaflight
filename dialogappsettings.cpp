@@ -28,8 +28,8 @@ void DialogAppSettings::closeEvent(QCloseEvent *event)
         }
     }
     appsettings *appsett = new appsettings(fgenv->getYFHome() + "/appconf.ini");
-    appsett->setFGDataPath(ui->lnedtFGDataDir->text().trimmed());
-    appsett->set_fgfs_bin_path(ui->lnedtFGFSBinaryPath->text().trimmed());
+    appsett->setFGDataPath(ui->lnedtFGDataDir->text().trimmed().replace("\\\\","/"));
+    appsett->set_fgfs_bin_path(ui->lnedtFGFSBinaryPath->text().trimmed().replace("\\\\","/"));
     if(!appsett->storeData())
     {
         QMessageBox msgBox;
