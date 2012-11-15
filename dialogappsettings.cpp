@@ -55,7 +55,7 @@ void DialogAppSettings::on_pbtSearchFGData_clicked()
                                                     "",
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
-    ui->lnedtFGDataDir->setText(dir);
+    ui->lnedtFGDataDir->setText(dir.trimmed().replace("\\\\","/"));
 }
 
 void DialogAppSettings::on_pbtSearchFGFSBin_clicked()
