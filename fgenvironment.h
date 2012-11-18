@@ -48,7 +48,7 @@ private:
 
 public:
     FGEnvironment();
-    bool start();
+    bool start(bool autoDetect = true);
     void setRootPath(QString path);
     QString getRootPath();
     QString getDefaultScenery();

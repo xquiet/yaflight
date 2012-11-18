@@ -24,10 +24,11 @@ FGEnvironment::FGEnvironment()
 
 }
 
-bool FGEnvironment::start()
+bool FGEnvironment::start(bool autoDetect)
 {
     operating_system = detectOS();
-    fgRootPath = detectRootPath();
+    if(autoDetect)
+        fgRootPath = detectRootPath();
     // detectFGVersion needs the rootpath
     fgVersion = detectFGVersion();
 

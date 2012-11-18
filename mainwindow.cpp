@@ -55,7 +55,10 @@ MainWindow::MainWindow(QWidget *parent) :
                 QApplication::exit(1);
             }
         }
+        // reload app conf
+        appsett = new appsettings(fgenv->getYFHome()+"/appconf.ini");
         fgenv->setRootPath(appsett->getFGDataPath());
+        fgenv->start(false);
     }
 
     log = new Logger(fgenv->getYFHome()+"/yf.log");
