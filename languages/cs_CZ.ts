@@ -95,7 +95,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="157"/>
-        <location filename="../mainwindow.cpp" line="1436"/>
+        <location filename="../mainwindow.cpp" line="1487"/>
         <source>Launch!</source>
         <translation>Spustit!</translation>
     </message>
@@ -460,7 +460,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1685"/>
+        <location filename="../mainwindow.ui" line="1701"/>
         <source>Loading...</source>
         <translation>Nahrává se...</translation>
     </message>
@@ -503,7 +503,7 @@ p, li { white-space: pre-wrap; }
         <translation>Nedostupný</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="161"/>
+        <location filename="../mainwindow.cpp" line="202"/>
         <source>Version: </source>
         <translation>Verze: </translation>
     </message>
@@ -512,7 +512,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">INFO: Spuštění TerraSync s:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="262"/>
+        <location filename="../mainwindow.cpp" line="303"/>
         <source>Launching...</source>
         <translation>Spouští se...</translation>
     </message>
@@ -525,13 +525,13 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">INFO: TerraSync spuštěn</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="303"/>
+        <location filename="../mainwindow.cpp" line="344"/>
         <source>Simulation complete</source>
         <translation>Simulace dokončena</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="304"/>
-        <location filename="../mainwindow.cpp" line="314"/>
+        <location filename="../mainwindow.cpp" line="345"/>
+        <location filename="../mainwindow.cpp" line="355"/>
         <source>process exited with code: %1, status: %2
 </source>
         <translation>Proces skončil s kódem: %1, stav: %2
@@ -554,12 +554,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">INFO: Nastavení uloženo správně</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1012"/>
+        <location filename="../mainwindow.cpp" line="1060"/>
         <source>Success</source>
         <translation>Úspěch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1013"/>
+        <location filename="../mainwindow.cpp" line="1061"/>
         <source>Configuration stored!</source>
         <translation>Nastavení uloženo!</translation>
     </message>
@@ -568,18 +568,18 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">VAROVÁNÍ: Nastavení NENÍ uloženo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1023"/>
+        <location filename="../mainwindow.cpp" line="1071"/>
         <source>Failure</source>
         <translation>Neúspěch</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1024"/>
+        <location filename="../mainwindow.cpp" line="1072"/>
         <source>Configuration NOT stored!</source>
         <translation>Nastavení NENÍ uloženo!</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="53"/>
-        <location filename="../mainwindow.cpp" line="1117"/>
+        <location filename="../mainwindow.cpp" line="1165"/>
         <source>Error</source>
         <translation>Chyba</translation>
     </message>
@@ -594,93 +594,110 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="229"/>
+        <location filename="../mainwindow.cpp" line="179"/>
+        <location filename="../mainwindow.cpp" line="184"/>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="179"/>
+        <location filename="../mainwindow.cpp" line="184"/>
+        <source>is available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="186"/>
+        <source>Your yaflight is up to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="270"/>
         <source>Starting TerraSync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="265"/>
+        <location filename="../mainwindow.cpp" line="306"/>
         <source>Simulation started</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="274"/>
+        <location filename="../mainwindow.cpp" line="315"/>
         <source>TerraSync started</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="313"/>
+        <location filename="../mainwindow.cpp" line="354"/>
         <source>TerraSync stopped</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="822"/>
+        <location filename="../mainwindow.cpp" line="867"/>
         <source>Aircraft from configuration not available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="892"/>
+        <location filename="../mainwindow.cpp" line="940"/>
         <source>Configuration loaded correctly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1010"/>
+        <location filename="../mainwindow.cpp" line="1058"/>
         <source>Configuration stored correctly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1021"/>
+        <location filename="../mainwindow.cpp" line="1069"/>
         <source>Configuration NOT stored</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1117"/>
+        <location filename="../mainwindow.cpp" line="1165"/>
         <source>Can&apos;t create airport index cache
 Check you permissions</source>
         <translation>Nelze vytvořit vyrovnávací paměť rejstříku letiště
 Prověřte svá oprávnění</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1349"/>
+        <location filename="../mainwindow.cpp" line="1400"/>
         <source>Select scenery directory</source>
         <translation>Vybrat adresář s krajinou</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1362"/>
+        <location filename="../mainwindow.cpp" line="1413"/>
         <source>Dropping: </source>
         <translation>Vyřazení: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1364"/>
+        <location filename="../mainwindow.cpp" line="1415"/>
         <source>
 Are you sure?</source>
         <translation>
 Jste si jistý?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1448"/>
+        <location filename="../mainwindow.cpp" line="1499"/>
         <source>TerraSync running</source>
         <translation>Běží TerraSync</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1455"/>
+        <location filename="../mainwindow.cpp" line="1506"/>
         <source>TerraSync not running</source>
         <translation>TerraSync neběží</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="48"/>
-        <location filename="../mainwindow.cpp" line="1463"/>
-        <location filename="../mainwindow.cpp" line="1501"/>
+        <location filename="../mainwindow.cpp" line="1514"/>
+        <location filename="../mainwindow.cpp" line="1552"/>
         <source>Warning</source>
         <translation>Varování</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1463"/>
+        <location filename="../mainwindow.cpp" line="1514"/>
         <source>Are you sure you want stop your simulation?</source>
         <translation>Opravdu chcete zastavit simulaci?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1501"/>
+        <location filename="../mainwindow.cpp" line="1552"/>
         <source>Are you sure you want to rebuild the entire Airports index?
 It should take a few minutes on slower machines</source>
         <translation type="unfinished"></translation>
