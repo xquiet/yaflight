@@ -48,6 +48,7 @@
 #include "surfacecode.h"
 #include "shouldercode.h"
 #include "runwaydetailsdialog.h"
+#include "mmapbridge.h"
 #include "settings.h"
 #include "appsettings.h"
 
@@ -153,6 +154,7 @@ private:
     Logger *log;
     QHttp *http;
     void check_updates();
+    void setup_mmap_viewer();
 
     // ----- processes -----
     QProcess *procFGFS;

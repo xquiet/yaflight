@@ -146,12 +146,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setup_about_box();
 
+    setup_mmap_viewer();
+
     check_updates();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setup_mmap_viewer()
+{
+    ui->webViewMMap->setUrl(mmapbridge::getBaseUrl());
 }
 
 void MainWindow::check_updates()

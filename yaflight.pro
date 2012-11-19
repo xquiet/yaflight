@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     appsettings.cpp \
     dialogappsettings.cpp \
     logger.cpp \
-    aircraftdetailsdialog.cpp
+    aircraftdetailsdialog.cpp \
+    mmapbridge.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
@@ -60,7 +61,8 @@ HEADERS  += mainwindow.h \
     appsettings.h \
     dialogappsettings.h \
     logger.h \
-    aircraftdetailsdialog.h
+    aircraftdetailsdialog.h \
+    mmapbridge.h
 
 FORMS    += mainwindow.ui \
     cuteexpander.ui \
