@@ -1319,6 +1319,7 @@ void MainWindow::center_mpmap_at_coords()
 {
     mpmapbridge *bridge = new mpmapbridge();
     bridge->setLonLat(lastLongitude, lastLatitude);
+    bridge->setPilotToFollow(ui->lnedtCallSign->text().trimmed());
     //log->Log(Logger::ET_INFO, bridge->getUrl());
     ui->webViewMMap->setUrl(bridge->getUrl());
 }

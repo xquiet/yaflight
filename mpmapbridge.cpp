@@ -11,6 +11,11 @@ QString mpmapbridge::getBaseUrl()
     return baseUrl;
 }
 
+void mpmapbridge::setPilotToFollow(QString p)
+{
+    pilot = p.trimmed();
+}
+
 void mpmapbridge::setLonLat(QString lon, QString lat)
 {
     ll = new LonLat();
@@ -19,5 +24,5 @@ void mpmapbridge::setLonLat(QString lon, QString lat)
 
 QString mpmapbridge::getUrl()
 {
-    return baseUrl + "?ll=" + ll->getLatLon();
+    return baseUrl + "?ll=" + ll->getLatLon() + "&nomenu&nomapcontrol&follow=" + pilot;
 }

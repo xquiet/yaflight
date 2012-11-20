@@ -31,10 +31,12 @@ public:
     static QString getBaseUrl();
     QString getUrl();
     void setLonLat(QString lon, QString lat);
+    void setPilotToFollow(QString p);
 
 private:
     static QString baseUrl;
     LonLat *ll;
+    QString pilot;
 };
 
 #endif // MPMAPBRIDGE_H
