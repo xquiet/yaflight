@@ -1319,7 +1319,7 @@ void MainWindow::center_mpmap_at_coords()
 {
     mpmapbridge *bridge = new mpmapbridge();
     bridge->setLonLat(lastLongitude, lastLatitude);
-    log->Log(Logger::ET_INFO, bridge->getUrl());
+    //log->Log(Logger::ET_INFO, bridge->getUrl());
     ui->webViewMMap->setUrl(bridge->getUrl());
 }
 
