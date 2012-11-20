@@ -81,12 +81,12 @@
     <message>
         <location filename="../dialogmpdetails.ui" line="42"/>
         <source>In</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../dialogmpdetails.ui" line="65"/>
         <source>Out</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -180,7 +180,7 @@
     <message>
         <location filename="../mainwindow.ui" line="431"/>
         <source>hostname:</source>
-        <translation type="unfinished"></translation>
+        <translation>nome host:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="483"/>
@@ -453,12 +453,12 @@
     <message>
         <location filename="../mainwindow.ui" line="1539"/>
         <source>MPMap</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1552"/>
         <source>about:blank</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1559"/>
@@ -628,18 +628,18 @@ p, li { white-space: pre-wrap; }
         <location filename="../mainwindow.cpp" line="170"/>
         <location filename="../mainwindow.cpp" line="175"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versione</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="170"/>
         <location filename="../mainwindow.cpp" line="175"/>
         <source>is available</source>
-        <translation type="unfinished"></translation>
+        <translation>è disponibile</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="177"/>
         <source>Your yaflight is up to date</source>
-        <translation type="unfinished"></translation>
+        <translation>yaflight è aggiornato</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="261"/>
@@ -800,7 +800,7 @@ Sei sicuro?</translation>
     <message>
         <location filename="../runwaydetailsdialog.cpp" line="50"/>
         <source>Heading</source>
-        <translation type="unfinished"></translation>
+        <translation>Prua</translation>
     </message>
     <message>
         <location filename="../runwaydetailsdialog.cpp" line="52"/>
