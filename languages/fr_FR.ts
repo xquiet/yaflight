@@ -75,7 +75,7 @@
     <name>DialogMPDetails</name>
     <message>
         <location filename="../dialogmpdetails.ui" line="14"/>
-        <source>Dialog</source>
+        <source>MultiPlayer Adv Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -113,7 +113,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="157"/>
-        <location filename="../mainwindow.cpp" line="1505"/>
+        <location filename="../mainwindow.cpp" line="1506"/>
         <source>Launch!</source>
         <translation>Lancer!</translation>
     </message>
@@ -681,45 +681,45 @@ Check you permissions</source>
 Vérifiez vos autorizations</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1418"/>
+        <location filename="../mainwindow.cpp" line="1419"/>
         <source>Select scenery directory</source>
         <translation>Sélectionnez le répertoire paysages</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1431"/>
+        <location filename="../mainwindow.cpp" line="1432"/>
         <source>Dropping: </source>
         <translation>Abandonner: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1433"/>
+        <location filename="../mainwindow.cpp" line="1434"/>
         <source>
 Are you sure?</source>
         <translation>êtes-vous sûr?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1517"/>
+        <location filename="../mainwindow.cpp" line="1518"/>
         <source>TerraSync running</source>
         <translation>TerraSync en exécution</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1524"/>
+        <location filename="../mainwindow.cpp" line="1525"/>
         <source>TerraSync not running</source>
         <translation>TerraSync pas en exécution</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="29"/>
-        <location filename="../mainwindow.cpp" line="1532"/>
-        <location filename="../mainwindow.cpp" line="1570"/>
+        <location filename="../mainwindow.cpp" line="1533"/>
+        <location filename="../mainwindow.cpp" line="1571"/>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1532"/>
+        <location filename="../mainwindow.cpp" line="1533"/>
         <source>Are you sure you want stop your simulation?</source>
         <translation>êtes-vous sûr de arrêter votre simulation?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1570"/>
+        <location filename="../mainwindow.cpp" line="1571"/>
         <source>Are you sure you want to rebuild the entire Airports index?
 It should take a few minutes on slower machines</source>
         <translation type="unfinished"></translation>
