@@ -468,7 +468,7 @@ QStringList MainWindow::collectLaunchSettings()
         // only if a callsign is defined
         if(ui->lnedtMPServerName->text().trimmed().compare("")!=0)
         {
-            params << "--multiplay=out,10," + ui->lnedtMPServerName->text().trimmed() + ",5000";
+            params << "--multiplay=out,10," + ui->lnedtMPServerName->text().trimmed() + "," + lastPortOut;
         }
     }
 
@@ -910,9 +910,14 @@ void MainWindow::loadSettings(bool appStart)
             ui->lstviewSceneries->setModel(lstviewmodel);
         }
 
-
         // heading
         lastHeading = curr_settings->getHeading();
+
+        // mp ports
+        lastPortIn = curr_settings->getMPIn();
+        lastPortOut = curr_settings->getMPOut();
+        check_mp_ports_values();
+
 
         if(appStart == false){
             // airports
@@ -941,10 +946,19 @@ void MainWindow::loadSettings(bool appStart)
         }
 
         ui->txaLog->append(Logger::ET_INFO + ": "+ tr("Configuration loaded correctly"));
+        log->Log(Logger::ET_INFO, tr("Configuration loaded correctly"));
         /*QMessageBox msgBox("Success","Configuration loaded!",QMessageBox::Information,QMessageBox::Ok,NULL,NULL,this);
         msgBox.exec();*/
     }
     toggleLoadingBarVisible();
+}
+
+void MainWindow::check_mp_ports_values()
+{
+    if(lastPortIn.trimmed().compare("")==0)
+        lastPortIn = "5000";
+    if(lastPortOut.trimmed().compare("")==0)
+        lastPortOut = "5000";
 }
 
 bool MainWindow::saveSettings()
@@ -1059,6 +1073,16 @@ bool MainWindow::saveSettings()
     if(ui->edtVisibility->text().trimmed().compare("")!=0)
     {
         curr_settings->setVisibility(ui->edtVisibility->text().trimmed());
+    }
+
+    if(lastPortIn.trimmed().compare("")!=0)
+    {
+        curr_settings->setMPIn(lastPortIn);
+    }
+
+    if(lastPortOut.trimmed().compare("")!=0)
+    {
+        curr_settings->setMPOut(lastPortOut);
     }
 
     if(curr_settings->storeData() && app_settings->storeData())
@@ -1592,8 +1616,12 @@ void MainWindow::on_pbtSearchAirport_clicked()
 void MainWindow::on_pbtSpecifyMPPorts_clicked()
 {
     DialogMPDetails *mpdetailsdiag = new DialogMPDetails(this);
-    if(mpdetailsdiag->exec() == QDialogButtonBox::Ok)
+    check_mp_ports_values();
+    mpdetailsdiag->setIn(lastPortIn.trimmed().toInt());
+    mpdetailsdiag->setOut(lastPortOut.trimmed().toInt());
+    if(mpdetailsdiag->exec() == 1)
     {
-
+        lastPortIn = mpdetailsdiag->getIn();
+        lastPortOut = mpdetailsdiag->getOut();
     }
 }

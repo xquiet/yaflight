@@ -6,6 +6,8 @@ DialogMPDetails::DialogMPDetails(QWidget *parent) :
     ui(new Ui::DialogMPDetails)
 {
     ui->setupUi(this);
+
+    connect((QObject *)ui->buttonBox->buttons().at(0), SIGNAL(clicked()), this, SLOT(close()));
 }
 
 DialogMPDetails::~DialogMPDetails()
@@ -15,22 +17,32 @@ DialogMPDetails::~DialogMPDetails()
 
 void DialogMPDetails::closeEvent(QCloseEvent *)
 {
-
+    portIn = ui->lnedtIn->text().trimmed().toInt();
+    portOut = ui->lnedtOut->text().trimmed().toInt();
 }
 
-void DialogMPDetails::on_buttonBox_clicked(QAbstractButton *button)
+void DialogMPDetails::showEvent(QShowEvent *)
 {
-//    QDialogButtonBox clickedButton();
-//    if( clickedButton.standardButton(button) != QDialogButtonBox::Ok )
-//        return;
-//    fgenv = new FGEnvironment();
-//    if(!curr_settings)
-//        curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
+    ui->lnedtIn->setText(QString::number(portIn));
+    ui->lnedtOut->setText(QString::number(portOut));
+}
 
-//    curr_settings->setMPIN(ui->lnedtIn->text().trimmed());
-//    curr_settings->setMPOUT(ui->lnedtOut->text().trimmed());
-//    if(!curr_settings->storeData())
-//    {
-//        qFatal("Something went wrong\n" + MPIN + " and " + MPOUT + " were not properly stored\n");
-//    }
+QString DialogMPDetails::getIn()
+{
+    return QString::number(portIn);
+}
+
+QString DialogMPDetails::getOut()
+{
+    return QString::number(portOut);
+}
+
+void DialogMPDetails::setIn(int pIn)
+{
+    portIn = pIn;
+}
+
+void DialogMPDetails::setOut(int pOut)
+{
+    portOut = pOut;
 }

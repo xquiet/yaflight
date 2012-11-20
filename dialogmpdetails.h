@@ -21,11 +21,6 @@
 #define DIALOGMPDETAILS_H
 
 #include <QDialog>
-//#include <QAbstractButton>
-#include <QDialogButtonBox>
-
-#include "settings.h"
-#include "fgenvironment.h"
 
 namespace Ui {
 class DialogMPDetails;
@@ -38,16 +33,22 @@ class DialogMPDetails : public QDialog
 public:
     explicit DialogMPDetails(QWidget *parent = 0);
     ~DialogMPDetails();
+
+    QString getIn();
+    QString getOut();
+
+    void setIn(int pIn);
+    void setOut(int pOut);
     
 private slots:
     void closeEvent(QCloseEvent *);
-
-    void on_buttonBox_clicked(QAbstractButton *button);
+    void showEvent(QShowEvent *);
 
 private:
     Ui::DialogMPDetails *ui;
-    Settings *curr_settings;
-    FGEnvironment *fgenv;
+    int portIn,
+        portOut;
+
 };
 
 #endif // DIALOGMPDETAILS_H

@@ -202,9 +202,12 @@ private:
     QString lastHeading;
     QString lastControlModeSelected;
     QString lastAircraft;
+    QString lastPortIn;
+    QString lastPortOut;
     float lastTurbulence;
 
     FGEnvironment *fgenv;
+    void check_mp_ports_values();
 
     // ----- flags -----
     bool just_started;
