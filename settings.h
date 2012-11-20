@@ -33,6 +33,9 @@
 #define FOG         "FOG"
 #define RESOLUTION  "RESOLUTION"
 #define CALLSIGN    "CALLSIGN"
+#define MPSERVER    "MPSERV"
+#define MPIN        "MPI"
+#define MPOUT       "MPO"
 #define CM          "CM"
 // ------- advsettings --------------
 #define FAILURE     "FAILURE"
@@ -88,6 +91,9 @@ public:
     QString getSound();
     QString getResolution();
     QString getCallSign();
+    QString getMPServer();
+    QString getMPIn();
+    QString getMPOut();
     QString getControlMode();
     // adv
     QString getFailure();
@@ -137,6 +143,9 @@ public:
     void setSound(QString val);
     void setResolution(QString val);
     void setCallSign(QString val);
+    void setMPServer(QString val);
+    void setMPIn(QString val);
+    void setMPOut(QString val);
     void setControlMode(QString val);
     // adv
     void setFailure(QString val);

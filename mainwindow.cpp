@@ -1,22 +1,3 @@
-/**
-    Copyright (C) 2012  Matteo Pasotti <matteo.pasotti@gmail.com>
-
-    This file is part of yaflight - Cross platform YaFlight
-
-    yaflight is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    yaflight is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    */
-
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -146,7 +127,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setup_about_box();
 
-    setup_mmap_viewer();
+    setup_mpmap_viewer();
 
     check_updates();
 }
@@ -156,9 +137,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::setup_mmap_viewer()
+void MainWindow::setup_mpmap_viewer()
 {
-    ui->webViewMMap->setUrl(mmapbridge::getBaseUrl());
+    ui->webViewMMap->setUrl(mpmapbridge::getBaseUrl());
 }
 
 void MainWindow::check_updates()
@@ -483,6 +464,12 @@ QStringList MainWindow::collectLaunchSettings()
     if(ui->lnedtCallSign->text().trimmed().compare("")!=0)
     {
         params << "--callsign=\""+ ui->lnedtCallSign->text() +"\"";
+
+        // only if a callsign is defined
+        if(ui->lnedtMPServerName->text().trimmed().compare("")!=0)
+        {
+            params << "--multiplay=out,10," + ui->lnedtMPServerName->text().trimmed() + ",5000";
+        }
     }
 
     // ------------- Quick options -------------
@@ -834,6 +821,11 @@ void MainWindow::loadSettings(bool appStart)
             ui->lnedtCallSign->setText(curr_settings->getCallSign().trimmed());
         }
 
+        if(curr_settings->getMPServer().trimmed().compare("")!=0)
+        {
+            ui->lnedtMPServerName->setText(curr_settings->getMPServer().trimmed());
+        }
+
         int fdmCurrIdx = ui->cboFDM->findText(curr_settings->getFDM().trimmed());
         if(fdmCurrIdx>=0)
         {
@@ -941,6 +933,7 @@ void MainWindow::loadSettings(bool appStart)
                             ui->cboRunway->setCurrentIndex(ui->cboRunway->findText(curr_settings->getRunway().trimmed()));
                         }
                         place_aircraft_on_map_reading_settings();
+                        center_mpmap_at_coords();
                         break;
                     }
                 }
@@ -986,6 +979,11 @@ bool MainWindow::saveSettings()
     if(ui->lnedtCallSign->text().trimmed().compare("")!=0)
     {
         curr_settings->setCallSign(ui->lnedtCallSign->text().trimmed());
+    }
+
+    if(ui->lnedtMPServerName->text().trimmed().compare("")!=0)
+    {
+        curr_settings->setMPServer(ui->lnedtMPServerName->text().trimmed());
     }
 
     ui->ckbSound->isChecked() ? curr_settings->setSound(SET_TRUE) : curr_settings->setSound(SET_FALSE);
@@ -1288,21 +1286,21 @@ void MainWindow::on_cboSeason_currentIndexChanged(const QString &arg1)
     lastSeasonSelected = arg1;
 }
 
-void MainWindow::place_aircraft_on_map_reading_table()
-{
-    QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
-    QModelIndexList modelidxlst = ui->tbvAirports->selectionModel()->selectedIndexes();
+//void MainWindow::place_aircraft_on_map_reading_table()
+//{
+//    QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
+//    QModelIndexList modelidxlst = ui->tbvAirports->selectionModel()->selectedIndexes();
 
-    if(modelidxlst.count()<=0)
-        return;
+//    if(modelidxlst.count()<=0)
+//        return;
 
-    lastLongitude = model->item(modelidxlst.at(0).row(),2)->text().trimmed();
-    lastLatitude = model->item(modelidxlst.at(0).row(),3)->text().trimmed();
-    //lastHeading = QString::number(ui->dialHeading->value());
-    lastHeading = currentRunway->getHeading();
+//    lastLongitude = model->item(modelidxlst.at(0).row(),2)->text().trimmed();
+//    lastLatitude = model->item(modelidxlst.at(0).row(),3)->text().trimmed();
+//    //lastHeading = QString::number(ui->dialHeading->value());
+//    lastHeading = currentRunway->getHeading();
 
-    update_latlonhead(lastLatitude, lastLongitude, lastHeading);
-}
+//    update_latlonhead(lastLatitude, lastLongitude, lastHeading);
+//}
 
 void MainWindow::place_aircraft_on_map_reading_settings()
 {
@@ -1314,6 +1312,15 @@ void MainWindow::place_aircraft_on_map_reading_settings()
     adjust_heading_value(lastHeading.toInt());
 
     update_latlonhead(lastLatitude, lastLongitude, lastHeading);
+}
+
+
+void MainWindow::center_mpmap_at_coords()
+{
+    mpmapbridge *bridge = new mpmapbridge();
+    bridge->setLonLat(lastLongitude, lastLatitude);
+    log->Log(Logger::ET_INFO, bridge->getUrl());
+    ui->webViewMMap->setUrl(bridge->getUrl());
 }
 
 void MainWindow::update_latlonhead(QString lat, QString lon, QString heading)
@@ -1374,6 +1381,7 @@ void MainWindow::on_dialHeading_valueChanged(int value)
 void MainWindow::on_btnGoToMap_clicked()
 {
     place_aircraft_on_map_reading_settings();
+    center_mpmap_at_coords();
     ui->tabOpts->setCurrentWidget(ui->tabBasic);
 }
 
@@ -1577,5 +1585,14 @@ void MainWindow::on_pbtSearchAirport_clicked()
             ui->tbvAirports->selectRow(i);
             break;
         }
+    }
+}
+
+void MainWindow::on_pbtSpecifyMPPorts_clicked()
+{
+    DialogMPDetails *mpdetailsdiag = new DialogMPDetails(this);
+    if(mpdetailsdiag->exec() == QDialogButtonBox::Ok)
+    {
+
     }
 }

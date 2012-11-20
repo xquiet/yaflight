@@ -43,7 +43,9 @@ SOURCES += main.cpp\
     dialogappsettings.cpp \
     logger.cpp \
     aircraftdetailsdialog.cpp \
-    mmapbridge.cpp
+    mpmapbridge.cpp \
+    dialogmpdetails.cpp \
+    lonlat.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
@@ -62,13 +64,16 @@ HEADERS  += mainwindow.h \
     dialogappsettings.h \
     logger.h \
     aircraftdetailsdialog.h \
-    mmapbridge.h
+    mpmapbridge.h \
+    dialogmpdetails.h \
+    lonlat.h
 
 FORMS    += mainwindow.ui \
     cuteexpander.ui \
     runwaydetailsdialog.ui \
     dialogappsettings.ui \
-    aircraftdetailsdialog.ui
+    aircraftdetailsdialog.ui \
+    dialogmpdetails.ui
 
 RESOURCES += \
     yaflightresources.qrc

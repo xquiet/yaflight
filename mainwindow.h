@@ -48,7 +48,8 @@
 #include "surfacecode.h"
 #include "shouldercode.h"
 #include "runwaydetailsdialog.h"
-#include "mmapbridge.h"
+#include "mpmapbridge.h"
+#include "dialogmpdetails.h"
 #include "settings.h"
 #include "appsettings.h"
 
@@ -137,6 +138,8 @@ private slots:
 
     void verify_updates();
 
+    void on_pbtSpecifyMPPorts_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -154,7 +157,7 @@ private:
     Logger *log;
     QHttp *http;
     void check_updates();
-    void setup_mmap_viewer();
+    void setup_mpmap_viewer();
 
     // ----- processes -----
     QProcess *procFGFS;
@@ -212,6 +215,7 @@ private:
     int convert_dialhead_to_azimuth(int value);
     void place_aircraft_on_map_reading_table();
     void place_aircraft_on_map_reading_settings();
+    void center_mpmap_at_coords();
 };
 
 #endif // MAINWINDOW_H

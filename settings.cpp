@@ -1,22 +1,3 @@
-/**
-    Copyright (C) 2012  Matteo Pasotti <matteo.pasotti@gmail.com>
-
-    This file is part of yaflight - Cross platform YaFlight
-
-    yaflight is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    yaflight is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    */
-
 #include "settings.h"
 
 Settings::Settings(QString confFilePath)
@@ -89,6 +70,21 @@ QString Settings::getResolution()
 QString Settings::getCallSign()
 {
     return conf->get(MAINSETTINGS, CALLSIGN);
+}
+
+QString Settings::getMPServer()
+{
+    return conf->get(MAINSETTINGS, MPSERVER);
+}
+
+QString Settings::getMPIn()
+{
+    return conf->get(MAINSETTINGS, MPIN);
+}
+
+QString Settings::getMPOut()
+{
+    return conf->get(MAINSETTINGS, MPIN);
 }
 
 QString Settings::getControlMode()
@@ -321,6 +317,21 @@ void Settings::setResolution(QString val)
 void Settings::setCallSign(QString val)
 {
     conf->set(QString(MAINSETTINGS), QString(CALLSIGN),val);
+}
+
+void Settings::setMPServer(QString val)
+{
+    conf->set(QString(MAINSETTINGS), QString(MPSERVER),val);
+}
+
+void Settings::setMPIn(QString val)
+{
+    conf->set(QString(MAINSETTINGS), QString(MPIN),val);
+}
+
+void Settings::setMPOut(QString val)
+{
+    conf->set(QString(MAINSETTINGS), QString(MPOUT),val);
 }
 
 void Settings::setControlMode(QString val)
