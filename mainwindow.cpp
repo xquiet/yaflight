@@ -1394,7 +1394,7 @@ void MainWindow::on_btnGoToMap_clicked()
 {
     place_aircraft_on_map_reading_settings();
     center_mpmap_at_coords();
-    ui->tabOpts->setCurrentWidget(ui->tabBasic);
+    ui->tabOpts->setCurrentWidget(ui->tabMap);
 }
 
 void MainWindow::on_btnAboutQt_clicked()
