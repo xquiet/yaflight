@@ -220,7 +220,7 @@
           <x>0</x>
           <y>0</y>
           <width>471</width>
-          <height>161</height>
+          <height>191</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -505,72 +505,88 @@
          </property>
         </widget>
        </widget>
-       <widget class="QWidget" name="mapView">
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tabMap">
+      <attribute name="title">
+       <string>Map</string>
+      </attribute>
+      <widget class="QWebView" name="webView">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>471</width>
+         <height>261</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="url">
+        <url>
+         <string>http://yaflight.altervista.org/yaserv/</string>
+        </url>
+       </property>
+      </widget>
+      <widget class="QWidget" name="wdgMiniPanelMap" native="true">
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>0</y>
+         <width>121</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
+       <widget class="QDial" name="dialHeading">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>90</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>31</width>
+          <height>31</height>
          </rect>
         </property>
-        <attribute name="icon">
-         <iconset>
-          <normalon>:/icons/icons/applications-internet.png</normalon>
-         </iconset>
-        </attribute>
-        <attribute name="label">
-         <string>Map</string>
-        </attribute>
-        <widget class="QWebView" name="webView">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>471</width>
-           <height>161</height>
-          </rect>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="url">
-          <url>
-           <string>http://yaflight.altervista.org/yaserv/</string>
-          </url>
-         </property>
-        </widget>
-        <widget class="QDial" name="dialHeading">
-         <property name="geometry">
-          <rect>
-           <x>420</x>
-           <y>0</y>
-           <width>50</width>
-           <height>51</height>
-          </rect>
-         </property>
-         <property name="maximum">
-          <number>359</number>
-         </property>
-         <property name="pageStep">
-          <number>1</number>
-         </property>
-         <property name="value">
-          <number>0</number>
-         </property>
-         <property name="sliderPosition">
-          <number>0</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="wrapping">
-          <bool>true</bool>
-         </property>
-        </widget>
+        <property name="maximum">
+         <number>359</number>
+        </property>
+        <property name="pageStep">
+         <number>1</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="sliderPosition">
+         <number>0</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="wrapping">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="spboxHeading">
+        <property name="geometry">
+         <rect>
+          <x>4</x>
+          <y>10</y>
+          <width>71</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="decimals">
+         <number>2</number>
+        </property>
+        <property name="maximum">
+         <double>359.899999999999977</double>
+        </property>
        </widget>
       </widget>
      </widget>
