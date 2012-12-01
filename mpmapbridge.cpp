@@ -24,5 +24,11 @@ void mpmapbridge::setLonLat(QString lon, QString lat)
 
 QString mpmapbridge::getUrl()
 {
-    return baseUrl + "?ll=" + ll->getLatLon() + "&nomenu&nomapcontrol&follow=" + pilot;
+    //return getBaseUrl() + "?ll=" + ll->getLatLon() + "&nomenu&nomapcontrol";
+    return getBaseUrl() + "?ll=" + ll->getLatLon() + "&nomapcontrol";
+}
+
+QString mpmapbridge::followPilot()
+{
+    return getBaseUrl() + "?nomapcontrol&follow=" + pilot;
 }

@@ -30,6 +30,7 @@ public:
     mpmapbridge();
     static QString getBaseUrl();
     QString getUrl();
+    QString followPilot();
     void setLonLat(QString lon, QString lat);
     void setPilotToFollow(QString p);
 
