@@ -1332,8 +1332,8 @@ void MainWindow::place_aircraft_on_map_reading_settings()
     lastLatitude = QString::number(currentRunway->getLatitude().toDouble());
     lastHeading = currentRunway->getHeading();
 
-    //ui->dialHeading->setValue(lastHeading.toInt());
-    adjust_heading_value(lastHeading.toInt());
+//    adjust_heading_value(lastHeading.toDouble());
+    ui->spboxHeading->setValue(lastHeading.toDouble());
 
     update_latlonhead(lastLatitude, lastLongitude, lastHeading);
 }
@@ -1350,49 +1350,36 @@ void MainWindow::center_mpmap_at_coords()
 
 void MainWindow::update_latlonhead(QString lat, QString lon, QString heading)
 {
-    adjust_heading_value((int)ceil(heading.toFloat()));
+    ui->dialHeading->setValue((int)convert_dialhead_to_azimuth(lastHeading.toDouble()));
     ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaCentroMappa(" + lon + "," + lat + ",true);");
     ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaLonLat(" + lon + "," + lat + ", true," + heading + ");");
 
 }
 
-void MainWindow::adjust_heading_value(int head)
+double MainWindow::convert_dialhead_to_azimuth(double head)
 {
     if((head >= 0) && (head < 180))
     {
-        ui->dialHeading->setValue(head + 180);
+        return head + 180;
     }
-    else if((head >= 180) && (head < 360))
+    else if ((head >= 180) && (head < 360))
     {
-        ui->dialHeading->setValue(head - 180);
-    }
-}
-
-int MainWindow::convert_dialhead_to_azimuth(int value)
-{
-    if((value >= 0) && (value < 180))
-    {
-        return value + 180;
-    }
-    else if ((value >= 180) && (value < 360))
-    {
-        return value - 180;
+        return head - 180;
     }
     return -1;
 }
 
 void MainWindow::on_dialHeading_valueChanged(int value)
 {
-    //QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
-    //QModelIndexList modelidxlst = ui->tbvAirports->selectionModel()->selectedIndexes();
-
-    //if(modelidxlst.count()<=0)
-    //    return;
-    //QString longitude = model->item(modelidxlst.at(0).row(),2)->text().trimmed();
-    //QString latitude  = model->item(modelidxlst.at(0).row(),3)->text().trimmed();
-
     update_latlonhead(lastLatitude, lastLongitude, QString::number(convert_dialhead_to_azimuth(value)));
-    lastHeading = QString::number(convert_dialhead_to_azimuth(value));
+    QStringList splitted = QString::number(ui->spboxHeading->value()).split('.');
+    QString decimal = "";
+    if(splitted.count() > 1)
+        decimal = splitted[1];
+    else
+        decimal = "0";
+    double newValue = convert_dialhead_to_azimuth(value) + QString("0," + decimal).toDouble();
+    ui->spboxHeading->setValue(newValue);
 }
 
 /*
@@ -1515,6 +1502,14 @@ void MainWindow::add_scenery_path(QString sceneryPath)
 
 }
 
+//void MainWindow::follow_pilot_on_mpmap()
+//{
+//    mpmapbridge *bridge = new mpmapbridge();
+//    bridge->setPilotToFollow(ui->lnedtCallSign->text().trimmed());
+//    ui->webViewMMap->stop();
+//    ui->webViewMMap->load(QUrl(bridge->followPilot()));
+//}
+
 void MainWindow::hndl_tmr_procfgfs()
 {
     if(procFGFS->state() == QProcess::Running)
@@ -1624,4 +1619,9 @@ void MainWindow::on_pbtSpecifyMPPorts_clicked()
         lastPortIn = mpdetailsdiag->getIn();
         lastPortOut = mpdetailsdiag->getOut();
     }
+}
+
+void MainWindow::on_spboxHeading_valueChanged(QString value)
+{
+    lastHeading = value;
 }

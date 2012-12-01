@@ -140,6 +140,8 @@ private slots:
 
     void on_pbtSpecifyMPPorts_clicked();
 
+    void on_spboxHeading_valueChanged(QString value);
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -158,6 +160,7 @@ private:
     QHttp *http;
     void check_updates();
     void setup_mpmap_viewer();
+    //void follow_pilot_on_mpmap();
 
     // ----- processes -----
     QProcess *procFGFS;
@@ -214,8 +217,7 @@ private:
 
     // ----- web service -----
     void update_latlonhead(QString lat, QString lon, QString heading);
-    void adjust_heading_value(int head);
-    int convert_dialhead_to_azimuth(int value);
+    double convert_dialhead_to_azimuth(double head);
     void place_aircraft_on_map_reading_table();
     void place_aircraft_on_map_reading_settings();
     void center_mpmap_at_coords();
