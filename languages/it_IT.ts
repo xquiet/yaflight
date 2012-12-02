@@ -79,12 +79,12 @@
         <translation>Impostazioni Avanzate MultiPlayer</translation>
     </message>
     <message>
-        <location filename="../dialogmpdetails.ui" line="42"/>
+        <location filename="../dialogmpdetails.ui" line="45"/>
         <source>In</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../dialogmpdetails.ui" line="65"/>
+        <location filename="../dialogmpdetails.ui" line="68"/>
         <source>Out</source>
         <translation></translation>
     </message>
@@ -113,7 +113,7 @@
     </message>
     <message>
         <location filename="../mainwindow.ui" line="157"/>
-        <location filename="../mainwindow.cpp" line="1506"/>
+        <location filename="../mainwindow.cpp" line="1503"/>
         <source>Launch!</source>
         <translation>Lancia!</translation>
     </message>
@@ -188,102 +188,102 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="523"/>
+        <location filename="../mainwindow.ui" line="512"/>
         <source>Map</source>
         <translation>Mappa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="542"/>
+        <location filename="../mainwindow.ui" line="531"/>
         <source>http://yaflight.altervista.org/yaserv/</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="579"/>
+        <location filename="../mainwindow.ui" line="595"/>
         <source>Advanced</source>
         <translation>Avanzate</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="611"/>
+        <location filename="../mainwindow.ui" line="627"/>
         <source>Features</source>
         <translation>Caratteristiche</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="639"/>
+        <location filename="../mainwindow.ui" line="655"/>
         <source>Simulation</source>
         <translation>Simulazione</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="651"/>
+        <location filename="../mainwindow.ui" line="667"/>
         <source>AI Models</source>
         <translation>Modelli IA</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="670"/>
+        <location filename="../mainwindow.ui" line="686"/>
         <source>Failures</source>
         <translation>Guasti</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="683"/>
+        <location filename="../mainwindow.ui" line="699"/>
         <source>Random objects</source>
         <translation>Oggetti casuali</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="706"/>
+        <location filename="../mainwindow.ui" line="722"/>
         <source>Lock Fuel</source>
         <translation>Blocca carburante</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="719"/>
+        <location filename="../mainwindow.ui" line="735"/>
         <source>Lock Time</source>
         <translation>Blocca tempo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="737"/>
+        <location filename="../mainwindow.ui" line="753"/>
         <source>Aircraft</source>
         <translation>Aeromobile</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="765"/>
+        <location filename="../mainwindow.ui" line="781"/>
         <source>FDM:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="778"/>
+        <location filename="../mainwindow.ui" line="794"/>
         <source>Auto Coordination</source>
         <translation>Auto Coordinazione</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="791"/>
+        <location filename="../mainwindow.ui" line="807"/>
         <source>Panel</source>
         <translation>Pannello</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="804"/>
+        <location filename="../mainwindow.ui" line="820"/>
         <source>In Air</source>
         <translation>In Aria</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="836"/>
+        <location filename="../mainwindow.ui" line="852"/>
         <source>Altitude:</source>
         <translation>Altitudine:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="850"/>
+        <location filename="../mainwindow.ui" line="866"/>
         <source>HUD Rendering</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="862"/>
+        <location filename="../mainwindow.ui" line="878"/>
         <source>HUD 3D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="878"/>
+        <location filename="../mainwindow.ui" line="894"/>
         <source>HUD 2D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="891"/>
+        <location filename="../mainwindow.ui" line="907"/>
         <source>HUD Antialias</source>
         <translation></translation>
     </message>
@@ -296,202 +296,213 @@
         <translation type="obsolete">Percorso al binario fgfs:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="903"/>
+        <location filename="../mainwindow.ui" line="919"/>
         <source>Rendering options</source>
         <translation>Opzioni Rendering</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="915"/>
+        <location filename="../mainwindow.ui" line="931"/>
         <source>Enhanced lighting</source>
         <translation>Illuminazione migliorata</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="928"/>
+        <location filename="../mainwindow.ui" line="944"/>
         <source>Specular highlight</source>
         <translation>Alte luci speculari</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="960"/>
+        <location filename="../mainwindow.ui" line="976"/>
         <source>Distance attenuation</source>
         <translation>Attenuazione distanza</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="973"/>
+        <location filename="../mainwindow.ui" line="989"/>
         <source>Textures</source>
         <translation>Motivi</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="986"/>
+        <location filename="../mainwindow.ui" line="1002"/>
         <source>Horizon effect</source>
         <translation>Effetto orizzonte</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="999"/>
+        <location filename="../mainwindow.ui" line="1015"/>
         <source>Sky Blending</source>
         <translation>Miscelazione Cielo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1009"/>
+        <location filename="../mainwindow.ui" line="1025"/>
         <source>Environment</source>
         <translation>Ambiente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1021"/>
+        <location filename="../mainwindow.ui" line="1037"/>
         <source>Severe</source>
         <translation>Forte</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1034"/>
+        <location filename="../mainwindow.ui" line="1050"/>
         <source>Real Weather fetch</source>
         <translation>Dati meteo reali</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1072"/>
+        <location filename="../mainwindow.ui" line="1088"/>
         <source>Turbulence</source>
         <translation>Turbolenza</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1085"/>
+        <location filename="../mainwindow.ui" line="1101"/>
         <source>Calm</source>
         <translation>Calmo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1098"/>
+        <location filename="../mainwindow.ui" line="1114"/>
         <source>Random Wind</source>
         <translation>Vento casuale</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1121"/>
+        <location filename="../mainwindow.ui" line="1137"/>
         <source>Ceiling</source>
         <translation>Coltre</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1134"/>
+        <location filename="../mainwindow.ui" line="1150"/>
         <source>Visibility</source>
         <translation>Visibilità</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1167"/>
+        <location filename="../mainwindow.ui" line="1183"/>
         <source>Quote</source>
         <translation>Quota</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1180"/>
+        <location filename="../mainwindow.ui" line="1196"/>
         <source>Thickness</source>
         <translation>Spessore</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1190"/>
+        <location filename="../mainwindow.ui" line="1206"/>
         <source>Time</source>
         <translation>Tempo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1218"/>
+        <location filename="../mainwindow.ui" line="1234"/>
         <source>Season</source>
         <translation>Stagione</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1237"/>
+        <location filename="../mainwindow.ui" line="1253"/>
         <source>Day Time</source>
         <translation>Momento del giorno</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1255"/>
+        <location filename="../mainwindow.ui" line="1271"/>
         <source>Airports</source>
         <translation>Aereoporti</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1267"/>
+        <location filename="../mainwindow.ui" line="1283"/>
         <source>Double click to show on map</source>
         <translation>Doppio click per mostrare sulla mappa</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1286"/>
+        <location filename="../mainwindow.ui" line="1302"/>
         <source>Filter installed</source>
         <translation>Filtra installati</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1299"/>
+        <location filename="../mainwindow.ui" line="1315"/>
         <source>Refresh airport list</source>
         <translation>Aggiorna lista aeroporti</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1335"/>
+        <location filename="../mainwindow.ui" line="1351"/>
         <source>RunWay</source>
         <translation>Pista</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1371"/>
+        <location filename="../mainwindow.ui" line="1387"/>
         <source>Place aircraft on the right place</source>
         <translation>Posizione aeromobile al posto giusto</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1374"/>
+        <location filename="../mainwindow.ui" line="1390"/>
         <source>Go To Map...</source>
         <translation>Vai alla Mappa...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1397"/>
+        <location filename="../mainwindow.ui" line="1413"/>
         <source>Recreate airports index</source>
         <translation>Ricrea l&apos;indice degli aeroporti</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1433"/>
+        <location filename="../mainwindow.ui" line="1449"/>
         <source>Search</source>
         <translation>Cerca</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1439"/>
+        <location filename="../mainwindow.ui" line="1455"/>
         <source>Sceneries</source>
         <translation>Scenari</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1485"/>
+        <location filename="../mainwindow.ui" line="1542"/>
         <source>TerraSync</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1539"/>
+        <location filename="../mainwindow.ui" line="1554"/>
+        <source>Launch TerraSync when simulation starts</source>
+        <translation>Avvia TerraSync quando si avvia la simulazione</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1589"/>
+        <location filename="../mainwindow.cpp" line="1610"/>
+        <source>Start</source>
+        <translation>Avvia</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="1595"/>
         <source>MPMap</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1552"/>
+        <location filename="../mainwindow.ui" line="1608"/>
         <source>about:blank</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1559"/>
+        <location filename="../mainwindow.ui" line="1615"/>
         <source>About</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1593"/>
+        <location filename="../mainwindow.ui" line="1649"/>
         <source>AppName</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1606"/>
+        <location filename="../mainwindow.ui" line="1662"/>
         <source>AppVersion</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1619"/>
+        <location filename="../mainwindow.ui" line="1675"/>
         <source>AppCopyRight</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1632"/>
+        <location filename="../mainwindow.ui" line="1688"/>
         <source>About Qt</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1688"/>
+        <location filename="../mainwindow.ui" line="1744"/>
         <source>Contributors:</source>
         <translation>Collaboratori:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1704"/>
+        <location filename="../mainwindow.ui" line="1760"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -500,7 +511,7 @@ p, li { white-space: pre-wrap; }
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1773"/>
+        <location filename="../mainwindow.ui" line="1807"/>
         <source>Loading...</source>
         <translation>Caricando...</translation>
     </message>
@@ -544,7 +555,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">INFO: Avvio TerraSync con:</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="294"/>
+        <location filename="../mainwindow.cpp" line="272"/>
         <source>Launching...</source>
         <translation>In fase di lancio...</translation>
     </message>
@@ -557,13 +568,13 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">INFO: TerraSync avviato</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="335"/>
+        <location filename="../mainwindow.cpp" line="313"/>
         <source>Simulation complete</source>
         <translation>Simulazione completata</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="336"/>
-        <location filename="../mainwindow.cpp" line="346"/>
+        <location filename="../mainwindow.cpp" line="314"/>
+        <location filename="../mainwindow.cpp" line="324"/>
         <source>process exited with code: %1, status: %2
 </source>
         <translation>processo uscito con codice: %1, status: %2</translation>
@@ -585,12 +596,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">INFO: Configurazione salvata correttamente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1068"/>
+        <location filename="../mainwindow.cpp" line="1070"/>
         <source>Success</source>
         <translation>Successo</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1069"/>
+        <location filename="../mainwindow.cpp" line="1071"/>
         <source>Configuration stored!</source>
         <translation>Configurazione salvata!</translation>
     </message>
@@ -599,18 +610,18 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">WARN: Configurazione NON salvata</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1079"/>
+        <location filename="../mainwindow.cpp" line="1081"/>
         <source>Failure</source>
         <translation>Guasto</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1080"/>
+        <location filename="../mainwindow.cpp" line="1082"/>
         <source>Configuration NOT stored!</source>
         <translation>Configurazione NON salvata!</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="34"/>
-        <location filename="../mainwindow.cpp" line="1173"/>
+        <location filename="../mainwindow.cpp" line="1175"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
@@ -642,47 +653,53 @@ p, li { white-space: pre-wrap; }
         <translation>yaflight è aggiornato</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="261"/>
+        <location filename="../mainwindow.cpp" line="1615"/>
+        <source>Stop</source>
+        <translation>Arresta</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="1633"/>
         <source>Starting TerraSync</source>
         <translation>Avviando TerraSync</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="297"/>
+        <location filename="../mainwindow.cpp" line="275"/>
         <source>Simulation started</source>
         <translation>Simulazione avviata</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="306"/>
+        <location filename="../mainwindow.cpp" line="284"/>
         <source>TerraSync started</source>
         <translation>TerraSync avviato</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="345"/>
+        <location filename="../mainwindow.cpp" line="323"/>
         <source>TerraSync stopped</source>
         <translation>TerraSync arrestato</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="869"/>
+        <location filename="../mainwindow.cpp" line="847"/>
         <source>Aircraft from configuration not available</source>
         <translation>Aeromobile in configurazione non disponibile</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="943"/>
+        <location filename="../mainwindow.cpp" line="926"/>
+        <location filename="../mainwindow.cpp" line="927"/>
         <source>Configuration loaded correctly</source>
         <translation>Configurazione caricata correttamente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1066"/>
+        <location filename="../mainwindow.cpp" line="1068"/>
         <source>Configuration stored correctly</source>
         <translation>Configurazione memorizzata correttamente</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1077"/>
+        <location filename="../mainwindow.cpp" line="1079"/>
         <source>Configuration NOT stored</source>
         <translation>Configurazione NON memorizzata</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1173"/>
+        <location filename="../mainwindow.cpp" line="1175"/>
         <source>Can&apos;t create airport index cache
 Check you permissions</source>
         <translation>Non posso creare la cache degli indici aeroporto\nVerifica i permessi</translation>
@@ -696,7 +713,7 @@ Check you permissions</source>
         <translation type="obsolete">Seleziona il percorso a fgfs</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1571"/>
+        <location filename="../mainwindow.cpp" line="1566"/>
         <source>Are you sure you want to rebuild the entire Airports index?
 It should take a few minutes on slower machines</source>
         <translation>Sei sicuro di voler ricostruire l&apos;intero indice degli Aeroporti?
@@ -736,41 +753,41 @@ Surface: </source>
         <translation type="obsolete">Dettagli pista</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1419"/>
+        <location filename="../mainwindow.cpp" line="1408"/>
         <source>Select scenery directory</source>
         <translation>Seleziona directory scenario</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1432"/>
+        <location filename="../mainwindow.cpp" line="1421"/>
         <source>Dropping: </source>
         <translation>Scarto: </translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1434"/>
+        <location filename="../mainwindow.cpp" line="1423"/>
         <source>
 Are you sure?</source>
         <translation>
 Sei sicuro?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1518"/>
+        <location filename="../mainwindow.cpp" line="1515"/>
         <source>TerraSync running</source>
         <translation>TerraSync in esecuzione</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1525"/>
+        <location filename="../mainwindow.cpp" line="1522"/>
         <source>TerraSync not running</source>
         <translation>TerraSync fermo</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="29"/>
-        <location filename="../mainwindow.cpp" line="1533"/>
-        <location filename="../mainwindow.cpp" line="1571"/>
+        <location filename="../mainwindow.cpp" line="1530"/>
+        <location filename="../mainwindow.cpp" line="1566"/>
         <source>Warning</source>
         <translation>Attenzione</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1533"/>
+        <location filename="../mainwindow.cpp" line="1530"/>
         <source>Are you sure you want stop your simulation?</source>
         <translation>Sei sicuro di voler interrompere la simulazione?</translation>
     </message>
