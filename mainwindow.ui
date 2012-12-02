@@ -470,8 +470,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -643,8 +643,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>96</width>
-            <height>26</height>
+            <width>471</width>
+            <height>143</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -741,8 +741,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>96</width>
-            <height>26</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -858,8 +858,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>96</width>
-            <height>26</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1488,19 +1488,6 @@
          <normaloff>:/icons/icons/list-remove.png</normaloff>:/icons/icons/list-remove.png</iconset>
        </property>
       </widget>
-      <widget class="QCheckBox" name="ckbTerraSync">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>220</y>
-         <width>91</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>TerraSync</string>
-       </property>
-      </widget>
       <widget class="QListView" name="lstviewSceneries">
        <property name="geometry">
         <rect>
@@ -1547,6 +1534,59 @@
        </property>
        <property name="text">
         <string/>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tabTS">
+      <attribute name="title">
+       <string>TerraSync</string>
+      </attribute>
+      <widget class="QCheckBox" name="ckbTerraSync">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>381</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Launch TerraSync when simulation starts</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblTerraSyncStatus">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>60</y>
+         <width>21</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="yaflightresources.qrc">:/icons/icons/dialog-close.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pbtTerraSyncStartStop">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>83</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Start</string>
        </property>
       </widget>
      </widget>
@@ -1750,28 +1790,6 @@ p, li { white-space: pre-wrap; }
       <zorder>lblGPLlogo</zorder>
      </widget>
     </widget>
-   </widget>
-   <widget class="QLabel" name="lblTerraSyncStatus">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>120</y>
-      <width>21</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap resource="yaflightresources.qrc">:/icons/icons/dialog-close.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
    </widget>
    <widget class="QLabel" name="lblLoading">
     <property name="geometry">
