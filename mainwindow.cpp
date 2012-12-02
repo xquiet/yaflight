@@ -230,7 +230,6 @@ void MainWindow::on_pbtLaunch_clicked()
     if(!proc_fgfs_is_running)
     {
         QStringList params = collectLaunchSettings();
-        QStringList ts_params;
         QStringList env = QProcess::systemEnvironment();
 
         bool use_terra_sync = false;
@@ -248,28 +247,7 @@ void MainWindow::on_pbtLaunch_clicked()
         {
             if(!proc_ts_is_running)
             {
-                procTerraSync = new QProcess();
-                procTerraSync->setProcessChannelMode(QProcess::MergedChannels);
-                procTerraSync->setReadChannel(QProcess::StandardOutput);
-                procTerraSync->setEnvironment(env);
-                ts_params << "-pid" << fgenv->getTerraSyncPidFilePath()
-                          << "-S" // (makes ts using svn protocol rather than rsync)
-                          << "-p" << "5500"
-                          << "-d" << fgenv->getYFScenery();
-                procTerraSync->start(fgenv->getTerraSyncBinPath(), ts_params, QProcess::ReadOnly);
-                log->Log(Logger::ET_INFO, fgenv->getTerraSyncBinPath() + " " + ts_params.join(" "));
-                ui->txaLog->append(Logger::ET_INFO + ": " + tr("Starting TerraSync"));
-                connect(procTerraSync,SIGNAL(readyRead()),this,SLOT(read_ts_output()));
-                connect(procTerraSync,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(proc_ts_finished()));
-
-                tmrProcTS = new QTimer();
-                connect(tmrProcTS, SIGNAL(timeout()),this,SLOT(hndl_tmr_procts()));
-                tmrProcTS->start(350);
-
-                procTerraSync->closeWriteChannel();
-                if((procTerraSync->state() == QProcess::Starting)||
-                        (procTerraSync->state() == QProcess::Starting))
-                    proc_ts_is_running = true;
+                startTerraSync();
             }
         }
 
@@ -1552,9 +1530,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QMessageBox msgBox(QMessageBox::Warning,tr("Warning"),tr("Are you sure you want stop your simulation?"),QMessageBox::Ok|QMessageBox::Cancel,this);
     if(msgBox.exec()==QMessageBox::Ok)
     {
-        if((proc_ts_is_running)&&((procTerraSync->state()==QProcess::Running)||
-                (procTerraSync->state()==QProcess::Starting)))
-            procTerraSync->kill();
+        stopTerraSync();
     }
     else
     {
@@ -1624,4 +1600,54 @@ void MainWindow::on_pbtSpecifyMPPorts_clicked()
 void MainWindow::on_spboxHeading_valueChanged(QString value)
 {
     lastHeading = value;
+}
+
+void MainWindow::on_pbtTerraSyncStartStop_clicked()
+{
+    if(proc_ts_is_running)
+    {
+        stopTerraSync();
+        ui->pbtTerraSyncStartStop->setText(tr("Start"));
+    }
+    else
+    {
+        startTerraSync();
+        ui->pbtTerraSyncStartStop->setText(tr("Stop"));
+    }
+}
+
+void MainWindow::startTerraSync()
+{
+    QStringList ts_params;
+    QStringList env = QProcess::systemEnvironment();
+    procTerraSync = new QProcess();
+    procTerraSync->setProcessChannelMode(QProcess::MergedChannels);
+    procTerraSync->setReadChannel(QProcess::StandardOutput);
+    procTerraSync->setEnvironment(env);
+    ts_params << "-pid" << fgenv->getTerraSyncPidFilePath()
+              << "-S" // (makes ts using svn protocol rather than rsync)
+              << "-p" << "5500"
+              << "-d" << fgenv->getYFScenery();
+    procTerraSync->start(fgenv->getTerraSyncBinPath(), ts_params, QProcess::ReadOnly);
+    log->Log(Logger::ET_INFO, fgenv->getTerraSyncBinPath() + " " + ts_params.join(" "));
+    ui->txaLog->append(Logger::ET_INFO + ": " + tr("Starting TerraSync"));
+    connect(procTerraSync,SIGNAL(readyRead()),this,SLOT(read_ts_output()));
+    connect(procTerraSync,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(proc_ts_finished()));
+
+    tmrProcTS = new QTimer();
+    connect(tmrProcTS, SIGNAL(timeout()),this,SLOT(hndl_tmr_procts()));
+    tmrProcTS->start(350);
+
+    procTerraSync->closeWriteChannel();
+    if((procTerraSync->state() == QProcess::Starting)||
+            (procTerraSync->state() == QProcess::Starting))
+        proc_ts_is_running = true;
+}
+
+void MainWindow::stopTerraSync()
+{
+    if((proc_ts_is_running)&&((procTerraSync->state()==QProcess::Running)||
+            (procTerraSync->state()==QProcess::Starting)))
+        procTerraSync->kill();
+    proc_ts_is_running = false;
 }

@@ -142,6 +142,8 @@ private slots:
 
     void on_spboxHeading_valueChanged(QString value);
 
+    void on_pbtTerraSyncStartStop_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -169,6 +171,8 @@ private:
     bool proc_ts_is_running;
     QTimer *tmrProcFGFS;
     QTimer *tmrProcTS;
+    void startTerraSync();
+    void stopTerraSync();
 
     // ----- aircrafts -----
     QStringList aircrafts;
