@@ -248,6 +248,7 @@ void MainWindow::on_pbtLaunch_clicked()
             if(!proc_ts_is_running)
             {
                 startTerraSync();
+                ui->pbtTerraSyncStartStop->setText(tr("Stop"));
             }
         }
 
@@ -305,7 +306,8 @@ void MainWindow::read_ts_output()
 {
     QByteArray bytes = procTerraSync->readAll();
     QString strLines = QString(bytes);
-    qDebug("%s", strLines.toStdString().data());
+    //qDebug("%s", strLines.toStdString().data());
+    ui->txaTSLog->append(strLines);
 }
 
 void MainWindow::procReadAircraftsFinished(int exitCode, QProcess::ExitStatus exitStatus)
@@ -314,7 +316,7 @@ void MainWindow::procReadAircraftsFinished(int exitCode, QProcess::ExitStatus ex
     QString message = QString(tr("process exited with code: %1, status: %2\n")
         .arg(exitCode)
         .arg(exitStatus == QProcess::NormalExit ? "QProcess::NormalExit" : "QProcess::CrashExit"));
-    qDebug("%s",message.toStdString().data());
+    //qDebug("%s",message.toStdString().data());
     ui->txaLog->append(message);
 }
 
@@ -324,7 +326,7 @@ void MainWindow::proc_ts_finished(int exitCode, QProcess::ExitStatus exitStatus)
     QString message = QString(tr("process exited with code: %1, status: %2\n")
         .arg(exitCode)
         .arg(exitStatus == QProcess::NormalExit ? "QProcess::NormalExit" : "QProcess::CrashExit"));
-    qDebug("%s",message.toStdString().data());
+    //qDebug("%s",message.toStdString().data());
     ui->txaLog->append(message);
 }
 

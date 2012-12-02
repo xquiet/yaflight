@@ -470,8 +470,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -643,8 +643,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>471</width>
-            <height>143</height>
+            <width>96</width>
+            <height>26</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -741,8 +741,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>96</width>
+            <height>26</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -858,8 +858,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>96</width>
+            <height>26</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1558,7 +1558,7 @@
        <property name="geometry">
         <rect>
          <x>100</x>
-         <y>60</y>
+         <y>40</y>
          <width>21</width>
          <height>21</height>
         </rect>
@@ -1580,13 +1580,35 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>60</y>
+         <y>40</y>
          <width>83</width>
          <height>25</height>
         </rect>
        </property>
        <property name="text">
         <string>Start</string>
+       </property>
+      </widget>
+      <widget class="QTextBrowser" name="txaTSLog">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>70</y>
+         <width>461</width>
+         <height>181</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
        </property>
       </widget>
      </widget>
