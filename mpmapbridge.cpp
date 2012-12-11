@@ -22,13 +22,34 @@ void mpmapbridge::setLonLat(QString lon, QString lat)
     ll->set(lon, lat);
 }
 
-QString mpmapbridge::getUrl()
+QString mpmapbridge::getLLUrlWithoutMenu()
+{
+    //return getBaseUrl() + "?ll=" + ll->getLatLon() + "&nomenu&nomapcontrol";
+    return getBaseUrl() + "?ll=" + ll->getLatLon() + "&nomapcontrol&nomenu";
+}
+
+QString mpmapbridge::getLLUrl()
 {
     //return getBaseUrl() + "?ll=" + ll->getLatLon() + "&nomenu&nomapcontrol";
     return getBaseUrl() + "?ll=" + ll->getLatLon() + "&nomapcontrol";
 }
 
-QString mpmapbridge::followPilot()
+QString mpmapbridge::getFollowPilotUrl()
 {
     return getBaseUrl() + "?nomapcontrol&follow=" + pilot;
+}
+
+QString mpmapbridge::getFollowPilotUrlWithoutMenu()
+{
+    return getBaseUrl() + "?nomapcontrol&nomenu&follow=" + pilot;
+}
+
+QString mpmapbridge::getUrlWithoutMenu()
+{
+    return getBaseUrl() + "?nomapcontrol&nomenu";
+}
+
+QString mpmapbridge::getUrl()
+{
+    return getBaseUrl() + "?nomapcontrol";
 }

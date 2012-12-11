@@ -29,8 +29,12 @@ class mpmapbridge
 public:
     mpmapbridge();
     static QString getBaseUrl();
+    QString getLLUrl();
+    QString getLLUrlWithoutMenu();
+    QString getFollowPilotUrl();
+    QString getUrlWithoutMenu();
     QString getUrl();
-    QString followPilot();
+    QString getFollowPilotUrlWithoutMenu();
     void setLonLat(QString lon, QString lat);
     void setPilotToFollow(QString p);
 
