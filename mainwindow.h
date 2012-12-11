@@ -144,6 +144,8 @@ private slots:
 
     void on_pbtTerraSyncStartStop_clicked();
 
+    void on_pbtRefreshMPMap_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);

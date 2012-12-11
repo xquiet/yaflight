@@ -139,7 +139,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::setup_mpmap_viewer()
 {
-    ui->webViewMMap->setUrl(mpmapbridge::getBaseUrl());
+    mpmapbridge *bridge = new mpmapbridge();
+    ui->webViewMMap->setUrl(bridge->getUrl());
 }
 
 void MainWindow::check_updates()
@@ -1325,7 +1326,7 @@ void MainWindow::center_mpmap_at_coords()
     bridge->setLonLat(lastLongitude, lastLatitude);
     bridge->setPilotToFollow(ui->lnedtCallSign->text().trimmed());
     //log->Log(Logger::ET_INFO, bridge->getUrl());
-    ui->webViewMMap->setUrl(bridge->getUrl());
+    ui->webViewMMap->setUrl(bridge->getLLUrl());
 }
 
 void MainWindow::update_latlonhead(QString lat, QString lon, QString heading)
@@ -1652,4 +1653,34 @@ void MainWindow::stopTerraSync()
             (procTerraSync->state()==QProcess::Starting)))
         procTerraSync->kill();
     proc_ts_is_running = false;
+}
+
+void MainWindow::on_pbtRefreshMPMap_clicked()
+{
+    mpmapbridge *bridge = new mpmapbridge();
+    if(ui->ckbFollowPilot->isChecked())
+    {
+        bridge->setPilotToFollow(ui->lnedtPilot->text().trimmed());
+
+        if(ui->ckbShowMPMapMenu->isChecked())
+        {
+            ui->webViewMMap->setUrl(bridge->getFollowPilotUrl());
+        }
+        else
+        {
+            ui->webViewMMap->setUrl(bridge->getFollowPilotUrlWithoutMenu());
+        }
+    }
+    else
+    {
+        if(ui->ckbShowMPMapMenu->isChecked())
+        {
+            ui->webViewMMap->setUrl(bridge->getUrl());
+        }
+        else
+        {
+            ui->webViewMMap->setUrl(bridge->getUrlWithoutMenu());
+        }
+    }
+    ui->webViewMMap->reload();
 }
