@@ -33,6 +33,7 @@ class FGEnvironment
 {
 private:
     QString fgRootPath;
+    QString fgfs_binary;
     QString fgVersion;
     QProcess *sysinfo;
     QString operating_system;
@@ -43,13 +44,14 @@ private:
 
     QString detectOS();
     QString detectFGVersion();
-    QString detectFGBinPath();
+    QString detectFGBinPath(bool autodetect = true);
     QString detectRootPath();
 
 public:
     FGEnvironment();
     bool start(bool autoDetect = true);
     void setRootPath(QString path);
+    void setFgFsBinary(QString path);
     QString getRootPath();
     QString getDefaultScenery();
     QString getAircraftsDir();

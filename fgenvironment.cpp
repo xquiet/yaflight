@@ -10,7 +10,10 @@ bool FGEnvironment::start(bool autoDetect)
     if(operating_system.trimmed().compare("")==0)
         operating_system = detectOS();
     if(autoDetect)
+    {
         fgRootPath = detectRootPath();
+        fgfs_binary = detectFGBinPath();
+    }
     // detectFGVersion needs the rootpath
     fgVersion = detectFGVersion();
 
@@ -33,6 +36,11 @@ bool FGEnvironment::start(bool autoDetect)
 void FGEnvironment::setRootPath(QString path)
 {
     fgRootPath = path.trimmed();
+}
+
+void FGEnvironment::setFgFsBinary(QString path)
+{
+    fgfs_binary = path.trimmed();
 }
 
 QString FGEnvironment::getOS()
@@ -96,19 +104,29 @@ QHash<QString, QStringList> FGEnvironment::getDefaultAirportList()
     return parseAirportsIndex(getDefaultAirportsDir()+"/"+"index.txt");
 }
 
+QString FGEnvironment::detectFGBinPath(bool autodetect)
+{
+    if(autodetect)
+    {
+        #ifdef Q_OS_WIN
+            return "\""+getRootPath()+"/../bin/Win32/fgfs.exe\"";
+        #elif defined Q_OS_UNIX
+            #ifdef Q_OS_LINUX
+                return "/usr/bin/fgfs";
+            #elif defined Q_OS_MACX
+                return "/Applications/FlightGear.app/Contents/MacOS/fgfs";
+            #else
+                //bsd
+                return "/usr/local/bin/fgfs";
+            #endif
+        #endif
+    }
+    return "";
+}
+
 QString FGEnvironment::getFgfsBinPath()
 {
-    #ifdef Q_OS_WIN
-        return "\""+getRootPath()+"/../bin/Win32/fgfs.exe\"";
-    #elif defined Q_OS_UNIX
-        #ifdef Q_OS_LINUX
-            return "/usr/bin/fgfs";
-        #else
-            //bsd
-            return "/usr/local/bin/fgfs";
-        #endif
-    #endif
-    return "";
+    return fgfs_binary;
 }
 
 QString FGEnvironment::getTerraSyncBinPath()
