@@ -7,7 +7,8 @@ FGEnvironment::FGEnvironment()
 
 bool FGEnvironment::start(bool autoDetect)
 {
-    operating_system = detectOS();
+    if(operating_system.trimmed().compare("")==0)
+        operating_system = detectOS();
     if(autoDetect)
         fgRootPath = detectRootPath();
     // detectFGVersion needs the rootpath
@@ -165,7 +166,36 @@ QString FGEnvironment::detectOS()
 {
     #ifdef Q_OS_UNIX
         #ifdef Q_OS_MAC
-            return "Mac";
+            /*
+             * kern.ostype = Darwin
+             * kern.osrelease = 12.2.0
+             * kern.osrevision = 199506
+             * kern.ostype: Darwin
+             * kern.osrelease: 12.2.0
+             * kern.osrevision: 199506
+             */
+            QString os = "Mac OS X";
+            sysinfo = new QProcess();
+            sysinfo->setProcessChannelMode(QProcess::MergedChannels);
+            sysinfo->start("/usr/sbin/sysctl", QStringList() << "kern.ostype" << "kern.osrelease", QProcess::ReadOnly);
+            sysinfo->waitForFinished();
+            QByteArray bytes = sysinfo->readAll();
+            QStringList strLines = QString(bytes).split("\n");
+            QStringList cols;
+            foreach(QString line, strLines)
+            {
+                line = line.trimmed();
+                if(line.contains("kern.ostype")||line.contains("kern.osrelease"))
+                {
+                    cols = line.split(":", QString::SkipEmptyParts, Qt::CaseSensitive);
+                    if(cols.length()>0)
+                    {
+                        os_details.append(cols[1].trimmed());
+                    }
+                }
+            }
+
+            return os + " - " + os_details.join(" ");
         #elif defined Q_OS_LINUX
             QString os = "GNU/Linux";
 
