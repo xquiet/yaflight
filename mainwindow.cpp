@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
         // reload app conf
         appsett = new appsettings(fgenv->getYFHome()+"/appconf.ini");
         fgenv->setRootPath(appsett->getFGDataPath());
+        fgenv->setFgFsBinary(appsett->get_fgfs_bin_path());
         fgenv->start(false);
     }
 
