@@ -137,6 +137,8 @@ QString FGEnvironment::getTerraSyncBinPath()
     #elif defined Q_OS_UNIX
         #ifdef Q_OS_LINUX
             ts_path = "/usr/bin/terrasync";
+        #elif defined Q_OS_MACX
+            ts_path = "";
         #else
             //bsd
             ts_path = "/usr/local/bin/terrasync";
