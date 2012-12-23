@@ -25,7 +25,7 @@ So, what happens to yaflight?
 -----------------------------
 
 The old YaFlight series (0.1.x) was renamed to fglc and it's still available here https://sourceforge.net/projects/fglc.
-Consider please that maintaining two code bases is to much effort to me
+Consider please that maintaining two code bases is too much effort to me
 consequently the gambas3 version will be abandoned, soon or later (the new yaflight implementation
 can be executed even on GNU/Linux and BSD systems, so I'll focus on adding features and maintaining the new one).
 
