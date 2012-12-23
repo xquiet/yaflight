@@ -286,6 +286,7 @@ QString FGEnvironment::detectRootPath()
     #endif
     #ifdef Q_OS_UNIX
         #ifdef Q_OS_MAC
+            possiblePaths << "/Applications/FlightGear.app/Contents/Resources/data";
         #elif defined Q_OS_LINUX
             possiblePaths << "/usr/share/flightgear/data"
                           << "/usr/share/FlightGear"
