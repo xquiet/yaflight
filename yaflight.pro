@@ -7,7 +7,7 @@
 QT       += core gui webkit network
 
 DEFINES += MAX_VERSION="0.99"
-DEFINES += MIN_VERSION="19"
+DEFINES += MIN_VERSION="20"
 TARGET = yaflight
 TEMPLATE = app
 
@@ -45,7 +45,9 @@ SOURCES += main.cpp\
     aircraftdetailsdialog.cpp \
     mpmapbridge.cpp \
     dialogmpdetails.cpp \
-    lonlat.cpp
+    lonlat.cpp \
+    mpmdialog.cpp \
+    helpdialog.cpp
 
 HEADERS  += mainwindow.h \
     fgenvironment.h \
@@ -66,14 +68,18 @@ HEADERS  += mainwindow.h \
     aircraftdetailsdialog.h \
     mpmapbridge.h \
     dialogmpdetails.h \
-    lonlat.h
+    lonlat.h \
+    mpmdialog.h \
+    helpdialog.h
 
 FORMS    += mainwindow.ui \
     cuteexpander.ui \
     runwaydetailsdialog.ui \
     dialogappsettings.ui \
     aircraftdetailsdialog.ui \
-    dialogmpdetails.ui
+    dialogmpdetails.ui \
+    mpmdialog.ui \
+    helpdialog.ui
 
 RESOURCES += \
     yaflightresources.qrc
