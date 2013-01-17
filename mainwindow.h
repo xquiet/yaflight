@@ -48,10 +48,11 @@
 #include "surfacecode.h"
 #include "shouldercode.h"
 #include "runwaydetailsdialog.h"
-#include "mpmapbridge.h"
+#include "mpmdialog.h"
 #include "dialogmpdetails.h"
 #include "settings.h"
 #include "appsettings.h"
+#include "helpdialog.h"
 
 #include "apt_dat.h"
 
@@ -144,7 +145,9 @@ private slots:
 
     void on_pbtTerraSyncStartStop_clicked();
 
-    void on_pbtRefreshMPMap_clicked();
+    void on_pbtOpenMPMap_clicked();
+
+    void on_pbtMPHostnameContextualHelp_clicked();
 
 protected:
     //void resizeEvent(QResizeEvent *event);
@@ -163,7 +166,9 @@ private:
     Logger *log;
     QHttp *http;
     void check_updates();
-    void setup_mpmap_viewer();
+    //void setup_mpmap_viewer();
+    MPMDialog *mpmdiag;
+    HelpDialog *hpdiag;
     //void follow_pilot_on_mpmap();
 
     // ----- processes -----

@@ -128,20 +128,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setup_about_box();
 
-    setup_mpmap_viewer();
-
     check_updates();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-void MainWindow::setup_mpmap_viewer()
-{
-    mpmapbridge *bridge = new mpmapbridge();
-    ui->webViewMMap->setUrl(bridge->getUrl());
 }
 
 void MainWindow::check_updates()
@@ -1327,7 +1319,8 @@ void MainWindow::center_mpmap_at_coords()
     bridge->setLonLat(lastLongitude, lastLatitude);
     bridge->setPilotToFollow(ui->lnedtCallSign->text().trimmed());
     //log->Log(Logger::ET_INFO, bridge->getUrl());
-    ui->webViewMMap->setUrl(bridge->getLLUrl());
+    //TOMIGRATE
+    //ui->webViewMMap->setUrl(bridge->getLLUrl());
 }
 
 void MainWindow::update_latlonhead(QString lat, QString lon, QString heading)
@@ -1534,6 +1527,18 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QMessageBox msgBox(QMessageBox::Warning,tr("Warning"),tr("Are you sure you want stop your simulation?"),QMessageBox::Ok|QMessageBox::Cancel,this);
     if(msgBox.exec()==QMessageBox::Ok)
     {
+        if(mpmdiag)
+        {
+            if(mpmdiag->isVisible()||
+                    mpmdiag->isHidden())
+                mpmdiag->close();
+        }
+        if(hpdiag)
+        {
+            if(hpdiag->isVisible()||
+                    hpdiag->isHidden())
+                   hpdiag->close();
+        }
         stopTerraSync();
     }
     else
@@ -1656,32 +1661,18 @@ void MainWindow::stopTerraSync()
     proc_ts_is_running = false;
 }
 
-void MainWindow::on_pbtRefreshMPMap_clicked()
+void MainWindow::on_pbtOpenMPMap_clicked()
 {
-    mpmapbridge *bridge = new mpmapbridge();
-    if(ui->ckbFollowPilot->isChecked())
-    {
-        bridge->setPilotToFollow(ui->lnedtPilot->text().trimmed());
+    mpmdiag = new MPMDialog(this);
+    mpmdiag->show();
+}
 
-        if(ui->ckbShowMPMapMenu->isChecked())
-        {
-            ui->webViewMMap->setUrl(bridge->getFollowPilotUrl());
-        }
-        else
-        {
-            ui->webViewMMap->setUrl(bridge->getFollowPilotUrlWithoutMenu());
-        }
-    }
-    else
+void MainWindow::on_pbtMPHostnameContextualHelp_clicked()
+{
+    if(!hpdiag)
     {
-        if(ui->ckbShowMPMapMenu->isChecked())
-        {
-            ui->webViewMMap->setUrl(bridge->getUrl());
-        }
-        else
-        {
-            ui->webViewMMap->setUrl(bridge->getUrlWithoutMenu());
-        }
+        hpdiag = new HelpDialog();
     }
-    ui->webViewMMap->reload();
+    hpdiag->setUrl("http://wiki.flightgear.org/Howto:Multiplayer#Servers");
+    hpdiag->showMaximized();
 }

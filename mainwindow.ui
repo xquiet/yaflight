@@ -36,7 +36,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="yaflightresources.qrc">
-    <normaloff>:/icons/icons/yaflight-custom-icon.png</normaloff>:/icons/icons/yaflight-custom-icon.png</iconset>
+    <normaloff>:/icons/icons/yaflight-logo2013-64px.png</normaloff>:/icons/icons/yaflight-logo2013-64px.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -158,7 +158,7 @@
     </property>
     <property name="icon">
      <iconset resource="yaflightresources.qrc">
-      <normaloff>:/icons/icons/applications-system.png</normaloff>:/icons/icons/applications-system.png</iconset>
+      <normaloff>:/icons/icons/fgrun.png</normaloff>:/icons/icons/fgrun.png</iconset>
     </property>
    </widget>
    <widget class="QComboBox" name="cboAircrafts">
@@ -235,7 +235,7 @@
          <property name="geometry">
           <rect>
            <x>280</x>
-           <y>40</y>
+           <y>70</y>
            <width>151</width>
            <height>16</height>
           </rect>
@@ -267,7 +267,7 @@
          <property name="geometry">
           <rect>
            <x>280</x>
-           <y>10</y>
+           <y>40</y>
            <width>181</width>
            <height>20</height>
           </rect>
@@ -306,7 +306,7 @@
          <property name="geometry">
           <rect>
            <x>280</x>
-           <y>60</y>
+           <y>90</y>
            <width>151</width>
            <height>24</height>
           </rect>
@@ -387,7 +387,7 @@
          <property name="geometry">
           <rect>
            <x>280</x>
-           <y>120</y>
+           <y>150</y>
            <width>151</width>
            <height>24</height>
           </rect>
@@ -397,7 +397,7 @@
          <property name="geometry">
           <rect>
            <x>280</x>
-           <y>100</y>
+           <y>130</y>
            <width>151</width>
            <height>16</height>
           </rect>
@@ -464,14 +464,50 @@
           </size>
          </property>
         </widget>
+        <widget class="QPushButton" name="pbtOpenMPMap">
+         <property name="geometry">
+          <rect>
+           <x>280</x>
+           <y>10</y>
+           <width>161</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>MultiPlayer Map...</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pbtMPHostnameContextualHelp">
+         <property name="geometry">
+          <rect>
+           <x>240</x>
+           <y>30</y>
+           <width>21</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="yaflightresources.qrc">
+           <normaloff>:/icons/icons/help-contextual.png</normaloff>:/icons/icons/help-contextual.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="page_2">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>100</width>
-          <height>30</height>
+          <width>471</width>
+          <height>191</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -1612,117 +1648,10 @@
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="tabMPMap">
-      <attribute name="title">
-       <string>MPMap</string>
-      </attribute>
-      <widget class="QWebView" name="webViewMMap">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>471</width>
-         <height>261</height>
-        </rect>
-       </property>
-       <property name="url">
-        <url>
-         <string>about:blank</string>
-        </url>
-       </property>
-      </widget>
-      <widget class="QWidget" name="wdgMPMapToolBar" native="true">
-       <property name="geometry">
-        <rect>
-         <x>40</x>
-         <y>0</y>
-         <width>431</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="autoFillBackground">
-        <bool>true</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <widget class="QPushButton" name="pbtRefreshMPMap">
-        <property name="geometry">
-         <rect>
-          <x>360</x>
-          <y>0</y>
-          <width>61</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Refresh</string>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="ckbFollowPilot">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>111</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Follow pilot</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lnedtPilot">
-        <property name="geometry">
-         <rect>
-          <x>110</x>
-          <y>0</y>
-          <width>91</width>
-          <height>20</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QCheckBox" name="ckbShowMPMapMenu">
-        <property name="geometry">
-         <rect>
-          <x>230</x>
-          <y>0</y>
-          <width>111</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Show Menu</string>
-        </property>
-       </widget>
-      </widget>
-     </widget>
      <widget class="QWidget" name="tabAbout">
       <attribute name="title">
        <string>About</string>
       </attribute>
-      <widget class="QLabel" name="lblYFIcon">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>20</y>
-         <width>161</width>
-         <height>101</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap resource="yaflightresources.qrc">:/icons/icons/yaflight-custom-icon.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>false</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
       <widget class="QLabel" name="lblAppName">
        <property name="geometry">
         <rect>
@@ -1855,7 +1784,7 @@ p, li { white-space: pre-wrap; }
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>140</y>
+          <y>130</y>
           <width>211</width>
           <height>21</height>
          </rect>
@@ -1867,9 +1796,30 @@ p, li { white-space: pre-wrap; }
          <string/>
         </property>
        </widget>
+       <widget class="QLabel" name="lblYFIcon">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>30</y>
+          <width>71</width>
+          <height>71</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap resource="yaflightresources.qrc">:/icons/icons/yaflight-logo2013-64px.png</pixmap>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
       </widget>
       <zorder>widget</zorder>
-      <zorder>lblYFIcon</zorder>
       <zorder>lblAppName</zorder>
       <zorder>lblAppVersion</zorder>
       <zorder>lblAppCopyright</zorder>
