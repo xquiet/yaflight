@@ -22,5 +22,12 @@
         <file>icons/yaflight-custom-icon.png</file>
         <file>icons/clock.png</file>
         <file>icons/video-display.png</file>
+        <file>icons/fgrun.png</file>
+        <file>icons/yaflight-logo2013-256px.png</file>
+        <file>icons/yaflight-logo2013-128px.png</file>
+        <file>icons/yaflight-logo2013-64px.png</file>
+        <file>icons/yaflight-logo2013-16px.png</file>
+        <file>icons/help-contents.png</file>
+        <file>icons/help-contextual.png</file>
     </qresource>
 </RCC>
