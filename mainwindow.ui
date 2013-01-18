@@ -506,8 +506,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>191</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -1076,7 +1076,7 @@
         <widget class="QCheckBox" name="ckbRealWeather">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>40</x>
            <y>10</y>
            <width>231</width>
            <height>20</height>
@@ -1140,7 +1140,7 @@
         <widget class="QCheckBox" name="ckbWind">
          <property name="geometry">
           <rect>
-           <x>10</x>
+           <x>40</x>
            <y>30</y>
            <width>251</width>
            <height>20</height>
@@ -1230,6 +1230,29 @@
          </property>
          <property name="text">
           <string>Thickness</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pbtWeatherContextualHelp">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>21</width>
+           <height>21</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="yaflightresources.qrc">
+           <normaloff>:/icons/icons/help-contextual.png</normaloff>:/icons/icons/help-contextual.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
          </property>
         </widget>
        </widget>
