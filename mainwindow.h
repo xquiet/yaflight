@@ -149,6 +149,8 @@ private slots:
 
     void on_pbtMPHostnameContextualHelp_clicked();
 
+    void on_pbtWeatherContextualHelp_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -169,6 +171,7 @@ private:
     //void setup_mpmap_viewer();
     MPMDialog *mpmdiag;
     HelpDialog *hpdiag;
+    void showHelp(QString url);
     //void follow_pilot_on_mpmap();
 
     // ----- processes -----

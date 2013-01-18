@@ -1669,10 +1669,20 @@ void MainWindow::on_pbtOpenMPMap_clicked()
 
 void MainWindow::on_pbtMPHostnameContextualHelp_clicked()
 {
+    showHelp("http://wiki.flightgear.org/Howto:Multiplayer#Servers");
+}
+
+void MainWindow::on_pbtWeatherContextualHelp_clicked()
+{
+    showHelp("http://wiki.flightgear.org/Weather");
+}
+
+void MainWindow::showHelp(QString url)
+{
     if(!hpdiag)
     {
         hpdiag = new HelpDialog();
     }
-    hpdiag->setUrl("http://wiki.flightgear.org/Howto:Multiplayer#Servers");
+    hpdiag->setUrl(url);
     hpdiag->showMaximized();
 }
