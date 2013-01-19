@@ -129,6 +129,9 @@ MainWindow::MainWindow(QWidget *parent) :
     setup_about_box();
 
     check_updates();
+
+    hpdiag = NULL;
+    mpmdiag = NULL;
 }
 
 MainWindow::~MainWindow()
