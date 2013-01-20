@@ -11,6 +11,10 @@ DEFINES += MIN_VERSION="20"
 TARGET = yaflight
 TEMPLATE = app
 
+mac: ICON = icons/yaflight.icns
+
+win32: RC_FILE = yaflight.rc
+
 isEmpty(DATADIR) {
     DATADIR = /usr/share/yaflight
 }
