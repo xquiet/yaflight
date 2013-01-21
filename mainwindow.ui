@@ -1334,7 +1334,7 @@
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>451</width>
+         <width>371</width>
          <height>181</height>
         </rect>
        </property>
@@ -1488,8 +1488,8 @@
       <widget class="QLineEdit" name="lnedtSearchAirport">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>240</y>
+         <x>390</x>
+         <y>20</y>
          <width>71</width>
          <height>16</height>
         </rect>
@@ -1498,10 +1498,10 @@
       <widget class="QPushButton" name="pbtSearchAirport">
        <property name="geometry">
         <rect>
-         <x>90</x>
-         <y>240</y>
-         <width>83</width>
-         <height>16</height>
+         <x>390</x>
+         <y>40</y>
+         <width>71</width>
+         <height>21</height>
         </rect>
        </property>
        <property name="text">
