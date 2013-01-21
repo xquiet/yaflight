@@ -6,6 +6,11 @@ HelpDialog::HelpDialog(QWidget *parent) :
     ui(new Ui::HelpDialog)
 {
     ui->setupUi(this);
+    // ugly focus workaround until the issue is resolved
+    // press ESC to exit close the help dialog :-/
+#ifdef Q_OS_MACX
+    this->setWindowFlags(Qt::WindowStaysOnTopHint);
+#endif
 }
 
 HelpDialog::~HelpDialog()
