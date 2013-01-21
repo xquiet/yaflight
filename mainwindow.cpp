@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+#ifdef Q_OS_MACX
+    this->setAttribute(Qt::WA_MacBrushedMetal);
+#endif
     QApplication::setApplicationName("YaFlight");
     QApplication::setApplicationVersion(QString::number(MAX_VERSION) + "." + QString::number(MIN_VERSION));
 
