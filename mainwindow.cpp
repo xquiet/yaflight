@@ -191,7 +191,7 @@ void MainWindow::setup_about_box()
 {
     ui->lblAppName->setText(QApplication::applicationName());
     ui->lblAppVersion->setText(tr("Version: ") + QApplication::applicationVersion());
-    ui->lblAppCopyright->setText("(C) 2012 by Matteo Pasotti");
+    ui->lblAppCopyright->setText("(C) 2012-2013 by Matteo Pasotti");
 }
 
 void MainWindow::refreshListOfAircrafts()
