@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 #ifdef Q_OS_MACX
     this->setAttribute(Qt::WA_MacBrushedMetal);
+    ui->pbtTerraSyncStartStop->setEnabled(false);
 #endif
     QApplication::setApplicationName("YaFlight");
     QApplication::setApplicationVersion(QString::number(MAX_VERSION) + "." + QString::number(MIN_VERSION));
@@ -247,8 +248,16 @@ void MainWindow::on_pbtLaunch_clicked()
         {
             if(!proc_ts_is_running)
             {
+#ifdef Q_OS_MACX
+                params << "--enable-terrasync";
+                params << "--prop:/sim/terrasync/refresh-display=true";
+                ui->txaTSLog->append("Running on Mac OS X");
+                log->Log(Logger::ET_INFO, "BuiltIn support for scenery download enabled");
+                proc_ts_is_running = true;
+#else
                 startTerraSync();
                 ui->pbtTerraSyncStartStop->setText(tr("Stop"));
+#endif
             }
         }
 
@@ -261,10 +270,12 @@ void MainWindow::on_pbtLaunch_clicked()
 
         fgfsBinary = fgenv->getFgfsBinPath();
 
+#ifndef Q_OS_MACX
         if(proc_ts_is_running)
         {
             params << "--atlas=socket,out,1,localhost,5500,udp";
         }
+#endif
 
         log->Log(Logger::ET_INFO, fgfsBinary + " " + params.join(" "));
 
@@ -1501,7 +1512,7 @@ void MainWindow::hndl_tmr_procfgfs()
     }
     else
     {
-        QIcon icon(":/icons/icons/applications-system.png");
+        QIcon icon(":/icons/icons/fgrun.png");
         ui->pbtLaunch->setIcon(icon);
         ui->pbtLaunch->setText(tr("Launch!"));
         proc_fgfs_is_running = false;
@@ -1619,6 +1630,7 @@ void MainWindow::on_spboxHeading_valueChanged(QString value)
 
 void MainWindow::on_pbtTerraSyncStartStop_clicked()
 {
+#ifndef Q_OS_MACX
     if(proc_ts_is_running)
     {
         stopTerraSync();
@@ -1629,6 +1641,9 @@ void MainWindow::on_pbtTerraSyncStartStop_clicked()
         startTerraSync();
         ui->pbtTerraSyncStartStop->setText(tr("Stop"));
     }
+#else
+    ui->pbtTerraSyncStartStop->setEnabled(false);
+#endif
 }
 
 void MainWindow::startTerraSync()
