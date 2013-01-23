@@ -151,6 +151,8 @@ private slots:
 
     void on_pbtWeatherContextualHelp_clicked();
 
+    void on_pbtFindNext_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -172,6 +174,8 @@ private:
     MPMDialog *mpmdiag;
     HelpDialog *hpdiag;
     void showHelp(QString url);
+    QList<QStandardItem *> searchFoundAirports;
+    int searchFoundAirportsIndex;
     //void follow_pilot_on_mpmap();
 
     // ----- processes -----

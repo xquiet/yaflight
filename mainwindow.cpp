@@ -1599,15 +1599,45 @@ void MainWindow::on_btnRecreateAiportsIndex_clicked()
 void MainWindow::on_pbtSearchAirport_clicked()
 {
     QStandardItemModel *model = (QStandardItemModel *)ui->tbvAirports->model();
-    for(int i=0;i<model->rowCount();i++)
+    int column_to_search = -1;
+
+    if(ui->rdbSearchById->isChecked())
     {
-        if(model->item(i,1)->text().trimmed().compare(ui->lnedtSearchAirport->text().trimmed())==0)
-        {
-            ui->tbvAirports->setCurrentIndex(model->index(i,1));
-            ui->tbvAirports->selectRow(i);
-            break;
-        }
+        column_to_search = 1; // ICAO
     }
+    else
+    {
+        column_to_search = 2; // Long name of the Airport
+    }
+
+    searchFoundAirportsIndex = 0;
+    searchFoundAirports = model->findItems(ui->lnedtSearchAirport->text().trimmed(),
+                                                         Qt::MatchContains,
+                                                         column_to_search);
+    if(searchFoundAirports.count() > 0)
+    {
+        ui->lblFoundItems->setText(tr("Found")+": "+QString::number(searchFoundAirports.count()));
+        ui->tbvAirports->setCurrentIndex(model->indexFromItem(searchFoundAirports.at(0)));
+        ui->tbvAirports->selectRow(searchFoundAirports.at(0)->row());
+        searchFoundAirportsIndex = 0;
+        if(searchFoundAirports.count()>1)
+            ui->pbtFindNext->setEnabled(true);
+    }
+    else
+    {
+        ui->lblFoundItems->setText(tr("Found")+": 0");
+        ui->pbtFindNext->setEnabled(false);
+    }
+}
+
+void MainWindow::on_pbtFindNext_clicked()
+{
+    QStandardItemModel *model = (QStandardItemModel *)ui->tbvAirports->model();
+    searchFoundAirportsIndex++;
+    ui->tbvAirports->setCurrentIndex(model->indexFromItem(searchFoundAirports.at(searchFoundAirportsIndex)));
+    ui->tbvAirports->selectRow(searchFoundAirports.at(searchFoundAirportsIndex)->row());
+    if(searchFoundAirportsIndex >= searchFoundAirports.count()-1)
+        ui->pbtFindNext->setEnabled(false);
 }
 
 void MainWindow::on_pbtSpecifyMPPorts_clicked()
@@ -1707,3 +1737,4 @@ void MainWindow::showHelp(QString url)
     hpdiag->setUrl(url);
     hpdiag->showMaximized();
 }
+
