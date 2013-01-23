@@ -13,6 +13,8 @@ bool FGEnvironment::start(bool autoDetect)
     {
         fgRootPath = detectRootPath();
         fgfs_binary = detectFGBinPath();
+        if(!QFile::exists(fgfs_binary))  // debian has fgfs under /usr/games/
+            return false;                // if appconf.ini already exists must it must be removed!
     }
     // detectFGVersion needs the rootpath
     fgVersion = detectFGVersion();
