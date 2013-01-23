@@ -1222,20 +1222,20 @@ void MainWindow::on_btnRefreshAirportList_clicked()
 void MainWindow::on_ckbFilterInstalled_toggled(bool checked)
 {
     QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
+    QList<QStandardItem *> filterItems;
+    filterItems = model->findItems("",Qt::MatchExactly,0);
     if(checked)
     {
-        for(int i=0;i<model->rowCount();i++)
+        foreach(QStandardItem *item, filterItems)
         {
-            if(model->item(i,0)->text().compare("X")!=0)
-                ui->tbvAirports->hideRow(i);
+            ui->tbvAirports->hideRow(item->row());
         }
     }
     else
     {
-        for(int i=0;i<model->rowCount();i++)
+        foreach(QStandardItem *item, filterItems)
         {
-            if(model->item(i,0)->text().compare("X")!=0)
-                ui->tbvAirports->showRow(i);
+            ui->tbvAirports->showRow(item->row());
         }
     }
 }
