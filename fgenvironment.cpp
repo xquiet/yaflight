@@ -292,6 +292,7 @@ QString FGEnvironment::detectRootPath()
         #elif defined Q_OS_LINUX
             possiblePaths << "/usr/share/flightgear/data"
                           << "/usr/share/FlightGear"
+                          << "/usr/share/flightgear"
                           << "/usr/share/games/FlightGear"
                           << "/usr/share/games/flightgear";
         #else
