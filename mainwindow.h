@@ -210,8 +210,8 @@ private:
     Settings *curr_settings;
     appsettings *appsett;
     QStringList collectLaunchSettings();
-    void loadSettings(bool appStart=false);
-    bool saveSettings();
+    void loadSettings(QString confFile, bool appStart=false);
+    bool saveSettings(QString confFile);
     void add_scenery_path(QString sceneryPath);
     QString lastResolutionSelected;
     QString lastFailureSelected;

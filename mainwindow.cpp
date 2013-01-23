@@ -767,12 +767,12 @@ void MainWindow::toggleLoadingBarVisible()
     QApplication::processEvents();
 }
 
-void MainWindow::loadSettings(bool appStart)
+void MainWindow::loadSettings(QString confFile, bool appStart)
 {
     if(just_started)
         just_started = false;
     toggleLoadingBarVisible();
-    curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
+    curr_settings = new Settings(confFile);
     appsettings *app_settings = new appsettings(fgenv->getYFHome()+"/appconf.ini");
     if(!curr_settings->isEmpty())
     {
@@ -952,10 +952,10 @@ void MainWindow::check_mp_ports_values()
         lastPortOut = "5000";
 }
 
-bool MainWindow::saveSettings()
+bool MainWindow::saveSettings(QString confFile)
 {
-    if((!curr_settings)||(just_started))
-        curr_settings = new Settings(fgenv->getYFHome()+"/conf.ini");
+    //if((!curr_settings)||(just_started))
+    curr_settings = new Settings(confFile);
 
     appsettings *app_settings = new appsettings(fgenv->getYFHome()+"/appconf.ini");
     ui->ckbFilterInstalled->isChecked() ? app_settings->setAirportListFiltered(SET_TRUE) : app_settings->setAirportListFiltered(SET_FALSE);
@@ -1104,12 +1104,50 @@ bool MainWindow::saveSettings()
 
 void MainWindow::on_pbtSaveConf_clicked()
 {
-    saveSettings();
+    QString configurationFilePath = QFileDialog::getSaveFileName(this,
+                                                                 tr("Choose the file where you want to store your current configuration"),
+                                                                 fgenv->getYFHome(),
+                                                                 tr("INI (*.ini);;"));
+    if(configurationFilePath.trimmed().compare("")==0)
+    {
+        QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("No file selected\nTrying to use default"), QMessageBox::Ok,this);
+        msgBox.exec();
+        configurationFilePath = fgenv->getYFHome() + "/conf.ini";
+    }
+    if(QFile::exists(configurationFilePath))
+    {
+        QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("The file already exists\nClick Ok to overwrite it"), QMessageBox::Ok|QMessageBox::Cancel,this);
+        if(msgBox.exec()==QMessageBox::Cancel)
+        {
+            return;
+        }
+    }
+    if(!configurationFilePath.endsWith(".ini"))
+    {
+        configurationFilePath.append(".ini");
+    }
+    saveSettings(configurationFilePath);
 }
 
 void MainWindow::on_pbtLoadConf_clicked()
 {
-    loadSettings();
+    QString configurationFilePath = QFileDialog::getOpenFileName(this,
+                                                                 tr("Select the configuration you want to load"),
+                                                                 fgenv->getYFHome(),
+                                                                 tr("INI (*.ini);;"));
+    if(configurationFilePath.trimmed().compare("")==0)
+    {
+        QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("No file selected\nTrying to use default"), QMessageBox::Ok,this);
+        msgBox.exec();
+        configurationFilePath = fgenv->getYFHome() + "/conf.ini";
+    }
+    if(!QFile::exists(configurationFilePath))
+    {
+        QMessageBox msgBox(QMessageBox::Warning, tr("Warning"), tr("File do not exists"), QMessageBox::Ok,this);
+        msgBox.exec();
+        return;
+    }
+    loadSettings(configurationFilePath);
 }
 
 QHash<QString, QStringList> MainWindow::collect_all_airports()
