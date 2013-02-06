@@ -756,7 +756,10 @@ QStringList MainWindow::collectLaunchSettings()
     }
 
     // heading
-    params << "--heading="+lastHeading;
+    if(lastHeading.compare("")!=0)
+    {
+        params << "--heading="+lastHeading;
+    }
 
     return params;
 }
