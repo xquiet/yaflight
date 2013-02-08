@@ -29,15 +29,18 @@
 #include <QEvent>
 #include <QDir>
 
+#include "yalib.h"
+
 class FGEnvironment
 {
 private:
-    QString fgRootPath;
-    QString fgfs_binary;
-    QString fgVersion;
-    QProcess *sysinfo;
-    QString operating_system;
-    QStringList os_details;
+    Yalib *ya;
+//    QString fgRootPath;
+//    QString fgfs_binary;
+//    QString fgVersion;
+//    QProcess *sysinfo;
+//    QString operating_system;
+//    QStringList os_details;
 
     // windows_exception
     QString _win_program_files;
