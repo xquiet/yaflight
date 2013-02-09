@@ -35,20 +35,9 @@ class FGEnvironment
 {
 private:
     Yalib *ya;
-//    QString fgRootPath;
-//    QString fgfs_binary;
-//    QString fgVersion;
-//    QProcess *sysinfo;
-//    QString operating_system;
-//    QStringList os_details;
 
     // windows_exception
     QString _win_program_files;
-
-    QString detectOS();
-    QString detectFGVersion();
-    QString detectFGBinPath(bool autodetect = true);
-    QString detectRootPath();
 
 public:
     FGEnvironment();
@@ -71,6 +60,7 @@ public:
     QString getYFScenery();
     QString getOS();
     QString getFGVersion();
+    QString getYaInstallBinary();
 
     // debug
     QString __read_winprogramfiles();

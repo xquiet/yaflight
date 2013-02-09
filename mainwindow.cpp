@@ -113,10 +113,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->cboSeason->addItems(seasons);
 
-
-    QStringList listOfAircrafts = hashOfAircrafts.keys();
-    listOfAircrafts.sort();
-    ui->cboAircrafts->addItems(listOfAircrafts);
+    populate_combo_aircrafts();
 
     ui->txaLog->append(tr("OS: ") + fgenv->getOS());
     ui->txaLog->append(tr("FG version: ") + fgenv->getFGVersion());
@@ -141,6 +138,14 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::populate_combo_aircrafts()
+{
+    QStringList listOfAircrafts = hashOfAircrafts.keys();
+    listOfAircrafts.sort();
+    ui->cboAircrafts->clear();
+    ui->cboAircrafts->addItems(listOfAircrafts);
 }
 
 void MainWindow::check_updates()
@@ -343,6 +348,8 @@ void MainWindow::proc_ts_finished(int exitCode, QProcess::ExitStatus exitStatus)
 
 void MainWindow::on_cboAircrafts_currentIndexChanged(const QString &arg1)
 {
+    if(arg1.trimmed().compare("")==0)
+        return;
     drawThumbnail(hashOfAircrafts.value(arg1.trimmed()));
     if(!just_started)
         lastAircraft = arg1;
@@ -1779,3 +1786,19 @@ void MainWindow::showHelp(QString url)
     hpdiag->showMaximized();
 }
 
+
+void MainWindow::on_pbtLoadConf_2_clicked()
+{
+    QStringList env = QProcess::systemEnvironment();
+    QProcess *proc = new QProcess();
+    proc->setEnvironment(env);
+    connect(proc,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(yainstall_proc_finished()));
+    log->Log(Logger::ET_INFO,tr("Launching")+" "+fgenv->getYaInstallBinary());
+    proc->start(fgenv->getYaInstallBinary(), QStringList(), QProcess::ReadOnly);
+}
+
+void MainWindow::yainstall_proc_finished()
+{
+    refreshListOfAircrafts();
+    populate_combo_aircrafts();
+}

@@ -60,11 +60,6 @@ QHash<QString, QStringList> FGEnvironment::getDefaultAirportList()
     return ya->getDefaultAirportList();
 }
 
-QString FGEnvironment::detectFGBinPath(bool autodetect)
-{
-    return ya->detectFGBinPath(autodetect);
-}
-
 QString FGEnvironment::getFgfsBinPath()
 {
     return ya->getFgfsBinPath();
@@ -95,21 +90,10 @@ QString FGEnvironment::getYFScenery()
     return ya->getYFScenery();
 }
 
-QString FGEnvironment::detectOS()
+QString FGEnvironment::getYaInstallBinary()
 {
-    return ya->detectOS();
+    return ya->getYaInstallBinary();
 }
-
-QString FGEnvironment::detectFGVersion()
-{
-    return ya->detectFGVersion();
-}
-
-QString FGEnvironment::detectRootPath()
-{
-    return ya->detectRootPath();
-}
-
 
 // --------------------------
 // DEBUG methods

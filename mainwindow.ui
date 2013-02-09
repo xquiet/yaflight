@@ -89,7 +89,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>150</y>
+      <y>80</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -506,8 +506,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>191</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -777,8 +777,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>96</width>
-            <height>26</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -894,8 +894,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>96</width>
-            <height>26</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1941,9 +1941,9 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>120</y>
+      <y>160</y>
       <width>111</width>
-      <height>16</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1951,6 +1951,26 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="text">
      <string>Loading...</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbtLoadConf_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>120</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To use this feature you need YaInstall&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="text">
+     <string>Install model</string>
+    </property>
+    <property name="icon">
+     <iconset resource="yaflightresources.qrc">
+      <normaloff>:/icons/icons/list-add.png</normaloff>:/icons/icons/list-add.png</iconset>
     </property>
    </widget>
   </widget>
