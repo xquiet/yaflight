@@ -29,7 +29,7 @@
 #include <QEvent>
 #include <QDir>
 
-#include "yalib.h"
+#include "yalib/yalib.h"
 
 class FGEnvironment
 {
@@ -64,8 +64,6 @@ public:
 
     // debug
     QString __read_winprogramfiles();
-
-
 
 };
 
