@@ -28,8 +28,11 @@
 #include <QProcess>
 #include <QEvent>
 #include <QDir>
-
+#ifdef Q_OS_MACX
+#include "yalib.h"
+#else
 #include "yalib/yalib.h"
+#endif
 
 class FGEnvironment
 {
