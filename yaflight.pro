@@ -99,13 +99,11 @@ TRANSLATIONS += languages/cs_CZ.ts \
     languages/zh_CN.ts \
     languages/zh_TW.ts
 
-# use Yalib
-#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../yalib/release/ -lyalib
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../yalib/debug/ -lyalib
-#else:mac: LIBS += -F$$PWD/../yalib/ -framework yalib
-#else:unix:!symbian: LIBS += -L$$PWD/../yalib/ -lyalib
 
-#INCLUDEPATH += $$PWD/../yalib
-#DEPENDPATH += $$PWD/../yalib
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../yalib/release/ -lyalib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../yalib/debug/ -lyalib
+else:mac: LIBS += -F$$PWD/../yalib/ -framework yalib
+else:unix: LIBS += -L$$PWD/../yalib/ -lyalib
 
-unix: LIBS += -L/usr/include/yalib/ -lyalib
+INCLUDEPATH += $$PWD/../yalib
+DEPENDPATH += $$PWD/../yalib
