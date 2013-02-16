@@ -30,6 +30,8 @@
 #include <QDir>
 #ifdef Q_OS_MACX
 #include "yalib.h"
+#elif defined Q_OS_WIN
+#include "yalib.h"
 #else
 #include "yalib/yalib.h"
 #endif
