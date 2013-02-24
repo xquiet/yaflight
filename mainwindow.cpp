@@ -615,6 +615,10 @@ QStringList MainWindow::collectLaunchSettings()
     {
         params << "--disable-ai-models";
     }
+    if(!ui->ckbRandomTrees->isChecked())
+    {
+        params << "--prop:/sim/rendering/random-vegetation=false";
+    }
     // ------------- Aircraft -------------
     // Auto coordination
     if(ui->ckbAutoCoordination->isChecked())
@@ -804,6 +808,7 @@ void MainWindow::loadSettings(QString confFile, bool appStart)
         (curr_settings->getTimeLock().compare(SET_TRUE)==0) ? ui->ckbLockTime->setChecked(true) : ui->ckbLockTime->setChecked(false);
         (curr_settings->getRandomObjects().compare(SET_TRUE)==0) ? ui->ckbRandomObjects->setChecked(true) : ui->ckbRandomObjects->setChecked(false);
         (curr_settings->getAIModels().compare(SET_TRUE)==0) ? ui->ckbAIModels->setChecked(true) : ui->ckbAIModels->setChecked(false);
+        (curr_settings->getRandomTrees().compare(SET_TRUE)==0) ? ui->ckbRandomTrees->setChecked(true) : ui->ckbRandomTrees->setChecked(false);
         (curr_settings->getAutoCoordination().compare(SET_TRUE)==0) ? ui->ckbAutoCoordination->setChecked(true) : ui->ckbAutoCoordination->setChecked(false);
         (curr_settings->getInAir().compare(SET_TRUE)==0) ? ui->ckbInAir->setChecked(true) : ui->ckbInAir->setChecked(false);
         (curr_settings->getPanel().compare(SET_TRUE)==0) ? ui->ckbPanel->setChecked(true) : ui->ckbPanel->setChecked(false);
@@ -1015,6 +1020,7 @@ bool MainWindow::saveSettings(QString confFile)
     ui->ckbLockTime->isChecked() ? curr_settings->setTimeLock(SET_TRUE) : curr_settings->setTimeLock(SET_FALSE);
     ui->ckbRandomObjects->isChecked() ? curr_settings->setRandomObjects(SET_TRUE) : curr_settings->setRandomObjects(SET_FALSE);
     ui->ckbAIModels->isChecked() ? curr_settings->setAIModels(SET_TRUE) : curr_settings->setAIModels(SET_FALSE);
+    ui->ckbRandomTrees->isChecked() ? curr_settings->setRandomTrees(SET_TRUE) : curr_settings->setRandomTrees(SET_FALSE);
     ui->ckbAutoCoordination->isChecked() ? curr_settings->setAutoCoordination(SET_TRUE) : curr_settings->setAutoCoordination(SET_FALSE);
     ui->ckbInAir->isChecked() ? curr_settings->setInAir(SET_TRUE) : curr_settings->setInAir(SET_FALSE);
     ui->ckbPanel->isChecked() ? curr_settings->setPanel(SET_TRUE) : curr_settings->setPanel(SET_FALSE);

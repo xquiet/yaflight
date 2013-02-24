@@ -42,6 +42,7 @@
 #define FUELLOCK    "FUELLOCK"
 #define TIMELOCK    "TIMELOCK"
 #define RNDOBJECTS  "RNDOBJECTS"
+#define RNDTREES    "RNDTREES"
 #define AIMODELS    "AIMODELS"
 #define AUTOCOORD   "AUTOCOORD"
 #define INAIR       "INAIR"
@@ -101,6 +102,7 @@ public:
     QString getTimeLock();
     QString getRandomObjects();
     QString getAIModels();
+    QString getRandomTrees();
     QString getAutoCoordination();
     QString getInAir();
     QString getAltitude();
@@ -153,6 +155,7 @@ public:
     void setTimeLock(QString val);
     void setRandomObjects(QString val);
     void setAIModels(QString val);
+    void setRandomTrees(QString val);
     void setAutoCoordination(QString val);
     void setInAir(QString val);
     void setAltitude(QString val);

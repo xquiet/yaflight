@@ -506,8 +506,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>471</width>
+          <height>191</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -679,8 +679,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>96</width>
-            <height>26</height>
+            <width>471</width>
+            <height>143</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -771,14 +771,27 @@
             <string>Lock Time</string>
            </property>
           </widget>
+          <widget class="QCheckBox" name="ckbRandomTrees">
+           <property name="geometry">
+            <rect>
+             <x>170</x>
+             <y>90</y>
+             <width>181</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Random trees</string>
+           </property>
+          </widget>
          </widget>
          <widget class="QWidget" name="pageAircraft">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>96</width>
-            <height>26</height>
+            <width>471</width>
+            <height>143</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -894,8 +907,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>96</width>
-            <height>26</height>
+            <width>471</width>
+            <height>143</height>
            </rect>
           </property>
           <attribute name="label">

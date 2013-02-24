@@ -119,6 +119,11 @@ QString Settings::getAIModels()
     return conf->get(ADVSETTINGS, AIMODELS);
 }
 
+QString Settings::getRandomTrees()
+{
+    return conf->get(ADVSETTINGS, RNDTREES);
+}
+
 QString Settings::getAutoCoordination()
 {
     return conf->get(ADVSETTINGS, AUTOCOORD);
@@ -364,6 +369,11 @@ void Settings::setRandomObjects(QString val)
 void Settings::setAIModels(QString val)
 {
     conf->set(QString(ADVSETTINGS), QString(AIMODELS), val);
+}
+
+void Settings::setRandomTrees(QString val)
+{
+    conf->set(QString(ADVSETTINGS), QString(RNDTREES), val);
 }
 
 void Settings::setAutoCoordination(QString val)
