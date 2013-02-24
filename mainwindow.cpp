@@ -11,6 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setAttribute(Qt::WA_MacBrushedMetal);
     ui->pbtTerraSyncStartStop->setEnabled(false);
 #endif
+#ifdef Q_OS_WIN
+    ui->pbtInstallModel->hide();
+#endif
+
     QApplication::setApplicationName("YaFlight");
     QApplication::setApplicationVersion(QString::number(MAX_VERSION) + "." + QString::number(MIN_VERSION));
 
@@ -1787,7 +1791,7 @@ void MainWindow::showHelp(QString url)
 }
 
 
-void MainWindow::on_pbtLoadConf_2_clicked()
+void MainWindow::on_pbtInstallModel_clicked()
 {
     QStringList env = QProcess::systemEnvironment();
     QProcess *proc = new QProcess();

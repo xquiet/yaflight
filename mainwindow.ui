@@ -506,8 +506,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>471</width>
-          <height>191</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -679,8 +679,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>471</width>
-            <height>143</height>
+            <width>96</width>
+            <height>26</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -777,8 +777,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>96</width>
+            <height>26</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -894,8 +894,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>96</width>
+            <height>26</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1953,7 +1953,7 @@ p, li { white-space: pre-wrap; }
      <string>Loading...</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pbtLoadConf_2">
+   <widget class="QPushButton" name="pbtInstallModel">
     <property name="geometry">
      <rect>
       <x>10</x>

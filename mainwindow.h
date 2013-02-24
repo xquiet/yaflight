@@ -153,7 +153,7 @@ private slots:
 
     void on_pbtFindNext_clicked();
 
-    void on_pbtLoadConf_2_clicked();
+    void on_pbtInstallModel_clicked();
 
     void yainstall_proc_finished();
 
