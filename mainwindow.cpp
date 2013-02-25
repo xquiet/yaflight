@@ -119,6 +119,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     populate_combo_aircrafts();
 
+    populate_scenarios();
+
     ui->txaLog->append(tr("OS: ") + fgenv->getOS());
     ui->txaLog->append(tr("FG version: ") + fgenv->getFGVersion());
     ui->txaLog->append(tr("Default FGROOT: ") + fgenv->getRootPath());
@@ -150,6 +152,14 @@ void MainWindow::populate_combo_aircrafts()
     listOfAircrafts.sort();
     ui->cboAircrafts->clear();
     ui->cboAircrafts->addItems(listOfAircrafts);
+}
+
+void MainWindow::populate_scenarios()
+{
+    QStringList scenarios = fgenv->getScenarios();
+    QStringListModel *lstviewmodel = new QStringListModel(scenarios);
+    ui->lstvScenarios->setModel(lstviewmodel);
+    ui->lstvScenarios->setSelectionMode(QListView::MultiSelection);
 }
 
 void MainWindow::check_updates()
@@ -615,9 +625,19 @@ QStringList MainWindow::collectLaunchSettings()
     {
         params << "--disable-ai-models";
     }
+    // Random Trees
     if(!ui->ckbRandomTrees->isChecked())
     {
         params << "--prop:/sim/rendering/random-vegetation=false";
+    }
+    // AI Scenarios
+    if(ui->lstvScenarios->selectionModel()->selectedIndexes().count()>0)
+    {
+        QStringListModel *scenariosModel = (QStringListModel *) ui->lstvScenarios->model();
+        foreach(QModelIndex modindex, ui->lstvScenarios->selectionModel()->selectedIndexes())
+        {
+            params << "--ai-scenario=" + scenariosModel->stringList().value(modindex.row());
+        }
     }
     // ------------- Aircraft -------------
     // Auto coordination
@@ -1037,6 +1057,21 @@ bool MainWindow::saveSettings(QString confFile)
     ui->ckbSpecularReflections->isChecked() ? curr_settings->setSpecularReflections(SET_TRUE) : curr_settings->setSpecularReflections(SET_FALSE);
     curr_settings->setTurbulence(QString::number(lastTurbulence));
     ui->ckbTerraSync->isChecked() ? curr_settings->setTerraSync(SET_TRUE) : curr_settings->setTerraSync(SET_FALSE);
+
+    if(ui->lstvScenarios->selectionModel()->selectedIndexes().count()>0)
+    {
+        QStringListModel *scenariosModel = (QStringListModel *) ui->lstvScenarios->model();
+        QString scenarios = "";
+        foreach(QModelIndex modindex, ui->lstvScenarios->selectionModel()->selectedIndexes())
+        {
+            scenarios = scenarios + scenariosModel->stringList().value(modindex.row())+":";
+        }
+        if(scenarios.trimmed().compare("")!=0)
+        {
+            scenarios = scenarios.mid(0,scenarios.length()-1);
+            curr_settings->setScenarios(scenarios);
+        }
+    }
 
     if((ui->lnedtAltitude->isEnabled())&&(ui->lnedtAltitude->text().trimmed().compare("")!=0))
     {
@@ -1811,4 +1846,9 @@ void MainWindow::yainstall_proc_finished()
 {
     refreshListOfAircrafts();
     populate_combo_aircrafts();
+}
+
+void MainWindow::on_pbtDeselectAllScenarios_clicked()
+{
+    ui->lstvScenarios->clearSelection();
 }

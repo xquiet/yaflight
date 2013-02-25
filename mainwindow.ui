@@ -695,7 +695,7 @@
             <rect>
              <x>170</x>
              <y>70</y>
-             <width>171</width>
+             <width>141</width>
              <height>20</height>
             </rect>
            </property>
@@ -727,7 +727,7 @@
             <rect>
              <x>170</x>
              <y>30</y>
-             <width>181</width>
+             <width>141</width>
              <height>20</height>
             </rect>
            </property>
@@ -750,7 +750,7 @@
             <rect>
              <x>170</x>
              <y>10</y>
-             <width>181</width>
+             <width>141</width>
              <height>20</height>
             </rect>
            </property>
@@ -763,7 +763,7 @@
             <rect>
              <x>170</x>
              <y>50</y>
-             <width>171</width>
+             <width>141</width>
              <height>20</height>
             </rect>
            </property>
@@ -776,12 +776,54 @@
             <rect>
              <x>170</x>
              <y>90</y>
-             <width>181</width>
+             <width>141</width>
              <height>20</height>
             </rect>
            </property>
            <property name="text">
             <string>Random trees</string>
+           </property>
+          </widget>
+          <widget class="QListView" name="lstvScenarios">
+           <property name="geometry">
+            <rect>
+             <x>320</x>
+             <y>30</y>
+             <width>141</width>
+             <height>81</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="lblScenarios">
+           <property name="geometry">
+            <rect>
+             <x>320</x>
+             <y>10</y>
+             <width>141</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Scenarios</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="pbtDeselectAllScenarios">
+           <property name="geometry">
+            <rect>
+             <x>320</x>
+             <y>110</y>
+             <width>141</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Deselect All</string>
            </property>
           </widget>
          </widget>

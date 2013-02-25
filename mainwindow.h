@@ -157,6 +157,8 @@ private slots:
 
     void yainstall_proc_finished();
 
+    void on_pbtDeselectAllScenarios_clicked();
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -182,6 +184,7 @@ private:
     int searchFoundAirportsIndex;
     //void follow_pilot_on_mpmap();
     void populate_combo_aircrafts();
+    void populate_scenarios();
 
     // ----- processes -----
     QProcess *procFGFS;

@@ -95,6 +95,11 @@ QString FGEnvironment::getYaInstallBinary()
     return ya->getYaInstallBinary();
 }
 
+QStringList FGEnvironment::getScenarios()
+{
+    return ya->getScenarios();
+}
+
 // --------------------------
 // DEBUG methods
 

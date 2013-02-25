@@ -66,6 +66,7 @@ public:
     QString getOS();
     QString getFGVersion();
     QString getYaInstallBinary();
+    QStringList getScenarios();
 
     // debug
     QString __read_winprogramfiles();
