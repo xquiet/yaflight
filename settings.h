@@ -43,6 +43,7 @@
 #define TIMELOCK    "TIMELOCK"
 #define RNDOBJECTS  "RNDOBJECTS"
 #define RNDTREES    "RNDTREES"
+#define SCENARIOS   "SCENARIOS"
 #define AIMODELS    "AIMODELS"
 #define AUTOCOORD   "AUTOCOORD"
 #define INAIR       "INAIR"
@@ -103,6 +104,7 @@ public:
     QString getRandomObjects();
     QString getAIModels();
     QString getRandomTrees();
+    QString getScenarios();
     QString getAutoCoordination();
     QString getInAir();
     QString getAltitude();
@@ -156,6 +158,7 @@ public:
     void setRandomObjects(QString val);
     void setAIModels(QString val);
     void setRandomTrees(QString val);
+    void setScenarios(QString val);
     void setAutoCoordination(QString val);
     void setInAir(QString val);
     void setAltitude(QString val);

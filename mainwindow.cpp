@@ -862,6 +862,24 @@ void MainWindow::loadSettings(QString confFile, bool appStart)
             ui->cboFDM->setCurrentIndex(fdmCurrIdx);
         }
 
+        if(curr_settings->getScenarios().trimmed().compare("")!=0)
+        {
+            QStringList selection = curr_settings->getScenarios().split(":");
+            QStringListModel *model = (QStringListModel *) ui->lstvScenarios->model();
+            QItemSelectionModel *selectionModel = ui->lstvScenarios->selectionModel();
+            foreach(QString sel, selection)
+            {
+                for(int row=0;row<model->rowCount();row++)
+                {
+                    QModelIndex modindex = model->index(row);
+                    if(modindex.data().toString().trimmed().compare(sel)==0)
+                    {
+                        selectionModel->setCurrentIndex(modindex,QItemSelectionModel::Select);
+                    }
+                }
+            }
+        }
+
         if(curr_settings->getAltitude().trimmed().compare("")!=0)
         {
             ui->lnedtAltitude->setText(curr_settings->getAltitude().trimmed());
