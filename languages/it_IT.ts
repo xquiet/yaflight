@@ -514,7 +514,7 @@
     <message>
         <location filename="../mainwindow.ui" line="1655"/>
         <source>Sceneries</source>
-        <translation>Scenari</translation>
+        <translation>Paesaggi</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1742"/>
