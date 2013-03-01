@@ -148,7 +148,7 @@
     <property name="geometry">
      <rect>
       <x>380</x>
-      <y>150</y>
+      <y>140</y>
       <width>121</width>
       <height>41</height>
      </rect>
@@ -679,8 +679,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>481</width>
-            <height>143</height>
+            <width>96</width>
+            <height>26</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -832,8 +832,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>481</width>
-            <height>143</height>
+            <width>96</width>
+            <height>26</height>
            </rect>
           </property>
           <attribute name="icon">
