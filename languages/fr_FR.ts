@@ -32,12 +32,12 @@
     <message>
         <location filename="../dialogappsettings.ui" line="46"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Par défaut</translation>
     </message>
     <message>
         <location filename="../dialogappsettings.ui" line="65"/>
         <source>FGDATA Directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Répertoire FGDATA:</translation>
     </message>
     <message>
         <location filename="../dialogappsettings.ui" line="91"/>
@@ -48,7 +48,7 @@
     <message>
         <location filename="../dialogappsettings.ui" line="136"/>
         <source>fgfs binary path:</source>
-        <translation type="unfinished"></translation>
+        <translation>path de fgfs:</translation>
     </message>
     <message>
         <location filename="../dialogappsettings.cpp" line="36"/>
@@ -58,17 +58,17 @@
     <message>
         <location filename="../dialogappsettings.cpp" line="37"/>
         <source>App Configuration NOT stored!</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration de l&apos;Application PAS stockées!</translation>
     </message>
     <message>
         <location filename="../dialogappsettings.cpp" line="54"/>
         <source>Select FGDATA directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez le répertoire FGDATA</translation>
     </message>
     <message>
         <location filename="../dialogappsettings.cpp" line="66"/>
         <source>Select fgfs binary path</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez le path de fgfs</translation>
     </message>
 </context>
 <context>
@@ -76,17 +76,17 @@
     <message>
         <location filename="../dialogmpdetails.ui" line="14"/>
         <source>MultiPlayer Adv Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres avancés multijoueurs</translation>
     </message>
     <message>
         <location filename="../dialogmpdetails.ui" line="45"/>
         <source>In</source>
-        <translation type="unfinished"></translation>
+        <translation>In</translation>
     </message>
     <message>
         <location filename="../dialogmpdetails.ui" line="68"/>
         <source>Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Out</translation>
     </message>
 </context>
 <context>
@@ -94,12 +94,12 @@
     <message>
         <location filename="../helpdialog.ui" line="14"/>
         <source>Contextual Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Aide contextuelle</translation>
     </message>
     <message>
         <location filename="../helpdialog.ui" line="40"/>
         <source>about:blank</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -107,17 +107,17 @@
     <message>
         <location filename="../mpmdialog.ui" line="14"/>
         <source>MultiPlayer Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Carte Multijoueur</translation>
     </message>
     <message>
         <location filename="../mpmdialog.ui" line="47"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualiser</translation>
     </message>
     <message>
         <location filename="../mpmdialog.ui" line="56"/>
         <source>about:blank</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -211,12 +211,12 @@
     <message>
         <location filename="../mainwindow.ui" line="431"/>
         <source>hostname:</source>
-        <translation type="unfinished"></translation>
+        <translation>nom d&apos;hôte:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="477"/>
         <source>MultiPlayer Map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Carte Multijoueur...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="519"/>
@@ -276,17 +276,17 @@
     <message>
         <location filename="../mainwindow.ui" line="784"/>
         <source>Random trees</source>
-        <translation type="unfinished"></translation>
+        <translation>Arbres aléatoires</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="813"/>
         <source>Scenarios</source>
-        <translation type="unfinished"></translation>
+        <translation>Scénarios</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="826"/>
         <source>Deselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Désélectionner Tous</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="844"/>
@@ -336,22 +336,22 @@
     <message>
         <location filename="../mainwindow.ui" line="998"/>
         <source>HUD Antialias</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1010"/>
         <source>Rendering options</source>
-        <translation type="unfinished"></translation>
+        <translation>Options de rendering</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1022"/>
         <source>Enhanced lighting</source>
-        <translation type="unfinished"></translation>
+        <translation>Amélioration de l&apos;éclairage</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1035"/>
         <source>Specular highlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Surbrillance spéculaire</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1067"/>
@@ -416,7 +416,7 @@
     <message>
         <location filename="../mainwindow.ui" line="1274"/>
         <source>Quote</source>
-        <translation type="unfinished"></translation>
+        <translation>Altimétrie</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1287"/>
@@ -456,7 +456,7 @@
     <message>
         <location filename="../mainwindow.ui" line="1429"/>
         <source>Refresh airport list</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualiser la liste des aéroport</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1465"/>
@@ -466,7 +466,7 @@
     <message>
         <location filename="../mainwindow.ui" line="1501"/>
         <source>Place aircraft on the right place</source>
-        <translation type="unfinished"></translation>
+        <translation>Positionner l&apos;appareil au bon endroit</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1504"/>
@@ -476,22 +476,22 @@
     <message>
         <location filename="../mainwindow.ui" line="1527"/>
         <source>Recreate airports index</source>
-        <translation type="unfinished"></translation>
+        <translation>Recréer l&apos;index des aéroports</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1563"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1581"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1602"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>Description</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1655"/>
@@ -501,18 +501,18 @@
     <message>
         <location filename="../mainwindow.ui" line="1742"/>
         <source>TerraSync</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1754"/>
         <source>Launch TerraSync when simulation starts</source>
-        <translation type="unfinished"></translation>
+        <translation>Lance TerraSync lorsque la simulation commence</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1789"/>
         <location filename="../mainwindow.cpp" line="1778"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Lance</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1817"/>
@@ -542,7 +542,7 @@
     <message>
         <location filename="../mainwindow.ui" line="1924"/>
         <source>Contributors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Contributeurs:</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1940"/>
@@ -551,7 +551,7 @@
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Pavel Fric (&lt;span style=&quot; font-style:italic;&quot;&gt;Czech Translations&lt;/span&gt;)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2008"/>
@@ -561,32 +561,32 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.ui" line="2021"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To use this feature you need YaInstall&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pour utiliser cette caractéristique tu dois installer YaInstall&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2024"/>
         <source>Install model</source>
-        <translation type="unfinished"></translation>
+        <translation>Installez le modèle</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="124"/>
         <source>OS: </source>
-        <translation type="unfinished"></translation>
+        <translation>Système d&apos;exploitation:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="125"/>
         <source>FG version: </source>
-        <translation type="unfinished"></translation>
+        <translation>Version de FG:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="126"/>
         <source>Default FGROOT: </source>
-        <translation type="unfinished"></translation>
+        <translation>Défaut FGROOT:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="127"/>
         <source>Default FGSCEN: </source>
-        <translation type="unfinished"></translation>
+        <translation>Défaut FGSCEN:</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="128"/>
@@ -596,7 +596,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.cpp" line="132"/>
         <source>N/A</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="213"/>
@@ -681,41 +681,41 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.cpp" line="37"/>
         <source>AutoDetection failed: manual configuration will be started</source>
-        <translation type="unfinished"></translation>
+        <translation>La détection automatique a échoué: la configuration manuelle sera lancé</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="42"/>
         <source>Manual configuration aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration manuelle avorté</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="190"/>
         <location filename="../mainwindow.cpp" line="195"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Version</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="190"/>
         <location filename="../mainwindow.cpp" line="195"/>
         <source>is available</source>
-        <translation type="unfinished"></translation>
+        <translation>est disponible</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="197"/>
         <source>Your yaflight is up to date</source>
-        <translation type="unfinished"></translation>
+        <translation>Votre yaflight est à jour</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="278"/>
         <location filename="../mainwindow.cpp" line="1783"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrêter</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1730"/>
         <location filename="../mainwindow.cpp" line="1739"/>
         <source>Found</source>
-        <translation type="unfinished"></translation>
+        <translation>Trouvé</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="1804"/>
