@@ -672,15 +672,15 @@
           </rect>
          </property>
          <property name="currentIndex">
-          <number>2</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="pageSimulation">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>96</width>
-            <height>26</height>
+            <width>481</width>
+            <height>143</height>
            </rect>
           </property>
           <attribute name="icon">
