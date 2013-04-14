@@ -247,6 +247,9 @@ private:
     void place_aircraft_on_map_reading_table();
     void place_aircraft_on_map_reading_settings();
     void center_mpmap_at_coords();
+    bool eventFilter(QObject * obj, QEvent * event);
+    void change_selected_coords();
+
 };
 
 #endif // MAINWINDOW_H
