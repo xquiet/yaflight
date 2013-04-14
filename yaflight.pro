@@ -25,9 +25,23 @@ DEFINES += DATADIR=\\\"$$DATADIR\\\" TRANSDIR=\\\"$$TRANSDIR\\\"
 
 unix:LIBS += -lz
 
+# for development environment
 win32:LIBS += "C:\\librerie\\zlib-1.2.7\\contrib\\vstudio\\vc9\\x86\\ZlibDllReleaseWithoutAsm\\zlibwapi.dll"
 
 win32:INCLUDEPATH += "C:\\librerie\\zlib-1.2.7"
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../yalib/release/ -lyalib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../yalib/debug/ -lyalib
+else:mac: LIBS += -F$$PWD/../yalib/ -framework yalib
+else:unix: LIBS += -L$$PWD/../yalib/ -lyalib
+
+unix:!macx {
+    target.path = /usr/bin
+}
+
+INCLUDEPATH += $$PWD/../yalib
+DEPENDPATH += $$PWD/../yalib
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -99,11 +113,4 @@ TRANSLATIONS += languages/cs_CZ.ts \
     languages/zh_CN.ts \
     languages/zh_TW.ts
 
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../yalib/release/ -lyalib
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../yalib/debug/ -lyalib
-else:mac: LIBS += -F$$PWD/../yalib/ -framework yalib
-else:unix: LIBS += -L$$PWD/../yalib/ -lyalib
-
-INCLUDEPATH += $$PWD/../yalib
-DEPENDPATH += $$PWD/../yalib
+INSTALLS += target
