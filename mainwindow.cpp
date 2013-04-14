@@ -261,6 +261,7 @@ QHash<QString, QString> MainWindow::getListOfAircrafts()
         {
             result.insert(xml.value(j).replace("-set.xml","",Qt::CaseSensitive),listOfAircrafts.value(i));
         }
+        delete subdir;
     }
     result.end();
     return result;
@@ -1887,15 +1888,19 @@ void MainWindow::showHelp(QString url)
 void MainWindow::on_pbtInstallModel_clicked()
 {
     QStringList env = QProcess::systemEnvironment();
-    QProcess *proc = new QProcess();
-    proc->setEnvironment(env);
-    connect(proc,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(yainstall_proc_finished()));
+    procYaInstall = new QProcess();
+    procYaInstall->setEnvironment(env);
+    procYaInstall->setProcessChannelMode(QProcess::MergedChannels);
+    connect(procYaInstall,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(yainstall_proc_finished()));
     log->Log(Logger::ET_INFO,tr("Launching")+" "+fgenv->getYaInstallBinary());
-    proc->start(fgenv->getYaInstallBinary(), QStringList(), QProcess::ReadOnly);
+    procYaInstall->start(fgenv->getYaInstallBinary(),QStringList(),QProcess::ReadOnly);
 }
 
 void MainWindow::yainstall_proc_finished()
 {
+    procYaInstall->kill();
+    procYaInstall->close();
+    delete procYaInstall;
     refreshListOfAircrafts();
     populate_combo_aircrafts();
 }

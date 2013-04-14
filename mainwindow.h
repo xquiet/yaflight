@@ -189,6 +189,7 @@ private:
     // ----- processes -----
     QProcess *procFGFS;
     QProcess *procTerraSync;
+    QProcess *procYaInstall;
     bool proc_fgfs_is_running;
     bool proc_ts_is_running;
     QTimer *tmrProcFGFS;
