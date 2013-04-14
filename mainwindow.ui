@@ -185,8 +185,8 @@
       <rect>
        <x>0</x>
        <y>30</y>
-       <width>491</width>
-       <height>281</height>
+       <width>521</width>
+       <height>311</height>
       </rect>
      </property>
      <property name="currentIndex">
@@ -552,7 +552,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>481</width>
+         <width>491</width>
          <height>261</height>
         </rect>
        </property>
@@ -832,8 +832,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>96</width>
-            <height>26</height>
+            <width>481</width>
+            <height>143</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -941,6 +941,51 @@
            </property>
            <property name="text">
             <string>Altitude:</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="lblCurrentCoords">
+           <property name="geometry">
+            <rect>
+             <x>370</x>
+             <y>10</y>
+             <width>111</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Coordinates:</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="lblLongitude">
+           <property name="geometry">
+            <rect>
+             <x>380</x>
+             <y>30</y>
+             <width>91</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Longitude</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="lblLatitude">
+           <property name="geometry">
+            <rect>
+             <x>380</x>
+             <y>50</y>
+             <width>91</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Latitude</string>
            </property>
           </widget>
          </widget>
