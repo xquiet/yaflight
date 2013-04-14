@@ -64,6 +64,7 @@ ImagePreview::ImagePreview(QString srcImagePath, int lblWidth, int lblHeight)
     painter->fillRect(pixmap->rect(),Qt::black);
     painter->drawImage(newX,0,dstImage);
     painter->end();
+    delete painter;
 }
 
 QPixmap ImagePreview::getPixmap()
