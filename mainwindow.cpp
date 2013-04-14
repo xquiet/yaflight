@@ -137,6 +137,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     check_updates();
 
+    // bad solution!
+    // start timer to retrieve current aircraft coords
+    /*tmrProcCoords = new QTimer();
+    connect(tmrProcCoords, SIGNAL(timeout()),this,SLOT(hndl_tmr_coords()));
+    tmrProcCoords->start(350);*/
+
+    // nice tip from
+    // http://www.developer.nokia.com/Community/Discussion/showthread.php?225405-How-to-detect-mouse-press-move-release-in-Qwebview-without-affect-linkcliced
+    ui->webView->installEventFilter(this);
+
     hpdiag = NULL;
     mpmdiag = NULL;
 }
@@ -144,6 +154,17 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    if(obj == ui->webView)
+    {
+        if(event->type() == QEvent::MouseButtonRelease)
+        {
+            change_selected_coords();
+        }
+    }
 }
 
 void MainWindow::populate_combo_aircrafts()
@@ -1456,7 +1477,6 @@ void MainWindow::update_latlonhead(QString lat, QString lon, QString heading)
     ui->dialHeading->setValue((int)convert_dialhead_to_azimuth(lastHeading.toDouble()));
     ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaCentroMappa(" + lon + "," + lat + ",true);");
     ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaLonLat(" + lon + "," + lat + ", true," + heading + ");");
-
 }
 
 double MainWindow::convert_dialhead_to_azimuth(double head)
@@ -1484,14 +1504,6 @@ void MainWindow::on_dialHeading_valueChanged(int value)
     double newValue = convert_dialhead_to_azimuth(value) + QString("0," + decimal).toDouble();
     ui->spboxHeading->setValue(newValue);
 }
-
-/*
-  sCoords = wbvMap.Eval("document.getElementById('yaflight').innerText;")
-  If Trim(sCoords) = "" Then Return
-  aCoords = Split(sCoords, ",", Null, True)
-  txtLongitude.Text = Trim(aCoords[0])
-  txtLatitude.Text = Trim(aCoords[1])
-  */
 
 void MainWindow::on_btnGoToMap_clicked()
 {
@@ -1647,6 +1659,28 @@ void MainWindow::hndl_tmr_procts()
         ui->lblTerraSyncStatus->setToolTip(tr("TerraSync not running"));
         ui->lblTerraSyncStatus->setScaledContents(true);
         tmrProcTS->stop();
+    }
+}
+
+void MainWindow::change_selected_coords()
+{
+    /*
+      sCoords = wbvMap.Eval("document.getElementById('yaflight').innerText;")
+      If Trim(sCoords) = "" Then Return
+      aCoords = Split(sCoords, ",", Null, True)
+      txtLongitude.Text = Trim(aCoords[0])
+      txtLatitude.Text = Trim(aCoords[1])
+      */
+    QString coords = ui->webView->page()->mainFrame()->evaluateJavaScript("document.getElementById('yaflight').innerText;").toString();
+    if(coords.trimmed().compare("")!=0)
+    {
+        QStringList aCoords = coords.split(",");
+        ui->lblLatitude->setText(aCoords[1].trimmed());
+        ui->lblLongitude->setText(aCoords[0].trimmed());
+        ui->lblLatitude->setToolTip(ui->lblLatitude->text().trimmed());
+        ui->lblLongitude->setToolTip(ui->lblLongitude->text().trimmed());
+        lastLongitude = aCoords[0].trimmed();
+        lastLatitude = aCoords[1].trimmed();
     }
 }
 
