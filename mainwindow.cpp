@@ -1668,19 +1668,12 @@ void MainWindow::hndl_tmr_procts()
 
 void MainWindow::change_selected_coords()
 {
-    /*
-      sCoords = wbvMap.Eval("document.getElementById('yaflight').innerText;")
-      If Trim(sCoords) = "" Then Return
-      aCoords = Split(sCoords, ",", Null, True)
-      txtLongitude.Text = Trim(aCoords[0])
-      txtLatitude.Text = Trim(aCoords[1])
-      */
     QString coords = ui->webView->page()->mainFrame()->evaluateJavaScript("document.getElementById('yaflight').innerText;").toString();
     if(coords.trimmed().compare("")!=0)
     {
         QStringList aCoords = coords.split(",");
-        ui->lblLatitude->setText(aCoords[1].trimmed());
-        ui->lblLongitude->setText(aCoords[0].trimmed());
+        ui->lblLatitude->setText(tr("Latitude")+": "+aCoords[1].trimmed());
+        ui->lblLongitude->setText(tr("Longitude")+": "+aCoords[0].trimmed());
         ui->lblLatitude->setToolTip(ui->lblLatitude->text().trimmed());
         ui->lblLongitude->setToolTip(ui->lblLongitude->text().trimmed());
         lastLongitude = aCoords[0].trimmed();
