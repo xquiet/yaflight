@@ -163,8 +163,11 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         if(event->type() == QEvent::MouseButtonRelease)
         {
             change_selected_coords();
+            ui->webView->eventFilter(obj,event);
         }
     }
+    else
+        return MainWindow::eventFilter(obj,event);
 }
 
 void MainWindow::populate_combo_aircrafts()
