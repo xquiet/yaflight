@@ -506,8 +506,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>491</width>
-          <height>191</height>
+          <width>96</width>
+          <height>26</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -946,7 +946,7 @@
           <widget class="QLabel" name="lblCurrentCoords">
            <property name="geometry">
             <rect>
-             <x>250</x>
+             <x>120</x>
              <y>90</y>
              <width>111</width>
              <height>16</height>
@@ -965,8 +965,8 @@
           <widget class="QLabel" name="lblLongitude">
            <property name="geometry">
             <rect>
-             <x>260</x>
-             <y>110</y>
+             <x>240</x>
+             <y>90</y>
              <width>221</width>
              <height>16</height>
             </rect>
@@ -978,8 +978,8 @@
           <widget class="QLabel" name="lblLatitude">
            <property name="geometry">
             <rect>
-             <x>260</x>
-             <y>130</y>
+             <x>240</x>
+             <y>110</y>
              <width>221</width>
              <height>16</height>
             </rect>
