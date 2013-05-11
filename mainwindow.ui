@@ -39,7 +39,110 @@
     <normaloff>:/icons/icons/yaflight-logo2013-64px.png</normaloff>:/icons/icons/yaflight-logo2013-64px.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">/* ---- QPushButton section ---- */
+QPushButton {
+	border-width: 1;
+    border-style: solid;
+    border-color: #888a85;
+}
+
+QPushButton:focus:pressed,
+QPushButton:hover {
+	background-color: rgb(245,245,245);
+}
+/* ---- QLineEdit section ---- */
+QLineEdit {
+	border-width: 1;
+    border-style: solid;
+    border-color: #888a85;
+}
+
+QLineEdit:focus:pressed,
+QLineEdit:hover {
+	border-width: 1;
+    border-style: solid;
+    border-color: rgb(145,2,2);
+}
+
+QLineEdit:focus {
+	background-color: #fce94f;
+}
+/* ---- QComboBox ---- */
+QComboBox {
+	border-width: 1;
+    border-style: solid;
+    border-color: #888a85;
+	background-color: #dfdfdf;
+}
+/* ---- QTabWidget abd QTabBar section ---- */
+QTabWidget::pane { /* The tab widget frame */
+    border-top: 2px solid #C2C7CB;
+}
+ QTabWidget::tab-bar {
+    left: 5px; /* move to the right by 5px */
+}
+ /* Style the tab using the tab sub-control. Note that
+    it reads QTabBar _not_ QTabWidget */
+QTabBar::tab {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
+                                stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+    border: 2px solid #C4C4C3;
+    border-bottom-color: #C2C7CB; /* same as the pane color */
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+	min-width:8ex;
+    padding: 2px;
+}
+QTabBar::tab:selected, QTabBar::tab:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                               stop: 0 #fafafa, stop: 0.4 #f4f4f4,
+                               stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
+}
+QTabBar::tab:selected {
+    border-color: #9B9B9B;
+    border-bottom-color: #C2C7CB; /* same as pane color */
+}
+QTabBar::tab:!selected {
+    margin-top: 2px; /* make non-selected tabs look smaller */
+}
+/* make use of negative margins for overlapping tabs */
+QTabBar::tab:selected {
+    /* expand/overlap to the left and right by 4px */
+    margin-left: -4px;
+    margin-right: -4px;
+}
+QTabBar::tab:first:selected {
+    margin-left: 0; /* the first selected tab has nothing to overlap with on the left */
+}
+QTabBar::tab:last:selected {
+    margin-right: 0; /* the last selected tab has nothing to overlap with on the right */
+}
+QTabBar::tab:only-one {
+    margin: 0; /* if there is only one tab, we don't want overlapping margins */
+}
+/* ---- QToolbox section ---- */
+/* Style the tab using the tab sub-control. Note that
+   it reads QTabBar _not_ QTabWidget */
+QToolBox::tab {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
+                                stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+    border: 2px solid #C4C4C3;
+    border-bottom-color: #C2C7CB; /* same as the pane color */
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    padding: 2px;
+}
+QToolBox::tab:selected, QToolBox::tab:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                               stop: 0 #fafafa, stop: 0.4 #f4f4f4,
+                               stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
+}
+QToolBox::tab:selected {
+    border-color: #9B9B9B;
+    border-bottom-color: #C2C7CB; /* same as pane color */
+}</string>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -60,12 +163,18 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string>Exit</string>
     </property>
     <property name="icon">
      <iconset resource="yaflightresources.qrc">
-      <normaloff>:/icons/icons/system-shutdown.png</normaloff>:/icons/icons/system-shutdown.png</iconset>
+      <normaloff>:/icons/icons/btn_yf_power_small.png</normaloff>:/icons/icons/btn_yf_power_small.png</iconset>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QPushButton" name="pbtSaveConf">
@@ -82,7 +191,7 @@
     </property>
     <property name="icon">
      <iconset resource="yaflightresources.qrc">
-      <normaloff>:/icons/icons/media-floppy.png</normaloff>:/icons/icons/media-floppy.png</iconset>
+      <normaloff>:/icons/icons/btn_yf_save_small.png</normaloff>:/icons/icons/btn_yf_save_small.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="pbtLoadConf">
@@ -99,7 +208,7 @@
     </property>
     <property name="icon">
      <iconset resource="yaflightresources.qrc">
-      <normaloff>:/icons/icons/svn-commit.png</normaloff>:/icons/icons/svn-commit.png</iconset>
+      <normaloff>:/icons/icons/btn_yf_load_small.png</normaloff>:/icons/icons/btn_yf_load_small.png</iconset>
     </property>
    </widget>
    <widget class="QLabel" name="lblAircraftPreview">
@@ -114,8 +223,14 @@
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border: 1 groove rgb(6,11,3);</string>
+    </property>
     <property name="frameShape">
-     <enum>QFrame::Box</enum>
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
     </property>
     <property name="text">
      <string/>
@@ -135,7 +250,7 @@
     </property>
     <property name="icon">
      <iconset resource="yaflightresources.qrc">
-      <normaloff>:/icons/icons/dialog-information.png</normaloff>:/icons/icons/dialog-information.png</iconset>
+      <normaloff>:/icons/icons/btn_yf_informations_small.png</normaloff>:/icons/icons/btn_yf_informations_small.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -186,11 +301,14 @@
        <x>0</x>
        <y>20</y>
        <width>501</width>
-       <height>311</height>
+       <height>281</height>
       </rect>
      </property>
      <property name="currentIndex">
       <number>0</number>
+     </property>
+     <property name="documentMode">
+      <bool>false</bool>
      </property>
      <widget class="QWidget" name="tabBasic">
       <attribute name="title">
@@ -223,10 +341,12 @@
           <height>191</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <attribute name="icon">
-         <iconset>
-          <normalon>:/icons/icons/configure.png</normalon>
-         </iconset>
+         <iconset resource="yaflightresources.qrc">
+          <normaloff>:/icons/icons/btn_yf_tool_small.png</normaloff>:/icons/icons/btn_yf_tool_small.png</iconset>
         </attribute>
         <attribute name="label">
          <string>Quick Options</string>
@@ -379,7 +499,7 @@
            <x>100</x>
            <y>10</y>
            <width>113</width>
-           <height>20</height>
+           <height>16</height>
           </rect>
          </property>
         </widget>
@@ -437,7 +557,7 @@
            <x>100</x>
            <y>30</y>
            <width>113</width>
-           <height>20</height>
+           <height>16</height>
           </rect>
          </property>
         </widget>
@@ -455,7 +575,7 @@
          </property>
          <property name="icon">
           <iconset resource="yaflightresources.qrc">
-           <normaloff>:/icons/icons/configure.png</normaloff>:/icons/icons/configure.png</iconset>
+           <normaloff>:/icons/icons/btn_yf_tool_small.png</normaloff>:/icons/icons/btn_yf_tool_small.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -506,8 +626,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>96</width>
-          <height>26</height>
+          <width>491</width>
+          <height>191</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -578,7 +698,7 @@
         </rect>
        </property>
        <property name="autoFillBackground">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <widget class="QDial" name="dialHeading">
         <property name="geometry">
@@ -648,6 +768,12 @@
        <property name="currentIndex">
         <number>0</number>
        </property>
+       <property name="iconSize">
+        <size>
+         <width>22</width>
+         <height>22</height>
+        </size>
+       </property>
        <property name="elideMode">
         <enum>Qt::ElideNone</enum>
        </property>
@@ -657,7 +783,7 @@
        <widget class="QWidget" name="tabFeatures">
         <attribute name="icon">
          <iconset resource="yaflightresources.qrc">
-          <normaloff>:/icons/icons/configure.png</normaloff>:/icons/icons/configure.png</iconset>
+          <normaloff>:/icons/icons/btn_yf_tool_small.png</normaloff>:/icons/icons/btn_yf_tool_small.png</iconset>
         </attribute>
         <attribute name="title">
          <string>Features</string>
@@ -668,7 +794,7 @@
            <x>0</x>
            <y>0</y>
            <width>501</width>
-           <height>231</height>
+           <height>221</height>
           </rect>
          </property>
          <property name="currentIndex">
@@ -680,12 +806,12 @@
             <x>0</x>
             <y>0</y>
             <width>501</width>
-            <height>143</height>
+            <height>133</height>
            </rect>
           </property>
           <attribute name="icon">
            <iconset resource="yaflightresources.qrc">
-            <normaloff>:/icons/icons/configure.png</normaloff>:/icons/icons/configure.png</iconset>
+            <normaloff>:/icons/icons/btn_yf_tool_small.png</normaloff>:/icons/icons/btn_yf_tool_small.png</iconset>
           </attribute>
           <attribute name="label">
            <string>Simulation</string>
@@ -819,7 +945,7 @@
              <x>330</x>
              <y>110</y>
              <width>141</width>
-             <height>25</height>
+             <height>21</height>
             </rect>
            </property>
            <property name="text">
@@ -833,7 +959,7 @@
             <x>0</x>
             <y>0</y>
             <width>501</width>
-            <height>143</height>
+            <height>133</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -995,7 +1121,7 @@
             <x>0</x>
             <y>0</y>
             <width>501</width>
-            <height>143</height>
+            <height>133</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1049,7 +1175,7 @@
        <widget class="QWidget" name="tabRendering">
         <attribute name="icon">
          <iconset resource="yaflightresources.qrc">
-          <normaloff>:/icons/icons/video-display.png</normaloff>:/icons/icons/video-display.png</iconset>
+          <normaloff>:/icons/icons/btn_yf_schermo_small.png</normaloff>:/icons/icons/btn_yf_schermo_small.png</iconset>
         </attribute>
         <attribute name="title">
          <string>Rendering options</string>
@@ -1359,7 +1485,7 @@
        <widget class="QWidget" name="tabTime">
         <attribute name="icon">
          <iconset resource="yaflightresources.qrc">
-          <normaloff>:/icons/icons/clock.png</normaloff>:/icons/icons/clock.png</iconset>
+          <normaloff>:/icons/icons/btn_yf_clock_small.png</normaloff>:/icons/icons/btn_yf_clock_small.png</iconset>
         </attribute>
         <attribute name="title">
          <string>Time</string>
@@ -1524,7 +1650,7 @@
        </property>
        <property name="icon">
         <iconset resource="yaflightresources.qrc">
-         <normaloff>:/icons/icons/dialog-information.png</normaloff>:/icons/icons/dialog-information.png</iconset>
+         <normaloff>:/icons/icons/btn_yf_informations_small.png</normaloff>:/icons/icons/btn_yf_informations_small.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -1550,7 +1676,7 @@
        </property>
        <property name="icon">
         <iconset resource="yaflightresources.qrc">
-         <normaloff>:/icons/icons/list-add.png</normaloff>:/icons/icons/list-add.png</iconset>
+         <normaloff>:/icons/icons/btn_yf_plus_small.png</normaloff>:/icons/icons/btn_yf_plus_small.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -1713,7 +1839,7 @@
        </property>
        <property name="icon">
         <iconset resource="yaflightresources.qrc">
-         <normaloff>:/icons/icons/list-add.png</normaloff>:/icons/icons/list-add.png</iconset>
+         <normaloff>:/icons/icons/btn_yf_plus_small.png</normaloff>:/icons/icons/btn_yf_plus_small.png</iconset>
        </property>
       </widget>
       <widget class="QPushButton" name="btnDel">
@@ -1730,7 +1856,7 @@
        </property>
        <property name="icon">
         <iconset resource="yaflightresources.qrc">
-         <normaloff>:/icons/icons/list-remove.png</normaloff>:/icons/icons/list-remove.png</iconset>
+         <normaloff>:/icons/icons/btn_yf_minus_small.png</normaloff>:/icons/icons/btn_yf_minus_small.png</iconset>
        </property>
       </widget>
       <widget class="QListView" name="lstviewSceneries">
@@ -1812,7 +1938,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="yaflightresources.qrc">:/icons/icons/dialog-close.png</pixmap>
+        <pixmap resource="yaflightresources.qrc">:/icons/icons/btn_yf_cross.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>true</bool>
@@ -2070,7 +2196,7 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="icon">
      <iconset resource="yaflightresources.qrc">
-      <normaloff>:/icons/icons/list-add.png</normaloff>:/icons/icons/list-add.png</iconset>
+      <normaloff>:/icons/icons/btn_yf_plus_small.png</normaloff>:/icons/icons/btn_yf_plus_small.png</iconset>
     </property>
    </widget>
   </widget>
