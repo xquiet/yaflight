@@ -1633,7 +1633,7 @@ void MainWindow::hndl_tmr_procfgfs()
 {
     if(procFGFS->state() == QProcess::Running)
     {
-        QIcon icon(":/icons/icons/dialog-close.png");
+        QIcon icon(":/icons/icons/btn_yf_cross.png");
         ui->pbtLaunch->setIcon(icon);
         ui->pbtLaunch->setText("Stop");
     }
@@ -1658,7 +1658,7 @@ void MainWindow::hndl_tmr_procts()
     }
     else
     {
-        QPixmap pixmap(":/icons/icons/dialog-close.png");
+        QPixmap pixmap(":/icons/icons/btn_yf_cross.png");
         ui->lblTerraSyncStatus->setPixmap(pixmap);
         ui->lblTerraSyncStatus->setToolTip(tr("TerraSync not running"));
         ui->lblTerraSyncStatus->setScaledContents(true);
