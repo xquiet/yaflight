@@ -29,5 +29,17 @@
         <file>icons/yaflight-logo2013-16px.png</file>
         <file>icons/help-contents.png</file>
         <file>icons/help-contextual.png</file>
+        <file>icons/btn_yf_power_small.png</file>
+        <file>icons/btn_yf_plus_small.png</file>
+        <file>icons/btn_yf_save_small.png</file>
+        <file>icons/btn_yf_load_small.png</file>
+        <file>icons/btn_yf_schermo_small.png</file>
+        <file>icons/btn_yf_tool_small.png</file>
+        <file>icons/up_arrow_dark.png</file>
+        <file>icons/down_arrow_dark.png</file>
+        <file>icons/btn_yf_cross.png</file>
+        <file>icons/btn_yf_minus_small.png</file>
+        <file>icons/btn_yf_clock_small.png</file>
+        <file>icons/btn_yf_informations_small.png</file>
     </qresource>
 </RCC>
