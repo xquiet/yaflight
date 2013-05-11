@@ -16,8 +16,9 @@ CuteExpander::CuteExpander(QWidget *parent) :
         lastY += wdgFiglio->height()+2;
     }*/
 
-    ui->btnToggle->setIcon(QIcon(":/icons/icons/arrowUp.png"));
+    ui->btnToggle->setIcon(QIcon(":/icons/icons/up_arrow_dark.png"));
     ui->btnToggle->setIconSize(QSize(16,16));
+    ui->btnToggle->setStyleSheet("border: none; text-align: left;");
 }
 
 void CuteExpander::on_btnToggle_clicked()
@@ -40,13 +41,13 @@ void CuteExpander::setText(QString text)
 void CuteExpander::expand()
 {
     this->setGeometry(this->x(),this->y(),this->width(),this->maximumHeight());
-    ui->btnToggle->setIcon(QIcon(":/icons/icons/arrowUp.png"));
+    ui->btnToggle->setIcon(QIcon(":/icons/icons/up_arrow_dark.png"));
     emit expanded();
 }
 
 void CuteExpander::unexpand()
 {
     this->setGeometry(this->x(),this->y(),this->width(),ui->btnToggle->height()+1);
-    ui->btnToggle->setIcon(QIcon(":/icons/icons/arrowDown.png"));
+    ui->btnToggle->setIcon(QIcon(":/icons/icons/down_arrow_dark.png"));
     emit unexpanded();
 }
