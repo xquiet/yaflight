@@ -626,14 +626,13 @@ QToolBox::tab:selected {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>491</width>
-          <height>191</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
-         <iconset>
-          <normalon>:/icons/icons/dialog-warning.png</normalon>
-         </iconset>
+         <iconset resource="yaflightresources.qrc">
+          <normaloff>:/icons/icons/btn_yf_warning_small.png</normaloff>:/icons/icons/btn_yf_warning_small.png</iconset>
         </attribute>
         <attribute name="label">
          <string>Log</string>
@@ -958,8 +957,8 @@ QToolBox::tab:selected {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>501</width>
-            <height>133</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -1120,8 +1119,8 @@ QToolBox::tab:selected {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>501</width>
-            <height>133</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1604,7 +1603,7 @@ QToolBox::tab:selected {
        </property>
        <property name="icon">
         <iconset resource="yaflightresources.qrc">
-         <normaloff>:/icons/icons/view-refresh.png</normaloff>:/icons/icons/view-refresh.png</iconset>
+         <normaloff>:/icons/icons/btn_yf_refresh_small.png</normaloff>:/icons/icons/btn_yf_refresh_small.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -1702,7 +1701,7 @@ QToolBox::tab:selected {
        </property>
        <property name="icon">
         <iconset resource="yaflightresources.qrc">
-         <normaloff>:/icons/icons/dialog-warning.png</normaloff>:/icons/icons/dialog-warning.png</iconset>
+         <normaloff>:/icons/icons/btn_yf_warning_small.png</normaloff>:/icons/icons/btn_yf_warning_small.png</iconset>
        </property>
        <property name="iconSize">
         <size>
