@@ -41,5 +41,7 @@
         <file>icons/btn_yf_minus_small.png</file>
         <file>icons/btn_yf_clock_small.png</file>
         <file>icons/btn_yf_informations_small.png</file>
+        <file>icons/btn_yf_warning_small.png</file>
+        <file>icons/btn_yf_refresh_small.png</file>
     </qresource>
 </RCC>
