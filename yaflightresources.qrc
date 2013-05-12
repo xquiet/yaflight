@@ -43,5 +43,11 @@
         <file>icons/btn_yf_informations_small.png</file>
         <file>icons/btn_yf_warning_small.png</file>
         <file>icons/btn_yf_refresh_small.png</file>
+        <file>icons/btn_yf_off_checked_small.png</file>
+        <file>icons/btn_yf_off_hover_small.png</file>
+        <file>icons/btn_yf_off_inactive_small.png</file>
+        <file>icons/btn_yf_on_checked_small.png</file>
+        <file>icons/btn_yf_on_hover_small.png</file>
+        <file>icons/btn_yf_on_inactive_small.png</file>
     </qresource>
 </RCC>
