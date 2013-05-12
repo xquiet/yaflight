@@ -678,8 +678,8 @@ QToolBox::tab:selected {
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>491</width>
-          <height>191</height>
+          <width>100</width>
+          <height>30</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -1009,8 +1009,8 @@ QToolBox::tab:selected {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>491</width>
-            <height>133</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -1171,8 +1171,8 @@ QToolBox::tab:selected {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>491</width>
-            <height>133</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <attribute name="label">
@@ -1332,7 +1332,7 @@ QToolBox::tab:selected {
        <widget class="QWidget" name="tabEnvironment">
         <attribute name="icon">
          <iconset resource="yaflightresources.qrc">
-          <normaloff>:/icons/icons/weather-showers-day.png</normaloff>:/icons/icons/weather-showers-day.png</iconset>
+          <normaloff>:/icons/icons/btn_yf_sunclouds_small.png</normaloff>:/icons/icons/btn_yf_sunclouds_small.png</iconset>
         </attribute>
         <attribute name="title">
          <string>Environment</string>
