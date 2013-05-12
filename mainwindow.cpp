@@ -2,8 +2,8 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    //QMainWindow(parent,Qt::FramelessWindowHint),
-    QMainWindow(parent),
+    QMainWindow(parent,Qt::FramelessWindowHint),
+    //QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -235,7 +235,8 @@ void MainWindow::setup_about_box()
 {
     ui->lblAppName->setText(QApplication::applicationName());
     ui->lblAppVersion->setText(tr("Version: ") + QApplication::applicationVersion());
-    ui->lblAppCopyright->setText("(C) 2012-2013 by Matteo Pasotti");
+    ui->lblAppCopyright->setText("&copy; 2012-2013 by Matteo Pasotti");
+    ui->lblAppCopyright->setTextFormat(Qt::RichText);
 }
 
 void MainWindow::refreshListOfAircrafts()
