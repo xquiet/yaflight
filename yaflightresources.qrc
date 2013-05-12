@@ -49,5 +49,6 @@
         <file>icons/btn_yf_on_checked_small.png</file>
         <file>icons/btn_yf_on_hover_small.png</file>
         <file>icons/btn_yf_on_inactive_small.png</file>
+        <file>icons/btn_yf_sunclouds_small.png</file>
     </qresource>
 </RCC>
