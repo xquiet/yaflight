@@ -37,6 +37,7 @@
 #include <QTimer>
 #include <QTranslator>
 #include <QtNetwork/QHttp>
+#include <QBitmap>
 
 #include "logger.h"
 #include "fgenvironment.h"
@@ -159,6 +160,8 @@ private slots:
 
     void on_pbtDeselectAllScenarios_clicked();
 
+    void paintEvent(QPaintEvent* event);
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -185,6 +188,9 @@ private:
     //void follow_pilot_on_mpmap();
     void populate_combo_aircrafts();
     void populate_scenarios();
+    // custom shape
+    QRegion getRegion() const;
+    void updateMask();
 
     // ----- processes -----
     QProcess *procFGFS;

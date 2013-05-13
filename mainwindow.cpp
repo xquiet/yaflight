@@ -1906,3 +1906,36 @@ void MainWindow::on_pbtDeselectAllScenarios_clicked()
 {
     ui->lstvScenarios->clearSelection();
 }
+
+void MainWindow::paintEvent(QPaintEvent* event)
+{
+        Q_UNUSED(event)
+
+        updateMask();
+
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing); // we need this in order to get correct rounded corners
+        painter.setPen(QPen(QBrush(Qt::black), 2.0));
+        painter.setBrush(QBrush(QColor(Qt::yellow)));
+        painter.drawRoundedRect(rect().adjusted(2,1,-2,-1), 5, 5);
+}
+
+QRegion MainWindow::getRegion() const
+{
+        QPainterPath path;
+        path.addRoundedRect(rect().adjusted(1, -1, -1, 0), 6, 6);
+        return QRegion(path.toFillPolygon().toPolygon());
+}
+
+void MainWindow::updateMask()
+{
+        QBitmap Bitmap(size());
+        Bitmap.clear();
+        QPainter Painter(&Bitmap);
+
+        Painter.setClipRegion(getRegion());
+        Painter.fillRect(rect(), Qt::color1);
+        Painter.end();
+
+        setMask(Bitmap);
+}
