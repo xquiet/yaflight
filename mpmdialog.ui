@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MultiPlayer Map</string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QWidget" name="wdgMPMapToolBar" native="true">
@@ -50,8 +53,8 @@
     </widget>
    </item>
    <item>
-    <widget class="QWebView" name="webViewMMap">
-     <property name="url">
+    <widget class="QWebView" name="webViewMMap" native="true">
+     <property name="url" stdset="0">
       <url>
        <string>about:blank</string>
       </url>
