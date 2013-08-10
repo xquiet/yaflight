@@ -188,15 +188,23 @@ void MainWindow::populate_scenarios()
 
 void MainWindow::check_updates()
 {
-    http = new QHttp(appsett->getUpdatesHost(),QHttp::ConnectionModeHttp,80);
-    connect(http,SIGNAL(requestFinished(int,bool)),this,SLOT(verify_updates()));
-    http->get(appsett->getUpdatesScript());
+    QNetworkAccessManager *mgr;
+    QNetworkRequest req;
+    mgr = new QNetworkAccessManager();
+    req.setUrl(QUrl(appsett->getUpdatesHost()+"/"+appsett->getUpdatesScript()));
+    //req.setRawHeader("User-Agent",userAgent.toStdString().data());
+    connect(mgr,SIGNAL(finished(QNetworkReply*)),this,SLOT(verify_updates(QNetworkReply*)));
+    mgr->get(req);
+    //http = new QHttp(appsett->getUpdatesHost(),QHttp::ConnectionModeHttp,80);
+    //connect(http,SIGNAL(requestFinished(int,bool)),this,SLOT(verify_updates()));
+    //http->get(appsett->getUpdatesScript());
 
 }
 
-void MainWindow::verify_updates()
+void MainWindow::verify_updates(QNetworkReply *reply)
 {
-    QString sDataReturned = QString(http->readAll());
+
+    QString sDataReturned = QString(reply->readAll());
     //qDebug("%s",sDataReturned.toStdString().data());
     QStringList items = sDataReturned.split("\n");
     foreach(QString item, items)
@@ -222,7 +230,7 @@ void MainWindow::verify_updates()
             }
         }
     }
-    http->close();
+    reply->close();
 }
 
 void MainWindow::setup_default_paths()

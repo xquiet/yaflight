@@ -36,7 +36,9 @@
 #include <QFileDialog>
 #include <QTimer>
 #include <QTranslator>
-#include <QtNetwork/QHttp>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
 #include <QBitmap>
 
 #include "logger.h"
@@ -138,7 +140,7 @@ private slots:
 
     void on_pbtSearchAirport_clicked();
 
-    void verify_updates();
+    void verify_updates(QNetworkReply *reply);
 
     void on_pbtSpecifyMPPorts_clicked();
 
@@ -177,7 +179,7 @@ private:
     void toggleLoadingBarVisible();
     void setup_default_paths();
     Logger *log;
-    QHttp *http;
+    //QNetworkAccessManager *mgr;
     void check_updates();
     //void setup_mpmap_viewer();
     MPMDialog *mpmdiag;
