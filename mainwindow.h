@@ -162,7 +162,7 @@ private slots:
 
     void on_pbtDeselectAllScenarios_clicked();
 
-    void paintEvent(QPaintEvent* event);
+    //void paintEvent(QPaintEvent* event);
 
 protected:
     //void resizeEvent(QResizeEvent *event);

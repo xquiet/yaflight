@@ -2,8 +2,8 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent,Qt::FramelessWindowHint),
-    //QMainWindow(parent),
+    //QMainWindow(parent,Qt::FramelessWindowHint),
+    QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
@@ -191,7 +191,8 @@ void MainWindow::check_updates()
     QNetworkAccessManager *mgr;
     QNetworkRequest req;
     mgr = new QNetworkAccessManager();
-    req.setUrl(QUrl(appsett->getUpdatesHost()+"/"+appsett->getUpdatesScript()));
+    QString myurl = "http://"+appsett->getUpdatesHost()+appsett->getUpdatesScript();
+    req.setUrl(QUrl(myurl));
     //req.setRawHeader("User-Agent",userAgent.toStdString().data());
     connect(mgr,SIGNAL(finished(QNetworkReply*)),this,SLOT(verify_updates(QNetworkReply*)));
     mgr->get(req);
@@ -1915,7 +1916,7 @@ void MainWindow::on_pbtDeselectAllScenarios_clicked()
     ui->lstvScenarios->clearSelection();
 }
 
-void MainWindow::paintEvent(QPaintEvent* event)
+/*void MainWindow::paintEvent(QPaintEvent* event)
 {
         Q_UNUSED(event)
 
@@ -1947,3 +1948,4 @@ void MainWindow::updateMask()
 
         setMask(Bitmap);
 }
+*/
