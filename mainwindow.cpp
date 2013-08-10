@@ -196,10 +196,6 @@ void MainWindow::check_updates()
     //req.setRawHeader("User-Agent",userAgent.toStdString().data());
     connect(mgr,SIGNAL(finished(QNetworkReply*)),this,SLOT(verify_updates(QNetworkReply*)));
     mgr->get(req);
-    //http = new QHttp(appsett->getUpdatesHost(),QHttp::ConnectionModeHttp,80);
-    //connect(http,SIGNAL(requestFinished(int,bool)),this,SLOT(verify_updates()));
-    //http->get(appsett->getUpdatesScript());
-
 }
 
 void MainWindow::verify_updates(QNetworkReply *reply)
