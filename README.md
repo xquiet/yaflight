@@ -9,7 +9,7 @@ and now completely rewritten using C++ with the Qt Framework to make it multi-pl
 Current development status
 --------------------------
 
-yaflight series 0.99 uses yalib, a shared library use also by yainstall, to access FlightGear related informations.
+yaflight series 0.99 uses yalib, a shared library also used by yainstall to access FlightGear related informations.
 
 Why this total rewrite?
 -----------------------
