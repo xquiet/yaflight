@@ -38,170 +38,11 @@
    <iconset resource="yaflightresources.qrc">
     <normaloff>:/icons/icons/yaflight-logo2013-64px.png</normaloff>:/icons/icons/yaflight-logo2013-64px.png</iconset>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <property name="styleSheet">
-   <string notr="true">* {
-	background-color: #efefef;
-}
-QToolTip {
-	color: #000;
-}
-QMainWindow {
-	border-width: 1;
-    border-style: solid;
-    border-color: #888a85;
-}
-/* ---- QPushButton section ---- */
-QPushButton {
-	border-width: 1;
-    border-style: solid;
-    border-color: #888a85;
-}
-
-QPushButton:hover {
-	color: rgb(250,250,250);
-	background-color: rgb(100,95,100);
-}
-QPushButton:focus:pressed {
-	/*color: rgb(6,11,3);
-	background-color: rgb(200,195,200);*/
-	color: rgb(250,250,250);
-	background-color: rgb(70,65,70);
-}
-/* ---- QLineEdit section ---- */
-QLineEdit {
-	border-width: 1;
-    border-style: solid;
-    border-color: #888a85;
-}
-
-QLineEdit:focus:pressed,
-QLineEdit:hover {
-	border-width: 1;
-    border-style: solid;
-    border-color: rgb(145,2,2);
-}
-
-QLineEdit:focus {
-	background-color: #fce94f;
-}
-/* ---- QComboBox ---- */
-QComboBox {
-	border-width: 1;
-    border-style: solid;
-    border-color: #888a85;
-	background-color: #dfdfdf;
-}
-/* ---- QCheckBox ---- */
-QCheckBox {
-    spacing: 5px;
-}
-
-QCheckBox::indicator {
-    width: 28px;
-    height: 28px;
-}
-QCheckBox::indicator:unchecked {
-    image: url(:/icons/icons/btn_yf_off_checked_small.png);
-}
-
-QCheckBox::indicator:unchecked:hover {
-    image: url(:/icons/icons/btn_yf_off_hover_small.png);
-}
-
-QCheckBox::indicator:unchecked:pressed {
-	image: url(:/icons/icons/btn_yf_off_inactive_small.png);
-}
-
-QCheckBox::indicator:checked {
-	image: url(:/icons/icons/btn_yf_on_checked_small.png);
-}
-
-QCheckBox::indicator:checked:hover {
-	image: url(:/icons/icons/btn_yf_on_hover_small.png);
-}
-
-QCheckBox::indicator:checked:pressed {
-	image: url(:/icons/icons/btn_yf_on_inactive_small.png);
-}
-
-QCheckBox::indicator:indeterminate:hover {
-	image: url(:/images/checkbox_indeterminate_hover.png);
-}
-
-QCheckBox::indicator:indeterminate:pressed {
-	image: url(:/images/checkbox_indeterminate_pressed.png);
-}
-
-/* ---- QTabWidget abd QTabBar section ---- */
-/* TabWidget frame */
-/*QTabWidget::pane {
-    border-top: 2px solid #C2C7CB;
-}
- QTabWidget::tab-bar {
-    left: 5px;
-}*/
- /* Style the tab using the tab sub-control. Note that
-    it reads QTabBar _not_ QTabWidget */
-/*QTabBar::tab {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
-                                stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
-    border: 2px solid #C4C4C3;
-    border-bottom-color: #C2C7CB; // same as the pane color //
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-	min-width:8ex;
-    padding: 2px;
-}
-QTabBar::tab:selected, QTabBar::tab:hover {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                               stop: 0 #fafafa, stop: 0.4 #f4f4f4,
-                               stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
-}
-QTabBar::tab:selected {
-    border-color: #9B9B9B;
-    border-bottom-color: #C2C7CB; // same as pane color //
-}
-QTabBar::tab:!selected {
-    margin-top: 2px; // make non-selected tabs look smaller //
-}
-// make use of negative margins for overlapping tabs //
-QTabBar::tab:selected {
-    // expand/overlap to the left and right by 4px //
-    margin-left: -4px;
-    margin-right: -4px;
-}
-QTabBar::tab:first:selected {
-    margin-left: 0; // the first selected tab has nothing to overlap with on the left //
-}
-QTabBar::tab:last:selected {
-    margin-right: 0; // the last selected tab has nothing to overlap with on the right //
-}
-QTabBar::tab:only-one {
-    margin: 0; // if there is only one tab, we don't want overlapping margins //
-}*/
-/* ---- QToolbox section ---- */
-/* Style the tab using the tab sub-control. Note that
-   it reads QTabBar _not_ QTabWidget */
-QToolBox::tab {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
-                                stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
-    border: 2px solid #C4C4C3;
-    border-bottom-color: #C2C7CB; /* same as the pane color */
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    padding: 2px;
-}
-QToolBox::tab:selected, QToolBox::tab:hover {
-    background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                               stop: 0 #fafafa, stop: 0.4 #f4f4f4,
-                               stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
-}
-QToolBox::tab:selected {
-    border-color: #9B9B9B;
-    border-bottom-color: #C2C7CB; /* same as pane color */
-}</string>
+   <string notr="true"/>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>
@@ -211,6 +52,9 @@ QToolBox::tab:selected {
     <width>32</width>
     <height>32</height>
    </size>
+  </property>
+  <property name="toolButtonStyle">
+   <enum>Qt::ToolButtonFollowStyle</enum>
   </property>
   <property name="unifiedTitleAndToolBarOnMac">
    <bool>false</bool>
@@ -728,7 +572,7 @@ QToolBox::tab:selected {
       <attribute name="title">
        <string>Map</string>
       </attribute>
-      <widget class="QWebView" name="webView">
+      <widget class="QWebView" name="webView" native="true">
        <property name="geometry">
         <rect>
          <x>0</x>
@@ -743,7 +587,7 @@ QToolBox::tab:selected {
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="url">
+       <property name="url" stdset="0">
         <url>
          <string>http://yaflight.altervista.org/yaserv/</string>
         </url>
@@ -1019,8 +863,8 @@ QToolBox::tab:selected {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>491</width>
-            <height>133</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
           <attribute name="icon">
@@ -1181,8 +1025,8 @@ QToolBox::tab:selected {
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>491</width>
-            <height>133</height>
+            <width>98</width>
+            <height>28</height>
            </rect>
           </property>
           <attribute name="label">
