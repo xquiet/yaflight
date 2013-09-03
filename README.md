@@ -49,3 +49,4 @@ icons
 =====
 
 Some of the icons used by yaflight belongs to the kde theme (http://www.kde.org) and to the gnome theme (http://www.gnome.org).
+Custom icons built from scratch are work in progress.
