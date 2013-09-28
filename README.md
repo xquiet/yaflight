@@ -1,7 +1,7 @@
 yaflight
 ========
 
-![yaflight logo](https://github.com/xquiet/yaflight/blob/master/icons/yaflight-logo2013-128px.png)
+![yaflight logo](https://raw.github.com/xquiet/yaflight/master/icons/yaflight-logo2013-128px.png)
 
 yaflight is a flightgear launch control developed originally using the Gambas3 language
 and now completely rewritten using C++ with the Qt Framework to make it multi-platform.
