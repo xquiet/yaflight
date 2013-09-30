@@ -20,13 +20,22 @@
 #ifndef APPSETTINGS_H
 #define APPSETTINGS_H
 
-#include <QString>
+#include <QStringList>
 
 #include "configuration.h"
+
+#ifdef Q_OS_MACX
+#include "yalib.h"
+#elif defined Q_OS_WIN
+#include "yalib.h"
+#else
+#include "yalib/yalib.h"
+#endif
 
 #define APTVIEW     "APTVIEW"
 #define FGFSBIN     "FGFSBIN"
 #define FGDATADIR   "FGDATADIR"
+#define YFCURRTHEME "YFCURRTHEME"
 
 class appsettings
 {
@@ -37,16 +46,19 @@ public:
     bool storeData();
     QString getUpdatesHost();
     QString getUpdatesScript();
+    QStringList getAvailableThemes();
 
     // app - GET
     QString getAirportListFiltered();
     QString get_fgfs_bin_path();
     QString getFGDataPath();
+    QString getCurrentTheme();
 
     // app - SET
     void setAirportListFiltered(QString val);
     void set_fgfs_bin_path(QString val);
     void setFGDataPath(QString val);
+    void setCurrentTheme(QString val);
 
 private:
     Configuration *conf;
