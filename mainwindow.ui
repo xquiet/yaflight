@@ -130,7 +130,7 @@
      <bool>false</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">border: 1 groove rgb(6,11,3);</string>
+     <string notr="true"/>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -211,7 +211,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>6</number>
      </property>
      <property name="documentMode">
       <bool>false</bool>
@@ -532,8 +532,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>491</width>
-          <height>191</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="icon">
@@ -2089,6 +2089,16 @@ p, li { white-space: pre-wrap; }
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="cboTheme">
+        <property name="geometry">
+         <rect>
+          <x>350</x>
+          <y>110</y>
+          <width>131</width>
+          <height>22</height>
+         </rect>
         </property>
        </widget>
       </widget>

@@ -164,6 +164,8 @@ private slots:
 
     //void paintEvent(QPaintEvent* event);
 
+    void on_cboTheme_currentTextChanged(const QString &arg1);
+
 protected:
     //void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
@@ -193,6 +195,7 @@ private:
     // custom shape
     QRegion getRegion() const;
     void updateMask();
+    void populate_yaflight_theme_list();
 
     // ----- processes -----
     QProcess *procFGFS;

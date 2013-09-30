@@ -121,6 +121,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     populate_scenarios();
 
+    populate_yaflight_theme_list();
+
     ui->txaLog->append(tr("OS: ") + fgenv->getOS());
     ui->txaLog->append(tr("FG version: ") + fgenv->getFGVersion());
     ui->txaLog->append(tr("Default FGROOT: ") + fgenv->getRootPath());
@@ -1912,6 +1914,13 @@ void MainWindow::on_pbtDeselectAllScenarios_clicked()
     ui->lstvScenarios->clearSelection();
 }
 
+void MainWindow::populate_yaflight_theme_list()
+{
+    ui->cboTheme->clear();
+    ui->cboTheme->addItems(appsett->getAvailableThemes());
+    ui->cboTheme->setCurrentText("default");
+}
+
 /*void MainWindow::paintEvent(QPaintEvent* event)
 {
         Q_UNUSED(event)
@@ -1945,3 +1954,21 @@ void MainWindow::updateMask()
         setMask(Bitmap);
 }
 */
+
+void MainWindow::on_cboTheme_currentTextChanged(const QString &arg1)
+{
+    QFile styleFile(fgenv->getYFHome()+"/themes/"+arg1+".qss");
+    QString styleContent = "";
+    if(!styleFile.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::information(0,"Error",styleFile.errorString());
+    }
+    QTextStream in(&styleFile);
+    while(!in.atEnd())
+    {
+        styleContent += in.readLine();
+    }
+    styleFile.close();
+    this->setStyleSheet(styleContent);
+    this->update();
+}
