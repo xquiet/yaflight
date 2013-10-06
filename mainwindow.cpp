@@ -1918,7 +1918,19 @@ void MainWindow::populate_yaflight_theme_list()
 {
     ui->cboTheme->clear();
     ui->cboTheme->addItems(appsett->getAvailableThemes());
+    #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+    int idxDefaultTheme = ui->cboTheme->findText("default");
+    if(idxDefaultTheme >= 0)
+    {
+        ui->cboTheme->setCurrentIndex(idxDefaultTheme);
+    }
+    else
+    {
+        ui->cboTheme->setCurrentIndex(0);
+    }
+    #else
     ui->cboTheme->setCurrentText("default");
+    #endif
 }
 
 /*void MainWindow::paintEvent(QPaintEvent* event)
