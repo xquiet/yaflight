@@ -9,7 +9,7 @@ lessThan(QT_MAJOR_VERSION, 5): QT += webkit
 greaterThan(QT_MAJOR_VERSION, 4): QT += webkitwidgets
 
 DEFINES += MAX_VERSION="0.99"
-DEFINES += MIN_VERSION="26"
+DEFINES += MIN_VERSION="27"
 TARGET = yaflight
 TEMPLATE = app
 

@@ -151,6 +151,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     hpdiag = NULL;
     mpmdiag = NULL;
+    currentRunway = nullptr;
 }
 
 MainWindow::~MainWindow()
@@ -1547,9 +1548,12 @@ void MainWindow::on_cboRunway_currentIndexChanged(const QString &arg1)
 
 void MainWindow::on_btnRunwayInfo_clicked()
 {
-    RunwayDetailsDialog dlgRunwayDetails(this);
-    dlgRunwayDetails.setCurrentRunway(currentRunway);
-    dlgRunwayDetails.exec();
+    if(currentRunway != nullptr)
+    {
+        RunwayDetailsDialog dlgRunwayDetails(this);
+        dlgRunwayDetails.setCurrentRunway(currentRunway);
+        dlgRunwayDetails.exec();
+    }
 }
 
 void MainWindow::on_btnAdd_clicked()
