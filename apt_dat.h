@@ -46,7 +46,7 @@ class APT_dat
 public:
     APT_dat(QString zpath, QString yfhomedir);
     //void parse_apt_data();
-    bool create_cache(QHash<QString, QStringList> allAirports, QStringList all_airports_dir);
+    bool create_cache(QStringList all_airports_dir);
     QHash<QString, QStringList> getAirports();
 
     QList<Runway *> getRunwaysByAirport(QString key);

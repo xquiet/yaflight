@@ -1328,7 +1328,7 @@ void MainWindow::setup_airport_list(bool forceAptIdxRebuild)
 
     if(!aptdat.aptcache_exists()||forceAptIdxRebuild)
     {
-        if(!aptdat.create_cache(collect_all_airports(),collect_all_airports_dir()))
+        if(!aptdat.create_cache(collect_all_airports_dir()))
         {
             QMessageBox msgbox(QMessageBox::Critical,tr("Error"),tr("Can't create airport index cache\nCheck you permissions"),QMessageBox::Ok);
             msgbox.exec();
