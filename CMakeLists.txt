@@ -1,5 +1,5 @@
 ###############
-# (C) 2012 by Matteo Pasotti <matteo.pasotti@gmail.com>
+# (C) 2014 by Matteo Pasotti <matteo.pasotti@gmail.com>
 # License: GPLv3
 ###############
 SET( VERSION_MAJOR "0")
