@@ -2,9 +2,9 @@
 # (C) 2012 by Matteo Pasotti <matteo.pasotti@gmail.com>
 # License: GPLv3
 ###############
-SET( VERSION_MAJOR "1")
-SET( VERSION_MINOR "0" )
-SET( VERSION_PATCH "0" )
+SET( VERSION_MAJOR "0")
+SET( VERSION_MINOR "99" )
+SET( VERSION_PATCH "28" )
 SET( VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}${GIT_SHA1_VERSION}" )
 
 cmake_minimum_required(VERSION 2.8.11)
@@ -15,11 +15,17 @@ project(yaflight)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
-# Find the QtWidgets library
+# Find the QtCore library - Not Really Needed as Qt5Widgets already requires it!
 find_package(Qt5Core REQUIRED)
+# Find the QtWidgets library
 find_package(Qt5Widgets REQUIRED)
+# Find the Qt5Network library
 find_package(Qt5Network REQUIRED)
+# Find the Qt5WebKitWidgets library
 find_package(Qt5WebKitWidgets REQUIRED)
+# Find the Qt5LinguistTools library (libqt5help-devel)
+find_package(Qt5LinguistTools REQUIRED)
+# TODO: check if qttools5 is installed (lrelease)
 
 # The Qt5Widgets_INCLUDES also includes the include directories for
 # dependencies QtCore and QtGui
@@ -27,25 +33,42 @@ include_directories(${Qt5Widgets_INCLUDE_DIRS})
 include_directories(${Qt5Network_INCLUDE_DIRS})
 include_directories(${Qt5WebKitWidgets_INCLUDE_DIRS})
 
-# setup some const used by the application at runtime
-set( DATA_DIR "/usr/share/yaflight" )
+set( DATA_DIR "${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}" )
 set( TRANSLATIONS_DIR "${DATA_DIR}/languages" )
+set( THEMES_DIR "${DATA_DIR}/themes" )
+
+message( STATUS "DATA_DIR: ${DATA_DIR}" )
+message( STATUS "TRANSLATIONS_DIR: ${TRANSLATIONS_DIR}" )
+message( STATUS "THEMES_DIR: ${THEMES_DIR}" )
 
 add_definitions(-DMAX_VERSION=${VERSION_MAJOR})
 add_definitions(-DMIN_VERSION=${VERSION_MINOR})
 add_definitions(-DVERSION=${VERSION})
+add_definitions(-DDATA_DIR="${DATA_DIR}")
 add_definitions(-DTRANSDIR="${TRANSLATIONS_DIR}")
+add_definitions(-DTHEMES_DIR="${THEMES_DIR}")
 
-set(CMAKE_CXX_FLAGS "-fPIC -std=c++0x")
+if(UNIX)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -std=gnu++0x")
+endif()
 
 file(GLOB YF_SOURCES *.cpp)
 file(GLOB YF_HEADERS *.h)
 file(GLOB YF_RESOURCES *.qrc)
 file(GLOB YF_FORMS *.ui)
+file(GLOB TS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts)
+file(GLOB YF_THEMES ${CMAKE_CURRENT_SOURCE_DIR}/themes/*.qss)
 
 QT5_WRAP_UI(UIS_HDRS ${YF_FORMS})
 
+qt5_add_resources(RC_ADDED ${YF_RESOURCES})
 
-add_executable(yaflight ${YF_SOURCES} ${UIS_HDRS})
+qt5_add_translation( QM_FILES ${TS_FILES} )
+
+add_executable(yaflight ${YF_SOURCES} ${UIS_HDRS} ${RC_ADDED} ${QM_FILES})
 
 target_link_libraries(yaflight yalib Qt5::Widgets Qt5::Network Qt5::WebKitWidgets z)
+
+install( TARGETS yaflight DESTINATION bin )
+install( FILES ${QM_FILES} DESTINATION ${TRANSLATIONS_DIR} )
+install( FILES ${YF_THEMES} DESTINATION ${THEMES_DIR} )
