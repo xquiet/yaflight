@@ -1,5 +1,5 @@
 /**
-    Copyright (C) 2012-2013  Matteo Pasotti <matteo.pasotti@gmail.com>
+    Copyright (C) 2012-2014  Matteo Pasotti <matteo.pasotti@gmail.com>
 
     This file is part of yaflight - Cross platform YaFlight
 

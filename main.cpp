@@ -9,6 +9,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    
     QTranslator yaflightTranslator;
     #ifdef Q_OS_UNIX
         #ifdef Q_OS_MACX
