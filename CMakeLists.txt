@@ -11,7 +11,11 @@ cmake_minimum_required(VERSION 2.8.11)
 
 project(yaflight)
 
+# Debug, RelWithDebInfo, Release
+set(CMAKE_BUILD_TYPE Debug)
+
 # Find includes in corresponding build directories
+# usefull for MOC
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
@@ -29,9 +33,10 @@ find_package(Qt5LinguistTools REQUIRED)
 
 # The Qt5Widgets_INCLUDES also includes the include directories for
 # dependencies QtCore and QtGui
-include_directories(${Qt5Widgets_INCLUDE_DIRS})
-include_directories(${Qt5Network_INCLUDE_DIRS})
-include_directories(${Qt5WebKitWidgets_INCLUDE_DIRS})
+# NOTE: using qt5_use_modules makes include_directories droppable
+# include_directories(${Qt5Widgets_INCLUDE_DIRS})
+# include_directories(${Qt5Network_INCLUDE_DIRS})
+# include_directories(${Qt5WebKitWidgets_INCLUDE_DIRS})
 
 set( DATA_DIR "${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}" )
 set( TRANSLATIONS_DIR "${DATA_DIR}/languages" )
@@ -43,7 +48,8 @@ message( STATUS "THEMES_DIR: ${THEMES_DIR}" )
 
 add_definitions(-DMAX_VERSION=${VERSION_MAJOR})
 add_definitions(-DMIN_VERSION=${VERSION_MINOR})
-add_definitions(-DVERSION=${VERSION})
+add_definitions(-DPATCH_VERSION=${VERSION_PATCH})
+add_definitions(-DVERSION="${VERSION}")
 add_definitions(-DDATA_DIR="${DATA_DIR}")
 add_definitions(-DTRANSDIR="${TRANSLATIONS_DIR}")
 add_definitions(-DTHEMES_DIR="${THEMES_DIR}")
@@ -67,7 +73,11 @@ qt5_add_translation( QM_FILES ${TS_FILES} )
 
 add_executable(yaflight ${YF_SOURCES} ${UIS_HDRS} ${RC_ADDED} ${QM_FILES})
 
-target_link_libraries(yaflight yalib Qt5::Widgets Qt5::Network Qt5::WebKitWidgets z)
+qt5_use_modules( yaflight Widgets LinguistTools Network WebKitWidgets)
+
+# NOTE: using qt5_use_modules target_link_libraries can refer just to the other libraries
+# target_link_libraries(yaflight yalib Qt5::Widgets Qt5::Network Qt5::WebKitWidgets z)
+target_link_libraries(yaflight yalib z)
 
 install( TARGETS yaflight DESTINATION bin )
 install( FILES ${QM_FILES} DESTINATION ${TRANSLATIONS_DIR} )
