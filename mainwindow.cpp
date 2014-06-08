@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
 
     QApplication::setApplicationName("YaFlight");
-    QApplication::setApplicationVersion(QString::number(MAX_VERSION) + "." + QString::number(MIN_VERSION));
+    QApplication::setApplicationVersion(VERSION);
 
     ui->lblLoading->setVisible(false);
 
@@ -213,20 +213,24 @@ void MainWindow::verify_updates(QNetworkReply *reply)
         if(couple[0].trimmed().compare("last-yaflight-vers")==0)
         {
             QStringList veritems = couple[1].split(".");
-            QString major = veritems[0]+"."+veritems[1];
-            QString minor = veritems[2];
-            float a = floorf(major.toFloat() * 100) / 100;
-            float b = MAX_VERSION;
-            if(a > b)
+            int major = veritems[0].toInt();
+            int minor = veritems[1].toInt();
+	    int patch = veritems[2].toInt();
+            if(major > MAX_VERSION)
             {
-                ui->lblLatestVersionAvailable->setText(tr("Version")+ " " + major + "." + minor + " " + tr("is available"));
+                ui->lblLatestVersionAvailable->setText(tr("Version")+ " " + veritems.join(".") + " " + tr("is available"));
             }
             else
             {
-                if(minor.toInt() > MIN_VERSION)
-                    ui->lblLatestVersionAvailable->setText(tr("Version") + " " + major + "." + minor + " " + tr("is available"));
+                if(minor > MIN_VERSION)
+                    ui->lblLatestVersionAvailable->setText(tr("Version")+ " " + veritems.join(".") + " " + tr("is available"));
                 else
-                    ui->lblLatestVersionAvailable->setText(tr("Your yaflight is up to date"));
+		{
+		    if(patch > PATCH_VERSION)
+		      ui->lblLatestVersionAvailable->setText(tr("Version")+ " " + veritems.join(".") + " " + tr("is available"));
+		    else
+		      ui->lblLatestVersionAvailable->setText(tr("Your yaflight is up to date"));
+		}
             }
         }
     }
@@ -243,7 +247,7 @@ void MainWindow::setup_about_box()
 {
     ui->lblAppName->setText(QApplication::applicationName());
     ui->lblAppVersion->setText(tr("Version: ") + QApplication::applicationVersion());
-    ui->lblAppCopyright->setText("&copy; 2012-2013 by Matteo Pasotti");
+    ui->lblAppCopyright->setText("&copy; 2012-2014 by Matteo Pasotti");
     ui->lblAppCopyright->setTextFormat(Qt::RichText);
 }
 
