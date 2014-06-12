@@ -31,14 +31,18 @@
 #include "airport.h"
 #include "runway.h"
 
-#define APTDAT_AIRPORT          1
-#define APTDAT_SEAPLANE_BASE    16
-#define APTDAT_HELIPORT         17
+// ref: https://github.com/mcantsin/x-plane-navdata/wiki/Airport-data-(apt.dat)-specifications
+// ref: full documentation http://data.x-plane.com/file_specs/XP%20APT1000%20Spec.pdf
 
-#define APTDAT_RUNWAY           10  // v810
-#define APTDAT_RUNWAY_850       100 // v850
+#define APTDAT_AIRPORT          1  // v850, v1000 land airport header
+#define APTDAT_SEAPLANE_BASE    16 // v850, v1000 seaplane base header
+#define APTDAT_HELIPORT         17 // v850, v1000 heliport header
+
+#define APTDAT_RUNWAY_LT_850    10  // v810
+#define APTDAT_RUNWAY           100 // v850 and v1000 runways
 #define APTDAT_RUNWAY_WATER     101 // water rw v850
 #define APTDAT_RUNWAY_HELIPAD   102 // helipad v850
+#define APTDAT_PAVEMENT         110 // pavement (taxiway or ramp)
 
 
 class APT_dat
@@ -67,8 +71,8 @@ private:
     QStringList allAirportsDir;
 
     void read();
-    void parseAirportLine(QStringList items);
-    void parseRunwayLine(QStringList items);
+    void parseAirportLine(QStringList items, QString spec);
+    void parseRunwayLine(QStringList items, QString spec);
     QByteArray gUncompress(const QByteArray &data);
 
     bool addAirport();
