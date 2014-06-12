@@ -139,6 +139,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     check_updates();
 
+    // disable some controls if no more available in later versions
+    if(fgenv->getFGVersion().split(".")[0].toInt()>=3)
+    {
+        ui->ckbSkyBlending->setVisible(false);
+        ui->ckbGameMode->setVisible(false);
+    }
+    
     // bad solution!
     // start timer to retrieve current aircraft coords
     /*tmrProcCoords = new QTimer();
@@ -485,6 +492,9 @@ QStringList MainWindow::collectLaunchSettings()
 {
     QString fgScenery = fgenv->getDefaultScenery() + ":" + fgenv->getYFScenery();
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
+    Yalib *ya = new Yalib();
+    ya->initialize(true);
+        
     if(lstviewmodel==NULL)
     {
         lstviewmodel = new QStringListModel(QStringList());
@@ -532,14 +542,18 @@ QStringList MainWindow::collectLaunchSettings()
     {
         params << "--disable-sound";
     }
-    // Game Mode
-    if(ui->ckbGameMode->isChecked())
+    if(ya->getFGVersion().split(".")[0].toInt()<3)
     {
-        params << "--enable-game-mode";
-    }
-    else
-    {
-        params << "--disable-game-mode";
+        // OBSOLETE since FlightGear 3.0.0
+        // Game Mode
+        if(ui->ckbGameMode->isChecked())
+        {
+            params << "--enable-game-mode";
+        }
+        else
+        {
+            params << "--disable-game-mode";
+        }
     }
     // Clouds
     if(ui->ckbClouds->isChecked())
@@ -594,14 +608,21 @@ QStringList MainWindow::collectLaunchSettings()
     {
         params << "--disable-horizon-effect";
     }
-    // Sky Blend
-    if(ui->ckbSkyBlending->isChecked())
+    
+    QMessageBox msgbox(QMessageBox::Information,"VERSION",ya->getFGVersion(),QMessageBox::Ok);
+    msgbox.exec();
+    if(ya->getFGVersion().split(".")[0].toInt()<3)
     {
-        params << "--enable-skyblend";
-    }
-    else
-    {
-        params << "--disable-skyblend";
+        // OBSOLETE since FlightGear 3.0.0
+        // Sky Blend
+        if(ui->ckbSkyBlending->isChecked())
+        {
+            params << "--enable-skyblend";
+        }
+        else
+        {
+            params << "--disable-skyblend";
+        }
     }
     // Textures
     if(ui->ckbTextures->isChecked())
@@ -850,6 +871,10 @@ void MainWindow::loadSettings(QString confFile, bool appStart)
     toggleLoadingBarVisible();
     curr_settings = new Settings(confFile);
     appsettings *app_settings = new appsettings(fgenv->getYFHome()+"/appconf.ini");
+    
+    Yalib *ya = new Yalib();
+    ya->initialize(true);
+    
     if(!curr_settings->isEmpty())
     {
         (app_settings->getAirportListFiltered().compare(SET_TRUE)==0) ? ui->ckbFilterInstalled->setChecked(true) : ui->ckbFilterInstalled->setChecked(false);
@@ -858,7 +883,6 @@ void MainWindow::loadSettings(QString confFile, bool appStart)
 
         (curr_settings->getSound().compare(SET_TRUE)==0) ? ui->ckbSound->setChecked(true) : ui->ckbSound->setChecked(false);
         (curr_settings->getClouds().compare(SET_TRUE)==0) ? ui->ckbClouds->setChecked(true) : ui->ckbClouds->setChecked(false);
-        (curr_settings->getGameMode().compare(SET_TRUE)==0) ? ui->ckbGameMode->setChecked(true) : ui->ckbGameMode->setChecked(false);
         (curr_settings->getFullScreen().compare(SET_TRUE)==0) ? ui->ckbFullScreen->setChecked(true) : ui->ckbFullScreen->setChecked(false);
         (curr_settings->getFog().compare(SET_TRUE)==0) ? ui->ckbFog->setChecked(true) : ui->ckbFog->setChecked(false);
         (curr_settings->getMeasureUnit().compare(SET_TRUE)==0) ? ui->rdbUnitMeters->setChecked(true) : ui->rdbUnitFeets->setChecked(true);
@@ -871,7 +895,12 @@ void MainWindow::loadSettings(QString confFile, bool appStart)
         (curr_settings->getInAir().compare(SET_TRUE)==0) ? ui->ckbInAir->setChecked(true) : ui->ckbInAir->setChecked(false);
         (curr_settings->getPanel().compare(SET_TRUE)==0) ? ui->ckbPanel->setChecked(true) : ui->ckbPanel->setChecked(false);
         (curr_settings->getHorizonEffect().compare(SET_TRUE)==0) ? ui->ckbHorizonEffect->setChecked(true) : ui->ckbHorizonEffect->setChecked(false);
-        (curr_settings->getSkyBlending().compare(SET_TRUE)==0) ? ui->ckbSkyBlending->setChecked(true) : ui->ckbSkyBlending->setChecked(false);
+        if(ya->getFGVersion().split(".")[0].toInt()<3)
+        {
+            // OBSOLETE since FlightGear 3.0.0
+            (curr_settings->getGameMode().compare(SET_TRUE)==0) ? ui->ckbGameMode->setChecked(true) : ui->ckbGameMode->setChecked(false);
+            (curr_settings->getSkyBlending().compare(SET_TRUE)==0) ? ui->ckbSkyBlending->setChecked(true) : ui->ckbSkyBlending->setChecked(false);
+        }
         (curr_settings->getTextures().compare(SET_TRUE)==0) ? ui->ckbTextures->setChecked(true) : ui->ckbTextures->setChecked(false);
         (curr_settings->getDistanceAttenuation().compare(SET_TRUE)==0) ? ui->ckbDistanceAttenuation->setChecked(true) : ui->ckbDistanceAttenuation->setChecked(false);
         (curr_settings->getWind().compare(SET_TRUE)==0) ? ui->ckbWind->setChecked(true) : ui->ckbWind->setChecked(false);
@@ -1053,6 +1082,10 @@ bool MainWindow::saveSettings(QString confFile)
     curr_settings = new Settings(confFile);
 
     appsettings *app_settings = new appsettings(fgenv->getYFHome()+"/appconf.ini");
+    
+    Yalib *ya = new Yalib();
+    ya->initialize(true);
+    
     ui->ckbFilterInstalled->isChecked() ? app_settings->setAirportListFiltered(SET_TRUE) : app_settings->setAirportListFiltered(SET_FALSE);
 
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
@@ -1088,7 +1121,6 @@ bool MainWindow::saveSettings(QString confFile)
 
     ui->ckbSound->isChecked() ? curr_settings->setSound(SET_TRUE) : curr_settings->setSound(SET_FALSE);
     ui->ckbClouds->isChecked() ? curr_settings->setClouds(SET_TRUE) : curr_settings->setClouds(SET_FALSE);
-    ui->ckbGameMode->isChecked() ? curr_settings->setGameMode(SET_TRUE) : curr_settings->setGameMode(SET_FALSE);
     ui->ckbFullScreen->isChecked() ? curr_settings->setFullScreen(SET_TRUE) : curr_settings->setFullScreen(SET_FALSE);
     ui->ckbFog->isChecked() ? curr_settings->setFog(SET_TRUE) : curr_settings->setFog(SET_FALSE);
     ui->rdbUnitMeters->isChecked() ? curr_settings->setMeasureUnit(SET_TRUE) : curr_settings->setMeasureUnit(SET_FALSE);
@@ -1101,7 +1133,12 @@ bool MainWindow::saveSettings(QString confFile)
     ui->ckbInAir->isChecked() ? curr_settings->setInAir(SET_TRUE) : curr_settings->setInAir(SET_FALSE);
     ui->ckbPanel->isChecked() ? curr_settings->setPanel(SET_TRUE) : curr_settings->setPanel(SET_FALSE);
     ui->ckbHorizonEffect->isChecked() ? curr_settings->setHorizonEffect(SET_TRUE) : curr_settings->setHorizonEffect(SET_FALSE);
-    ui->ckbSkyBlending->isChecked() ? curr_settings->setSkyBlending(SET_TRUE) : curr_settings->setSkyBlending(SET_FALSE);
+    if(ya->getFGVersion().split(".")[0].toInt()<3)
+    {
+        // OBSOLETE since FlightGear 3.0.0
+        ui->ckbGameMode->isChecked() ? curr_settings->setGameMode(SET_TRUE) : curr_settings->setGameMode(SET_FALSE);
+        ui->ckbSkyBlending->isChecked() ? curr_settings->setSkyBlending(SET_TRUE) : curr_settings->setSkyBlending(SET_FALSE);
+    }
     ui->ckbTextures->isChecked() ? curr_settings->setTextures(SET_TRUE) : curr_settings->setTextures(SET_FALSE);
     ui->ckbDistanceAttenuation->isChecked() ? curr_settings->setDistanceAttenuation(SET_TRUE) : curr_settings->setDistanceAttenuation(SET_FALSE);
     ui->ckbWind->isChecked() ? curr_settings->setWind(SET_TRUE) : curr_settings->setWind(SET_FALSE);
