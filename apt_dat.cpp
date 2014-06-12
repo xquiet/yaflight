@@ -124,9 +124,12 @@ bool APT_dat::create_cache(QStringList all_airports_dir)
 
     QFile file(decompressedFilePath);
     QString token;
+    QString dataSpecification;
     if(file.open(QIODevice::ReadOnly|QIODevice::Text)){
         QTextStream in(&file);
-        in.readLine(); in.readLine(); // skip two header lines containing IBM/DOS and licenses
+        in.readLine(); // skip first line with IBM/DOS stuff
+	dataSpecification = in.readLine().split(" ")[0];
+	qDebug("File specification is %s\n", dataSpecification.toStdString().data());
         while(!in.atEnd())
         {
             token = in.readLine();
@@ -139,13 +142,14 @@ bool APT_dat::create_cache(QStringList all_airports_dir)
                     case APTDAT_AIRPORT:
                     case APTDAT_SEAPLANE_BASE:
                     case APTDAT_HELIPORT:
-                        parseAirportLine(lineItems);
+                        parseAirportLine(lineItems, dataSpecification);
                         break;
+                    case APTDAT_RUNWAY_LT_850:
                     case APTDAT_RUNWAY:
-                    case APTDAT_RUNWAY_850:
                     case APTDAT_RUNWAY_WATER:
                     case APTDAT_RUNWAY_HELIPAD:
-                        parseRunwayLine(lineItems);
+		    case APTDAT_PAVEMENT:
+                        parseRunwayLine(lineItems, dataSpecification);
                         break;
                 }
             }
@@ -207,7 +211,7 @@ bool APT_dat::addRunway()
     return true;
 }
 
-void APT_dat::parseAirportLine(QStringList items)
+void APT_dat::parseAirportLine(QStringList items, QString spec)
 {
     /*
       0 -> APTDAT_AIRPORT/SEAPLANE_BASE/HELIPORT
@@ -224,10 +228,10 @@ void APT_dat::parseAirportLine(QStringList items)
     addAirport();
 }
 
-void APT_dat::parseRunwayLine(QStringList items)
+void APT_dat::parseRunwayLine(QStringList items, QString spec)
 {
-    /*
-    ' id --> what it is
+    /* v850
+    ' 0  --> id
     ' 1  --> latitude
     ' 2  --> longitude
     ' 3  --> runway number
@@ -239,29 +243,85 @@ void APT_dat::parseRunwayLine(QStringList items)
     ' 10 --> runway surface code
     ' 11 --> runway shoulder code
     */
-
-    lastRunway = new Runway(items[3].trimmed(),
-                            items[1].trimmed(),
-                            items[2].trimmed(),
-                            items[4].trimmed(),
-                            items[10].trimmed(),
-                            items[11].trimmed()
-                            );
-
+    
+    /* v1000
+     * 0  --> id
+     * 1  --> width of the runway in meters
+     * 2  --> surface type (concrete, asphalt, etc)
+     * 3  --> shoulder surface type
+     * 4  --> rw smoothness
+     * 5  --> rw centre-line lights
+     * 6  --> rw edge lighting
+     * 7  --> rw number
+     * 8  --> latitude in decimal degrees
+     * 9  --> longitude in decimal degrees
+     * 10 --> length of displaced treshold in meters
+     * ...
+     */
+    
+    //qDebug("Item count is: %d\n%s", items.count(), items.join(" ").toStdString().data());
+    
+    if(spec.toInt()<1000)
+    {
+      lastRunway = new Runway(items[3].trimmed(),
+			      items[1].trimmed(),
+			      items[2].trimmed(),
+			      items[4].trimmed(),
+			      items[10].trimmed(),
+			      items[11].trimmed()
+			      );
+    }
+    else
+    {
+      int code = items[0].trimmed().toInt();
+      switch(code)
+      {
+	case APTDAT_RUNWAY:
+            lastRunway = new Runway(items[8].trimmed(),
+				  items[9].trimmed(),
+				  items[10].trimmed(),
+				  "",
+				  items[2].trimmed(),
+				  items[3].trimmed()
+				  );
+            break;
+	case APTDAT_RUNWAY_WATER:
+            lastRunway = new Runway(items[3].trimmed(),
+                                    items[4].trimmed(),
+                                    items[5].trimmed(),
+                                    "0",
+                                    "0",
+                                    "0"
+                                    );
+            break;
+        case APTDAT_HELIPORT:
+            lastRunway = new Runway(items[1].trimmed(),
+                                    items[2].trimmed(),
+                                    items[3].trimmed(),
+                                    items[4].trimmed(),
+                                    items[7].trimmed(),
+                                    items[9].trimmed()
+                                    );
+            break;
+        default:
+            return;
+            break;
+      }
+    }
     addRunway();
-
-    /*lastRunwayList.insertMulti(icao, new Runway(items[3].trimmed(),
-                                       items[1].trimmed(),
-                                       items[2].trimmed(),
-                                       items[4].trimmed(),
-                                       items[10].trimmed(),
-                                       items[11].trimmed()
-                                       ));*/
-
 }
 
 QByteArray APT_dat::gUncompress(const QByteArray &data)
 {
+    qDebug("Compressed Data Size: %d\n", data.size());
+    if (QFile::exists(this->aptdatFilePath))
+    {
+      qDebug("The file %s exists!\n", this->aptdatFilePath.toStdString().data());
+    }
+    else
+    {
+      qDebug("The file %s DO NOT exists!\n", this->aptdatFilePath.toStdString().data());
+    }
     if (data.size() <= 4) {
         qWarning("gUncompress: Input data is truncated");
         return QByteArray();
