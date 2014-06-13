@@ -12,7 +12,7 @@ cmake_minimum_required(VERSION 2.8.11)
 project(yaflight)
 
 # Debug, RelWithDebInfo, Release
-set(CMAKE_BUILD_TYPE Debug)
+# set(CMAKE_BUILD_TYPE Debug)
 
 # Find includes in corresponding build directories
 # usefull for MOC
@@ -38,9 +38,15 @@ find_package(Qt5LinguistTools REQUIRED)
 # include_directories(${Qt5Network_INCLUDE_DIRS})
 # include_directories(${Qt5WebKitWidgets_INCLUDE_DIRS})
 
+if(NOT DATA_DIR)
 set( DATA_DIR "${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}" )
+endif(NOT DATA_DIR)
+if(NOT TRANSLATIONS_DIR)
 set( TRANSLATIONS_DIR "${DATA_DIR}/languages" )
+endif(NOT TRANSLATIONS_DIR)
+if(NOT THEMES_DIR)
 set( THEMES_DIR "${DATA_DIR}/themes" )
+endif(NOT THEMES_DIR)
 
 message( STATUS "DATA_DIR: ${DATA_DIR}" )
 message( STATUS "TRANSLATIONS_DIR: ${TRANSLATIONS_DIR}" )
@@ -54,9 +60,9 @@ add_definitions(-DDATA_DIR="${DATA_DIR}")
 add_definitions(-DTRANSDIR="${TRANSLATIONS_DIR}")
 add_definitions(-DTHEMES_DIR="${THEMES_DIR}")
 
-if(UNIX)
+# if(UNIX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -std=gnu++0x")
-endif()
+# endif()
 
 file(GLOB YF_SOURCES *.cpp)
 file(GLOB YF_HEADERS *.h)
@@ -75,9 +81,24 @@ add_executable(yaflight ${YF_SOURCES} ${UIS_HDRS} ${RC_ADDED} ${QM_FILES})
 
 qt5_use_modules( yaflight Widgets LinguistTools Network WebKitWidgets)
 
-# NOTE: using qt5_use_modules target_link_libraries can refer just to the other libraries
-# target_link_libraries(yaflight yalib Qt5::Widgets Qt5::Network Qt5::WebKitWidgets z)
-target_link_libraries(yaflight yalib z)
+if(WIN32)
+    include_directories("../yalib/src")
+endif(WIN32)
+
+if(UNIX)
+    # NOTE: using qt5_use_modules target_link_libraries can refer just to the other libraries
+    # target_link_libraries(yaflight yalib Qt5::Widgets Qt5::Network Qt5::WebKitWidgets z)
+    target_link_libraries(yaflight yalib z)
+elseif(WIN32)
+    #Determine Yalib library
+    FIND_LIBRARY(YALIB_LIBRARY NAMES yalib
+         PATH_SUFFIXES lib
+         PATHS ../yalib-build/src                 # Extension to localize MinGW root
+         DOC "The file that corresponds to the base il library."
+    )
+    MESSAGE("Found YaLib library at: ${YALIB_LIBRARY}")
+    target_link_libraries(yaflight ${YALIB_LIBRARY} z)
+endif()
 
 install( TARGETS yaflight DESTINATION bin )
 install( FILES ${QM_FILES} DESTINATION ${TRANSLATIONS_DIR} )
