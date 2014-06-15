@@ -81,23 +81,50 @@ add_executable(yaflight ${YF_SOURCES} ${UIS_HDRS} ${RC_ADDED} ${QM_FILES})
 
 qt5_use_modules( yaflight Widgets LinguistTools Network WebKitWidgets)
 
-if(WIN32)
-    include_directories("../yalib/src")
-endif(WIN32)
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    message( STATUS "Building on MacOSX" )
+    set( MACOSX ON )
+else()
+    unset( MACOSX )
+endif()
+
+if(WIN32 OR MACOSX)
+    include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../yalib/src")
+    message( STATUS "Including ${CMAKE_CURRENT_SOURCE_DIR}/../yalib/src" )
+endif(WIN32 OR MACOSX)
 
 if(UNIX)
     # NOTE: using qt5_use_modules target_link_libraries can refer just to the other libraries
     # target_link_libraries(yaflight yalib Qt5::Widgets Qt5::Network Qt5::WebKitWidgets z)
-    target_link_libraries(yaflight yalib z)
+    if(MACOSX)
+        #Determine Yalib library
+        FIND_LIBRARY(YALIB_LIBRARY NAMES yalib
+             PATH_SUFFIXES lib
+             PATHS $CMAKE_CURRENT_SOURCE_DIR/../yalib-build/src                 # Extension to localize MinGW root
+             DOC "The file that corresponds to the base il library."
+        )
+        if(YALIB_LIBRARY)
+            message(STATUS "Found YaLib library at: ${YALIB_LIBRARY}")
+            target_link_libraries(yaflight ${YALIB_LIBRARY} z)
+        else(YALIB_LIBRARY)
+            message( STATUS "YaLib Not Found")
+        endif(YALIB_LIBRARY)
+    else(MACOSX)
+        target_link_libraries(yaflight yalib z)
+    endif()
 elseif(WIN32)
     #Determine Yalib library
     FIND_LIBRARY(YALIB_LIBRARY NAMES yalib
          PATH_SUFFIXES lib
-         PATHS ../yalib-build/src                 # Extension to localize MinGW root
+         PATHS $CMAKE_CURRENT_SOURCE_DIR/../yalib-build/src                 # Extension to localize MinGW root
          DOC "The file that corresponds to the base il library."
     )
-    MESSAGE("Found YaLib library at: ${YALIB_LIBRARY}")
-    target_link_libraries(yaflight ${YALIB_LIBRARY} z)
+    if(YALIB_LIBRARY)
+        message(STATUS "Found YaLib library at: ${YALIB_LIBRARY}")
+        target_link_libraries(yaflight ${YALIB_LIBRARY} z)
+    else(YALIB_LIBRARY)
+        message( STATUS "YaLib Not Found")
+    endif(YALIB_LIBRARY)
 endif()
 
 install( TARGETS yaflight DESTINATION bin )
