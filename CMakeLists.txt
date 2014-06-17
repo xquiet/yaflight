@@ -113,15 +113,24 @@ if(UNIX)
         target_link_libraries(yaflight yalib z)
     endif()
 elseif(WIN32)
+    find_path(YALIB_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../yalib/src/yalib.h
+	      HINTS ${PC_YALIBL_INCLUDEDIR} ${PC_YALIB_INCLUDE_DIRS}
+	      PATH_SUFFIXES libyalib )
+
+    find_library(YALIB_LIBRARY NAMES yalib libyalib
+		HINTS ${PC_YALIB_LIBDIR} ${PC_YALIB_LIBRARY_DIRS} )
+
+    set(YALIB_LIBRARIES ${YALIB_LIBRARY} )
+    set(YALIB_INCLUDE_DIRS ${LIBXML2_INCLUDE_DIR} )
     #Determine Yalib library
-    FIND_LIBRARY(YALIB_LIBRARY NAMES yalib
-         PATH_SUFFIXES lib
-         PATHS $CMAKE_CURRENT_SOURCE_DIR/../yalib-build/src                 # Extension to localize MinGW root
-         DOC "The file that corresponds to the base il library."
-    )
-    if(YALIB_LIBRARY)
-        message(STATUS "Found YaLib library at: ${YALIB_LIBRARY}")
-        target_link_libraries(yaflight ${YALIB_LIBRARY} z)
+    #FIND_LIBRARY(YALIB_LIBRARY NAMES yalib
+    #     PATH_SUFFIXES lib
+    #     PATHS $CMAKE_CURRENT_SOURCE_DIR/../yalib-build/src                 # Extension to localize MinGW root
+    #     DOC "The file that corresponds to the base il library."
+    #)
+    if(YALIB_LIBRARIES)
+        message(STATUS "Found YaLib library at: ${YALIB_LIBRARIES}")
+        target_link_libraries(yaflight ${YALIB_LIBRARIES} z)
     else(YALIB_LIBRARY)
         message( STATUS "YaLib Not Found")
     endif(YALIB_LIBRARY)
