@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "YaFlight"
-!define PRODUCT_VERSION "0.99.28"
+!define PRODUCT_VERSION "0.99.29"
 !define PRODUCT_PUBLISHER "YaFlight"
 !define PRODUCT_WEB_SITE "http://yaflight.altervista.org"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\yaflight.exe"
@@ -52,7 +52,7 @@ SetCompressor lzma
 ; MUI end ------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "Setup.exe"
+OutFile "setup-${PRODUCT_VERSION}.exe"
 InstallDir "$PROGRAMFILES\YaFlight"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
