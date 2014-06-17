@@ -166,7 +166,7 @@ Section Uninstall
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\uninst.exe"
   Delete "$INSTDIR\README.md"
-  Delete "$INSTDIR\yalib.dll"
+  Delete "$INSTDIR\libyalib.dll"
   Delete "$INSTDIR\languages\*.qm"
   Delete "$INSTDIR\themes\*.qss"
   Delete "$INSTDIR\imageformats\*.*"
