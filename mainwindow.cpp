@@ -609,8 +609,6 @@ QStringList MainWindow::collectLaunchSettings()
         params << "--disable-horizon-effect";
     }
     
-    QMessageBox msgbox(QMessageBox::Information,"VERSION",ya->getFGVersion(),QMessageBox::Ok);
-    msgbox.exec();
     if(ya->getFGVersion().split(".")[0].toInt()<3)
     {
         // OBSOLETE since FlightGear 3.0.0
