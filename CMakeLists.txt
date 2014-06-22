@@ -2,9 +2,9 @@
 # (C) 2014 by Matteo Pasotti <matteo.pasotti@gmail.com>
 # License: GPLv3
 ###############
-SET( VERSION_MAJOR "0")
-SET( VERSION_MINOR "99" )
-SET( VERSION_PATCH "29" )
+SET( VERSION_MAJOR "1")
+SET( VERSION_MINOR "0" )
+SET( VERSION_PATCH "0" )
 SET( VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}${GIT_SHA1_VERSION}" )
 
 cmake_minimum_required(VERSION 2.8.11)
@@ -30,6 +30,8 @@ find_package(Qt5WebKitWidgets REQUIRED)
 # Find the Qt5LinguistTools library (libqt5help-devel)
 find_package(Qt5LinguistTools REQUIRED)
 # TODO: check if qttools5 is installed (lrelease)
+
+find_package( ZLIB REQUIRED)
 
 # The Qt5Widgets_INCLUDES also includes the include directories for
 # dependencies QtCore and QtGui
