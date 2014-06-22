@@ -1,7 +1,7 @@
 #include "appsettings.h"
 
 QString appsettings::updatesHost = "yaflight.altervista.org";
-QString appsettings::updatesScript = "/updates_script.php";
+QString appsettings::updatesScript = "/index.php/downloads/last_available_version";
 
 appsettings::appsettings(QString confFilePath)
 { 
