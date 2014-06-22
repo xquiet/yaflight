@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "YaFlight"
-!define PRODUCT_VERSION "0.99.29"
+!define PRODUCT_VERSION "1.0.0"
 !define PRODUCT_PUBLISHER "YaFlight"
 !define PRODUCT_WEB_SITE "http://yaflight.altervista.org"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\yaflight.exe"
@@ -92,6 +92,7 @@ Section "SezionePrincipale" SEC01
   SetOutPath "$INSTDIR"
   SetOverwrite ifnewer
   File "C:\Users\matteo\workspace\yaflight-build\yaflight.exe"
+  File "C:\Users\matteo\workspace\yainstall-build\yainstall.exe"
   CreateDirectory "$SMPROGRAMS\YaFlight"
   CreateDirectory "$SMPROGRAMS\YaFlight\languages"
   CreateShortCut "$SMPROGRAMS\YaFlight\YaFlight.lnk" "$INSTDIR\yaflight.exe"
@@ -118,7 +119,8 @@ Section "SezionePrincipale" SEC01
   File "C:\Qt\Qt5.3.0\5.3\mingw482_32\bin\Qt5Widgets.dll"
   File "C:\Qt\Qt5.3.0\5.3\mingw482_32\bin\Qt5Xml.dll"
   File "C:\Qt\Qt5.3.0\5.3\mingw482_32\bin\Qt5Positioning.dll"
-  File "C:\zlib\zlib1.dll"
+  File "C:\zlib-1.2.8-build\libzlib.dll"
+  File "C:\libzip-build\lib\libzip.dll"
   SetOverwrite try
   File /r "C:\Qt\Qt5.3.0\5.3\mingw482_32\plugins\iconengines"
   File /r "C:\Qt\Qt5.3.0\5.3\mingw482_32\plugins\imageformats"
@@ -201,7 +203,10 @@ Section Uninstall
   Delete "$INSTDIR\Qt5Xml.dll"
   Delete "$INSTDIR\Qt5Positioning.dll"
   Delete "$INSTDIR\zlib1.dll"
+  Delete "$INSTDIR\libzlib.dll"
+  Delete "$INSTDIR\libzip.dll"
   Delete "$INSTDIR\yaflight.exe"
+  Delete "$INSTDIR\yainstall.exe"
 
   Delete "$SMPROGRAMS\YaFlight\Uninstall.lnk"
   Delete "$SMPROGRAMS\YaFlight\Website.lnk"
