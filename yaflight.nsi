@@ -94,8 +94,8 @@ Section "SezionePrincipale" SEC01
   File "C:\Users\matteo\workspace\yaflight-build\yaflight.exe"
   File "C:\Users\matteo\workspace\yainstall-build\yainstall.exe"
   CreateDirectory "$SMPROGRAMS\YaFlight"
-  CreateDirectory "$SMPROGRAMS\YaFlight\languages"
   CreateShortCut "$SMPROGRAMS\YaFlight\YaFlight.lnk" "$INSTDIR\yaflight.exe"
+  CreateShortCut "$SMPROGRAMS\YaFlight\YaInstall.lnk" "$INSTDIR\yainstall.exe"
   CreateShortCut "$DESKTOP\YaFlight.lnk" "$INSTDIR\yaflight.exe"
   File "C:\Qt\Qt5.3.0\5.3\mingw482_32\bin\icudt52.dll"
   File "C:\Qt\Qt5.3.0\5.3\mingw482_32\bin\icuin52.dll"
@@ -122,6 +122,7 @@ Section "SezionePrincipale" SEC01
   File "C:\zlib-1.2.8-build\libzlib.dll"
   File "C:\libzip-build\lib\libzip.dll"
   SetOverwrite try
+  CreateDirectory "$OUTDIR\languages"
   File /r "C:\Qt\Qt5.3.0\5.3\mingw482_32\plugins\iconengines"
   File /r "C:\Qt\Qt5.3.0\5.3\mingw482_32\plugins\imageformats"
   File /r "C:\Qt\Qt5.3.0\5.3\mingw482_32\plugins\platforms"
