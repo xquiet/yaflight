@@ -21,6 +21,7 @@
 #define DLGAIRCRAFTDETAILS_H
 
 #include <QDialog>
+#include <QObject>
 #include <QStringList>
 #include <QStandardItemModel>
 

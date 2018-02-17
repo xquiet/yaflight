@@ -21,6 +21,7 @@
 #define DIALOGAPPSETTINGS_H
 
 #include <QDialog>
+#include <QObject>
 #include <QMessageBox>
 #include <QFileDialog>
 

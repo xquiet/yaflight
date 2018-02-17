@@ -29,6 +29,7 @@
 #include <QDir>
 #include <QHash>
 #include <QHashIterator>
+#include <QObject>
 #include <QResizeEvent>
 #include <QStringListModel>
 #include <QStandardItemModel>

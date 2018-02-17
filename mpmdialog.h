@@ -21,6 +21,7 @@
 #define MPMDIALOG_H
 
 #include <QDialog>
+#include <QObject>
 
 #include "mpmapbridge.h"
 

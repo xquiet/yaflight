@@ -20,6 +20,7 @@
 #ifndef APT_DAT_H
 #define APT_DAT_H
 
+#include <QDataStream>
 #include <QFile>
 #include <QTextStream>
 #include <QHash>

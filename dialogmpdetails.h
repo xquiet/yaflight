@@ -21,6 +21,7 @@
 #define DIALOGMPDETAILS_H
 
 #include <QDialog>
+#include <QObject>
 
 namespace Ui {
 class DialogMPDetails;

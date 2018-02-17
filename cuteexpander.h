@@ -21,6 +21,7 @@
 #define CUTEEXPANDER_H
 
 #include <QWidget>
+#include <QObject>
 #include <QObjectList>
 
 namespace Ui{

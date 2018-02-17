@@ -21,6 +21,7 @@
 #define RUNWAYDETAILSDIALOG_H
 
 #include <QDialog>
+#include <QObject>
 #include <QStandardItemModel>
 #include <QAbstractButton>
 

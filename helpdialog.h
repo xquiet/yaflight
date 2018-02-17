@@ -21,6 +21,7 @@
 #define HELPDIALOG_H
 
 #include <QDialog>
+#include <QObject>
 
 namespace Ui {
 class HelpDialog;
