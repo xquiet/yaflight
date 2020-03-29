@@ -4,12 +4,17 @@
 #
 #-------------------------------------------------
 
+QMAKE_CXXFLAGS += -fPIC -std=gnu++0x
+
 QT       += core gui network 
 lessThan(QT_MAJOR_VERSION, 5): QT += webkit 
 greaterThan(QT_MAJOR_VERSION, 4): QT += webkitwidgets
 
-DEFINES += MAX_VERSION="0.99"
-DEFINES += MIN_VERSION="27"
+DEFINES += MAX_VERSION=0
+DEFINES += MIN_VERSION=99
+DEFINES += PATCH_VERSION=28
+DEFINES += VERSION=\\\"$$MAX_VERSION.$$MIN_VERSION.$$PATCH_VERSION\\\"
+
 TARGET = yaflight
 TEMPLATE = app
 
@@ -28,9 +33,10 @@ DEFINES += DATADIR=\\\"$$DATADIR\\\" TRANSDIR=\\\"$$TRANSDIR\\\"
 unix:LIBS += -lz
 
 # for development environment
-win32:LIBS += "C:\\librerie\\zlib-1.2.7\\contrib\\vstudio\\vc9\\x86\\ZlibDllReleaseWithoutAsm\\zlibwapi.dll" -lz
+win32:LIBS += "$$PWD/../zlib/lib/zlib.lib" -lz
 
-win32:INCLUDEPATH += "C:\\librerie\\zlib-1.2.7"
+
+win32:INCLUDEPATH += "$$PWD/../zlib/include/"
 
 else:mac: LIBS += -F$$PWD/../yalib/ -framework yalib
 else:unix: LIBS += -L$$PWD/../yalib/ -lyalib
@@ -39,12 +45,13 @@ unix:!macx {
     target.path = /usr/bin
 }
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../build-yalib-Desktop_Qt_5_1_1_MinGW_32bit-Release/release/ -lyalib
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../build-yalib-Desktop_Qt_5_1_1_MinGW_32bit-Debug/debug/ -lyalib
+# for the binary to link
+INCLUDEPATH += $$PWD/../yalib-build/src
+DEPENDPATH += $$PWD/../yalib-build/src
 
-
-INCLUDEPATH += $$OUT_PWD/../yalib
-DEPENDPATH += $$OUT_PWD/../yalib
+# for the header file
+INCLUDEPATH += $$PWD/../yalib/src
+DEPENDPATH += $$PWD/../yalib/src
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -117,3 +124,9 @@ TRANSLATIONS += languages/cs_CZ.ts \
     languages/zh_TW.ts
 
 INSTALLS += target
+
+# libyalib for both release and debug as I'm building libyalib as RelWithDebInfo
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../yalib-build/src/ -llibyalib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../yalib-build/src/ -llibyalib
+else:unix: LIBS += -L$$PWD/../yalib-build/src/ -llibyalib
+
