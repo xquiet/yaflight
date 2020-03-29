@@ -19,6 +19,12 @@ project(yaflight)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
+
+if(WIN32)
+	# W/A for QTBUG-34940 
+	set(CMAKE_LIBRARY_PATH C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.18362.0\\um\\x86)
+endif(WIN32)
+
 # Find the QtCore library - Not Really Needed as Qt5Widgets already requires it!
 find_package(Qt5Core REQUIRED)
 # Find the QtWidgets library
