@@ -491,9 +491,11 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 QStringList MainWindow::collectLaunchSettings()
 {
     QString fgScenery = fgenv->getDefaultScenery() + ":" + fgenv->getYFScenery();
+    QString fgVersion = fgenv->getFGVersion();
     QStringListModel *lstviewmodel = (QStringListModel *) ui->lstviewSceneries->model();
     Yalib *ya = new Yalib();
-    ya->initialize(true);
+    // don't try to autodetect
+    ya->initialize(false);
         
     if(lstviewmodel==NULL)
     {
@@ -542,7 +544,7 @@ QStringList MainWindow::collectLaunchSettings()
     {
         params << "--disable-sound";
     }
-    if(ya->getFGVersion().split(".")[0].toInt()<3)
+    if(fgVersion.split(".")[0].toInt()<3)
     {
         // OBSOLETE since FlightGear 3.0.0
         // Game Mode
@@ -609,7 +611,7 @@ QStringList MainWindow::collectLaunchSettings()
         params << "--disable-horizon-effect";
     }
     
-    if(ya->getFGVersion().split(".")[0].toInt()<3)
+    if(fgVersion.split(".")[0].toInt()<3)
     {
         // OBSOLETE since FlightGear 3.0.0
         // Sky Blend
@@ -869,7 +871,7 @@ void MainWindow::loadSettings(QString confFile, bool appStart)
     toggleLoadingBarVisible();
     curr_settings = new Settings(confFile);
     appsettings *app_settings = new appsettings(fgenv->getYFHome()+"/appconf.ini");
-    
+    QString fgVersion = fgenv->getFGVersion();
     Yalib *ya = new Yalib();
     ya->initialize(true);
     
@@ -893,7 +895,7 @@ void MainWindow::loadSettings(QString confFile, bool appStart)
         (curr_settings->getInAir().compare(SET_TRUE)==0) ? ui->ckbInAir->setChecked(true) : ui->ckbInAir->setChecked(false);
         (curr_settings->getPanel().compare(SET_TRUE)==0) ? ui->ckbPanel->setChecked(true) : ui->ckbPanel->setChecked(false);
         (curr_settings->getHorizonEffect().compare(SET_TRUE)==0) ? ui->ckbHorizonEffect->setChecked(true) : ui->ckbHorizonEffect->setChecked(false);
-        if(ya->getFGVersion().split(".")[0].toInt()<3)
+        if(fgVersion.split(".")[0].toInt()<3)
         {
             // OBSOLETE since FlightGear 3.0.0
             (curr_settings->getGameMode().compare(SET_TRUE)==0) ? ui->ckbGameMode->setChecked(true) : ui->ckbGameMode->setChecked(false);
