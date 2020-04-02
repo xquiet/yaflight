@@ -1,10 +1,10 @@
 ###############
-# (C) 2014 by Matteo Pasotti <matteo.pasotti@gmail.com>
+# (C) 2014-2020 by Matteo Pasotti <matteo.pasotti@gmail.com>
 # License: GPLv3
 ###############
-SET( VERSION_MAJOR "1")
-SET( VERSION_MINOR "0" )
-SET( VERSION_PATCH "0" )
+SET( VERSION_MAJOR "0")
+SET( VERSION_MINOR "99" )
+SET( VERSION_PATCH "30" )
 SET( VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}${GIT_SHA1_VERSION}" )
 
 cmake_minimum_required(VERSION 2.8.11)
@@ -21,8 +21,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
 if(WIN32)
-	# W/A for QTBUG-34940 
-	set(CMAKE_LIBRARY_PATH C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.18362.0\\um\\x86)
+    # W/A for QTBUG-34940
+    set(CMAKE_LIBRARY_PATH C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.18362.0\\um\\x86)
 endif(WIN32)
 
 # Find the QtCore library - Not Really Needed as Qt5Widgets already requires it!
