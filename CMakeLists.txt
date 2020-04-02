@@ -105,7 +105,9 @@ qt5_add_translation( QM_FILES ${TS_FILES} )
 
 add_executable(yaflight ${YF_SOURCES} ${UIS_HDRS} ${RC_ADDED} ${QM_FILES})
 
-qt5_use_modules( yaflight Widgets LinguistTools Network WebKitWidgets)
+# qt5_use_modules( yaflight Widgets LinguistTools Network WebKitWidgets)
+
+target_link_libraries( yaflight Qt5::Widgets Qt5::Network Qt5::WebKitWidgets)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     message( STATUS "Building on MacOSX" )
