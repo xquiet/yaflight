@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent) :
     //QMainWindow(parent,Qt::FramelessWindowHint),
     QMainWindow(parent),
@@ -16,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 #endif
 
     QApplication::setApplicationName("YaFlight");
-    QApplication::setApplicationVersion(VERSION);
+    QApplication::setApplicationVersion(STRVERSION);
 
     ui->lblLoading->setVisible(false);
 
@@ -29,10 +30,31 @@ MainWindow::MainWindow(QWidget *parent) :
 
     fgenv = new FGEnvironment();
 
-    if(!fgenv->start())
+    /**
+      * steps to start loading/creating initial configuration
+      1) does YFHome exists?
+      2) if YFHome exists -> does appconf.ini exists?
+      3) if YFHome doesn't exists must start automatic configuration
+      4) if automatic configuration fails -> must start manual configuration
+      */
+
+
+    if (!QFile::exists(fgenv->getYFHome()))
     {
-        appsett = new appsettings(fgenv->getYFHome()+"/appconf.ini");
-        if(appsett->isEmpty())
+        // new setup
+        QDir tmppath(QDir::homePath());
+        if(!tmppath.mkpath(fgenv->getYFHome()))
+        {
+            QMessageBox msgbox(QMessageBox::Critical, tr("Errore critico"), tr("Cannot create YF Home Directory"),QMessageBox::Ok, this);
+            msgbox.exec();
+            QApplication::exit(1);
+        }
+    }
+    if(!QFile::exists(fgenv->getYFHome()+"/appconf.ini"))
+    {
+        // directory already exists but not the ini file
+        // launch automatic setup procedure
+        if(!fgenv->start()) // autodetect = true
         {
             QMessageBox msgbox(QMessageBox::Warning,tr("Warning"),tr("AutoDetection failed: manual configuration will be started"),QMessageBox::Ok,this);
             msgbox.exec();
@@ -44,12 +66,36 @@ MainWindow::MainWindow(QWidget *parent) :
                 QApplication::exit(1);
             }
         }
-        // reload app conf
         appsett = new appsettings(fgenv->getYFHome()+"/appconf.ini");
-        fgenv->setRootPath(appsett->getFGDataPath());
-        fgenv->setFgFsBinary(appsett->get_fgfs_bin_path());
-        fgenv->start(false);
+        appsett->setFGDataPath(fgenv->getRootPath());
+        appsett->set_fgfs_bin_path(fgenv->getFgfsBinPath());
+        appsett->storeData();
+        delete appsett;
     }
+
+    // reload appsett (not a proper solution)
+    appsett = new appsettings(fgenv->getYFHome()+"/appconf.ini");
+    if(appsett->isEmpty())
+    {
+        QMessageBox msgbox(QMessageBox::Warning,tr("Warning"),tr("appconf.ini exists but it's empty: running manual configuration in a moment"),QMessageBox::Ok,this);
+        msgbox.exec();
+        DialogAppSettings appSettingsDlg(this);
+        if(appSettingsDlg.exec() == QMessageBox::Cancel)
+        {
+            QMessageBox msgbox(QMessageBox::Warning,tr("Error"),tr("Manual configuration aborted"),QMessageBox::Ok,this);
+            msgbox.exec();
+            QApplication::exit(1);
+        }
+        // reload app conf and fgenvironment
+        delete appsett;
+        appsett = new appsettings(fgenv->getYFHome()+"/appconf.ini");
+    }
+
+    // we're ready to start, let's setup FGEnvironment instance
+
+    fgenv->setRootPath(appsett->getFGDataPath());
+    fgenv->setFgFsBinary(appsett->get_fgfs_bin_path());
+    fgenv->start(false);
 
     log = new Logger(fgenv->getYFHome()+"/yf.log");
 
@@ -133,6 +179,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->lblTerraSyncStatus->setToolTip(tr("N/A"));
 
+    // the first time it runs could take MINUTES!!!
+    // a proper solution must be adopted
     setup_airport_list();
 
     setup_about_box();
@@ -201,7 +249,7 @@ void MainWindow::check_updates()
     QNetworkAccessManager *mgr;
     QNetworkRequest req;
     mgr = new QNetworkAccessManager();
-    QString myurl = "http://"+appsett->getUpdatesHost()+appsett->getUpdatesScript();
+    QString myurl = appsett->getUpdatesHost()+appsett->getUpdatesScript();
     req.setUrl(QUrl(myurl));
     //req.setRawHeader("User-Agent",userAgent.toStdString().data());
     connect(mgr,SIGNAL(finished(QNetworkReply*)),this,SLOT(verify_updates(QNetworkReply*)));
@@ -254,7 +302,7 @@ void MainWindow::setup_about_box()
 {
     ui->lblAppName->setText(QApplication::applicationName());
     ui->lblAppVersion->setText(tr("Version: ") + QApplication::applicationVersion());
-    ui->lblAppCopyright->setText("&copy; 2012-2014 by Matteo Pasotti");
+    ui->lblAppCopyright->setText("&copy; 2012-2020 by Matteo Pasotti");
     ui->lblAppCopyright->setTextFormat(Qt::RichText);
 }
 
@@ -1365,6 +1413,8 @@ void MainWindow::setup_airport_list(bool forceAptIdxRebuild)
     ui->tbvAirports->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tbvAirports->setSelectionMode(QAbstractItemView::SingleSelection);
 
+    // IMPORTANT: this should be ported inside a separated thread to allow GUI to appear real-time while it works
+
     APT_dat aptdat(fgenv->getAPTSource(),fgenv->getYFHome());
 
     if(!aptdat.aptcache_exists()||forceAptIdxRebuild)
@@ -1521,9 +1571,11 @@ void MainWindow::center_mpmap_at_coords()
     mpmapbridge *bridge = new mpmapbridge();
     bridge->setLonLat(lastLongitude, lastLatitude);
     bridge->setPilotToFollow(ui->lnedtCallSign->text().trimmed());
-    //log->Log(Logger::ET_INFO, bridge->getUrl());
+
+    log->Log(Logger::ET_INFO, bridge->getUrl());
+
     //TOMIGRATE
-    //ui->webViewMMap->setUrl(bridge->getLLUrl());
+    ui->webView->setUrl(bridge->getLLUrlWithoutMenu());
 }
 
 void MainWindow::update_latlonhead(QString lat, QString lon, QString heading)
