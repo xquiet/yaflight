@@ -29,11 +29,11 @@
 #include <QEvent>
 #include <QDir>
 #ifdef Q_OS_MACX
-#include "yalib.h"
+#include "yalib_global.h"
 #elif defined Q_OS_WIN
 #include "yalib.h"
 #else
-#include "yalib/yalib.h"
+#include "yalib/yalib_global.h"
 #endif
 
 class FGEnvironment
