@@ -10,19 +10,25 @@ QT       += core gui network
 lessThan(QT_MAJOR_VERSION, 5): QT += webkit 
 greaterThan(QT_MAJOR_VERSION, 4): QT += webkitwidgets
 
-DEFINES += MAX_VERSION=0
-DEFINES += MIN_VERSION=99
-DEFINES += PATCH_VERSION=28
-DEFINES += VERSION=\\\"$$MAX_VERSION.$$MIN_VERSION.$$PATCH_VERSION\\\"
+MAX_VERSION = 0
+MIN_VERSION = 99
+PATCH_VERSION = 30
+
+DEFINES += MAX_VERSION=$$MAX_VERSION
+DEFINES += MIN_VERSION=$$MIN_VERSION
+DEFINES += PATCH_VERSION=$$PATCH_VERSION
+DEFINES += STRVERSION=\\\"$${MAX_VERSION}.$${MIN_VERSION}.$${PATCH_VERSION}\\\"
 
 TARGET = yaflight
 TEMPLATE = app
+
+VERSION = $${MAX_VERSION}.$${MIN_VERSION}.$${PATCH_VERSION}
 
 mac: ICON = icons/yaflight.icns
 
 win32: RC_FILE = yaflight.rc
 
-isEmpty(DATADIR) {
+unix: isEmpty($$DATADIR) {
     DATADIR = /usr/share/yaflight
 }
 
