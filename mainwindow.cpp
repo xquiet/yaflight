@@ -22,6 +22,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lblLoading->setVisible(false);
     ui->pbarAptCache->setVisible(false);
 
+    // avoid LEAK
+    ui->webView->setAttribute(Qt::WA_DeleteOnClose);
+
     just_started = true;
     proc_fgfs_is_running = false;
     proc_ts_is_running = false;
@@ -391,8 +394,17 @@ void MainWindow::on_pbtLaunch_clicked()
                 log->Log(Logger::ET_INFO, "BuiltIn support for scenery download enabled");
                 proc_ts_is_running = true;
 #else
-                startTerraSync();
-                ui->pbtTerraSyncStartStop->setText(tr("Stop"));
+                if(fgenv->getFGVersion().split(".")[0].toInt()<2019)
+                {
+                    startTerraSync();
+                    ui->pbtTerraSyncStartStop->setText(tr("Stop"));
+                }
+                else
+                {
+                    params << "--enable-terrasync";
+                    params << "--terrasync-dir=" + fgenv->getYFScenery();
+                    ui->txaLog->append("Terrasync running with --enable-terrasync parameter from fgfs");
+                }
 #endif
             }
         }
@@ -1622,9 +1634,9 @@ void MainWindow::center_mpmap_at_coords()
 
 void MainWindow::update_latlonhead(QString lat, QString lon, QString heading)
 {
-    ui->dialHeading->setValue((int)convert_dialhead_to_azimuth(lastHeading.toDouble()));
+    /*ui->dialHeading->setValue((int)convert_dialhead_to_azimuth(lastHeading.toDouble()));
     ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaCentroMappa(" + lon + "," + lat + ",true);");
-    ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaLonLat(" + lon + "," + lat + ", true," + heading + ");");
+    ui->webView->page()->mainFrame()->evaluateJavaScript("aggiornaLonLat(" + lon + "," + lat + ", true," + heading + ");");*/
 }
 
 double MainWindow::convert_dialhead_to_azimuth(double head)
@@ -1821,7 +1833,7 @@ void MainWindow::hndl_tmr_procts()
 
 void MainWindow::change_selected_coords()
 {
-    QString coords = ui->webView->page()->mainFrame()->evaluateJavaScript("document.getElementById('yaflight').innerText;").toString();
+    /*QString coords = ui->webView->page()->mainFrame()->evaluateJavaScript("document.getElementById('yaflight').innerText;").toString();
     if(coords.trimmed().compare("")!=0)
     {
         QStringList aCoords = coords.split(",");
@@ -1831,7 +1843,7 @@ void MainWindow::change_selected_coords()
         ui->lblLongitude->setToolTip(ui->lblLongitude->text().trimmed());
         lastLongitude = aCoords[0].trimmed();
         lastLatitude = aCoords[1].trimmed();
-    }
+    }*/
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -1973,30 +1985,37 @@ void MainWindow::on_pbtTerraSyncStartStop_clicked()
 
 void MainWindow::startTerraSync()
 {
-    QStringList ts_params;
-    QStringList env = QProcess::systemEnvironment();
-    procTerraSync = new QProcess();
-    procTerraSync->setProcessChannelMode(QProcess::MergedChannels);
-    procTerraSync->setReadChannel(QProcess::StandardOutput);
-    procTerraSync->setEnvironment(env);
-    ts_params << "-pid" << fgenv->getTerraSyncPidFilePath()
-              << "-S" // (makes ts using svn protocol rather than rsync)
-              << "-p" << "5500"
-              << "-d" << fgenv->getYFScenery();
-    procTerraSync->start(fgenv->getTerraSyncBinPath(), ts_params, QProcess::ReadOnly);
-    log->Log(Logger::ET_INFO, fgenv->getTerraSyncBinPath() + " " + ts_params.join(" "));
-    ui->txaLog->append(Logger::ET_INFO + ": " + tr("Starting TerraSync"));
-    connect(procTerraSync,SIGNAL(readyRead()),this,SLOT(read_ts_output()));
-    connect(procTerraSync,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(proc_ts_finished()));
+    if(fgenv->getFGVersion().split(".")[0].toInt()<2019)
+    {
+        QStringList ts_params;
+        QStringList env = QProcess::systemEnvironment();
+        procTerraSync = new QProcess();
+        procTerraSync->setProcessChannelMode(QProcess::MergedChannels);
+        procTerraSync->setReadChannel(QProcess::StandardOutput);
+        procTerraSync->setEnvironment(env);
+        ts_params << "-pid" << fgenv->getTerraSyncPidFilePath()
+                  << "-S" // (makes ts using svn protocol rather than rsync)
+                  << "-p" << "5500"
+                  << "-d" << fgenv->getYFScenery();
+        procTerraSync->start(fgenv->getTerraSyncBinPath(), ts_params, QProcess::ReadOnly);
+        log->Log(Logger::ET_INFO, fgenv->getTerraSyncBinPath() + " " + ts_params.join(" "));
+        ui->txaLog->append(Logger::ET_INFO + ": " + tr("Starting TerraSync"));
+        connect(procTerraSync,SIGNAL(readyRead()),this,SLOT(read_ts_output()));
+        connect(procTerraSync,SIGNAL(finished(int,QProcess::ExitStatus)),this,SLOT(proc_ts_finished()));
 
-    tmrProcTS = new QTimer();
-    connect(tmrProcTS, SIGNAL(timeout()),this,SLOT(hndl_tmr_procts()));
-    tmrProcTS->start(350);
+        tmrProcTS = new QTimer();
+        connect(tmrProcTS, SIGNAL(timeout()),this,SLOT(hndl_tmr_procts()));
+        tmrProcTS->start(350);
 
-    procTerraSync->closeWriteChannel();
-    if((procTerraSync->state() == QProcess::Starting)||
-            (procTerraSync->state() == QProcess::Starting))
-        proc_ts_is_running = true;
+        procTerraSync->closeWriteChannel();
+        if((procTerraSync->state() == QProcess::Starting)||
+                (procTerraSync->state() == QProcess::Starting))
+            proc_ts_is_running = true;
+    }
+    else
+    {
+        qDebug("TerraSync changed after version 3");
+    }
 }
 
 void MainWindow::stopTerraSync()
