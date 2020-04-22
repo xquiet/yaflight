@@ -66,7 +66,8 @@ class MainWindow;
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+
+Q_OBJECT
     
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -133,6 +134,8 @@ private slots:
 
     void hndl_tmr_procts();
 
+    void hndl_tmr_update_map_with_plane();
+
     void on_ckbInAir_toggled(bool checked);
 
     void on_cboControlMode_currentIndexChanged(const QString &arg1);
@@ -166,6 +169,10 @@ private slots:
     //void paintEvent(QPaintEvent* event);
 
     void on_cboTheme_currentTextChanged(const QString &arg1);
+
+    void completedAptCache();
+
+    void updateCacheProgress(int currLine, int lineCount);
 
 protected:
     //void resizeEvent(QResizeEvent *event);
@@ -206,6 +213,7 @@ private:
     bool proc_ts_is_running;
     QTimer *tmrProcFGFS;
     QTimer *tmrProcTS;
+    QTimer *tmrProcCoords;
     void startTerraSync();
     void stopTerraSync();
 
@@ -222,7 +230,7 @@ private:
     // ----- airports -----
     QHash<QString, QStringList> collect_all_airports();
     QStringList collect_all_airports_dir();
-    void setup_airport_list(bool forceAptIdxRebuild=false);
+    void setup_airport_list();
     QList<Runway *> ap_runways;
     Runway *currentRunway;
     QModelIndex lastAirportIndex;
@@ -262,6 +270,9 @@ private:
     void center_mpmap_at_coords();
     bool eventFilter(QObject * obj, QEvent * event);
     void change_selected_coords();
+
+    // ----- threads -----
+    APT_dat aptdat;
 
 };
 

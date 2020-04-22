@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QApplication::setApplicationVersion(STRVERSION);
 
     ui->lblLoading->setVisible(false);
+    ui->pbarAptCache->setVisible(false);
 
     just_started = true;
     proc_fgfs_is_running = false;
@@ -179,9 +180,32 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->lblTerraSyncStatus->setToolTip(tr("N/A"));
 
-    // the first time it runs could take MINUTES!!!
-    // a proper solution must be adopted
-    setup_airport_list();
+    // initialize aptdat and search for cache file
+    // if it doesn't exists,
+    // the APT_dat thread is launched to create it
+    aptdat.initialize(fgenv->getAPTSource(), fgenv->getYFHome());
+    if(!aptdat.aptcache_exists())
+    {
+        // connect signals emitted from the thread to local handlers
+        connect(&aptdat, SIGNAL(sgnDecompressionCompleted()),
+                this, SLOT(completedAptCache()));
+        connect(&aptdat, SIGNAL(sgnCacheProgress(int, int)),
+                this, SLOT(updateCacheProgress(int, int)));
+
+        ui->btnRecreateAiportsIndex->setEnabled(false);
+        ui->btnRefreshAirportList->setEnabled(false);
+        ui->pbarAptCache->show();
+        if(!aptdat.create_cache(collect_all_airports_dir()))
+        {
+            QMessageBox msgbox(QMessageBox::Critical,tr("Error"),tr("Can't create airport index cache\nCheck you permissions"),QMessageBox::Ok);
+            msgbox.exec();
+            return;
+        }
+    }
+    else
+    {
+        setup_airport_list();
+    }
 
     setup_about_box();
 
@@ -196,9 +220,9 @@ MainWindow::MainWindow(QWidget *parent) :
     
     // bad solution!
     // start timer to retrieve current aircraft coords
-    /*tmrProcCoords = new QTimer();
-    connect(tmrProcCoords, SIGNAL(timeout()),this,SLOT(hndl_tmr_coords()));
-    tmrProcCoords->start(350);*/
+    tmrProcCoords = new QTimer();
+    connect(tmrProcCoords, SIGNAL(timeout()),this,SLOT(hndl_tmr_update_map_with_plane()));
+    tmrProcCoords->start(500);
 
     // nice tip from
     // http://www.developer.nokia.com/Community/Discussion/showthread.php?225405-How-to-detect-mouse-press-move-release-in-Qwebview-without-affect-linkcliced
@@ -1393,7 +1417,25 @@ QStringList MainWindow::collect_all_airports_dir()
     return allAirportDirectories;
 }
 
-void MainWindow::setup_airport_list(bool forceAptIdxRebuild)
+void MainWindow::completedAptCache()
+{
+    QString cacheBuilt = (aptdat.cacheBuilt())? "READY" : "NOT READY";
+    // now that cache is built, setup the airport list
+    setup_airport_list();
+    ui->pbarAptCache->hide();
+    ui->btnRecreateAiportsIndex->setEnabled(true);
+    ui->btnRefreshAirportList->setEnabled(true);
+    ui->lblLoading->setText("Airports cache status");
+}
+
+void MainWindow::updateCacheProgress(int currLine, int lineCount)
+{
+    ui->pbarAptCache->setMinimum(0);
+    ui->pbarAptCache->setMaximum(lineCount);
+    ui->pbarAptCache->setValue(currLine);
+}
+
+void MainWindow::setup_airport_list()
 {   
     QStandardItemModel *model = new QStandardItemModel(1,4);
     ui->tbvAirports->setModel(model);
@@ -1415,17 +1457,8 @@ void MainWindow::setup_airport_list(bool forceAptIdxRebuild)
 
     // IMPORTANT: this should be ported inside a separated thread to allow GUI to appear real-time while it works
 
-    APT_dat aptdat(fgenv->getAPTSource(),fgenv->getYFHome());
+    //APT_dat aptdat(fgenv->getAPTSource(),fgenv->getYFHome());
 
-    if(!aptdat.aptcache_exists()||forceAptIdxRebuild)
-    {
-        if(!aptdat.create_cache(collect_all_airports_dir()))
-        {
-            QMessageBox msgbox(QMessageBox::Critical,tr("Error"),tr("Can't create airport index cache\nCheck you permissions"),QMessageBox::Ok);
-            msgbox.exec();
-            return;
-        }
-    }
     int row = 0;
     QHash<QString, QStringList> cache = aptdat.getAirports();
     model->setRowCount(cache.count());
@@ -1480,9 +1513,9 @@ void MainWindow::on_tbvAirports_clicked(const QModelIndex &index)
 {
     QStandardItemModel *model = (QStandardItemModel *) ui->tbvAirports->model();
     QString icao = model->item(index.row(),1)->text().trimmed();
-    APT_dat apdat(fgenv->getAPTSource(),fgenv->getYFHome());
+    //APT_dat apdat(fgenv->getAPTSource(),fgenv->getYFHome());
 
-    ap_runways = apdat.getRunwaysByAirport(icao);
+    ap_runways = aptdat.getRunwaysByAirport(icao);
 
     ui->cboRunway->clear();
 
@@ -1734,6 +1767,12 @@ void MainWindow::add_scenery_path(QString sceneryPath)
 //    ui->webViewMMap->load(QUrl(bridge->followPilot()));
 //}
 
+void MainWindow::hndl_tmr_update_map_with_plane()
+{
+    on_dialHeading_valueChanged(360);
+    tmrProcCoords->stop();
+}
+
 void MainWindow::hndl_tmr_procfgfs()
 {
     if(procFGFS->state() == QProcess::Running)
@@ -1839,7 +1878,7 @@ void MainWindow::on_btnRecreateAiportsIndex_clicked()
     QMessageBox msgbox(QMessageBox::Warning,tr("Warning"),tr("Are you sure you want to rebuild the entire Airports index?\nIt should take a few minutes on slower machines"),QMessageBox::Ok|QMessageBox::Cancel,this);
     if(msgbox.exec()==QMessageBox::Ok)
     {
-        setup_airport_list(true);
+        aptdat.create_cache(collect_all_airports_dir());
     }
 }
 
