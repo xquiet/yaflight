@@ -1,6 +1,18 @@
 #include "apt_dat.h"
 
-APT_dat::APT_dat(QString zpath, QString yfhomedir)
+APT_dat::APT_dat(QObject *parent):QThread(parent)
+{
+    restart = false;
+    abort = false;
+}
+
+APT_dat::~APT_dat()
+{
+    abort = true;
+    wait();
+}
+
+void APT_dat::initialize(QString zpath, QString yfhomedir)
 {
     homeDir = yfhomedir.trimmed();
     aptdatFilePath = zpath.trimmed();
@@ -9,6 +21,99 @@ APT_dat::APT_dat(QString zpath, QString yfhomedir)
     rwscache = homeDir + "/rws.cache";
 
     isDecompressed = false;
+    isCacheReady = false;
+}
+
+float APT_dat::getCacheProgress()
+{
+    return cacheProgress;
+}
+
+void APT_dat::run()
+{
+    if(!isDecompressed)
+    {
+        if(!QFile::exists(decompressedFilePath))
+            read();
+        isDecompressed = true;
+    }
+
+    QFile cache_apt(aptcache);
+
+    if(cache_apt.exists() && !QFile::remove(aptcache))
+    {
+        qFatal("Cannot remove file %s. Cache NOT built!", aptcache.toStdString().data());
+        isCacheReady = false;
+    }
+
+    QFile cache_rws(rwscache);
+    if(cache_rws.exists() && !QFile::remove(rwscache))
+    {
+        qFatal("Cannot remove file %s. Cache NOT built!", rwscache.toStdString().data());
+        isCacheReady = false;
+    }
+
+    QFile file(decompressedFilePath);
+    QString token;
+    QString dataSpecification;
+    long lineCount = 0;
+    long currLine = 0;
+    if(file.open(QIODevice::ReadOnly|QIODevice::Text)){
+        // open to count lines
+        QTextStream in(&file);
+        in.readLine(); // skip first line with IBM/DOS stuff
+        dataSpecification = in.readLine().split(" ")[0];
+        qDebug("File specification is %s\n", dataSpecification.toStdString().data());
+        while(!in.atEnd())
+        {
+            token = in.readLine();
+            if(token.trimmed().compare("")==0)
+                continue; // skip empty lines
+            lineCount++;
+        }
+
+        in.seek(0);
+
+        in.readLine(); // skip first line with IBM/DOS stuff
+        while(!in.atEnd())
+        {
+            token = in.readLine();
+            if(token.trimmed().compare("")==0)
+                continue; // skip empty lines
+            QStringList lineItems = token.split(" ",QString::SkipEmptyParts);
+            if(lineItems.count()>0){
+                switch(lineItems[0].toInt())
+                {
+                    case APTDAT_AIRPORT:
+                    case APTDAT_SEAPLANE_BASE:
+                    case APTDAT_HELIPORT:
+                        parseAirportLine(lineItems, dataSpecification);
+                        break;
+                    case APTDAT_RUNWAY_LT_850:
+                    case APTDAT_RUNWAY:
+                    case APTDAT_RUNWAY_WATER:
+                    case APTDAT_RUNWAY_HELIPAD:
+            case APTDAT_PAVEMENT:
+                        parseRunwayLine(lineItems, dataSpecification);
+                        break;
+                }
+            }
+            currLine++;
+            cacheProgress = currLine / lineCount;
+            emit sgnCacheProgress(currLine, lineCount);
+        }
+    }
+    isCacheReady = true;
+    if (!restart)
+    {
+        emit sgnDecompressionCompleted();
+    }
+    restart = false;
+}
+
+bool APT_dat::cacheBuilt()
+{
+    return isCacheReady;
 }
 
 void APT_dat::read()
@@ -100,62 +205,11 @@ bool APT_dat::create_cache(QStringList all_airports_dir)
 {
     allAirportsDir = all_airports_dir;
 
-    if(!isDecompressed)
-    {
-        if(!QFile::exists(decompressedFilePath))
-            read();
-        isDecompressed = true;
+    if (!isRunning()) {
+        start(LowPriority);
+    } else {
+        restart = true;
     }
-
-    QFile cache_apt(aptcache);
-
-    if(cache_apt.exists() && !QFile::remove(aptcache))
-    {
-        qFatal("Cannot remove file %s. Cache NOT built!", aptcache.toStdString().data());
-        return false;
-    }
-
-    QFile cache_rws(rwscache);
-    if(cache_rws.exists() && !QFile::remove(rwscache))
-    {
-        qFatal("Cannot remove file %s. Cache NOT built!", rwscache.toStdString().data());
-        return false;
-    }
-
-    QFile file(decompressedFilePath);
-    QString token;
-    QString dataSpecification;
-    if(file.open(QIODevice::ReadOnly|QIODevice::Text)){
-        QTextStream in(&file);
-        in.readLine(); // skip first line with IBM/DOS stuff
-	dataSpecification = in.readLine().split(" ")[0];
-	qDebug("File specification is %s\n", dataSpecification.toStdString().data());
-        while(!in.atEnd())
-        {
-            token = in.readLine();
-            if(token.trimmed().compare("")==0)
-                continue; // skip empty lines
-            QStringList lineItems = token.split(" ",QString::SkipEmptyParts);
-            if(lineItems.count()>0){
-                switch(lineItems[0].toInt())
-                {
-                    case APTDAT_AIRPORT:
-                    case APTDAT_SEAPLANE_BASE:
-                    case APTDAT_HELIPORT:
-                        parseAirportLine(lineItems, dataSpecification);
-                        break;
-                    case APTDAT_RUNWAY_LT_850:
-                    case APTDAT_RUNWAY:
-                    case APTDAT_RUNWAY_WATER:
-                    case APTDAT_RUNWAY_HELIPAD:
-		    case APTDAT_PAVEMENT:
-                        parseRunwayLine(lineItems, dataSpecification);
-                        break;
-                }
-            }
-        }
-    }
-    return true;
 }
 
 bool APT_dat::aptcache_exists()

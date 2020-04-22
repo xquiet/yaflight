@@ -26,6 +26,7 @@
 #include <QHash>
 #include <QStringList>
 #include <QDir>
+#include <QThread>
 
 #include <zlib.h>
 
@@ -46,10 +47,22 @@
 #define APTDAT_PAVEMENT         110 // pavement (taxiway or ramp)
 
 
-class APT_dat
+class APT_dat : public QThread
 {
+
+Q_OBJECT
+
 public:
-    APT_dat(QString zpath, QString yfhomedir);
+    APT_dat(QObject *parent = nullptr);
+    ~APT_dat();
+
+    void initialize(QString zpath, QString yfhomedir);
+
+    // getter/setter
+    bool cacheBuilt();
+    float getCacheProgress();
+
+
     //void parse_apt_data();
     bool create_cache(QStringList all_airports_dir);
     QHash<QString, QStringList> getAirports();
@@ -58,6 +71,16 @@ public:
 
     bool aptcache_exists();
     bool rwscache_exists();
+
+    void read();
+
+signals:
+    void sgnDecompressionCompleted();
+    void sgnCacheProgress(int, int);
+
+
+protected:
+    void run() override;
 
 private:
     QString homeDir;
@@ -71,7 +94,11 @@ private:
     QString lastAirportDescription;
     QStringList allAirportsDir;
 
-    void read();
+    // ---- thread ----
+    bool restart;
+    bool abort;
+    // ---- end thread ----
+
     void parseAirportLine(QStringList items, QString spec);
     void parseRunwayLine(QStringList items, QString spec);
     QByteArray gUncompress(const QByteArray &data);
@@ -82,6 +109,8 @@ private:
     bool store_runways(QString apname, QString data);
 
     bool isDecompressed;
+    bool isCacheReady;
+    float cacheProgress;
 };
 
 #endif // APT_DAT_H
