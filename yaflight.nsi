@@ -2,9 +2,9 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "YaFlight"
-!define PRODUCT_VERSION "0.99.30"
+!define PRODUCT_VERSION "1.0.1"
 !define PRODUCT_PUBLISHER "YaFlight"
-!define PRODUCT_WEB_SITE "http://yaflight.altervista.org"
+!define PRODUCT_WEB_SITE "http://yaflight.grysol.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\yaflight.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
@@ -119,7 +119,7 @@ Section "SezionePrincipale" SEC01
   File "C:\Qt\Qt5.3.0\5.3\mingw482_32\bin\Qt5Widgets.dll"
   File "C:\Qt\Qt5.3.0\5.3\mingw482_32\bin\Qt5Xml.dll"
   File "C:\Qt\Qt5.3.0\5.3\mingw482_32\bin\Qt5Positioning.dll"
-  File "C:\Users\Matteo\workspace\zlib\bin\zlib1.dll"
+  File "C:\Users\Matteo\workspace\zlib-win-build\build-VS2019\Release\libz.dll"
   SetOverwrite try
   CreateDirectory "$OUTDIR\languages"
   File /r "C:\Qt\Qt5.3.0\5.3\mingw482_32\plugins\iconengines"
@@ -202,7 +202,7 @@ Section Uninstall
   Delete "$INSTDIR\Qt5Widgets.dll"
   Delete "$INSTDIR\Qt5Xml.dll"
   Delete "$INSTDIR\Qt5Positioning.dll"
-  Delete "$INSTDIR\zlib1.dll"
+  Delete "$INSTDIR\libz.dll"
   Delete "$INSTDIR\libzlib.dll"
   ;Delete "$INSTDIR\libzip.dll"
   Delete "$INSTDIR\yaflight.exe"
