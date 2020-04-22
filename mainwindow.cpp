@@ -418,7 +418,7 @@ void MainWindow::on_pbtLaunch_clicked()
         procFGFS->start(fgfsBinary, params, QProcess::ReadOnly);
 
         ui->txaLog->append(tr("Launching..."));
-        //ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
+        ui->txaLog->append(fgenv->getFgfsBinPath()+" "+params.join(" "));
         qDebug("%s",(fgenv->getFgfsBinPath()+" "+params.join(" ")).toStdString().data());
         ui->txaLog->append(Logger::ET_INFO + ": "+ tr("Simulation started"));
         connect(procFGFS,SIGNAL(readyRead()),this,SLOT(readAircrafts()));
@@ -670,7 +670,10 @@ QStringList MainWindow::collectLaunchSettings()
     }
 
     // control mode
-    params << "--control=" + lastControlModeSelected;
+    if(fgVersion.split(".")[0].toInt()<2019)
+    {
+        params << "--control=" + lastControlModeSelected;
+    }
 
     // ------------- Rendering -------------
     // Horizon effect
@@ -697,13 +700,16 @@ QStringList MainWindow::collectLaunchSettings()
         }
     }
     // Textures
-    if(ui->ckbTextures->isChecked())
+    if(fgVersion.split(".")[0].toInt()<2019)
     {
-        params << "--enable-textures";
-    }
-    else
-    {
-        params << "--disable-textures";
+        if(ui->ckbTextures->isChecked())
+        {
+            params << "--enable-textures";
+        }
+        else
+        {
+            params << "--disable-textures";
+        }
     }
     // Distance attenuation
     if(ui->ckbDistanceAttenuation->isChecked())
@@ -842,13 +848,16 @@ QStringList MainWindow::collectLaunchSettings()
         params << "--disable-specular-highlight";
     }
     // Enhanced lighting
-    if(ui->ckbEnhancedLighting->isChecked())
+    if(fgVersion.split(".")[0].toInt()<2019)
     {
-        params << "--enable-enhanced-lighting";
-    }
-    else
-    {
-        params << "--disable-enhanced-lighting";
+        if(ui->ckbEnhancedLighting->isChecked())
+        {
+            params << "--enable-enhanced-lighting";
+        }
+        else
+        {
+            params << "--disable-enhanced-lighting";
+        }
     }
     // ------------- Environment ----------------
     if(ui->ckbWind->isChecked())
