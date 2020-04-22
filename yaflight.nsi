@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "YaFlight"
-!define PRODUCT_VERSION "1.0.1"
+!define PRODUCT_VERSION "1.0.3"
 !define PRODUCT_PUBLISHER "YaFlight"
 !define PRODUCT_WEB_SITE "http://yaflight.grysol.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\yaflight.exe"
