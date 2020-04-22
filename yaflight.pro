@@ -10,9 +10,9 @@ QT       += core gui network
 lessThan(QT_MAJOR_VERSION, 5): QT += webkit 
 greaterThan(QT_MAJOR_VERSION, 4): QT += webkitwidgets
 
-MAX_VERSION = 0
-MIN_VERSION = 99
-PATCH_VERSION = 30
+MAX_VERSION = 1
+MIN_VERSION = 0
+PATCH_VERSION = 1
 
 DEFINES += MAX_VERSION=$$MAX_VERSION
 DEFINES += MIN_VERSION=$$MIN_VERSION
@@ -39,10 +39,10 @@ DEFINES += DATADIR=\\\"$$DATADIR\\\" TRANSDIR=\\\"$$TRANSDIR\\\"
 unix:LIBS += -lz
 
 # for development environment
-win32:LIBS += "$$PWD/../zlib/lib/zlib.lib" -lz
+win32:LIBS += C:\Users\Matteo\workspace\zlib-win-build\build-VS2019\Release\libz.dll -lz
 
 
-win32:INCLUDEPATH += "$$PWD/../zlib/include/"
+win32:INCLUDEPATH += C:\Users\Matteo\workspace\zlib-win-build
 
 else:mac: LIBS += -F$$PWD/../yalib/ -framework yalib
 else:unix: LIBS += -L$$PWD/../yalib/ -lyalib
