@@ -19,8 +19,8 @@ DEFINES += MIN_VERSION=$$MIN_VERSION
 DEFINES += PATCH_VERSION=$$PATCH_VERSION
 DEFINES += STRVERSION=\\\"$${MAX_VERSION}.$${MIN_VERSION}.$${PATCH_VERSION}\\\"
 
-TARGET = yaflight
 TEMPLATE = app
+TARGET = yaflight
 
 VERSION = $${MAX_VERSION}.$${MIN_VERSION}.$${PATCH_VERSION}
 
@@ -45,7 +45,12 @@ win32:LIBS += C:\Users\Matteo\workspace\zlib-win-build\build-VS2019\Release\libz
 win32:INCLUDEPATH += C:\Users\Matteo\workspace\zlib-win-build
 
 else:mac: LIBS += -F$$PWD/../yalib/ -framework yalib
-else:unix: LIBS += -L$$PWD/../yalib/ -lyalib
+
+
+# libyalib for both release and debug as I'm building libyalib as RelWithDebInfo
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../yalib-build/src/ -llibyalib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../yalib-build/src/ -llibyalib
+else:unix: LIBS += -L$$PWD/../yalib/build/src -lyalib
 
 unix:!macx {
     target.path = /usr/bin
@@ -131,8 +136,5 @@ TRANSLATIONS += languages/cs_CZ.ts \
 
 INSTALLS += target
 
-# libyalib for both release and debug as I'm building libyalib as RelWithDebInfo
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../yalib-build/src/ -llibyalib
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../yalib-build/src/ -llibyalib
-else:unix: LIBS += -L$$PWD/../yalib-build/src/ -llibyalib
+
 
