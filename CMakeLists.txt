@@ -2,9 +2,9 @@
 # (C) 2014-2020 by Matteo Pasotti <matteo.pasotti@gmail.com>
 # License: GPLv3
 ###############
-SET( VERSION_MAJOR "0")
-SET( VERSION_MINOR "99" )
-SET( VERSION_PATCH "30" )
+SET( VERSION_MAJOR "1")
+SET( VERSION_MINOR "0" )
+SET( VERSION_PATCH "3" )
 SET( VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}${GIT_SHA1_VERSION}" )
 
 cmake_minimum_required(VERSION 2.8.11)
