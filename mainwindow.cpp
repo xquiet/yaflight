@@ -198,12 +198,7 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->btnRecreateAiportsIndex->setEnabled(false);
         ui->btnRefreshAirportList->setEnabled(false);
         ui->pbarAptCache->show();
-        if(!aptdat.create_cache(collect_all_airports_dir()))
-        {
-            QMessageBox msgbox(QMessageBox::Critical,tr("Error"),tr("Can't create airport index cache\nCheck you permissions"),QMessageBox::Ok);
-            msgbox.exec();
-            return;
-        }
+        aptdat.create_cache(collect_all_airports_dir());
     }
     else
     {
