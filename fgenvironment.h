@@ -33,7 +33,7 @@
 #elif defined Q_OS_WIN
 #include "yalib.h"
 #else
-#include "yalib/yalib_global.h"
+#include "yalib/yalib.h"
 #endif
 
 class FGEnvironment
