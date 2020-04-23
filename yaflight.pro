@@ -28,7 +28,7 @@ mac: ICON = icons/yaflight.icns
 
 win32: RC_FILE = yaflight.rc
 
-unix: isEmpty($$DATADIR) {
+unix: isEmpty(DATADIR) {
     DATADIR = /usr/share/yaflight
 }
 
