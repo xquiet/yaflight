@@ -85,6 +85,7 @@ add_definitions(-DVERSION="${VERSION}")
 add_definitions(-DDATA_DIR="${DATA_DIR}")
 add_definitions(-DTRANSDIR="${TRANSLATIONS_DIR}")
 add_definitions(-DTHEMES_DIR="${THEMES_DIR}")
+add_definitions(-DSTRVERSION="${VERSION}")
 
 # if(UNIX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -std=gnu++0x")
