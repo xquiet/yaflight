@@ -64,7 +64,7 @@ public:
 
 
     //void parse_apt_data();
-    bool create_cache(QStringList all_airports_dir);
+    void create_cache(QStringList all_airports_dir);
     QHash<QString, QStringList> getAirports();
 
     QList<Runway *> getRunwaysByAirport(QString key);

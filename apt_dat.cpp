@@ -201,7 +201,7 @@ QList<Runway *> APT_dat::getRunwaysByAirport(QString key)
 }
 
 
-bool APT_dat::create_cache(QStringList all_airports_dir)
+void APT_dat::create_cache(QStringList all_airports_dir)
 {
     allAirportsDir = all_airports_dir;
 
