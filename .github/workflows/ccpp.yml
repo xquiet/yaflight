@@ -13,11 +13,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: configure
-      run: mkdir build && cd build && cmake ..
+    - name: Prepare
+      working-directory: build
+      run: |
+        apt install -y qtbase5-dev 
+        cmake ..
     - name: make
+      working-directory: build
       run: make
     - name: make check
+      working-directory: build
       run: make check
     - name: make distcheck
+      working-directory: build
       run: make distcheck
