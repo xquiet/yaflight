@@ -16,7 +16,7 @@ jobs:
     - name: Prepare
       working-directory: build
       run: |
-        apt-get install -y qtbase5-dev 
+        apt-get install -y cmake qtbase5-dev 
         cmake ..
     - name: make
       working-directory: build
