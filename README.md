@@ -6,7 +6,7 @@ yaflight
 yaflight is a flightgear launch control developed originally using the Gambas3 language
 and now completely rewritten using C++ with the Qt Framework to make it multi-platform.
 
-(C) 2012-2020 by Matteo Pasotti
+(C) 2012-2021 by Matteo Pasotti
 
 GPLv3 License
 -------------
